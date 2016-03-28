@@ -1,6 +1,8 @@
+import json
+
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 
 def index(request):
@@ -13,4 +15,7 @@ def get_string(request):
 
 def get_vec2(request):
     print "get vec2"
-    return HttpResponse("12, 12") 
+    return JsonResponse({
+        'x': 200,
+        'y': 200
+        }) 
