@@ -20,5 +20,7 @@ from buildup import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'', views.index),
+    url(r'^$', views.index),
+    url(r'^get_vec2$', views.get_vec2),
+    url(r'^get_string$', views.get_string),
 ]
