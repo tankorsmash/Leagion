@@ -15,12 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.shortcuts import render_to_response
 
 from buildup import views
+
+def changelog(request):
+	return render_to_response("buildup_server/index.html", {})
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
     url(r'^get_vec2$', views.get_vec2),
     url(r'^get_string$', views.get_string),
+    url(r'^changelog$', changelog),
 ]
