@@ -25,7 +25,7 @@ SECRET_KEY = ')3-^3j&1(0e35&ld30u&x-hw6rf*5^u2)y26&o*9u^m-o-dt09'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".webfactional.com"]
 
 
 # Application definition
@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
+    #'django.contrib.staticfiles',
+
+	'buildup',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -74,13 +76,6 @@ WSGI_APPLICATION = 'buildup_server.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -117,5 +112,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
+#
+#STATIC_URL = '/static/'
+#STATIC_ROOT = '/home/tankorsmash/webapps/buildup_static/'
 
-STATIC_URL = '/static/'
+from local import *
+#DEBUG = True

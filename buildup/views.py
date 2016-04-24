@@ -6,15 +6,12 @@ from django.http import HttpResponse, JsonResponse
 
 
 def index(request):
-    print "get index"
-    return HttpResponse("Hello, world. You're at the polls index.") 
+    return HttpResponse("Changelog will be at /changelog soon!") 
 
 def get_string(request):
-    print "get string"
     return HttpResponse("this is a string") 
 
 def get_vec2(request):
-    print "get vec2"
     return JsonResponse({
         'x': 200,
         'y': 200
