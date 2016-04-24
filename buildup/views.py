@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 
 
 def index(request):
-    return HttpResponse("Changelog will be at /changelog soon!") 
+    return HttpResponse("Changelog will be at /changelog soon! Just working some stuff out real quick.") 
 
 def get_string(request):
     return HttpResponse("this is a string") 
