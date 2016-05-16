@@ -20,6 +20,15 @@ def get_vec2(request):
 def users(request, username):
 
     player, created = Player.objects.get_or_create(username=username)
+    
+    if request.method == "POST":
+        new_coins = request.POST.get("coins")
+        if new_coins:
+            player.coins = int(new_coins) #idk if this will break over 2.4b
+
+            player.save()
+
+
     payload = {
             "username": player.username,
             "coins": player.coins
