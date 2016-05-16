@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from django.shortcuts import render_to_response
+from django.db import models
 
 from buildup import views
 
@@ -29,4 +30,6 @@ urlpatterns = [
     url(r'^get_vec2$', views.get_vec2),
     url(r'^get_string$', views.get_string),
     url(r'^changelog$', changelog),
+
+    url(r'^users/(?P<username>[a-zA-Z0-9]*)$', views.users),
 ]
