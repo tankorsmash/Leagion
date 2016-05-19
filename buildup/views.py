@@ -22,11 +22,21 @@ def users(request, username):
     player, created = Player.objects.get_or_create(username=username)
     
     if request.method == "POST":
-        new_coins = request.POST.get("coins")
-        if new_coins:
-            player.coins = int(new_coins) #idk if this will break over 2.4b
+        post = request.POST
+        if "json" in request.META.get("CONTENT_TYPE", ""):
+            payload = json.loads(request.body)
 
-            player.save()
+            new_coins = payload.get("coins")
+            if new_coins:
+                player.coins = int(new_coins) #idk if this will break over 2.4b
+
+                player.save()
+
+            else:
+                print "found no coins in json request"
+
+        else:
+            print "need CONTENT_TYPE to contain 'json'"
 
 
     payload = {
