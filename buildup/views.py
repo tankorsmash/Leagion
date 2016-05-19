@@ -18,6 +18,12 @@ def get_vec2(request):
     payload = {'x': 200, 'y': 200 }
     return JsonResponse(payload)
 
+def leaderboard(request):
+
+    players = Player.objects.all().order_by("-coins")
+
+    return TemplateResponse(request, "leaderboard.html", {"players": players})
+
 def users(request, username):
 
     player, created = Player.objects.get_or_create(username=username)

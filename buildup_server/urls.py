@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^changelog$', changelog),
 
     url(r'^users/(?P<username>[a-zA-Z0-9]*)$', views.users),
+    url(r'^leaderboard$', views.leaderboard),
 ]

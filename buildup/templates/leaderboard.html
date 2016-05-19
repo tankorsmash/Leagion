@@ -1,0 +1,25 @@
+<head>
+    <title>Leaderboards | Build Up The Base</title>
+
+    <style>
+        .player-detail {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<h1>Leaderboard</h1>
+<h2>Who's better than you?</h2>
+
+<div id="leaderboard">
+{% for player in players %}
+    <div class="player-detail">
+        <div class="player-username"> 
+            {{ player.username }}
+        </div>
+        <div class="player-coins"> 
+            {{ player.coins }} coins
+        </div>
+    </div>
+{% endfor %}
+</div>
+
