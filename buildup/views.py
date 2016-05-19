@@ -1,6 +1,7 @@
 import json
 
 from django.shortcuts import render
+from django.template.response import TemplateResponse
 
 from django.http import HttpResponse, JsonResponse
 
@@ -39,9 +40,14 @@ def users(request, username):
             print "need CONTENT_TYPE to contain 'json'"
 
 
-    payload = {
+        payload = {
             "username": player.username,
             "coins": player.coins
-            }
-    return JsonResponse(payload)
+        }
+
+        return JsonResponse(payload)
+
+    elif request.method == "GET":
+
+        return TemplateResponse(request, "user_detail.html", {"player": player})
 
