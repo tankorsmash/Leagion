@@ -122,5 +122,8 @@ USE_TZ = True
 #STATIC_URL = '/static/'
 #STATIC_ROOT = '/home/tankorsmash/webapps/buildup_static/'
 
-from local import *
+try:
+    from local import *
+except ImportError:
+    print "need a local.py with settings, DATABASES etc"
 #DEBUG = True
