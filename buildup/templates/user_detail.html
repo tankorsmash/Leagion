@@ -1,4 +1,5 @@
 <head>
+    <title>{{ player.username }} | User Detail | Build Up The Base</title>
 
     <style>
         .buildings_wrap {
@@ -11,6 +12,9 @@
 <body>
 <div class="username"> Username: {{ player.username }} </div>
 <div class="coins"> Coins: {{ player.coins }} </div>
+<div class="player-building_levels"> 
+    Total levels: {{ player.total_building_levels }}
+</div>
 
 <div class="buildings_wrap">
     {% for name, building in buildings.items %}

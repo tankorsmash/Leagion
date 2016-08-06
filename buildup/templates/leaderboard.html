@@ -6,6 +6,7 @@
             margin-top: 15px;
         }
     </style>
+
 </head>
 <h1>Leaderboard</h1>
 <h2>Who's better than you?</h2>
@@ -18,6 +19,9 @@
         </div>
         <div class="player-coins"> 
             {{ player.coins }} coins
+        </div>
+        <div class="player-building_levels"> 
+            Total levels: {{ player.total_building_levels }}
         </div>
     </div>
 {% endfor %}
