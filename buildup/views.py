@@ -34,10 +34,16 @@ def users(request, username):
             payload = json.loads(request.body)
 
             new_coins = payload.get("coins")
+            payload.pop("coins")
             if new_coins:
-                player.coins = int(new_coins) #idk if this will break over 2.4b
+                player.coins = int(new_coins) #idk if this will break over 2.4T
+                buildings = json.dumps(payload)
+                print "POST: player building json raw", buildings
+                player.building_json = buildings
 
                 player.save()
+
+                print "saving player and building"
 
             else:
                 print "found no coins in json request"
@@ -55,5 +61,13 @@ def users(request, username):
 
     elif request.method == "GET":
 
-        return TemplateResponse(request, "user_detail.html", {"player": player})
+        print "GET: player id", player.id
+        buildings_str = player.building_json
+        print "GET: player building json str", buildings_str
+        building_json = json.loads(buildings_str)
+        print "GET: player building json dict", building_json
+        return TemplateResponse(request, "user_detail.html", {
+            "player": player,
+            "buildings": building_json
+            })
 

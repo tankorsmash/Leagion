@@ -1,2 +1,23 @@
+<head>
+
+    <style>
+        .buildings_wrap {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+
+<body>
 <div class="username"> Username: {{ player.username }} </div>
 <div class="coins"> Coins: {{ player.coins }} </div>
+
+<div class="buildings_wrap">
+    {% for name, building in buildings.items %}
+    <div class="building">
+        <span class="building-name">{{ name }}</span>
+        <span class="building-level">Lv. {{ building.building_level }}</span>
+    </div>
+    {% endfor %}
+</div>
+</body>
