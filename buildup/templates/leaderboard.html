@@ -15,7 +15,7 @@
 {% for player in players %}
     <div class="player-detail">
         <div class="player-username"> 
-            {{ player.username }}
+            <a href="/users/{{player.username}}/">{{ player.username }}</a>
         </div>
         <div class="player-coins"> 
             {{ player.coins }} coins

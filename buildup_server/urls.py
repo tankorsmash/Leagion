@@ -27,10 +27,10 @@ def changelog(request):
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
-    url(r'^get_vec2$', views.get_vec2),
-    url(r'^get_string$', views.get_string),
-    url(r'^changelog$', changelog),
+    url(r'^get_vec2/$', views.get_vec2),
+    url(r'^get_string/$', views.get_string),
+    url(r'^changelog/$', changelog),
 
-    url(r'^users/(?P<username>[a-zA-Z0-9]*)$', views.users),
-    url(r'^leaderboard$', views.leaderboard),
+    url(r'^users/(?P<username>[a-zA-Z0-9]*)/$', views.users),
+    url(r'^leaderboard/$', views.leaderboard),
 ]
