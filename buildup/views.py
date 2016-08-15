@@ -9,7 +9,7 @@ from buildup.models import Player
 
 
 def index(request):
-    return HttpResponse("<a href='/changelog'>CHANGELOG HERE</a>") 
+    return TemplateResponse(request, "index.html")
 
 def get_string(request):
     return HttpResponse("this is a string") 
