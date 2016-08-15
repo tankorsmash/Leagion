@@ -17,11 +17,11 @@
         <div class="player-username"> 
             <a href="/users/{{player.username}}/">{{ player.username }}</a>
         </div>
-        <div class="player-coins"> 
-            {{ player.pretty_coins }} coins
-        </div>
         <div class="player-building_levels"> 
             Total levels: {{ player.total_building_levels }}
+        </div>
+        <div class="player-coins"> 
+            {{ player.pretty_coins }} coins
         </div>
     </div>
 {% endfor %}
