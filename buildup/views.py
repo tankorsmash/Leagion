@@ -2,17 +2,16 @@ import re
 import json
 
 from django.shortcuts import render
+from django.shortcuts import render_to_response
+
 from django.template.response import TemplateResponse
+
 
 from django.http import HttpResponse, JsonResponse
 
 from buildup.models import Player
 
-def index(request):
-    return TemplateResponse(request, "index.html")
-
-
-
+#utils
 def match_harv(str):
  return bool(re.match("harve.*_\d*", str))
 
@@ -45,12 +44,20 @@ def get_resources_per_sec(building_json):
 
     return total
 
-def get_string(request):
-    return HttpResponse("this is a string") 
 
-def get_vec2(request):
-    payload = {'x': 200, 'y': 200 }
-    return JsonResponse(payload)
+# views
+def index(request):
+    return TemplateResponse(request, "index.html")
+
+
+def changelog(request):
+    #only works with the hardcoded file on the live server, not locally
+    try:
+        return render_to_response("buildup_server/index.html", {})
+    except Exception as e: 
+        print e, "this is supposed to be a TemplateDoesNot exist error"
+        return TemplateResponse(request, "index.html")
+
 
 def leaderboard(request):
 
@@ -62,6 +69,7 @@ def leaderboard(request):
             {
                 "players": players,
             })
+
 
 def users(request, username):
 
@@ -77,13 +85,12 @@ def users(request, username):
             if new_coins:
                 player.coins = int(new_coins) #idk if this will break over 2.4T
                 buildings = json.dumps(payload)
+
                 print "POST: player building json raw", buildings
                 player.building_json = buildings
 
                 player.save()
-
                 print "saving player and building"
-
             else:
                 print "found no coins in json request"
 
@@ -100,11 +107,8 @@ def users(request, username):
 
     elif request.method == "GET":
 
-        print "GET: player id", player.id
         buildings_str = player.building_json
-        print "GET: player building json str", buildings_str
         building_json = json.loads(buildings_str)
-        print "GET: player building json dict", building_json
         return TemplateResponse(request, "user_detail.html", {
             "player": player,
             "buildings": building_json,

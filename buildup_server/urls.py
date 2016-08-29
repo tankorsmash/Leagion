@@ -13,24 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
-from django.contrib import admin
-from django.shortcuts import render_to_response
+from django.conf.urls.static import static
+
 from django.db import models
-
+from django.contrib import admin
 from buildup import views
-
-def changelog(request):
-	return render_to_response("buildup_server/index.html", {})
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+
     url(r'^$', views.index),
-    url(r'^get_vec2/$', views.get_vec2),
-    url(r'^get_string/$', views.get_string),
-    url(r'^changelog/$', changelog),
+
+    url(r'^changelog/$', views.changelog),
+    url(r'^leaderboard/$', views.leaderboard),
 
     url(r'^users/(?P<username>[a-zA-Z0-9]*)/$', views.users),
-    url(r'^leaderboard/$', views.leaderboard),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
