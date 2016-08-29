@@ -23,7 +23,11 @@ def leaderboard(request):
     players = Player.objects.all().order_by("-coins")
     players = sorted(players, key=lambda p: -p.total_building_levels)
 
-    return TemplateResponse(request, "leaderboard.html", {"players": players})
+    return TemplateResponse(request,
+            "leaderboard.html",
+            {
+                "players": players,
+            })
 
 def users(request, username):
 
