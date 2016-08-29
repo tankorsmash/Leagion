@@ -4,13 +4,27 @@
 Leaderboard
 {% endblock %}
 
+{% block styles %}
+    body {
+        counter-reset: player-index;
+    }
+
+    .player-username {
+        counter-increment: player-index;
+    }
+
+    .player-username:before {
+        content: counter(player-index);
+    }
+{% endblock %}
+
 {% block content %}
 <h1>Leaderboard</h1>
 <h2>Who's better than you?</h2>
 
 <div id="leaderboard ">
     {% for player in players %}
-    <div class="card-row player-detail">
+    <div class="card-row player-detail m-t-1">
         <div class="player-username"> 
             <a href="/users/{{player.username}}/">{{ player.username }}</a>
         </div>

@@ -78,6 +78,5 @@ def users(request, username):
         return TemplateResponse(request, "user_detail.html", {
             "player": player,
             "buildings": building_json,
-            'cps': get_resources_per_sec(building_json)
             })
 
