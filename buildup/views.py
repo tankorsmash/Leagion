@@ -11,40 +11,6 @@ from django.http import HttpResponse, JsonResponse
 
 from buildup.models import Player
 
-#utils
-def match_harv(str):
- return bool(re.match("harve.*_\d*", str))
-
-
-def build_resources(building_json):
-    resources = []
-    for building, data in building_json.items():                                                                                                                              
-        for k, v in data.iteritems():
-            if match_harv(k):
-                resources.append((k, v))
-
-    return resources
-
-value_map = {
-        1: 0.1,
-        2: 1,
-        3: 8,
-        4: 25,
-        5: 100,
-        6: 350,
-        7: 800,
-        8: 1500
-        }
-
-def get_resources_per_sec(building_json):
-    resources = build_resources(building_json)
-    total = 0
-    for key, count in resources:
-        total+= value_map[int(key.split("_")[2])]*count
-
-    return total
-
-
 # views
 def index(request):
     return TemplateResponse(request, "index.html")
