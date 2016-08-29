@@ -14,7 +14,10 @@
 <div class="player-building_levels"> 
     Total levels: {{ player.total_building_levels }}
 </div>
-<br>
+<div class="player-coins-per-sec"> 
+    Coins per second: {{ cps }}
+</div>
+
 <div class="buildings_wrap">
     {% for name, building in buildings.items %}
     <div class="building">
