@@ -67,6 +67,12 @@ class Player(models.Model):
     # its own building model later, I just don't want to deal with 
     building_json = models.fields.TextField(null=True, blank=True, default="{}")
 
+    def __unicode__(self):
+        return u"Player '%s'" % self.username
+
+    def __repr__(self):
+        return "<%s>" % unicode(self)
+
     @property
     def total_building_levels(self):
         buildings = json.loads(self.building_json)
