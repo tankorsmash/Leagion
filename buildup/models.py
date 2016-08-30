@@ -46,7 +46,10 @@ value_map = {
         5: 100,
         6: 350,
         7: 800,
-        8: 1500
+        8: 1500,
+        9: 4300,
+        10: 11000,
+        11: 55000,
         }
 
 def get_resources_per_sec(building_json):
