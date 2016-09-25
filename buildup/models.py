@@ -65,6 +65,7 @@ def get_resources_per_sec(building_json):
 class Player(models.Model):
     username = models.fields.CharField(max_length=16)
     coins = models.fields.FloatField(default=0)
+    last_login = models.fields.DateTimeField()
 
     #for now put the raw json here, we'll want to move this out into 
     # its own building model later, I just don't want to deal with 

@@ -1,5 +1,6 @@
 import re
 import json
+import datetime
 
 from django.shortcuts import render
 from django.shortcuts import render_to_response
@@ -51,8 +52,14 @@ def users(request, username):
 
             new_coins = payload.get("coins")
             payload.pop("coins")
+
+            last_login = payload.get("last_login")
+            last_login = datetime.datetime.fromtimestamp(float(last_login)/1000.0)
+            payload.pop("last_login")
+
             if new_coins:
                 player.coins = float(new_coins) #idk if this will break over 2.4T
+                player.last_login = last_login
                 buildings = json.dumps(payload)
 
                 print "POST: player building json raw", buildings
