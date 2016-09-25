@@ -64,7 +64,7 @@ def get_resources_per_sec(building_json):
 #model data
 class Player(models.Model):
     username = models.fields.CharField(max_length=16)
-    coins = models.fields.BigIntegerField(default=0)
+    coins = models.fields.FloatField(default=0)
 
     #for now put the raw json here, we'll want to move this out into 
     # its own building model later, I just don't want to deal with 
@@ -83,7 +83,7 @@ class Player(models.Model):
 
     @property
     def pretty_coins(self):
-        return _pretty(str(self.coins))
+        return _pretty("%.2f" % self.coins)
 
     @property
     def cps(self):

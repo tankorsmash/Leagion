@@ -52,7 +52,7 @@ def users(request, username):
             new_coins = payload.get("coins")
             payload.pop("coins")
             if new_coins:
-                player.coins = int(new_coins) #idk if this will break over 2.4T
+                player.coins = float(new_coins) #idk if this will break over 2.4T
                 buildings = json.dumps(payload)
 
                 print "POST: player building json raw", buildings
