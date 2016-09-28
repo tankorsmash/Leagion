@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [".webfactional.com"]
 
+ADMINS = [('TankorSmash', 'tankorsmash@gmail.com'), ]
+
 
 # Application definition
 
