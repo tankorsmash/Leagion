@@ -25,7 +25,7 @@ SECRET_KEY = ')3-^3j&1(0e35&ld30u&x-hw6rf*5^u2)y26&o*9u^m-o-dt09'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".webfactional.com"]
+ALLOWED_HOSTS = [".webfactional.com", ".buildupthebase.com"]
 
 
 # Application definition
