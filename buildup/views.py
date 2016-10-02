@@ -3,10 +3,11 @@ import json
 import datetime
 import pprint
 
-from django.shortcuts import render
-from django.shortcuts import render_to_response
+from django.shortcuts import render, render_to_response, get_object_or_404
 
 from django.template.response import TemplateResponse
+
+from django.views.generic import TemplateView
 
 
 from django.http import HttpResponse, JsonResponse
@@ -14,8 +15,8 @@ from django.http import HttpResponse, JsonResponse
 from buildup.models import Player
 
 # views
-def index(request):
-    return TemplateResponse(request, "index.html")
+class Index(TemplateView):
+    template_name = "index.html"
 
 
 def changelog(request):
@@ -27,66 +28,66 @@ def changelog(request):
         return TemplateResponse(request, "index.html")
 
 
-def leaderboard(request):
+class Leaderboard(TemplateView):
+    template_name = "leaderboard.html"
 
-    players = Player.objects.all().order_by("-coins")
-    players = sorted(players, key=lambda p: -p.total_building_levels)
+    def get_context_data(self):
+        players = Player.objects.all().order_by("-coins")
+        players = sorted(players, key=lambda p: -p.total_building_levels)
 
-    player_id = request.GET.get("username")
+        #FIXME replace this with django style if you can find it
+        player_id = self.request.GET.get("username")
 
-    return TemplateResponse(request,
-            "leaderboard.html",
-            {
-                "players": players,
-                "player_id": player_id
-            })
+        return {
+            "players": players,
+            "player_id": player_id
+        }
 
 
-def users(request, username):
-    player, created = Player.objects.get_or_create(username=username)
-    
-    if request.method == "POST":
-        post = request.POST
-        if "json" in request.META.get("CONTENT_TYPE", ""):
-            payload = json.loads(request.body)
+class UserDetail(TemplateView):
+    template_name = "user_detail.html"
 
-            new_coins = payload.get("coins")
-            payload.pop("coins")
+    def dispatch(self, *args, **kwargs):
+        self.player = get_object_or_404(Player.objects, username=self.kwargs.get('username', ''))
+        return super(UserDetail, self).dispatch(*args, **kwargs)
 
-            last_login = payload.get("last_login")
-            if last_login:
-                last_login = datetime.datetime.fromtimestamp(float(last_login))
-            payload.pop("last_login", None)
+    def post(self, *args, **kwargs):
+        payload = json.loads(self.request.body)
 
-            player.coins = float(new_coins) #idk if this will break over 2.4T
+        new_coins = payload.get("coins")
+        payload.pop("coins")
 
-            if last_login:
-                player.last_login = last_login
+        last_login = payload.get("last_login")
+        if last_login:
+            last_login = datetime.datetime.fromtimestamp(float(last_login))
+        payload.pop("last_login", None)
 
-            buildings = json.dumps(payload)
+        self.player.coins = float(new_coins) #idk if this will break over 2.4T
 
-            print "POST: player data:" 
-            pprint.pprint(payload)
-            player.building_json = buildings
+        if last_login:
+            self.player.last_login = last_login
 
-            player.save()
-        else:
-            print "need CONTENT_TYPE to contain 'json'"
+        buildings = json.dumps(payload)
+
+        print "POST: player data:" 
+        pprint.pprint(payload)
+        self.player.building_json = buildings
+
+        self.player.save()
 
 
         payload = {
-            "username": player.username,
-            "coins": player.coins
+            "username": self.player.username,
+            "coins": self.player.coins
         }
 
         return JsonResponse(payload)
 
-    elif request.method == "GET":
-
-        buildings_str = player.building_json
+    def get(self, *args, **kwargs):
+        buildings_str = self.player.building_json
         building_json = json.loads(buildings_str)
-        return TemplateResponse(request, "user_detail.html", {
-            "player": player,
+
+        return TemplateResponse(self.request, "user_detail.html", {
+            "player": self.player,
             "buildings": building_json,
             })
-
