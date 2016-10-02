@@ -54,17 +54,15 @@ class UserDetail(TemplateView):
     def post(self, *args, **kwargs):
         payload = json.loads(self.request.body)
 
-        new_coins = payload.get("coins")
-        payload.pop("coins")
+        #remove coins and last login from payload so that its purely building 
+        # stuff by then time it saves
+        new_coins = payload.pop("coins", None)
+        if new_coins:
+            self.player.coins = float(new_coins) #idk if this will break over 2.4T
 
-        last_login = payload.get("last_login")
+        last_login = payload.pop("last_login", None)
         if last_login:
             last_login = datetime.datetime.fromtimestamp(float(last_login))
-        payload.pop("last_login", None)
-
-        self.player.coins = float(new_coins) #idk if this will break over 2.4T
-
-        if last_login:
             self.player.last_login = last_login
 
         buildings = json.dumps(payload)
@@ -75,13 +73,7 @@ class UserDetail(TemplateView):
 
         self.player.save()
 
-
-        payload = {
-            "username": self.player.username,
-            "coins": self.player.coins
-        }
-
-        return JsonResponse(payload)
+        return JsonResponse({})
 
     def get(self, *args, **kwargs):
         buildings_str = self.player.building_json
