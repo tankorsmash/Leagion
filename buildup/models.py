@@ -3,6 +3,8 @@ from __future__ import unicode_literals
 import re
 import json
 
+import humanize
+
 from django.db import models
 
 #utils
@@ -84,7 +86,7 @@ class Player(models.Model):
 
     @property
     def pretty_coins(self):
-        return _pretty("%.2f" % self.coins)
+        return humanize.intword(self.coins, format="%.2f")
 
     @property
     def cps(self):
