@@ -28,34 +28,36 @@
 
 <div class="buildings_wrap">
     {% for building in buildings %}
-    <div class="building">
+    <div class="building m-t-1">
         <span class="small text-muted building-level">
             Lv. {{ building.level }}
         </span>
         <span class="building-name">{{ building.name }}</span>
 
-        <div class="building-techs">
-            {% for tech in building.techs %}
-            <div class="building-tech m-l-1">
-                {{ tech.name }} | {{ tech.count }}
+        <div class="row">
+            <div class="building-techs col-md-4">
+                {% for tech in building.techs %}
+                <div class="building-tech m-l-1">
+                    {{ tech.name }} | {{ tech.count }}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
 
-        <div class="building-harvesters">
-            {% for harvester in building.harvesters %}
-            <div class="building-tech m-l-1">
-                {{ harvester.name }} Salesmen +{{harvester.level}} | {{ harvester.count }}
+            <div class="building-harvesters col-md-4">
+                {% for harvester in building.harvesters %}
+                <div class="building-harvester m-l-1">
+                    {{ harvester.name }} Harvesters +{{harvester.level}} | {{ harvester.count }}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
-        </div>
 
-        <div class="building-salesmen">
-            {% for tech in building.salesmen %}
-            <div class="building-tech m-l-1">
-                {{ tech.name }} Salesmen | {{ tech.count }}
+            <div class="building-salesmen col-md-4">
+                {% for salesman in building.salesmen %}
+                <div class="building-salesmen m-l-1">
+                    {{ salesman.name }} Salesmen | {{ salesman.count }}
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
     {% endfor %}
