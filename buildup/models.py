@@ -3,14 +3,9 @@ from __future__ import unicode_literals
 import re
 import json
 
-import humanize
+from buildup.utils import _pretty
 
 from django.db import models
-
-#utils
-def _pretty(input):
-    return humanize.intword(input, format="%.2f")
-
 
 def match_harv(str):
  return bool(re.match("harve.*_\d*", str))

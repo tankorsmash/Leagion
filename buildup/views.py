@@ -13,6 +13,7 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse, JsonResponse
 
 from buildup.models import Player
+from buildup.utils import _pretty
 
 # views
 class Index(TemplateView):
@@ -51,12 +52,12 @@ class ViewModel(object):
 class Technology(ViewModel):
     def __init__(self, name, count):
         self.name = name.replace("tech_", "")
-        self.count = count
+        self.count = _pretty(count)
 
 class Building(ViewModel):
     def __init__(self, name, data):
         self.name = name
-        self.level = data.get("building_level")
+        self.level = _pretty(data.get("building_level"))
 
         self.techs = self.parse_techs(data)
 
