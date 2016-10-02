@@ -146,6 +146,7 @@ class Building(ViewModel):
         for raw_harvesters_name, count in filter(lambda (k,v): k.startswith("harvester_"), data.items()):
             harvesters.append(Harvester(raw_harvesters_name, count))
 
+        harvesters.sort(key=lambda h: int(h.level))
         return harvesters
 
     def parse_salesmen(self, data):
