@@ -15,6 +15,29 @@ from django.http import HttpResponse, JsonResponse
 from buildup.models import Player
 from buildup.utils import _pretty
 
+def ingredient_type_to_string(raw_ing_type):
+    ING_TYPE_STRING_MAP = {
+        "grain" : "Grain",
+        "pileofgrain" : "PileOfGrain",
+        "bread" : "Bread",
+        "loaf" : "Loaf",
+        "seed" : "Seed",
+        "wood" : "Wood",
+        "iron" : "Iron",
+        "copper" : "Copper",
+        "fly" : "Fly",
+        "sand" : "Sand",
+        "flesh" : "Flesh",
+        "berry" : "Berry",
+        "soul" : "Soul",
+        "blood" : "Blood",
+        "paper" : "Paper",
+        "undead" : "Undead"
+    }
+
+    return ING_TYPE_STRING_MAP.get(raw_ing_type, raw_ing_type)
+
+
 # views
 class Index(TemplateView):
     template_name = "index.html"
@@ -77,37 +100,29 @@ class Technology(ViewModel):
 class Salesmen(ViewModel):
     def __init__(self, raw_name, count):
         self.name = self.clean_name(raw_name)
-
-        self.count = count
+        self.count = _pretty(count)
 
     def clean_name(self, raw_name):
         data = raw_name.replace("salesmen_", "")
-
         raw_ing_type, _ = data.split("_")
+        return ingredient_type_to_string(raw_ing_type)
 
-        return self.clean_ing_type(raw_ing_type)
+class Harvester(ViewModel):
+    def __init__(self, raw_name, count):
+        self.name = self.clean_name(raw_name)
+        self.level = self.clean_level(raw_name)
+        self.count = _pretty(count)
 
-    def clean_ing_type(self, raw_ing_type):
-        ING_TYPE_STRING_MAP = {
-            "grain" : "Grain",
-            "pileofgrain" : "PileOfGrain",
-            "bread" : "Bread",
-            "loaf" : "Loaf",
-            "seed" : "Seed",
-            "wood" : "Wood",
-            "iron" : "Iron",
-            "copper" : "Copper",
-            "fly" : "Fly",
-            "sand" : "Sand",
-            "flesh" : "Flesh",
-            "berry" : "Berry",
-            "soul" : "Soul",
-            "blood" : "Blood",
-            "paper" : "Paper",
-            "undead" : "Undead"
-        }
+    def clean_name(self, raw_name):
+        data = raw_name.replace("harvester_", "")
+        raw_ing_type, _ = data.split("_")
+        return ingredient_type_to_string(raw_ing_type)
 
-        return ING_TYPE_STRING_MAP.get(raw_ing_type, raw_ing_type)
+    def clean_level(self, raw_name):
+        data = raw_name.replace("harvester_", "")
+        _, level = data.split("_")
+        return level
+
 
 
 class Building(ViewModel):
@@ -116,6 +131,7 @@ class Building(ViewModel):
         self.level = _pretty(data.get("building_level"))
 
         self.techs = self.parse_techs(data)
+        self.harvesters = self.parse_harvesters(data)
         self.salesmen = self.parse_salesmen(data)
 
     def parse_techs(self, data):
@@ -124,6 +140,13 @@ class Building(ViewModel):
             techs.append(Technology(raw_tech_name, count))
 
         return techs
+
+    def parse_harvesters(self, data):
+        harvesters = []
+        for raw_harvesters_name, count in filter(lambda (k,v): k.startswith("harvester_"), data.items()):
+            harvesters.append(Harvester(raw_harvesters_name, count))
+
+        return harvesters
 
     def parse_salesmen(self, data):
         salesmen = []

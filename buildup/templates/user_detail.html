@@ -33,10 +33,19 @@
             Lv. {{ building.level }}
         </span>
         <span class="building-name">{{ building.name }}</span>
+
         <div class="building-techs">
             {% for tech in building.techs %}
             <div class="building-tech m-l-1">
                 {{ tech.name }} | {{ tech.count }}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="building-harvesters">
+            {% for harvester in building.harvesters %}
+            <div class="building-tech m-l-1">
+                {{ harvester.name }} Salesmen +{{harvester.level}} | {{ harvester.count }}
             </div>
             {% endfor %}
         </div>
