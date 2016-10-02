@@ -9,22 +9,7 @@ from django.db import models
 
 #utils
 def _pretty(input):
-    """
-    takes an input string of a number, reverses it up to the floating point
-    then every third character, adds a comma
-    if the first character (really the last character) is a comma, get rid of it
-    reverse it again, join it up with the rest of the number
-    """
-
-    result = []
-    f_idx = input.find(".") if input.find(".") != -1 else 9999 #float index
-    for i, el in enumerate(input[:f_idx][::-1]):
-        if i % 3 == 0:
-            result.append(",")
-        result.append(el)
-    if result[0] == ",":
-        result = result[1:]
-    return "".join(result[::-1]+list(input[f_idx:]))
+    return humanize.intword(input, format="%.2f")
 
 
 def match_harv(str):
@@ -86,12 +71,12 @@ class Player(models.Model):
 
     @property
     def pretty_coins(self):
-        return humanize.intword(self.coins, format="%.2f")
+        return _pretty(self.coins)
 
     @property
     def cps(self):
         try:
-            return _pretty(str(get_resources_per_sec(json.loads(self.building_json))))
+            return _pretty(get_resources_per_sec(json.loads(self.building_json)))
         except ValueError as e:
             print e, "this should be because building json is None"
             return _pretty("-1")
