@@ -28,10 +28,18 @@ Leaderboard
 
 <div id="leaderboard ">
     {% for player in players %}
-    <div class="card-row player-detail m-t-1 {% if player_id == player.username %}current_player{% endif %}">
+    <div class="card-row player-detail m-y-1 {% if player_id == player.username %}current_player{% endif %}">
+        <!--username-->
         <div class="player-username"> 
-            <a href="/users/{{player.username}}/">{{ player.username }}</a>
+            <a href="{% url 'user-detail' username=player.username %}">
+                {{ player.username }}
+            </a>
+            <span class="text-sm-right small text-muted player-last-login"> 
+                at {{ player.last_login }}
+            </span>
         </div>
+
+        <!--user stats-->
         <div class="row">
             <div class="col-md-3 player-building_levels"> 
                 Total levels: {{ player.total_building_levels }}
