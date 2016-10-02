@@ -50,9 +50,28 @@ class ViewModel(object):
 
 
 class Technology(ViewModel):
-    def __init__(self, name, count):
-        self.name = name.replace("tech_", "")
+    def __init__(self, raw_name, count):
+        self.name = self.clean_name(raw_name)
         self.count = _pretty(count)
+
+    def clean_name(self, raw_name):
+        """
+        strips the prefix and returns a human friendly name. 
+
+        defaults back to the stripped name
+        """
+        name = raw_name.replace("tech_", "")
+
+        TECH_STRING_MAP = {
+            "combat_crit_factor": "Sharpened blades",
+            "combat_crit_chance": "Sword coating",
+            "combat_damage": "Swords",
+            "click_dbl_power": "Market click power",
+            "combat_weaken_enemy": "Dead meat",
+            "salesmen_base_boost": "Salesmen boost",
+        }
+
+        return TECH_STRING_MAP.get(name, name)
 
 class Building(ViewModel):
     def __init__(self, name, data):
