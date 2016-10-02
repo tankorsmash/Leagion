@@ -35,29 +35,38 @@
         <span class="building-name">{{ building.name }}</span>
 
         <div class="row">
-            <div class="building-techs col-md-4">
+            {% if building.techs %}
+            <div class="building-techs col-md-4 m-l-1">
+                <div class="small text-muted"><ins>Upgrades</ins></div>
                 {% for tech in building.techs %}
-                <div class="building-tech m-l-1">
+                <div class="building-tech">
                     {{ tech.name }} | {{ tech.count }}
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
 
-            <div class="building-harvesters col-md-4">
+            {% if building.harvesters %}
+            <div class="building-harvesters col-md-4 m-l-1">
+                <div class="small text-muted"><ins>Harvesters</ins></div>
                 {% for harvester in building.harvesters %}
-                <div class="building-harvester m-l-1">
+                <div class="building-harvester">
                     {{ harvester.name }} Harvesters +{{harvester.level}} | {{ harvester.count }}
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
 
-            <div class="building-salesmen col-md-4">
+            {% if building.salesmen %}
+            <div class="building-salesmen col-md-4 m-l-1">
+                <div class="small text-muted"><ins>Salesmen</ins></div>
                 {% for salesman in building.salesmen %}
-                <div class="building-salesmen m-l-1">
+                <div class="building-salesmen">
                     {{ salesman.name }} Salesmen | {{ salesman.count }}
                 </div>
                 {% endfor %}
             </div>
+            {% endif %}
         </div>
     </div>
     {% endfor %}
