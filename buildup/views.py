@@ -55,7 +55,7 @@ def users(request, username):
 
             last_login = payload.get("last_login")
             if last_login:
-                last_login = datetime.datetime.fromtimestamp(float(last_login)/1000.0)
+                last_login = datetime.datetime.fromtimestamp(float(last_login))
             payload.pop("last_login", None)
 
             if new_coins:
