@@ -48,10 +48,26 @@ class ViewModel(object):
     pass
 
 
+class Technology(ViewModel):
+    def __init__(self, name, count):
+        self.name = name.replace("tech_", "")
+        self.count = count
+
 class Building(ViewModel):
     def __init__(self, name, data):
         self.name = name
         self.level = data.get("building_level")
+
+        self.techs = self.parse_techs(data)
+
+    def parse_techs(self, data):
+        techs = []
+        for raw_tech_name, count in filter(lambda (k,v): k.startswith("tech_"), data.items()):
+            techs.append(Technology(raw_tech_name, count))
+
+        return techs
+
+
 
     def __repr__(self):
         return "<Building: Lv%i: %s>" % (self.level, self.name)
