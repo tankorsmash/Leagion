@@ -6,7 +6,7 @@ import pprint
 from django.shortcuts import render, render_to_response, get_object_or_404
 
 from django.template.response import TemplateResponse
-
+from django.utils.html import mark_safe
 from django.views.generic import TemplateView
 
 
@@ -69,7 +69,9 @@ class Leaderboard(TemplateView):
 
 
 class ViewModel(object):
-    pass
+    def pretty_count(self):
+        html = """<small class="text-muted">x%s</small>""" % self.count
+        return mark_safe(html)
 
 
 class Technology(ViewModel):
