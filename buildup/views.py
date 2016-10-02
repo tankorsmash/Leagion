@@ -44,6 +44,18 @@ class Leaderboard(TemplateView):
         }
 
 
+class ViewModel(object):
+    pass
+
+
+class Building(ViewModel):
+    def __init__(self, name, data):
+        self.name = name
+        self.level = data.get("building_level")
+
+    def __repr__(self):
+        return "<Building: Lv%i: %s>" % (self.level, self.name)
+
 class UserDetail(TemplateView):
     template_name = "user_detail.html"
 
@@ -79,7 +91,9 @@ class UserDetail(TemplateView):
         buildings_str = self.player.building_json
         building_json = json.loads(buildings_str)
 
+        buildings = [Building(name, data) for name, data in building_json.items()]
+
         return TemplateResponse(self.request, "user_detail.html", {
             "player": self.player,
-            "buildings": building_json,
+            "buildings": buildings,
             })

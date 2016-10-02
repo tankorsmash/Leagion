@@ -27,12 +27,12 @@
 </div>
 
 <div class="buildings_wrap">
-    {% for name, building in buildings.items %}
+    {% for building in buildings %}
     <div class="building">
         <span class="small text-muted building-level">
-            Lv. {{ building.building_level }}
+            Lv. {{ building.level }}
         </span>
-        <span class="building-name">{{ name }}</span>
+        <span class="building-name">{{ building.name }}</span>
     </div>
     {% endfor %}
 </div>
