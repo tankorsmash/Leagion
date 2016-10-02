@@ -40,6 +40,14 @@
             </div>
             {% endfor %}
         </div>
+
+        <div class="building-salesmen">
+            {% for tech in building.salesmen %}
+            <div class="building-tech m-l-1">
+                {{ tech.name }} Salesmen | {{ tech.count }}
+            </div>
+            {% endfor %}
+        </div>
     </div>
     {% endfor %}
 </div>

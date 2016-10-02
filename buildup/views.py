@@ -73,12 +73,50 @@ class Technology(ViewModel):
 
         return TECH_STRING_MAP.get(name, name)
 
+
+class Salesmen(ViewModel):
+    def __init__(self, raw_name, count):
+        self.name = self.clean_name(raw_name)
+
+        self.count = count
+
+    def clean_name(self, raw_name):
+        data = raw_name.replace("salesmen_", "")
+
+        raw_ing_type, _ = data.split("_")
+
+        return self.clean_ing_type(raw_ing_type)
+
+    def clean_ing_type(self, raw_ing_type):
+        ING_TYPE_STRING_MAP = {
+            "grain" : "Grain",
+            "pileofgrain" : "PileOfGrain",
+            "bread" : "Bread",
+            "loaf" : "Loaf",
+            "seed" : "Seed",
+            "wood" : "Wood",
+            "iron" : "Iron",
+            "copper" : "Copper",
+            "fly" : "Fly",
+            "sand" : "Sand",
+            "flesh" : "Flesh",
+            "berry" : "Berry",
+            "soul" : "Soul",
+            "blood" : "Blood",
+            "paper" : "Paper",
+            "undead" : "Undead"
+        }
+
+        return ING_TYPE_STRING_MAP.get(raw_ing_type, raw_ing_type)
+
+
 class Building(ViewModel):
     def __init__(self, name, data):
         self.name = name
         self.level = _pretty(data.get("building_level"))
 
         self.techs = self.parse_techs(data)
+        self.salesmen = self.parse_salesmen(data)
 
     def parse_techs(self, data):
         techs = []
@@ -86,6 +124,13 @@ class Building(ViewModel):
             techs.append(Technology(raw_tech_name, count))
 
         return techs
+
+    def parse_salesmen(self, data):
+        salesmen = []
+        for raw_salesmen_name, count in filter(lambda (k,v): k.startswith("salesmen_"), data.items()):
+            salesmen.append(Salesmen(raw_salesmen_name, count))
+
+        return salesmen
 
 
 
