@@ -5,17 +5,25 @@
 {% endblock %}
 
 {% block content %}
-
-<a href="/leaderboard/"> &larr; LEADERBOARDS</a>
+<a href="{% url 'leaderboard' %}"> &larr; LEADERBOARDS</a>
 <br> <br>
 
-<div class="username"> Username: {{ player.username }} </div>
-<div class="coins"> Coins: {{ player.pretty_coins }} </div>
-<div class="player-building_levels"> 
-    Total levels: {{ player.total_building_levels }}
-</div>
-<div class="player-coins-per-sec"> 
-    Coins per second: {{ player.cps }}
+<div class="user-detail-wrap m-b-1">
+    <strong class="username">
+        {{ player.username }}
+            <span class="text-sm-right small text-muted player-last-login"> 
+                as of {{ player.last_login }}
+            </span>
+    </strong>
+    <div class="coins">
+        Coins: {{ player.pretty_coins }}
+    </div>
+    <div class="player-building_levels"> 
+        Total levels: {{ player.total_building_levels }}
+    </div>
+    <div class="player-coins-per-sec"> 
+        Coins per second: {{ player.cps }}
+    </div>
 </div>
 
 <div class="buildings_wrap">
