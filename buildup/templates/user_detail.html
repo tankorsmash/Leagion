@@ -40,9 +40,9 @@
             <span class="building-name">{{ building.name }}</span>
         </h5>
 
-        <div class="row">
+        <div class="row m-l-1">
             {% if building.techs %}
-            <div class="building-techs col-md-4 m-l-1">
+            <div class="building-techs col-md-3">
                 <div class="small text-muted"><ins>Upgrades</ins></div>
                 {% for tech in building.techs %}
                 <div class="building-tech">
@@ -53,7 +53,7 @@
             {% endif %}
 
             {% if building.harvesters %}
-            <div class="building-harvesters col-md-4 m-l-1">
+            <div class="building-harvesters col-md-3">
                 <div class="small text-muted"><ins>Harvesters</ins></div>
                 {% for harvester in building.harvesters %}
                 <div class="building-harvester">
@@ -64,7 +64,7 @@
             {% endif %}
 
             {% if building.salesmen %}
-            <div class="building-salesmen col-md-4 m-l-1">
+            <div class="building-salesmen col-md-3">
                 <div class="small text-muted"><ins>Salesmen</ins></div>
                 {% for salesman in building.salesmen %}
                 <div class="building-salesmen">
