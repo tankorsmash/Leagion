@@ -1,6 +1,7 @@
 import re
 import json
 import datetime
+import pprint
 
 from django.shortcuts import render
 from django.shortcuts import render_to_response
@@ -42,7 +43,6 @@ def leaderboard(request):
 
 
 def users(request, username):
-
     player, created = Player.objects.get_or_create(username=username)
     
     if request.method == "POST":
@@ -58,22 +58,18 @@ def users(request, username):
                 last_login = datetime.datetime.fromtimestamp(float(last_login))
             payload.pop("last_login", None)
 
-            if new_coins:
-                player.coins = float(new_coins) #idk if this will break over 2.4T
+            player.coins = float(new_coins) #idk if this will break over 2.4T
 
-                if last_login:
-                    player.last_login = last_login
+            if last_login:
+                player.last_login = last_login
 
-                buildings = json.dumps(payload)
+            buildings = json.dumps(payload)
 
-                print "POST: player building json raw", buildings
-                player.building_json = buildings
+            print "POST: player data:" 
+            pprint.pprint(payload)
+            player.building_json = buildings
 
-                player.save()
-                print "saving player and building"
-            else:
-                print "found no coins in json request"
-
+            player.save()
         else:
             print "need CONTENT_TYPE to contain 'json'"
 
