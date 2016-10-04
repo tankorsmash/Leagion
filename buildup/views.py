@@ -167,11 +167,11 @@ class UserDetail(TemplateView):
     template_name = "user_detail.html"
 
     def dispatch(self, *args, **kwargs):
-        self.player = get_object_or_404(Player.objects, username=self.kwargs.get('username', ''))
         return super(UserDetail, self).dispatch(*args, **kwargs)
 
-    def post(self, *args, **kwargs):
+    def post(self, request, username, *args, **kwargs):
         payload = json.loads(self.request.body)
+        self.player, created = Player.objects.get_or_create(username=username)
 
         #remove coins and last login from payload so that its purely building 
         # stuff by then time it saves
@@ -194,7 +194,8 @@ class UserDetail(TemplateView):
 
         return JsonResponse({})
 
-    def get(self, *args, **kwargs):
+    def get(self, request, username=None, *args, **kwargs):
+        self.player = get_object_or_404(Player.objects, username=username)
         buildings_str = self.player.building_json
         building_json = json.loads(buildings_str)
 
