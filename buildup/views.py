@@ -42,6 +42,12 @@ def ingredient_type_to_string(raw_ing_type):
 class Index(TemplateView):
     template_name = "index.html"
 
+    def get_context_data(self):
+        players = Player.objects.all().order_by("-coins")
+        players = sorted(players, key=lambda p: -p.total_building_levels)
+        return {"players": players}
+
+
 
 def changelog(request):
     #only works with the hardcoded file on the live server, not locally
