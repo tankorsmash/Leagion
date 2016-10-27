@@ -176,6 +176,7 @@ class UserDetail(TemplateView):
         #remove coins and last login from payload so that its purely building 
         # stuff by then time it saves
         new_coins = payload.pop("coins", None)
+
         if new_coins:
             self.player.coins = float(new_coins) #idk if this will break over 2.4T
 
@@ -186,13 +187,14 @@ class UserDetail(TemplateView):
 
         buildings = json.dumps(payload)
 
-        print "POST: player data:" 
-        pprint.pprint(payload)
         self.player.building_json = buildings
 
         self.player.save()
 
-        return JsonResponse({})
+        return JsonResponse({
+            "success": True,
+            "message": "Updated player '%s'." % username
+        })
 
     def get(self, request, username=None, *args, **kwargs):
         self.player = get_object_or_404(Player.objects, username=username)

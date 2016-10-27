@@ -26,6 +26,10 @@ Leaderboard
 <h1>Leaderboard</h1>
 <h2>Who's better than you?</h2>
 
+<div>
+    So far there's {{ players|length }} players. Opt in to the Android alpha <a href="https://play.google.com/apps/testing/com.tankorsmash.buildupthebase">here</a>.
+</div>
+
 <div id="leaderboard ">
     {% for player in players %}
     <div class="card-row player-detail m-y-1 {% if player_id == player.username %}current_player{% endif %}">
@@ -53,5 +57,6 @@ Leaderboard
         </div>
     </div>
     {% endfor %}
+    <small class="text-muted">pagination is for chumps.</small>
 </div>
 {% endblock %}
