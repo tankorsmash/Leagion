@@ -12,7 +12,7 @@ from django.views.generic import TemplateView
 
 from django.http import HttpResponse, JsonResponse
 
-from buildup.models import Player
+from leagion.models import Player
 
 # views
 class Index(TemplateView):
