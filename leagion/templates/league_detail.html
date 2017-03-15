@@ -38,6 +38,12 @@ League Details
             </small>
         </div>
     </div>
+    {% empty %}
+    <div class="row">
+        <div class="col-md-12">
+            No matches found.
+        </div>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}
