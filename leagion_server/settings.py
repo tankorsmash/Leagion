@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 
     'django_extensions',
 
-	'leagion',
+    'leagion',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -58,9 +58,6 @@ MIDDLEWARE_CLASSES = [
 
 ROOT_URLCONF = 'leagion_server.urls'
 
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 TEMPLATES = [
     {
