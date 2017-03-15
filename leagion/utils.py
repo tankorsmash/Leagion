@@ -109,6 +109,7 @@ def generate_matches(league, match_count=10):
             match_datetime=match_datetime,
             location=location,
             duration_seconds=duration_seconds,
+            league=league
         )
 
         generate_roster(home_team, match)
