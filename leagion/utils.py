@@ -1,7 +1,6 @@
 import pytz
 import faker
 import random
-import humanize
 
 from django.db import IntegrityError
 

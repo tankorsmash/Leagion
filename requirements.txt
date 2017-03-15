@@ -2,7 +2,6 @@ Django==1.9.4
 django-devserver==0.8.0
 django-extensions==1.6.7
 enum34==1.0.4
-humanize==0.5.1
 ipython==2.2.0
 requests==2.3.0
-faker
+Faker==0.7.10
