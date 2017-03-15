@@ -71,6 +71,7 @@ class LeagueDetail(DetailView):
 
         return context
 
+
 class TeamDetail(DetailView):
     template_name = "team_detail.html"
 
@@ -112,5 +113,62 @@ class TeamDetail(DetailView):
             "full_name": "{} {}".format(player.first_name, player.last_name),
             "matches_played": matches_played[player.id],
         } for player in team.players.all()]
+
+        return context
+
+
+class MatchDetail(DetailView):
+    template_name = "match_detail.html"
+
+    context_object_name = "match"
+    pk_url_kwarg = "match_id"
+    queryset = Match.objects.all()
+
+    def get_context_data(self, object):
+        context = super(MatchDetail, self).get_context_data()
+        match = context['match']
+        home_team = match.home_team
+        away_team = match.away_team
+
+        home_roster_player_ids = Roster.objects.filter(
+            team=home_team
+        ).values_list("players__id", flat=True)
+        home_matches_played = Counter(home_roster_player_ids)
+
+        away_roster_player_ids = Roster.objects.filter(
+            team=away_team
+        ).values_list("players__id", flat=True)
+        away_matches_played = Counter(away_roster_player_ids)
+
+        context['match'] = {
+            'location': match.location.name,
+            'match_datetime': match.match_datetime,
+
+            'home_team': match.home_team.name,
+            'home_points': match.home_points,
+            'away_team': match.away_team.name,
+            'away_points': match.away_points,
+
+            'is_home_win': match.is_home_win,
+            'is_away_win': match.is_away_win,
+
+            'is_draw': match.is_draw,
+        }
+
+        context['home_team'] = {
+            'roster': [{
+                    "full_name": "{} {}".format(player.first_name, player.last_name),
+                    "matches_played": home_matches_played[player.id],
+                } for player in home_team.players.filter(id__in=match.rosters.get(team_id=home_team.id).players.values_list("id", flat=True))
+            ]
+        }
+
+        context['away_team'] = {
+            'roster': [{
+                    "full_name": "{} {}".format(player.first_name, player.last_name),
+                    "matches_played": away_matches_played[player.id],
+                } for player in away_team.players.filter(id__in=match.rosters.get(team_id=away_team.id).players.values_list("id", flat=True))
+            ]
+        }
 
         return context
