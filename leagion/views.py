@@ -84,7 +84,7 @@ class TeamDetail(DetailView):
 
         matches = team.league.matches.filter(
             Q(away_team=team)|Q(home_team=team)
-        ).order_by("match_datetime")
+        ).order_by("match_datetime").select_related("location")
 
         roster_player_ids = Roster.objects.filter(
             team=team

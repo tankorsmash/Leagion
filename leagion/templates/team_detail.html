@@ -20,7 +20,7 @@ Team Details
         <div class="col-md-1">
             {{ match.status }}
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             {{ match.match_datetime }}
         </div>
         <div class="col-md-2">
@@ -63,14 +63,14 @@ Team Details
     {% endfor %}
 </div>
 
-<div class="matches">
+<div class="players m-t-1">
     <h2> Players </h2>
     {% for player in players %}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-2">
             {{ player.full_name }}
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <small class="text-muted">
                 Matches played:
                 {{ player.matches_played }}
