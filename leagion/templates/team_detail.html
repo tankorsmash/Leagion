@@ -10,19 +10,29 @@ Team Details
 {% block content %}
 <a class="btn btn-link" href="{% url 'index' %}"> Back </a>
 <h1>
-    {{ object.name }} Matches
+    {{ object.name }}
 </h1>
 
 <div class="matches">
+    <h2> Matches </h2>
     {% for match in matches %}
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-1">
+            {{ match.status }}
+        </div>
+        <div class="col-md-2">
             {{ match.match_datetime }}
         </div>
         <div class="col-md-2">
             {{ match.location }}
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2
+            {% if match.is_home_win %}
+            text-success
+            {% elif  match.is_away_win %}
+            text-danger
+            {% endif %}
+        ">
             {{ match.home_team }}
             <small class="text-muted">
                 ( {{ match.home_points }} )
@@ -31,11 +41,23 @@ Team Details
         <div class="col-md-1">
             vs
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2
+            {% if match.is_away_win %}
+            text-success
+            {% elif  match.is_home_win %}
+            text-danger
+            {% endif %}
+        ">
             {{ match.away_team }}
             <small class="text-muted">
                 ( {{ match.away_points }} )
             </small>
+        </div>
+    </div>
+    {% empty %}
+    <div class="row">
+        <div class="col-md-12">
+            No matches found.
         </div>
     </div>
     {% endfor %}
@@ -45,8 +67,14 @@ Team Details
     <h2> Players </h2>
     {% for player in players %}
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             {{ player.full_name }}
+        </div>
+        <div class="col-md-6">
+            <small class="text-muted">
+                Matches played:
+                {{ player.matches_played }}
+            </small>
         </div>
     </div>
     {% endfor %}

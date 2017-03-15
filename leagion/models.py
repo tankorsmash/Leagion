@@ -73,6 +73,39 @@ class Match(models.Model):
     def __repr__(self):
         return "<%s>" % unicode(self).encode("utf-8")
 
+    @property
+    def is_home_win(self):
+        return self.home_points > self.away_points
+
+    @property
+    def is_away_win(self):
+        return self.home_points < self.away_points
+
+    @property
+    def is_draw(self):
+        return self.home_points == self.away_points
+
+    def get_winning_team(self):
+        winning_team = None
+
+        if self.is_home_win:
+            winning_team = self.home_team
+        if self.is_away_win:
+            winning_team = self.away_team
+
+        return winning_team
+
+    def get_status_for_team(self, team):
+        status = "W"
+        winning_team = self.get_winning_team()
+        if winning_team != team:
+            status = "L"
+            if self.is_draw:
+                status = "-"
+
+        return status
+
+
 
 class Roster(models.Model):
     team = models.ForeignKey(Team, related_name="+")

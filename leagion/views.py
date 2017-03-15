@@ -1,7 +1,8 @@
 import re
 import json
-import datetime
 import pprint
+import datetime
+from collections import Counter
 
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, render_to_response, get_object_or_404
@@ -80,17 +81,36 @@ class TeamDetail(DetailView):
     def get_context_data(self, object):
         context = super(TeamDetail, self).get_context_data()
         team = context['team']
+
+        matches = team.league.matches.filter(
+            Q(away_team=team)|Q(home_team=team)
+        ).order_by("match_datetime")
+
+        roster_player_ids = Roster.objects.filter(
+            team=team
+        ).values_list("players__id", flat=True)
+        matches_played = Counter(roster_player_ids) #fuck yeah python
+
         context['matches'] = [{
             'location': match.location.name,
+            'match_datetime': match.match_datetime,
+
             'home_team': match.home_team.name,
             'home_points': match.home_points,
             'away_team': match.away_team.name,
             'away_points': match.away_points,
-            'match_datetime': match.match_datetime,
-        } for match in team.league.matches.filter(Q(away_team=team)|Q(home_team=team)).order_by("match_datetime")]
+
+            'is_home_win': match.is_home_win,
+            'is_away_win': match.is_away_win,
+
+            'is_draw': match.is_draw,
+            'team_won': match.get_winning_team() == team,
+            'status': match.get_status_for_team(team),
+        } for match in matches]
 
         context['players'] = [{
             "full_name": "{} {}".format(player.first_name, player.last_name),
+            "matches_played": matches_played[player.id],
         } for player in team.players.all()]
 
         return context
