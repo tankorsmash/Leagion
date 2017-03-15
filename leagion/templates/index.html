@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Welcome!
+{% endblock %}
+
+{% block content %}
+<h1> HOMEPAGE </h1>
+<div class="h3">
+    This is the homepage
+</div>
+<br>
+
+<div class="league-wrapper">
+    {% for league in leagues %}
+    <div>
+        <h1>
+            {{ league.name }}
+        </h1>
+        <div class="teams-wrapper">
+            {% for team in league.teams %}
+            <h2>
+                {{ team.name }}
+            </h2>
+            <div class="players-wrapper">
+                {% for player in team.players %}
+                <div class="player-name">
+                    {{ player.full_name }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+{{ player.username }} | User Detail
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'leaderboard' %}"> &larr; LEADERBOARDS</a>
+<br> <br>
+
+<div class="user-detail-wrap m-b-1">
+
+    <div class="m-b-1">
+        <span class="h3 username">
+            {{ player.username }}
+        </span>
+        <span class="text-sm-right small text-muted player-last-login"> 
+            as of {{ player.last_login }}
+        </span>
+    </div>
+
+    <div class="coins">
+        Coins: {{ player.pretty_coins }}
+    </div>
+    <div class="player-building_levels"> 
+        Total levels: {{ player.total_building_levels }}
+    </div>
+    <div class="player-coins-per-sec"> 
+        Coins per second: {{ player.cps }}
+    </div>
+</div>
+
+<div class="buildings_wrap">
+    {% for building in buildings %}
+    <div class="building m-t-2">
+        <h5>
+            <span class="small text-muted building-level">
+                Lv. {{ building.level }}
+            </span>
+            <span class="building-name">{{ building.name }}</span>
+        </h5>
+
+        <div class="row m-l-1">
+            {% if building.techs %}
+            <div class="building-techs col-md-3">
+                <div class="small text-muted"><ins>Upgrades</ins></div>
+                {% for tech in building.techs %}
+                <div class="building-tech">
+                    {{ tech.name }} {{ tech.pretty_count }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if building.harvesters %}
+            <div class="building-harvesters col-md-3">
+                <div class="small text-muted"><ins>Harvesters</ins></div>
+                {% for harvester in building.harvesters %}
+                <div class="building-harvester">
+                    {{ harvester.name }} Harvesters +{{harvester.level}} {{ harvester.pretty_count }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if building.salesmen %}
+            <div class="building-salesmen col-md-3">
+                <div class="small text-muted"><ins>Salesmen</ins></div>
+                {% for salesman in building.salesmen %}
+                <div class="building-salesmen">
+                    {{ salesman.name }} Salesmen {{ salesman.pretty_count }}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
