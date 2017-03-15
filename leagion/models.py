@@ -106,7 +106,6 @@ class Match(models.Model):
         return status
 
 
-
 class Roster(models.Model):
     team = models.ForeignKey(Team, related_name="+")
     players = models.ManyToManyField(User, related_name="+")

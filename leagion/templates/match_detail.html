@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Match Details
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<a class="btn btn-link" href="{% url 'index' %}"> Back </a>
+<h1>
+    {{ object.name }}
+</h1>
+
+<h1 class="scores">
+    <span class="home-score">
+        {{ match.home_team }}
+    </span>
+    <span class="home-score">
+        {{ match.home_points }}
+    </span>
+    -
+    <span class="away-score">
+        {{ match.away_points }}
+    </span>
+    <span class="away-score">
+        {{ match.away_team }}
+    </span>
+
+    <small class="text-muted">
+        {{ match.location }}
+    </small>
+</h1>
+
+<div class="rosters row m-t-1">
+    <div class="home-roster col-md-6">
+    <h2> Home Roster </h2>
+    {% for player in home_team.roster %}
+    <div class="row">
+        <div class="col-md-4">
+            {{ player.full_name }}
+        </div>
+        <div class="col-md-8">
+            <small class="text-muted">
+                Matches played:
+                {{ player.matches_played }}
+            </small>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+
+    <div class="away-roster col-md-6">
+    <h2> Away Roster </h2>
+    {% for player in away_team.roster %}
+    <div class="row">
+        <div class="col-md-4">
+            {{ player.full_name }}
+        </div>
+        <div class="col-md-8">
+            <small class="text-muted">
+                Matches played:
+                {{ player.matches_played }}
+            </small>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
