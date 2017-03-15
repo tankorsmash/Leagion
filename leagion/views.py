@@ -30,11 +30,14 @@ class Index(TemplateView):
                 "teams": [],
                 "detail_url": reverse("league-detail", args=(league.id,)),
             }
+            matches = list(league.matches.all().values("id", "home_team_id", "away_team_id"))
+
             for team in league.teams.all():
                 team_ctx = {
                     "name": team.name,
                     "players": [],
                     "detail_url": reverse("team-detail", args=(team.id,)),
+                    "matches_played": len(filter(lambda m: m['home_team_id'] == team.id or m['away_team_id'] == team.id, matches)),
                 }
                 for player in team.players.all():
                     player_ctx = {
@@ -67,6 +70,7 @@ class LeagueDetail(DetailView):
             'away_team': match.away_team.name,
             'away_points': match.away_points,
             'match_datetime': match.match_datetime,
+            'match_detail_url': reverse("match-detail", args=(match.id,)),
         } for match in league.matches.all().order_by("match_datetime")]
 
         return context
@@ -95,6 +99,7 @@ class TeamDetail(DetailView):
         context['matches'] = [{
             'location': match.location.name,
             'match_datetime': match.match_datetime,
+            'match_detail_url': reverse("match-detail", args=(match.id,)),
 
             'home_team': match.home_team.name,
             'home_points': match.home_points,
