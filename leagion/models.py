@@ -13,7 +13,6 @@ class Team(models.Model):
     players = models.ManyToManyField(User)
     league = models.ForeignKey("League", related_name="teams")
 
-
     def __unicode__(self):
         return u"Team: {name}".format(name=self.name)
 
@@ -74,7 +73,8 @@ class Match(models.Model):
 
 
 class Roster(models.Model):
-    team = models.ForeignKey(Team)
-    players = models.ManyToManyField(User)
+    team = models.ForeignKey(Team, related_name="+")
+    players = models.ManyToManyField(User, related_name="+")
 
-    match = models.ForeignKey(Match)
+    match = models.ForeignKey(Match, related_name="rosters")
+

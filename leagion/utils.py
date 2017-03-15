@@ -1,7 +1,9 @@
-import faker
 import pytz
+import faker
 import random
 import humanize
+
+from django.db import IntegrityError
 
 from leagion.models import User, Team, League, Match, Roster, Location
 
@@ -10,16 +12,21 @@ def generate_users(count, team=None):
 
     for i in xrange(count):
         print "generating user", i+1, "of", count
-        user = User.objects.create(
-            username=f.user_name(),
-            email=f.email(),
-            first_name=f.first_name(),
-            last_name=f.last_name(),
-            password=f.password()
-        )
+        try:
+            user = User.objects.create(
+                username=f.user_name(),
+                email=f.email(),
+                first_name=f.first_name(),
+                last_name=f.last_name(),
+                password=f.password()
+            )
 
-        if team:
-            team.players.add(user)
+            if team:
+                team.players.add(user)
+
+        except IntegrityError as e:
+            print e, "ignoring and continuing"
+
 
 def generate_league(name=None, teams_count=5, players_in_team_count=15):
     print "generating league"
@@ -58,6 +65,20 @@ def generate_locations(location_count=10):
 
     return locations
 
+def generate_roster(team, match):
+    f = faker.Faker()
+    roster = Roster.objects.create(
+        team=team,
+        match=match,
+    )
+    players=random.sample(
+        team.players.all(),
+        f.random_int(10, team.players.count())
+    )
+
+    roster.players.add(*players)
+
+    return roster
 
 def generate_matches(league, match_count=10):
     f = faker.Faker()
@@ -90,9 +111,14 @@ def generate_matches(league, match_count=10):
             duration_seconds=duration_seconds,
         )
 
+        generate_roster(home_team, match)
+        generate_roster(away_team, match)
+
         matches.append(match)
 
     return matches
 
 
-
+def generate_all():
+    league = generate_league()
+    matches = generate_matches(league)
