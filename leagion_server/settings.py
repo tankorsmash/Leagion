@@ -121,6 +121,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 #STATIC_ROOT = '/home/tankorsmash/webapps/leagion_static/'
 
+# always include leagion.utils
+SHELL_PLUS_PRE_IMPORTS = (
+    ('leagion', ('utils',)),
+    'faker',
+    'humanize',
+    'random',
+    'pytz',
+    'django'
+)
+
 try:
     from local import *
 except ImportError:
