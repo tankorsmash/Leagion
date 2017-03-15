@@ -19,7 +19,11 @@ Welcome!
     <div>
         <h1>
             <span>{{ league.name }}</span>
+            <small class="text-muted">
+                <a href="{{league.detail_url}}">(matches)</a>
+            </small>
         </h1>
+
         <div class="teams-wrapper">
             {% for team in league.teams %}
             <div class"row">
@@ -30,7 +34,9 @@ Welcome!
                 </div>
 
                 <div class="players-wrapper text-muted col-md-10">
-                    {{ team.players|length }} players
+                    <a href="{{team.detail_url}}">
+                        {{ team.players|length }} players
+                    </a>
                 </div>
             </div>
             {% endfor %}

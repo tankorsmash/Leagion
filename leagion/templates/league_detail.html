@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+League Details
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<a class="btn btn-link" href="{% url 'index' %}"> Back </a>
+<h1>
+    {{ object.name }} Matches
+</h1>
+
+<div class="matches">
+    {% for match in matches %}
+    <div class="row">
+        <div class="col-md-3">
+            {{ match.match_datetime }}
+        </div>
+        <div class="col-md-2">
+            {{ match.location }}
+        </div>
+        <div class="col-md-2">
+            {{ match.home_team }}
+            <small class="text-muted">
+                ( {{ match.home_points }} )
+            </small>
+        </div>
+        <div class="col-md-1">
+            vs
+        </div>
+        <div class="col-md-2">
+            {{ match.away_team }}
+            <small class="text-muted">
+                ( {{ match.away_points }} )
+            </small>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

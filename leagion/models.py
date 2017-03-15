@@ -57,7 +57,9 @@ class Match(models.Model):
 
     match_datetime = models.DateTimeField()
 
-    location = models.ForeignKey(Location, related_name="matches")
+    location = models.ForeignKey(Location, null=True, blank=True, related_name="matches")
+
+    league = models.ForeignKey(League, null=False, related_name="matches")
 
     duration_seconds = models.IntegerField(null=True, blank=True, default=0)
 
