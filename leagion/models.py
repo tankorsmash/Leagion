@@ -15,7 +15,7 @@ class Team(models.Model):
 
 
     def __unicode__(self):
-        return u"Team {name}".format(name=self.name)
+        return u"Team: {name}".format(name=self.name)
 
     def __repr__(self):
         return "<%s>" % unicode(self).encode("utf-8")
@@ -25,7 +25,7 @@ class League(models.Model):
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return u"League {name}".format(name=self.name)
+        return u"League: {name}".format(name=self.name)
 
     def __repr__(self):
         return "<%s>" % unicode(self).encode("utf-8")
@@ -39,7 +39,7 @@ class Location(models.Model):
     name = models.CharField(max_length=255) #ie Fenway Park
 
     def __unicode__(self):
-        return u"Location {name}".format(name=self.name)
+        return u"Location: {name}".format(name=self.name)
 
     def __repr__(self):
         return "<%s>" % unicode(self).encode("utf-8")
@@ -63,7 +63,7 @@ class Match(models.Model):
     duration_seconds = models.IntegerField(null=True, blank=True, default=0)
 
     def __unicode__(self):
-        return u"Match {home_team} vs {away_team} at {location}".format(
+        return u"Match: {home_team} vs {away_team} at {location}".format(
             home_team=self.home_team.name,
             away_team=self.away_team.name,
             location=self.location.name
