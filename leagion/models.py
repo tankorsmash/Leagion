@@ -60,6 +60,8 @@ class Match(models.Model):
 
     location = models.ForeignKey(Location, related_name="matches")
 
+    duration_seconds = models.IntegerField(null=True, blank=True, default=0)
+
     def __unicode__(self):
         return u"Match {home_team} vs {away_team} at {location}".format(
             home_team=self.home_team.name,
