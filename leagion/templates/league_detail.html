@@ -17,7 +17,9 @@ League Details
     {% for match in matches %}
     <div class="row">
         <div class="col-md-3">
-            {{ match.match_datetime }}
+            <a href="{{match.match_detail_url}}">
+                {{ match.match_datetime }}
+            </a>
         </div>
         <div class="col-md-2">
             {{ match.location }}

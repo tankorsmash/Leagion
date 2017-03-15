@@ -9,9 +9,6 @@ Welcome!
 
 {% block content %}
 <h1> LEAGION </h1>
-<div class="h3">
-    Overview
-</div>
 <br>
 
 <div class="league-wrapper">
@@ -29,14 +26,15 @@ Welcome!
             <div class"row">
                 <div class="col-md-2">
                     <div>
-                    {{ team.name }}
+                        <a href="{{team.detail_url}}">
+                            {{ team.name }}
+                        </a>
                     </div>
                 </div>
 
                 <div class="players-wrapper text-muted col-md-10">
-                    <a href="{{team.detail_url}}">
-                        {{ team.players|length }} players
-                    </a>
+                    {{ team.matches_played }} matches played,
+                    {{ team.players|length }} players
                 </div>
             </div>
             {% endfor %}
