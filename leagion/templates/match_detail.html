@@ -33,6 +33,23 @@ Match Details
     </small>
 </h1>
 
+<div class="match-status">
+    <div>
+        {{ match.status }}
+    </div>
+    {% if match.postponed_match %}
+    Postponed to...
+    <div class="row">
+        <div class="col-md-3">
+            {{ match.postponed_match.match_datetime }}
+        </div>
+        <div class="col-md-3">
+            {{ match.postponed_match.location }}
+        </div>
+    </div>
+    {% endif %}
+</div>
+
 <div class="rosters row m-t-1">
     <div class="home-roster col-md-6">
     <h2> Home Roster </h2>

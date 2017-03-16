@@ -68,7 +68,7 @@ class Match(models.Model):
 
     #TODO make a nice enum wrapper
     StatusChoices = (
-        (0, "NotStarted"),
+        (0, "Not Yet Played"),
         (1, "Completed"),
         (2, "Postponed")
     )
