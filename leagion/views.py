@@ -129,6 +129,32 @@ class MatchDetail(DetailView):
     pk_url_kwarg = "match_id"
     queryset = Match.objects.all()
 
+    def build_match_context(self, match):
+        """
+        can be the postponed match
+        """
+
+        if match is None:
+            return {}
+
+        return {
+            'location': match.location.name,
+            'match_datetime': match.match_datetime,
+
+            'home_team': match.home_team.name,
+            'home_points': match.home_points,
+            'away_team': match.away_team.name,
+            'away_points': match.away_points,
+
+            'is_home_win': match.is_home_win,
+            'is_away_win': match.is_away_win,
+
+            'is_draw': match.is_draw,
+
+            'status': match.get_status_display(),
+            'postponed_match': self.build_match_context(match.postponed_to),
+        }
+
     def get_context_data(self, object):
         context = super(MatchDetail, self).get_context_data()
         match = context['match']
@@ -145,20 +171,7 @@ class MatchDetail(DetailView):
         ).values_list("players__id", flat=True)
         away_matches_played = Counter(away_roster_player_ids)
 
-        context['match'] = {
-            'location': match.location.name,
-            'match_datetime': match.match_datetime,
-
-            'home_team': match.home_team.name,
-            'home_points': match.home_points,
-            'away_team': match.away_team.name,
-            'away_points': match.away_points,
-
-            'is_home_win': match.is_home_win,
-            'is_away_win': match.is_away_win,
-
-            'is_draw': match.is_draw,
-        }
+        context['match'] = self.build_match_context(match)
 
         context['home_team'] = {
             'roster': [{

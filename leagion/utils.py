@@ -117,6 +117,10 @@ def generate_match(league, home_team, away_team, location, postponed_match=None)
         league=league
     )
 
+    if postponed_match is not None:
+        match.postposted_from = postponed_match
+        match.save()
+
     generate_roster(home_team, match)
     generate_roster(away_team, match)
 
@@ -138,6 +142,7 @@ def generate_matches(league, match_count=10):
         match = generate_match(league, home_team=home_team, away_team=away_team, location=location, postponed_match=None)
         matches.append(match)
 
+        # should_postpone = True
         #1 in 25 chance its a postponed game
         should_postpone = random.randint(0, 25) == 0
         if should_postpone:
@@ -146,7 +151,10 @@ def generate_matches(league, match_count=10):
             match.save()
 
             new_location = random.choice(locations)
+
             new_match = generate_match(league, home_team=None, away_team=None, location=new_location, postponed_match=match)
+            match.refresh_from_db()
+
             matches.append(new_match)
 
     return matches
@@ -155,3 +163,10 @@ def generate_matches(league, match_count=10):
 def generate_all():
     league = generate_league()
     matches = generate_matches(league)
+
+if __name__ == "__main__":
+    import django
+    from django.conf import settings
+    # from myapp import myapp_defaults
+    # settings.configure(default_settings=myapp_defaults, DEBUG=True)
+    django.setup()
