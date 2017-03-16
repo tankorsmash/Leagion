@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 import re
 import json
+import enum
 
 from django.contrib.auth.models import User
 
@@ -64,6 +65,17 @@ class Match(models.Model):
     league = models.ForeignKey(League, null=False, related_name="matches")
 
     duration_seconds = models.IntegerField(null=True, blank=True, default=0)
+
+    #TODO make a nice enum wrapper
+    StatusChoices = (
+        (0, "NotStarted"),
+        (1, "Completed"),
+        (2, "Postponed")
+    )
+    status = models.IntegerField(default=0, choices=StatusChoices)
+
+    #if a match.status == Postponed, this would point to that match
+    postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postposted_from")
 
     def __unicode__(self):
         return u"Match: {home_team} vs {away_team} at {location}".format(
