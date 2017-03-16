@@ -47,9 +47,11 @@ class Location(models.Model):
 class Match(models.Model):
     """
     should this be a MatchRecord? not all games are played or rescheduled
-    """
 
-    home_team = models.ForeignKey(Team, related_name="home_matches") #this'll mean you can do Team.matches.all() and get both home and away games though, maybe there's a better way?
+    NOTE: the home_team and away_team FKs mean you cannot do something simple
+    like some_team.matches.all(). TODO We'll want a helper method for that somewhere
+    """
+    home_team = models.ForeignKey(Team, related_name="home_matches")
     home_points = models.IntegerField(null=True, blank=True, default=0)
 
     away_team = models.ForeignKey(Team, related_name="away_matches")
