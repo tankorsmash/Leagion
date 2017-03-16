@@ -75,7 +75,7 @@ class Match(models.Model):
     status = models.IntegerField(default=0, choices=StatusChoices)
 
     #if a match.status == Postponed, this would point to that match
-    postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postposted_from")
+    postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postponed_from")
 
     def __unicode__(self):
         return u"Match: {home_team} vs {away_team} at {location}".format(
