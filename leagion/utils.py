@@ -9,22 +9,34 @@ from leagion.models import User, Team, League, Match, Roster, Location
 def generate_users(count, team=None):
     f = faker.Faker()
 
+    existing_usernames = list(User.objects.all().values_list("username", flat=True))
+
+    new_users = []
     for i in xrange(count):
-        print "generating user", i+1, "of", count
-        try:
-            user = User.objects.create(
-                username=f.user_name(),
-                email=f.email(),
-                first_name=f.first_name(),
-                last_name=f.last_name(),
-                password=f.password()
-            )
+        #ensure unique username
+        username = f.user_name()
+        while username in existing_usernames:
+            username = f.user_name()
 
-            if team:
-                team.players.add(user)
+        user = User(
+            username=username,
+            email=f.email(),
+            first_name=f.first_name(),
+            last_name=f.last_name(),
+            password=f.password()
+        )
+        new_users.append(user)
 
-        except IntegrityError as e:
-            print e, "ignoring and continuing"
+    User.objects.bulk_create(new_users)
+
+    #get the new users from the database so that they've got ids
+    created_users = User.objects.filter(username__in=[u.username for u in new_users])
+
+    if team:
+        team.players.add(*created_users)
+
+    return created_users
+
 
 
 def generate_league(name=None, teams_count=5, players_in_team_count=15):
