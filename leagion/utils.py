@@ -1,6 +1,7 @@
 import pytz
 import faker
 import random
+import datetime
 
 from django.db import IntegrityError
 
@@ -91,9 +92,37 @@ def generate_roster(team, match):
 
     return roster
 
-def generate_matches(league, match_count=10):
+def generate_match(league, home_team, away_team, location, postponed_match=None):
     f = faker.Faker()
 
+    home_points = f.random_number(1)
+    away_points = f.random_number(1)
+
+    if postponed_match is None:
+        match_datetime = f.date_time_this_year(tzinfo=pytz.timezone("EST"))
+    else:
+        match_datetime = postponed_match.match_datetime + datetime.timedelta(days=7)
+        home_team, away_team = postponed_match.home_team, postponed_match.away_team
+
+    duration_seconds = f.random_int(10, 60*60*4) #10s to 4hrs
+
+    match = Match.objects.create(
+        home_team=home_team,
+        home_points=home_points,
+        away_team=away_team,
+        away_points=away_points,
+        match_datetime=match_datetime,
+        location=location,
+        duration_seconds=duration_seconds,
+        league=league
+    )
+
+    generate_roster(home_team, match)
+    generate_roster(away_team, match)
+
+    return match
+
+def generate_matches(league, match_count=10):
     teams = league.teams.all()
 
     locations = Location.objects.all()
@@ -104,29 +133,21 @@ def generate_matches(league, match_count=10):
     for i in xrange(match_count):
         print "generating match", i+1, "of", match_count
         home_team, away_team = random.sample(teams, 2)
-
-        home_points = f.random_number(1)
-        away_points = f.random_number(1)
-
-        match_datetime = f.date_time_this_year(tzinfo=pytz.timezone("EST"))
         location = random.choice(locations)
-        duration_seconds = f.random_int(10, 60*60*4) #10s to 4hrs
 
-        match = Match.objects.create(
-            home_team=home_team,
-            home_points=home_points,
-            away_team=away_team,
-            away_points=away_points,
-            match_datetime=match_datetime,
-            location=location,
-            duration_seconds=duration_seconds,
-            league=league
-        )
-
-        generate_roster(home_team, match)
-        generate_roster(away_team, match)
-
+        match = generate_match(league, home_team=home_team, away_team=away_team, location=location, postponed_match=None)
         matches.append(match)
+
+        #1 in 25 chance its a postponed game
+        should_postpone = random.randint(0, 25) == 0
+        if should_postpone:
+            print "generating postponed match for ", i+1, "of", match_count
+            match.status = 2 #Match.StatusChoices.Postponed once we get that going
+            match.save()
+
+            new_location = random.choice(locations)
+            new_match = generate_match(league, home_team=None, away_team=None, location=new_location, postponed_match=match)
+            matches.append(new_match)
 
     return matches
 
