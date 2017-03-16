@@ -34,18 +34,24 @@ Match Details
 </h1>
 
 <div class="match-status">
-    <div>
-        {{ match.status }}
-    </div>
     {% if match.postponed_match %}
-    Postponed to...
     <div class="row">
+        <div class="col-md-2">
+            Postponed to:
+        </div>
         <div class="col-md-3">
             {{ match.postponed_match.match_datetime }}
+        </div>
+        <div class="col-md-1">
+            @
         </div>
         <div class="col-md-3">
             {{ match.postponed_match.location }}
         </div>
+    </div>
+    {% else %}
+    <div class="row">
+        {{ match.status }}
     </div>
     {% endif %}
 </div>

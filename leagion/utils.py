@@ -120,6 +120,7 @@ def generate_match(league, home_team, away_team, location, postponed_match=None)
     if postponed_match is not None:
         match.postposted_from = postponed_match
         match.save()
+        postponed_match.save() #related instance needs to get saved too
 
     generate_roster(home_team, match)
     generate_roster(away_team, match)
