@@ -163,10 +163,3 @@ def generate_matches(league, match_count=10):
 def generate_all():
     league = generate_league()
     matches = generate_matches(league)
-
-if __name__ == "__main__":
-    import django
-    from django.conf import settings
-    # from myapp import myapp_defaults
-    # settings.configure(default_settings=myapp_defaults, DEBUG=True)
-    django.setup()
