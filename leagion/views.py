@@ -116,6 +116,7 @@ class TeamDetail(DetailView):
 
         context['players'] = [{
             "full_name": "{} {}".format(player.first_name, player.last_name),
+            "detail_url": reverse("player-detail", args=(player.id,)),
             "matches_played": matches_played[player.id],
         } for player in team.players.all()]
 
@@ -188,5 +189,38 @@ class MatchDetail(DetailView):
                 } for player in away_team.players.filter(id__in=match.rosters.get(team_id=away_team.id).players.values_list("id", flat=True))
             ]
         }
+
+        return context
+
+
+class PlayerDetail(DetailView):
+    template_name = "player_detail.html"
+
+    context_object_name = "player"
+    pk_url_kwarg = "player_id"
+    queryset = User.objects.all()
+
+    def get_context_data(self, object):
+        player = object
+        context = super(PlayerDetail, self).get_context_data()
+        context["full_name"] = "{} {}".format(player.first_name, player.last_name)
+
+        teams = player.teams.all().select_related("league")
+        leagues = []
+        for team in teams:
+            if team.league not in leagues:
+                leagues.append(team.league)
+
+        leagues_ctx = [{
+            "name": league.name,
+            "detail_url": reverse("league-detail", args=(league.id,))
+        } for league in leagues]
+        context['leagues'] = leagues_ctx
+
+        teams_ctx = [{
+            "name": team.name,
+            "detail_url": reverse("team-detail", args=(team.id,))
+        } for team in teams]
+        context['teams'] = teams_ctx
 
         return context
