@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block page_title %}
+Player Details
+{% endblock %}
+
+{% block styles %}
+{% endblock %}
+
+{% block content %}
+<a class="btn btn-link" href="{% url 'index' %}"> Back </a>
+<h1>
+    {{ full_name }}
+</h1>
+
+<div class="player-league-list">
+    <h2>
+        Leagues
+    </h2>
+
+    {% for league in leagues %}
+    <div class="row">
+        <div class="col-md-12">
+        <a href="{{league.detail_url}}">
+            {{ league.name }}
+        </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="player-team-list">
+    <h2>
+        Teams
+    </h2>
+
+    {% for team in teams %}
+    <div class="row">
+        <div class="col-md-12">
+        <a href="{{team.detail_url}}">
+            {{ team.name }}
+        </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

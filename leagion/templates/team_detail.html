@@ -70,7 +70,9 @@ Team Details
     {% for player in players %}
     <div class="row">
         <div class="col-md-2">
-            {{ player.full_name }}
+            <a href="{{player.detail_url}}">
+                {{ player.full_name }}
+            </a>
         </div>
         <div class="col-md-4">
             <small class="text-muted">
