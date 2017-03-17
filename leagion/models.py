@@ -11,7 +11,7 @@ from django.db import models
 #model data
 class Team(models.Model):
     name = models.CharField(max_length=255)
-    players = models.ManyToManyField(User)
+    players = models.ManyToManyField(User, related_name="teams")
     league = models.ForeignKey("League", related_name="teams")
 
     def __unicode__(self):
