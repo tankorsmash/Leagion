@@ -74,7 +74,7 @@ class Match(models.Model):
     )
     status = models.IntegerField(default=0, choices=StatusChoices)
 
-    #if a match.status == Postponed, this would point to that match
+    #if a match's status was Postponed, match.postponed_to would point to a new match to replace it
     postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postponed_from")
 
     def __unicode__(self):
