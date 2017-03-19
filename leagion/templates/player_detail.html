@@ -45,4 +45,20 @@ Player Details
     {% endfor %}
 </div>
 
+<div class="player-match-list">
+    <h2>
+        Matches
+    </h2>
+
+    {% for match in matches %}
+    <div class="row">
+        <div class="col-md-12">
+        <a href="{{match.detail_url}}">
+            {{ match.name }}
+        </a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

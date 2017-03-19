@@ -206,9 +206,13 @@ class PlayerDetail(DetailView):
 
         teams = player.teams.all().select_related("league")
         leagues = []
+        matches = []
         for team in teams:
             if team.league not in leagues:
                 leagues.append(team.league)
+
+            matches.extend([m for m in team.home_matches.all()])
+            matches.extend([m for m in team.away_matches.all()])
 
         leagues_ctx = [{
             "name": league.name,
@@ -221,5 +225,11 @@ class PlayerDetail(DetailView):
             "detail_url": reverse("team-detail", args=(team.id,))
         } for team in teams]
         context['teams'] = teams_ctx
+
+        matches_ctx = [{
+            "name": match.pretty_name,
+            "detail_url": reverse("match-detail", args=(match.id,))
+        } for match in matches]
+        context['matches'] = matches_ctx
 
         return context
