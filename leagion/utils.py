@@ -3,8 +3,6 @@ import faker
 import random
 import datetime
 
-from django.db import IntegrityError
-
 from leagion.models import User, Team, League, Match, Roster, Location
 
 def generate_users(count, team=None):
@@ -13,7 +11,7 @@ def generate_users(count, team=None):
     existing_usernames = list(User.objects.all().values_list("username", flat=True))
 
     new_users = []
-    for i in xrange(count):
+    for i in range(count):
         #ensure unique username
         username = f.user_name()
         while username in existing_usernames:
@@ -41,25 +39,25 @@ def generate_users(count, team=None):
 
 
 def generate_league(name=None, teams_count=5, players_in_team_count=15):
-    print "generating league"
+    print("generating league")
     if name is None:
         f = faker.Faker()
         name = f.company()+" League"
     league = League.objects.create(name=name)
 
-    print "generating teams for league"
+    print("generating teams for league")
     generate_teams(league, teams_count, players_in_team_count)
 
     return league
 
 def generate_teams(league, team_count, players_count):
     f = faker.Faker()
-    for i in xrange(team_count):
+    for i in range(team_count):
         team = Team.objects.create(
             name=f.street_name(),
             league=league
         )
-        print "generating players for team", i+1, "of", team_count
+        print(("generating players for team", i+1, "of", team_count))
         generate_users(players_count, team)
 
 
@@ -68,8 +66,8 @@ def generate_locations(location_count=10):
     f = faker.Faker()
 
     locations = []
-    print "generating", location_count, "locations"
-    for i in xrange(location_count):
+    print(("generating", location_count, "locations"))
+    for i in range(location_count):
         loc = Location.objects.create(
             name=f.city()
         )
@@ -84,7 +82,7 @@ def generate_roster(team, match):
         match=match,
     )
     players=random.sample(
-        team.players.all(),
+        list(team.players.all()),
         f.random_int(10, team.players.count())
     )
 
@@ -128,15 +126,15 @@ def generate_match(league, home_team, away_team, location, postponed_match=None)
     return match
 
 def generate_matches(league, match_count=10):
-    teams = league.teams.all()
+    teams = list(league.teams.all())
 
     locations = Location.objects.all()
     if not locations:
         locations = generate_locations()
 
     matches = []
-    for i in xrange(match_count):
-        print "generating match", i+1, "of", match_count
+    for i in range(match_count):
+        print(("generating match", i+1, "of", match_count))
         home_team, away_team = random.sample(teams, 2)
         location = random.choice(locations)
 
@@ -147,7 +145,7 @@ def generate_matches(league, match_count=10):
         #1 in 25 chance its a postponed game
         should_postpone = random.randint(0, 25) == 0
         if should_postpone:
-            print "generating postponed match for ", i+1, "of", match_count
+            print(("generating postponed match for ", i+1, "of", match_count))
             match.status = 2 #Match.StatusChoices.Postponed once we get that going
             match.save()
 

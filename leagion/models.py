@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import re
 import json
 import enum
@@ -15,20 +13,20 @@ class Team(models.Model):
     league = models.ForeignKey("League", related_name="teams")
 
     def __unicode__(self):
-        return u"Team: {name}".format(name=self.name)
+        return "Team: {name}".format(name=self.name)
 
     def __repr__(self):
-        return "<%s>" % unicode(self).encode("utf-8")
+        return "<%s>" % str(self).encode("utf-8")
 
 
 class League(models.Model):
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
-        return u"League: {name}".format(name=self.name)
+        return "League: {name}".format(name=self.name)
 
     def __repr__(self):
-        return "<%s>" % unicode(self).encode("utf-8")
+        return "<%s>" % str(self).encode("utf-8")
 
 
 class Location(models.Model):
@@ -39,10 +37,10 @@ class Location(models.Model):
     name = models.CharField(max_length=255) #ie Fenway Park
 
     def __unicode__(self):
-        return u"Location: {name}".format(name=self.name)
+        return "Location: {name}".format(name=self.name)
 
     def __repr__(self):
-        return "<%s>" % unicode(self).encode("utf-8")
+        return "<%s>" % str(self).encode("utf-8")
 
 
 class Match(models.Model):
@@ -78,14 +76,14 @@ class Match(models.Model):
     postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postponed_from")
 
     def __unicode__(self):
-        return u"Match: {home_team} vs {away_team} at {location}".format(
+        return "Match: {home_team} vs {away_team} at {location}".format(
             home_team=self.home_team.name,
             away_team=self.away_team.name,
             location=self.location.name
         )
 
     def __repr__(self):
-        return "<%s>" % unicode(self).encode("utf-8")
+        return "<%s>" % str(self).encode("utf-8")
 
     @property
     def is_home_win(self):
@@ -125,4 +123,3 @@ class Roster(models.Model):
     players = models.ManyToManyField(User, related_name="+")
 
     match = models.ForeignKey(Match, related_name="rosters")
-
