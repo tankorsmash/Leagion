@@ -1,6 +1,5 @@
 import re
 import json
-import pprint
 import datetime
 from collections import Counter
 
@@ -37,7 +36,7 @@ class Index(TemplateView):
                     "name": team.name,
                     "players": [],
                     "detail_url": reverse("team-detail", args=(team.id,)),
-                    "matches_played": len(filter(lambda m: m['home_team_id'] == team.id or m['away_team_id'] == team.id, matches)),
+                    "matches_played": len([m for m in matches if m['home_team_id'] == team.id or m['away_team_id'] == team.id]),
                 }
                 for player in team.players.all():
                     player_ctx = {

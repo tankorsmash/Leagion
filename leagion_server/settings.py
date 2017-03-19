@@ -131,8 +131,5 @@ SHELL_PLUS_PRE_IMPORTS = (
     'django'
 )
 
-try:
-    from local import *
-except ImportError:
-    print "need a local.py with settings, DATABASES etc"
+from .local import *
 #DEBUG = True
