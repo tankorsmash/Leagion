@@ -76,7 +76,13 @@ class Match(models.Model):
     postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postponed_from")
 
     def __unicode__(self):
-        return "Match: {home_team} vs {away_team} at {location}".format(
+        return "Match: {}".format(
+            self.pretty_name
+        )
+
+    @property
+    def pretty_name(self):
+        return "{home_team} vs {away_team} at {location}".format(
             home_team=self.home_team.name,
             away_team=self.away_team.name,
             location=self.location.name
