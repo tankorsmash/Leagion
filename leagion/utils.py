@@ -57,7 +57,7 @@ def generate_teams(league, team_count, players_count):
             name=f.street_name(),
             league=league
         )
-        print(("generating players for team", i+1, "of", team_count))
+        print("generating players for team", i+1, "of", team_count)
         generate_users(players_count, team)
 
 
@@ -66,7 +66,7 @@ def generate_locations(location_count=10):
     f = faker.Faker()
 
     locations = []
-    print(("generating", location_count, "locations"))
+    print("generating", location_count, "locations")
     for i in range(location_count):
         loc = Location.objects.create(
             name=f.city()
@@ -134,7 +134,7 @@ def generate_matches(league, match_count=10):
 
     matches = []
     for i in range(match_count):
-        print(("generating match", i+1, "of", match_count))
+        print("generating match", i+1, "of", match_count)
         home_team, away_team = random.sample(teams, 2)
         location = random.choice(locations)
 
@@ -145,7 +145,7 @@ def generate_matches(league, match_count=10):
         #1 in 25 chance its a postponed game
         should_postpone = random.randint(0, 25) == 0
         if should_postpone:
-            print(("generating postponed match for ", i+1, "of", match_count))
+            print("generating postponed match for ", i+1, "of", match_count)
             match.status = 2 #Match.StatusChoices.Postponed once we get that going
             match.save()
 
