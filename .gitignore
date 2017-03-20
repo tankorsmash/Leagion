@@ -60,3 +60,5 @@ Doxy*
 *.7z
 
 *.sqlite3
+
+*local.py
