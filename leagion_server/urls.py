@@ -17,6 +17,9 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 from django.db import models
 from django.contrib import admin
 
@@ -25,7 +28,10 @@ from leagion.api import views as api_views
 
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
+    url(r'^man/', admin.site.urls),
+    url(r'^lin/$', auth_views.login, name='login'),
+    url(r'^lout/$', auth_views.logout, name='logout'),
 
     url(r'^$', views.Index.as_view(), name="index"),
     url(r'^league/(?P<league_id>\d+)/$', views.LeagueDetail.as_view(), name="league-detail"),
