@@ -23,7 +23,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = ')3-^3j&1(0e35&ld30u&x-hw6rf*5^u2)y26&o*9u^m-o-dt09'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = [".webfactional.com", ".leagionthebase.com"]
 
@@ -148,4 +147,3 @@ SHELL_PLUS_PRE_IMPORTS = (
 )
 
 from .local import *
-#DEBUG = True
