@@ -35,5 +35,7 @@ urlpatterns = [
 
     url(r'^api/player/$', api_views.UserList.as_view(), name='api-player-list'),
     url(r'^api/player/(?P<player_id>\d+)/$', api_views.UserDetail.as_view(), name='api-player-detail'),
+    url(r'^api/match/$', api_views.MatchList.as_view(), name='api-match-list'),
+    url(r'^api/match/(?P<match_id>\d+)/$', api_views.MatchDetail.as_view(), name='api-match-detail'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

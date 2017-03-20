@@ -50,6 +50,13 @@ class Match(models.Model):
     NOTE: the home_team and away_team FKs mean you cannot do something simple
     like some_team.matches.all(). TODO We'll want a helper method for that somewhere
     """
+    #TODO make a nice enum wrapper
+    StatusChoices = (
+        (0, "Not Yet Played"),
+        (1, "Completed"),
+        (2, "Postponed")
+    )
+
     home_team = models.ForeignKey(Team, related_name="home_matches")
     home_points = models.IntegerField(null=True, blank=True, default=0)
 
@@ -64,12 +71,6 @@ class Match(models.Model):
 
     duration_seconds = models.IntegerField(null=True, blank=True, default=0)
 
-    #TODO make a nice enum wrapper
-    StatusChoices = (
-        (0, "Not Yet Played"),
-        (1, "Completed"),
-        (2, "Postponed")
-    )
     status = models.IntegerField(default=0, choices=StatusChoices)
 
     #if a match's status was Postponed, match.postponed_to would point to a new match to replace it
