@@ -14,7 +14,6 @@ from django.db.models import Q
 
 from django.utils.html import mark_safe
 
-
 from leagion.models import User, Team, League, Match, Roster
 
 # views
