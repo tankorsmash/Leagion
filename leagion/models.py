@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from django.db import models
 
-#model data
+
 class Team(models.Model):
     name = models.CharField(max_length=255)
     players = models.ManyToManyField(User, related_name="teams")
