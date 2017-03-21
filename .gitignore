@@ -62,3 +62,6 @@ Doxy*
 *.sqlite3
 
 *local.py
+
+assets/bundles/
+node_modules/

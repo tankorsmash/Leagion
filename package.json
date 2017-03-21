@@ -1,0 +1,27 @@
+{
+  "name": "leagion",
+  "version": "0.0.1",
+  "description": "Sports league management app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tankorsmash/Leagion.git"
+  },
+  "author": "Josh Bergasse & Calvin Collins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tankorsmash/Leagion/issues"
+  },
+  "homepage": "https://github.com/tankorsmash/Leagion#readme",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "react": "^15.4.2",
+    "webpack": "^2.2.1",
+    "webpack-bundle-tracker": "^0.2.0"
+  }
+}
