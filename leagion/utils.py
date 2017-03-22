@@ -93,18 +93,21 @@ def generate_roster(team, match):
 def generate_match(league, home_team, away_team, location, postponed_match=None):
     f = faker.Faker()
 
+    #if not postponed:
     if postponed_match is None:
         match_datetime = f.date_time_this_year(tzinfo=pytz.timezone("EST"))
         home_points = f.random_number(1)
         away_points = f.random_number(1)
+        duration_seconds = f.random_int(10, 60*60*4) #10s to 4hrs
 
+    #if the match is postponed
     else:
         match_datetime = postponed_match.match_datetime + datetime.timedelta(days=7)
         home_team, away_team = postponed_match.home_team, postponed_match.away_team
         home_points = 0
         away_points = 0
+        duration_seconds = 0
 
-    duration_seconds = f.random_int(10, 60*60*4) #10s to 4hrs
 
     match = Match.objects.create(
         home_team=home_team,
