@@ -5,7 +5,11 @@ var BundleTracker = require('webpack-bundle-tracker')
 module.exports = {
     context: __dirname,
 
-    entry: './assets/js/admin/index',
+    entry: [
+        'webpack-dev-server/client?http://localhost:4000',
+        'webpack/hot/only-dev-server',
+        './assets/js/admin/index'
+    ],
 
     output: {
         path: path.resolve('./assets/bundles/'),
@@ -13,6 +17,12 @@ module.exports = {
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(), // don't reload if there is an error
+        new webpack.ProvidePlugin({
+            'Promise': 'es6-promise',
+            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+        }),
         new BundleTracker({filename: './webpack-stats.json'}),
     ],
 
