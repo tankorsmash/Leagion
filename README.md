@@ -4,10 +4,7 @@ install node modules:
 
     npm install
 
-install webpack globally:
+Run the webpack dev server which takes care of running webpack and handling hot reloading. 
+This will live reload your jsx changes without having to refresh the page!:
 
-    npm install -g webpack
-
-run webpack as a watcher to automatically recompile as you make changes:
-
-    webpack -w
+    node server.js
