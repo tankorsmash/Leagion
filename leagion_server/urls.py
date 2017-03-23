@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^lout/$', auth_views.logout, name='logout'),
 
     url(r'^$', views.Index.as_view(), name="index"),
+    url(r'^root/$', views.Root.as_view(), name="root"),
     url(r'^league/(?P<league_id>\d+)/$', views.LeagueDetail.as_view(), name="league-detail"),
     url(r'^team/(?P<team_id>\d+)/$', views.TeamDetail.as_view(), name="team-detail"),
     url(r'^match/(?P<match_id>\d+)/$', views.MatchDetail.as_view(), name="match-detail"),

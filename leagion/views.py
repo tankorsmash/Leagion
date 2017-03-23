@@ -16,6 +16,9 @@ from django.utils.html import mark_safe
 
 from leagion.models import User, Team, League, Match, Roster
 
+class Root(TemplateView):
+    template_name = "root.html"
+
 # views
 class Index(TemplateView):
     template_name = "index.html"
