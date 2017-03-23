@@ -4,3 +4,5 @@ DATABASES = {
         'NAME': 'leagion.sqlite3',
     }
 }
+
+DEBUG = True

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'rest_framework',
+    'webpack_loader'
 
 ]
 
@@ -102,7 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
@@ -116,6 +116,12 @@ REST_FRAMEWORK = {
     )
 }
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'BUNDLE_DIR_NAME': 'bundles/',
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -138,6 +144,10 @@ LOGIN_REDIRECT_URL = 'index'
 #
 STATIC_URL = '/static/'
 #STATIC_ROOT = '/home/tankorsmash/webapps/leagion_static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'), # We do this so that django's collectstatic copies or our bundles to the STATIC_ROOT or syncs them to whatever storage we use.
+)
 
 # always include leagion.utils
 SHELL_PLUS_PRE_IMPORTS = (
