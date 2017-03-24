@@ -8,11 +8,18 @@ module.exports = {
 
     devtool: 'source-map',
 
-    entry: [
-        'babel-polyfill',
-        'whatwg-fetch',
-        './assets/js/admin/index'
-    ],
+	entry: {
+		vendor: [
+			'babel-polyfill',
+			'whatwg-fetch',
+		],
+		admin: [
+			'./assets/js/admin/index',
+		],
+		common: [
+			'./assets/js/common/index',
+		]
+	},
 
     output: {
         path: path.resolve('./assets/bundles/'),
@@ -42,7 +49,11 @@ module.exports = {
     },
 
     resolve: {
-        modules: ['node_modules', 'bower_components'],
-        extensions: ['*', '.js', '.jsx', '.css'],
+        modules: [
+            'node_modules',
+            'bower_components',
+            path.resolve(__dirname, 'assets/js/'),
+        ],
+        extensions: ['*', '.js', '.jsx'],
     },
 }
