@@ -16,19 +16,24 @@
     "url": "https://github.com/tankorsmash/Leagion/issues"
   },
   "homepage": "https://github.com/tankorsmash/Leagion#readme",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
+    "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.0",
     "babel-preset-react": "^6.23.0",
+    "bootstrap": "^4.0.0-alpha.6",
+    "css-loader": "^0.27.3",
+    "extract-text-webpack-plugin": "^2.1.0",
     "react": "^15.4.2",
-    "react-hot-loader": "^1.3.1",
+    "react-addons-css-transition-group": "^15.4.2",
+    "react-addons-transition-group": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "reactstrap": "^4.3.0",
     "webpack": "^2.2.1",
     "webpack-bundle-tracker": "^0.2.0",
-    "webpack-dev-server": "^2.4.2"
-  },
-  "dependencies": {
-    "react-dom": "^15.4.2"
+    "whatwg-fetch": "^2.0.3"
   }
 }
