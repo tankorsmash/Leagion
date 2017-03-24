@@ -1,1 +1,2 @@
-import Hello from './hello.jsx';
+import 'bootstrap/dist/css/bootstrap.css';
+import Main from './main.jsx';

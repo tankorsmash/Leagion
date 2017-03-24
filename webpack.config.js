@@ -1,29 +1,30 @@
-var path = require("path")
-var webpack = require('webpack')
-var BundleTracker = require('webpack-bundle-tracker')
+var path = require("path");
+var webpack = require('webpack');
+var BundleTracker = require('webpack-bundle-tracker');
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     context: __dirname,
 
+    devtool: 'source-map',
+
     entry: [
-        'webpack-dev-server/client?http://localhost:4000',
-        'webpack/hot/only-dev-server',
+        'babel-polyfill',
+        'whatwg-fetch',
         './assets/js/admin/index'
     ],
 
     output: {
         path: path.resolve('./assets/bundles/'),
-        filename: "[name]-[hash].js",
+        filename: "[name].js",
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(), // don't reload if there is an error
         new webpack.ProvidePlugin({
-            'Promise': 'es6-promise',
             'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
         }),
         new BundleTracker({filename: './webpack-stats.json'}),
+		new ExtractTextPlugin('[name].css'),
     ],
 
     module: {
@@ -34,11 +35,14 @@ module.exports = {
             query: {
                 presets: ['es2015', 'react']
             }
+        } , {
+            test: /\.css$/,
+            loader: ExtractTextPlugin.extract('css-loader')
         }],
     },
 
     resolve: {
         modules: ['node_modules', 'bower_components'],
-        extensions: ['*', '.js', '.jsx'],
+        extensions: ['*', '.js', '.jsx', '.css'],
     },
 }
