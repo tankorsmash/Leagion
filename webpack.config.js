@@ -13,12 +13,12 @@ module.exports = {
 			'babel-polyfill',
 			'whatwg-fetch',
 		],
-		admin: [
-			'./assets/js/admin/index',
+		main: [
+			'./assets/js/main/index',
 		],
-		common: [
-			'./assets/js/common/index',
-		]
+		public: [
+			'./assets/js/public/index',
+		],
 	},
 
     output: {

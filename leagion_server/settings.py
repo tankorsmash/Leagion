@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_extensions',
 
     'rest_framework',
+    'knox',
     'webpack_loader'
 
 ]
@@ -112,6 +113,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'knox.auth.TokenAuthentication',
         # 'rest_framework.authentication.BasicAuthentication',
         # 'rest_framework.authentication.SessionAuthentication',
     )

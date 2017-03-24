@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf.urls.static import static
 
 from django.contrib import admin
@@ -28,13 +28,17 @@ from leagion.api import views as api_views
 
 
 urlpatterns = [
+    #authentication
+    url(r'api/auth/', include('knox.urls')),
+
     #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
     url(r'^man/', admin.site.urls),
     url(r'^lin/$', auth_views.login, name='login'),
     url(r'^lout/$', auth_views.logout, name='logout'),
 
     url(r'^$', views.Index.as_view(), name="index"),
-    url(r'^root/$', views.Root.as_view(), name="root"),
+    url(r'^main/$', views.Main.as_view(), name="main"),
+    url(r'^public/$', views.Public.as_view(), name="public"),
     url(r'^league/(?P<league_id>\d+)/$', views.LeagueDetail.as_view(), name="league-detail"),
     url(r'^team/(?P<team_id>\d+)/$', views.TeamDetail.as_view(), name="team-detail"),
     url(r'^match/(?P<match_id>\d+)/$', views.MatchDetail.as_view(), name="match-detail"),
