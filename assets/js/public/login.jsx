@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import reverse from 'common/reverse';
 
 class Login extends React.Component {
     render() {
         return (
-            <Form inline action='.'>
+            <Form inline action={reverse('knox-login')}>
                 <FormGroup>
                     <Label for="loginEmail">Email</Label>
                     <Input type="email" name="email" id="loginEmail" />

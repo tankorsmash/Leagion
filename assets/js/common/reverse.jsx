@@ -7,9 +7,9 @@ var viewnames = {
     "api-match-list": "/api/match/",
     "api-player-detail": "/api/player/<player_id>/",
     "api-player-list": "/api/player/",
-    "knox_login": "/login/",
-    "knox_logout": "/logout/",
-    "knox_logoutall": "/logoutall/"
+    "knox-login": "/login/",
+    "knox-logout": "/logout/",
+    "knox-logoutall": "/logoutall/"
 };
 
 function reverse(urlname, kwargs) {
@@ -29,4 +29,5 @@ function reverse(urlname, kwargs) {
     }
     return url;
 }
-window.reverse = reverse;
+
+module.exports = reverse;
