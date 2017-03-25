@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from django.contrib.auth.models import User
+from leagion.models import User
 from rest_framework import routers, serializers, viewsets
 
 from leagion.models import Match, Roster, Team, League
