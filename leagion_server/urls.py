@@ -28,9 +28,9 @@ from leagion.api import views as api_views
 
 urlpatterns = [
     #authentication
-    url(r'login/', views.KnoxLoginView.as_view(), name='knox-login'),
-    url(r'logout/', views.KnoxLogoutView.as_view(), name='knox-logout'),
-    url(r'logoutall/', views.KnoxLogoutAllView.as_view(), name='knox-logoutall'),
+    url(r'login/', api_views.LoginView.as_view(), name='knox-login'),
+    url(r'logout/', api_views.LogoutView.as_view(), name='knox-logout'),
+    url(r'logoutall/', api_views.LogoutAllView.as_view(), name='knox-logoutall'),
 
     #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
     url(r'^man/', admin.site.urls),

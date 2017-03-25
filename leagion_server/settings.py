@@ -166,3 +166,6 @@ SHELL_PLUS_PRE_IMPORTS = (
     'pytz',
     'django'
 )
+
+# set auth user model to our own custom model
+AUTH_USER_MODEL = 'leagion.User'
