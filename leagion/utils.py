@@ -5,6 +5,12 @@ import datetime
 
 from leagion.models import User, Team, League, Match, Roster, Location
 
+viewnames_exposed_js = set()
+
+def reverse_js(view):
+    viewnames_exposed_js.add(view)
+    return view
+
 def generate_users(count, team=None):
     f = faker.Faker()
 

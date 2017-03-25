@@ -1,12 +1,20 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class Login extends React.Component {
     render() {
         return (
-            <div>
-                Login
-            </div>
+            <Form inline action='.'>
+                <FormGroup>
+                    <Label for="loginEmail">Email</Label>
+                    <Input type="email" name="email" id="loginEmail" />
+                </FormGroup>
+                <FormGroup>
+                    <Label for="loginPassword">Password</Label>
+                    <Input type="password" name="password" id="loginPassword" />
+                </FormGroup>
+                <Button>Log In</Button>
+            </Form>
         );
     }
 }

@@ -15,6 +15,21 @@ from django.db.models import Q
 from django.utils.html import mark_safe
 
 from leagion.models import User, Team, League, Match, Roster
+from leagion.utils import reverse_js
+
+from knox import views
+
+@reverse_js
+class KnoxLoginView(views.LoginView):
+    pass
+
+@reverse_js
+class KnoxLogoutView(views.LogoutView):
+    pass
+
+@reverse_js
+class KnoxLogoutAllView(views.LogoutAllView):
+    pass
 
 class Main(TemplateView):
     template_name = "react/main.html"
