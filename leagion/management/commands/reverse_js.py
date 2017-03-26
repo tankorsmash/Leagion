@@ -77,6 +77,7 @@ function reverse(urlname, kwargs) {
     }
     return url;
 }
-window.reverse = reverse;
+
+module.exports = reverse;
 '''
 

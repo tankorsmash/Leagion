@@ -22,9 +22,6 @@ User = get_user_model()
 class Main(TemplateView):
     template_name = "react/main.html"
 
-class Public(TemplateView):
-    template_name = "react/public.html"
-
 # views
 class Index(TemplateView):
     template_name = "index.html"
