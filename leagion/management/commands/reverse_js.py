@@ -23,7 +23,7 @@ class Command(BaseCommand):
             }
         reverse_js_path = os.path.join(
             settings.ROOT_PATH,
-            'assets/js/common/reverse.js'
+            'assets/js/common/reverse.jsx'
             )
 
         with open(reverse_js_path, 'wt') as reverse_js_file:

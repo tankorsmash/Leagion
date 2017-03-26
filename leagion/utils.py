@@ -3,7 +3,10 @@ import faker
 import random
 import datetime
 
-from leagion.models import User, Team, League, Match, Roster, Location
+from django.contrib.auth import get_user_model
+from leagion.models import Team, League, Match, Roster, Location
+
+User = get_user_model()
 
 viewnames_exposed_js = set()
 
