@@ -1,0 +1,18 @@
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Example</title>
+		{% render_bundle 'vendor' 'css'%}
+		{% block css %}{% endblock  %}
+	</head>
+
+	<body>
+		<div id="root"></div>
+		{% render_bundle 'vendor' 'js'%}
+		{% render_bundle 'public' 'js'%}
+		{% block javacript %}{% endblock javacript %}
+	</body>
+</html>

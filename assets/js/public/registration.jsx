@@ -29,7 +29,7 @@ class RegisterForm extends FormBase {
 
     render() {
         return (
-            <Form inline onSubmit={this.handleSubmit}>
+            <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label for="registerEmail">Email</Label>
                     <Input type="email" name="email" id="registerEmail" value={this.state.email} onChange={this.handleInputChange}/>
