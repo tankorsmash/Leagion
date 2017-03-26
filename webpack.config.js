@@ -11,18 +11,11 @@ module.exports = {
 	entry: {
 		vendor: [
 			'react-hot-loader/patch',
-			// react hot loader
-
 			'webpack-dev-server/client?http://localhost:20034',
-			// bundle the client for webpack-dev-server
-			// and connect to the provided endpoint
-
 			'webpack/hot/only-dev-server',
-			// bundle the client for hot reloading
-			// only- means to only hot reload for successful updates<Paste>
-
 			'babel-polyfill',
 			'whatwg-fetch',
+			'./assets/js/vendor/index',
 		],
 		main: [
 			'./assets/js/main/index',
@@ -71,6 +64,6 @@ module.exports = {
             'bower_components',
             path.resolve(__dirname, 'assets/js/'),
         ],
-        extensions: ['*', '.js', '.jsx'],
+        extensions: ['*', '.js', '.jsx', 'css'],
     },
 }

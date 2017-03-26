@@ -1,16 +1,10 @@
+{% extends "react/base.html" %}
 {% load render_bundle from webpack_loader %}
 
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Example</title>
+{% block css %}
     {% render_bundle 'public' 'css'%}
-  </head>
+{% endblock %}
 
-  <body>
-    <div id="root"></div>
-    {% render_bundle 'vendor' 'js'%}
+{% block javascript %}
     {% render_bundle 'public' 'js'%}
-  </body>
-</html>
+{% endblock %}
