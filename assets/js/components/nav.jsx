@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar as BSNavbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 
-class Navigation extends React.Component {
+class Navbar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -19,7 +19,7 @@ class Navigation extends React.Component {
     render() {
         return (
             <div>
-                <Navbar color="faded" light toggleable>
+                <BSNavbar color="faded" light toggleable>
                     <NavbarToggler right onClick={this.toggle} />
                     <NavbarBrand href="/">Leagion</NavbarBrand>
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -29,12 +29,12 @@ class Navigation extends React.Component {
                             </NavItem>
                         </Nav>
                     </Collapse>
-                </Navbar>
+                </BSNavbar>
             </div>
         );
     }
 }
 
 module.exports = {
-    Navigation: Navigation
+    Navbar: Navbar
 }
