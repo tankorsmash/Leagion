@@ -7,10 +7,14 @@ var viewnames = {
     "api-match-list": "/api/match/",
     "api-player-detail": "/api/player/<player_id>/",
     "api-player-list": "/api/player/",
-    "login": "/lin/",
-    "logout": "/lout/",
-    "logoutall": "/loutall/",
-    "register": "/rgstr/"
+    "rest_login": "/lin/",
+    "rest_logout": "/lout/",
+    "rest_password_change": "/pswdchg/",
+    "rest_password_reset": "/pswdrst/",
+    "rest_password_reset_confirm": "/pswdrstcfm/",
+    "rest_register": "/rgstr/",
+    "rest_user_details": "/usrdtls/",
+    "rest_verify_email": "/vrfyeml/"
 };
 
 function reverse(urlname, kwargs) {
@@ -30,4 +34,5 @@ function reverse(urlname, kwargs) {
     }
     return url;
 }
-window.reverse = reverse;
+
+module.exports = reverse;

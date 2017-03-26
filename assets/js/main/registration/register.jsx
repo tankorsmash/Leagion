@@ -1,14 +1,16 @@
+import reverse from 'common/reverse';
 import React from 'react';
 import {FormBase} from 'components/forms';
-import { Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import reverse from 'common/reverse';
+import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
+import {fetchInfo} from 'common/default';
 
 class RegisterForm extends FormBase {
     constructor(props) {
+
         super(props);
         this.state = {
             'email': '',
-            'password': '',
+            'password1': '',
             'password2': ''
         };
     }
@@ -17,13 +19,14 @@ class RegisterForm extends FormBase {
         event.preventDefault();
         //console.log(reverse);
 
-        fetch(reverse('register'), {
-            method: 'post'
-        }).then(function(response) {
-            console.log(response);
+        fetchInfo.method = 'POST';
+        fetchInfo.body = JSON.stringify(this.state);
 
-        }).catch(function(err) {
-            console.log(err);
+        fetch(reverse('rest_register'), fetchInfo)
+            .then(function(response) {
+                console.log(response);
+            }).catch(function(err) {
+                console.log(err);
         });
     }
 
@@ -36,7 +39,7 @@ class RegisterForm extends FormBase {
                 </FormGroup>
                 <FormGroup>
                     <Label for="loginPassword">Password</Label>
-                    <Input type="password" name="password" id="registerPassword" value={this.state.password} onChange={this.handleInputChange}/>
+                    <Input type="password" name="password1" id="registerPassword1" value={this.state.password1} onChange={this.handleInputChange}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="loginPassword2">Password Again</Label>
@@ -48,26 +51,4 @@ class RegisterForm extends FormBase {
     }
 }
 
-class LoginForm extends FormBase {
-    render() {
-        return (
-            <Form inline>
-                <FormGroup>
-                    <Label for="loginEmail">Email</Label>
-                    <Input type="email" name="email" id="loginEmail" />
-                </FormGroup>
-                <FormGroup>
-                    <Label for="loginPassword">Password</Label>
-                    <Input type="password" name="password" id="loginPassword" />
-                </FormGroup>
-                <Button>Log In</Button>
-            </Form>
-        );
-    }
-}
-
-module.exports = {
-    RegisterForm: RegisterForm,
-    LoginForm: LoginForm
-}
-
+module.exports = RegisterForm;

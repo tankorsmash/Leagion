@@ -30,8 +30,8 @@ def generate_users(count, team=None):
             email=email,
             first_name=f.first_name(),
             last_name=f.last_name(),
-            password=f.password()
         )
+        user.set_password('abc123')
         new_users.append(user)
 
     User.objects.bulk_create(new_users)
