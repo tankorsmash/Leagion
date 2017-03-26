@@ -4,7 +4,8 @@
   "description": "Sports league management app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --port 20034 --inline --hot"
   },
   "repository": {
     "type": "git",
@@ -26,14 +27,18 @@
     "babel-preset-react": "^6.23.0",
     "bootstrap": "^4.0.0-alpha.6",
     "css-loader": "^0.27.3",
+    "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^2.1.0",
+    "imports-loader": "^0.7.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-hot-loader": "^3.0.0-beta.6",
     "reactstrap": "^4.3.0",
     "webpack": "^2.2.1",
     "webpack-bundle-tracker": "^0.2.0",
+    "webpack-dev-server": "^2.4.2",
     "whatwg-fetch": "^2.0.3"
   }
 }

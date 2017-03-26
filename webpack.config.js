@@ -10,6 +10,17 @@ module.exports = {
 
 	entry: {
 		vendor: [
+			'react-hot-loader/patch',
+			// react hot loader
+
+			'webpack-dev-server/client?http://localhost:20034',
+			// bundle the client for webpack-dev-server
+			// and connect to the provided endpoint
+
+			'webpack/hot/only-dev-server',
+			// bundle the client for hot reloading
+			// only- means to only hot reload for successful updates<Paste>
+
 			'babel-polyfill',
 			'whatwg-fetch',
 		],
@@ -22,13 +33,18 @@ module.exports = {
 	},
 
     output: {
+        publicPath: 'http://localhost:20034/assets/bundles/',
         path: path.resolve('./assets/bundles/'),
         filename: "[name].js",
     },
 
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+		new webpack.NamedModulesPlugin(),
+		new webpack.NoEmitOnErrorsPlugin(),
+		// do not emit compiled assets that include errors
         new webpack.ProvidePlugin({
-            'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+            'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
         }),
         new BundleTracker({filename: './webpack-stats.json'}),
 		new ExtractTextPlugin('[name].css'),
@@ -40,7 +56,8 @@ module.exports = {
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
-                presets: ['es2015', 'react']
+                presets: ['es2015', 'react'],
+				plugins: ["react-hot-loader/babel"]
             }
         } , {
             test: /\.css$/,

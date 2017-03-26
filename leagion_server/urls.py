@@ -28,14 +28,15 @@ from leagion.api import views as api_views
 
 urlpatterns = [
     #authentication
-    url(r'login/', api_views.LoginView.as_view(), name='knox-login'),
-    url(r'logout/', api_views.LogoutView.as_view(), name='knox-logout'),
-    url(r'logoutall/', api_views.LogoutAllView.as_view(), name='knox-logoutall'),
+    url(r'lin/', api_views.LoginView.as_view(), name='login'),
+    url(r'lout/', api_views.LogoutView.as_view(), name='logout'),
+    url(r'loutall/', api_views.LogoutAllView.as_view(), name='logoutall'),
+    url(r'rgstr/', api_views.CreateUserView.as_view(), name='register'),
 
     #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
     url(r'^man/', admin.site.urls),
-    url(r'^lin/$', auth_views.login, name='login'),
-    url(r'^lout/$', auth_views.logout, name='logout'),
+    # url(r'^lin/$', auth_views.login, name='login'),
+    # url(r'^lout/$', auth_views.logout, name='logout'),
 
     url(r'^$', views.Index.as_view(), name="index"),
     url(r'^main/$', views.Main.as_view(), name="main"),

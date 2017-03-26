@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Login} from 'public/login';
+import {LoginForm, RegisterForm} from 'public/registration';
 
 class Public extends React.Component {
     render() {
         return (
-            <Login/>
+            <RegisterForm/>
         );
     }
 }
