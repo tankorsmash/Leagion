@@ -1,8 +1,11 @@
 import reverse from 'common/reverse';
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import {FormBase} from 'components/forms';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {fetchInfo} from 'common/default';
+import {app} from 'common/urls';
+import auth from 'main/registration/auth';
 
 class RegisterForm extends FormBase {
     constructor(props) {
@@ -17,20 +20,24 @@ class RegisterForm extends FormBase {
 
     handleSubmit(event) {
         event.preventDefault();
-        //console.log(reverse);
 
-        fetchInfo.method = 'POST';
-        fetchInfo.body = JSON.stringify(this.state);
+		let info = Object.assign({}, fetchInfo, {
+			method: 'POST',
+			body: JSON.stringify(this.state)
+		});
 
-        fetch(reverse('rest_register'), fetchInfo)
-            .then(function(response) {
-                console.log(response);
-            }).catch(function(err) {
-                console.log(err);
-        });
+		fetch(reverse('rest_register'), info)
+			.then(r => r.json())
+			.then(data => {
+				auth.login(data.token);
+			})
     }
 
     render() {
+		if (auth.loggedIn()) {
+			return (<Redirect to={app} />)
+		}
+
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
