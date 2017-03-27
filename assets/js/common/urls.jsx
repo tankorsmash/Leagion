@@ -1,3 +1,7 @@
+let root = '/main';
+let app = `${root}/app`;
+
 module.exports = {
-	root: 'main'
+	root: root,
+	app: app
 }
