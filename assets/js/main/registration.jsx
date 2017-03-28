@@ -20,7 +20,27 @@ let auth = {
     }
 }
 
-class RegisterForm extends FormBase {
+class RegisterBase extends FormBase {
+    handleSubmit(event) {
+        event.preventDefault();
+
+		let info = Object.assign({}, fetchInfo, {
+			method: 'POST',
+			body: JSON.stringify(this.state)
+		});
+
+		fetch(reverse(this.url), info)
+			.then(r => r.json())
+			.then(data => {
+				auth.login(data.key);
+			})
+    }
+
+}
+
+class RegisterForm extends RegisterBase {
+    url = 'rest_register';
+
     constructor(props) {
 
         super(props);
@@ -31,20 +51,6 @@ class RegisterForm extends FormBase {
         };
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-
-		let info = Object.assign({}, fetchInfo, {
-			method: 'POST',
-			body: JSON.stringify(this.state)
-		});
-
-		fetch(reverse('rest_register'), info)
-			.then(r => r.json())
-			.then(data => {
-				auth.login(data.token);
-			})
-    }
 
     render() {
 		if (auth.loggedIn()) {
@@ -71,7 +77,9 @@ class RegisterForm extends FormBase {
     }
 }
 
-class LoginForm extends FormBase {
+class LoginForm extends RegisterBase {
+    url = 'rest_login';
+
     constructor(props) {
 
         super(props);
@@ -81,31 +89,16 @@ class LoginForm extends FormBase {
         };
     }
 
-    handleSubmit(event) {
-        event.preventDefault();
-        //console.log(reverse);
-
-        fetchInfo.method = 'POST';
-        fetchInfo.body = JSON.stringify(this.state);
-
-        fetch(reverse('rest_register'), fetchInfo)
-            .then(function(response) {
-                console.log(response);
-            }).catch(function(err) {
-                console.log(err);
-        });
-    }
-
     render() {
         return (
-            <Form>
+            <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label for="loginEmail">Email</Label>
-                    <Input type="email" name="email" id="loginEmail" />
+                    <Input type="email" name="email" id="loginEmail" value={this.state.email} onChange={this.handleInputChange} />
                 </FormGroup>
                 <FormGroup>
                     <Label for="loginPassword">Password</Label>
-                    <Input type="password" name="password" id="loginPassword" />
+                    <Input type="password" name="password" id="loginPassword" value={this.state.password} onChange={this.handleInputChange} />
                 </FormGroup>
                 <Button>Log In</Button>
                 <Link to={`${root}/register`}>Register</Link>
