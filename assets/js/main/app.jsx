@@ -1,5 +1,5 @@
 import React from 'react';
-import auth from 'main/registration/auth'
+import {auth} from 'main/registration'
 
 module.exports = React.createClass({
    getInitialState: function() {
