@@ -5,7 +5,7 @@ import {Container, Row, Col} from 'reactstrap';
 import {Navbar} from 'components/nav';
 import App from 'main/app.jsx';
 import {RegisterForm, LoginForm, auth} from 'main/registration';
-import {root} from 'common/urls';
+import urls from 'common/urls';
 
 const PrivateRoute = ({ component, ...rest }) => (
     <Route {...rest} render={props => (
@@ -13,7 +13,7 @@ const PrivateRoute = ({ component, ...rest }) => (
             React.createElement(component, props)
         ) : (
             <Redirect to={{
-                pathname: `${root}/login`,
+                pathname: urls.login,
                 state: { from: props.location }
             }}/>
         )
@@ -21,11 +21,6 @@ const PrivateRoute = ({ component, ...rest }) => (
 )
 
 class Public extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
     render() {
         return (
             <div>Your at the public page!</div>
@@ -48,10 +43,10 @@ const Main = ({match}) => {
                     <Col>
                         <main>
                             <Switch>
-                                <Route exact path={`${match.url}`} component={Public} />
-                                <Route path={`${match.url}/login`} component={LoginForm} />
-                                <Route path={`${match.url}/register`} component={RegisterForm} />
-                                <PrivateRoute path={`${match.url}/app/`} component={App}/>
+                                <Route exact path={urls.root} component={Public} />
+                                <Route path={urls.login} component={LoginForm} />
+                                <Route path={urls.register} component={RegisterForm} />
+                                <PrivateRoute path={urls.app.index} component={App}/>
                                 <Route component={FourOhFour} />
                             </Switch>
                         </main>
@@ -79,7 +74,7 @@ class Index extends React.Component {
 
         return (
             <Router>
-                <Route path={`${root}/`} component={Main} />
+                <Route path={`${urls.root}/`} component={Main} />
             </Router>
         );
     }

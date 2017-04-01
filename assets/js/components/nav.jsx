@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Link} from 'react-router-dom';
 import { Collapse, Navbar as BSNavbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
-import {root} from 'common/urls';
+import urls from 'common/urls';
+import {LogoutButton, LoginButton} from 'main/registration';
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -23,11 +24,12 @@ class Navbar extends React.Component {
             <div>
                 <BSNavbar color="faded" light toggleable>
                     <NavbarToggler right onClick={this.toggle} />
-                    <NavbarBrand href={root}>Leagion</NavbarBrand>
+                    <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href={root}>League</NavLink>
+                                <LogoutButton />
+                                <LoginButton />
                             </NavItem>
                         </Nav>
                     </Collapse>
