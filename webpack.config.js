@@ -12,6 +12,7 @@ module.exports = {
 		vendor: [
             "expose-loader?React!react",
             "expose-loader?$!jquery/dist/jquery.slim",
+            "expose-loader?toastr!toastr",
 			'react-hot-loader/patch',
 			'webpack-dev-server/client?http://localhost:20034',
 			'webpack/hot/only-dev-server',
