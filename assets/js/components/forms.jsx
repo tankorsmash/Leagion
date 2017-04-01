@@ -1,5 +1,3 @@
-import React from 'react';
-
 class FormBase extends React.Component {
     constructor(props) {
         super(props);

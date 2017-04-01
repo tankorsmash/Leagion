@@ -4,16 +4,22 @@
 //     url: ''
 //
 // }
+import {auth} from 'main/registration';
+import {getCookie} from 'common/utils';
+
 let ajax = function(options) {
-	let data = options.data || {};
-	let body  = JSON.stringify(data);
+	let data = options.data || null;
+	let body = null;
+	if (data) {
+		body = JSON.stringify(data);
+	}
 
 	let info = {
 		method: options.method || 'GET',
 		body: body,
 		credentials: "same-origin",
 		headers: {
-			//"X-CSRFToken": getCookie("csrftoken"),
+			"X-CSRFToken": getCookie("csrftoken"),
 			"Accept": "application/json",
 			"Content-Type": "application/json"
 		},
@@ -24,10 +30,16 @@ let ajax = function(options) {
 		// reject the promise
 		(resolve, reject) => {
 			fetch(options.url, info)
-				.then(r => r.json())
+				.then(r => {
+					if (r.status == 200) {
+						return r.json()
+					} else {
+						reject(r);
+					}
+				})
 				.then(data => {
 					resolve(data);
-				})
+				});
 		}
 	);
 

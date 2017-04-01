@@ -1,22 +1,20 @@
-import reverse from 'common/reverse';
-import React from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import {FormBase} from 'components/forms';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import ajax from 'common/fetch';
+import ajax from 'common/ajax';
 import urls from 'common/urls';
 
 let auth = {
     login: function(token) {
-        localStorage.token = token;
+        localStorage.logged_in = true;
     },
 
     logout: function() {
-        delete localStorage.token;
+        delete localStorage.logged_in;
     },
 
     loggedIn: function() {
-        return !!localStorage.token;
+        return !!localStorage.logged_in;
     }
 }
 
@@ -53,7 +51,9 @@ class RegisterBase extends FormBase {
         }).then(data => {
             auth.login(data.key);
             this.forceUpdate();
-        })
+        }).catch(r => {
+            throw('login error');
+        });
 
     }
 
