@@ -29,12 +29,13 @@ urlpatterns = [
     # django-rest-auth
     url(r'lin/', reg_views.LoginView.as_view(), name='rest_login'),
     url(r'lout/', reg_views.LogoutView.as_view(), name='rest_logout'),
-    url(r'usrdtls/', reg_views.UserDetailsView.as_view(), name='rest_user_details'),
     url(r'pswdrst/', reg_views.PasswordResetView.as_view(), name='rest_password_reset'),
     url(r'pswdrstcfm/', reg_views.PasswordResetConfirmView.as_view(), name='rest_password_reset_confirm'),
     url(r'pswdchg/', reg_views.PasswordChangeView.as_view(), name='rest_password_change'),
     url(r'rgstr/', reg_views.RegisterView.as_view(), name='rest_register'),
     url(r'vrfyeml/', reg_views.VerifyEmailView.as_view(), name='rest_verify_email'),
+
+    url(r'usrdtls/', user_views.UserDetailsView.as_view(), name='rest_user_details'),
 
     #django-allauth
     url(r'^accounts/', include('allauth.urls')),
