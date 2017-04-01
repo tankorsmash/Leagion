@@ -4,7 +4,7 @@ import {Redirect, Link} from 'react-router-dom';
 import {FormBase} from 'components/forms';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import {fetchInfo} from 'common/default';
-import {app} from 'common/urls';
+import urls from 'common/urls';
 
 let auth = {
     login: function(token) {
@@ -17,6 +17,28 @@ let auth = {
 
     loggedIn: function() {
         return !!localStorage.token;
+    }
+}
+
+const LogoutButton = () => {
+    if (auth.loggedIn()) {
+        return (
+            <Link to={urls.login} onClick={auth.logout}>
+                Logout
+            </Link>
+        );
+    } else {
+        return null;
+    }
+}
+
+const LoginButton = () => {
+    if (!auth.loggedIn()) {
+        return (
+            <Link to={urls.login}>Login</Link>
+        );
+    } else {
+        return null;
     }
 }
 
@@ -39,7 +61,7 @@ class RegisterBase extends FormBase {
 
     render() {
 		if (auth.loggedIn()) {
-			return (<Redirect to={app} />)
+			return (<Redirect to={urls.app.index} />)
         } else {
             return this.getForm();
         }
@@ -115,5 +137,7 @@ class LoginForm extends RegisterBase {
 module.exports = {
     RegisterForm: RegisterForm,
     LoginForm: LoginForm,
+    LogoutButton: LogoutButton,
+    LoginButton: LoginButton,
     auth: auth
 };
