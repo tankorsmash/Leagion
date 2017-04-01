@@ -33,7 +33,16 @@ class RegisterBase extends FormBase {
 			.then(r => r.json())
 			.then(data => {
 				auth.login(data.key);
+                this.forceUpdate();
 			})
+    }
+
+    render() {
+		if (auth.loggedIn()) {
+			return (<Redirect to={app} />)
+        } else {
+            return this.getForm();
+        }
     }
 
 }
@@ -52,11 +61,7 @@ class RegisterForm extends RegisterBase {
     }
 
 
-    render() {
-		if (auth.loggedIn()) {
-			return (<Redirect to={app} />)
-		}
-
+    getForm() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
@@ -89,7 +94,7 @@ class LoginForm extends RegisterBase {
         };
     }
 
-    render() {
+    getForm() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
