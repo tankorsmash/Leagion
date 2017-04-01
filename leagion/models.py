@@ -89,10 +89,6 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 		return self.first_name
 
 	@property
-	def username(self):
-		return self.email
-
-	@property
 	def full_name(self):
 		return self.get_full_name()
 

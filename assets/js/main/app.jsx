@@ -21,15 +21,16 @@ class App extends React.Component {
         ajax({
             url: reverse('rest_user_details'),
         }).then(data => {
+           this.setState({user: data})
            console.log(data);
+           console.log(this.state);
         });
    }
 
    render() {
       return (
          <div>
-            <h1>You are now logged in, {this.state.user.username}</h1>
-            <button onClick={this.logoutHandler}>Log out</button>
+            <h1>You are now logged in, {this.state.user.full_name}</h1>
          </div>
       );        
    }
