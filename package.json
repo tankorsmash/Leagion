@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --port 20034 --inline --hot"
+    "start": "webpack-dev-server --port 20034 --inline"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
     "expose-loader": "^0.7.3",
     "extract-text-webpack-plugin": "^2.1.0",
     "imports-loader": "^0.7.1",
+    "jquery": "^3.2.1",
     "react": "^15.4.2",
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
