@@ -3,7 +3,7 @@ import React from 'react';
 import {Redirect, Link} from 'react-router-dom';
 import {FormBase} from 'components/forms';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import {fetchInfo} from 'common/default';
+import ajax from 'common/fetch';
 import urls from 'common/urls';
 
 let auth = {
@@ -46,17 +46,15 @@ class RegisterBase extends FormBase {
     handleSubmit(event) {
         event.preventDefault();
 
-		let info = Object.assign({}, fetchInfo, {
+        ajax({
+            url: reverse(this.url),
 			method: 'POST',
-			body: JSON.stringify(this.state)
-		});
+            data: this.state,
+        }).then(data => {
+            auth.login(data.key);
+            this.forceUpdate();
+        })
 
-		fetch(reverse(this.url), info)
-			.then(r => r.json())
-			.then(data => {
-				auth.login(data.key);
-                this.forceUpdate();
-			})
     }
 
     render() {

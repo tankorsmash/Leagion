@@ -62,12 +62,12 @@ class Index extends React.Component {
 
         super(props);
         this.state = {
-            isAuthenticated: false,
+            //isAuthenticated: false,
         };
     }
 
     logout() {
-        this.setState({isAuthenticated: false});
+        //this.setState({isAuthenticated: false});
     }
 
     render() {

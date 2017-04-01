@@ -1,15 +1,39 @@
 import React from 'react';
 import {auth} from 'main/registration'
 
+class Index extends React.Component {
+    constructor(props) {
+
+        super(props);
+        this.state = {
+           user: []
+        };
+    }
+
+   componentDidMount() {
+      this.loadUserData();
+
+   }
+
+    logout() {
+        this.setState({isAuthenticated: false});
+    }
+
+    render() {
+
+        return (
+            <Router>
+                <Route path={`${urls.root}/`} component={Main} />
+            </Router>
+        );
+    }
+}
+
 module.exports = React.createClass({
    getInitialState: function() {
         return {'user':[]}
     },
 
-    componentDidMount: function() {
-        this.loadUserData()
-    },
-            
     contextTypes: {
         router: React.PropTypes.object.isRequired
     },
