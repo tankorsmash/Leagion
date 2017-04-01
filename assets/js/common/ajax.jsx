@@ -34,6 +34,7 @@ let ajax = function(options) {
 					if (r.status == 200) {
 						return r.json()
 					} else {
+						$.toastr.error(`bad request -> url:${r.url}, status ${r.status} - ${r.statusText}`);
 						reject(r);
 					}
 				})
