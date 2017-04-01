@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
 import {Navbar} from 'components/nav';
-import {BrowserRouter as Router, Route, IndexRoute, Redirect} from 'react-router-dom';
 import App from 'main/app.jsx';
 import {RegisterForm, LoginForm, auth} from 'main/registration';
 import {root} from 'common/urls';
@@ -33,6 +33,11 @@ class Public extends React.Component {
     }
 }
 
+const FourOhFour = (props) => {
+    return (
+        <div>404</div>
+    );
+}
 
 const Main = ({match}) => {
     return (
@@ -42,10 +47,13 @@ const Main = ({match}) => {
                 <Row>
                     <Col>
                         <main>
-                            <Route component={Public} />
-                            <Route path={`${match.url}/login`} component={LoginForm} />
-                            <Route path={`${match.url}/register`} component={RegisterForm} />
-                            <PrivateRoute path={`${match.url}/app/`} component={App}/>
+                            <Switch>
+                                <Route exact path={`${match.url}`} component={Public} />
+                                <Route path={`${match.url}/login`} component={LoginForm} />
+                                <Route path={`${match.url}/register`} component={RegisterForm} />
+                                <PrivateRoute path={`${match.url}/app/`} component={App}/>
+                                <Route component={FourOhFour} />
+                            </Switch>
                         </main>
                     </Col>
                 </Row>
