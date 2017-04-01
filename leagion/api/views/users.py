@@ -22,6 +22,17 @@ class UserDetail(generics.RetrieveUpdateAPIView):
     serializer_class = serializers.UserSerializer
 
 @reverse_js
+class UserDetailsView(generics.RetrieveUpdateAPIView):
+    """ GET, PUT, and PATCH current users details """
+    serializer_class = serializers.UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+    def get_queryset(self):
+        return get_user_model().objects.none()
+
+@reverse_js
 class MatchList(generics.ListCreateAPIView):
     queryset = Match.objects.all()
     serializer_class = serializers.MatchSerializer

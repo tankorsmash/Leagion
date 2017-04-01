@@ -30,6 +30,7 @@ ALLOWED_HOSTS = [".webfactional.com", ".leagionthebase.com"]
 
 ADMINS = [('TankorSmash', 'tankorsmash@gmail.com'), ]
 
+USER_DETAILS_SERIALIZER = 'leagion.api.serializers.UserSerializer'
 
 # Application definition
 
@@ -38,8 +39,8 @@ INSTALLED_APPS = [
 
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',

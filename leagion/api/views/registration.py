@@ -30,10 +30,6 @@ class LogoutView(AuthLogoutView):
     pass
 
 @reverse_js
-class UserDetailsView(AuthUserDetailsView):
-    pass
-
-@reverse_js
 class PasswordResetView(AuthPasswordResetView):
     pass
 
