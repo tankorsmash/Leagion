@@ -10,6 +10,7 @@ module.exports = {
 
 	entry: {
 		vendor: [
+            "expose-loader?React!react",
 			'react-hot-loader/patch',
 			'webpack-dev-server/client?http://localhost:20034',
 			'webpack/hot/only-dev-server',

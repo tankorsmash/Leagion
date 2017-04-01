@@ -1,4 +1,5 @@
-import React from 'react';
+require("expose-loader?reverse!common/reverse");
+
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
