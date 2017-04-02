@@ -14,27 +14,19 @@ class Dashboard extends React.Component {
 }
 
 class App extends React.Component {
-    constructor(props) {
-
-        super(props);
-        this.state = {
-           user: {}
-        };
-    }
-
    componentDidMount() {
       this.loadUserData();
    }
 
    loadUserData() {
 
-        ajax({
-            url: reverse('rest_user_details'),
-        }).then(data => {
-           this.setState({user: data})
-           console.log(data);
-           console.log(this.state);
-        });
+      ajax({
+         url: reverse('rest_user_details'),
+      }).then(data => {
+         localStorage.id = data.id;
+         localStorage.email = data.email;
+         localStorage.name = data.name;
+      });
    }
 
    render() {

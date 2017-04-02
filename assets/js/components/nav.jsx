@@ -1,5 +1,10 @@
 import {Link} from 'react-router-dom';
-import { Collapse, Navbar as BSNavbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+
+import { Collapse, Navbar as BSNavbar, NavbarToggler, 
+    NavbarBrand, NavDropdown, DropdownToggle, DropdownMenu, 
+    DropdownItem, Nav, NavItem, NavLink 
+} from 'reactstrap';
+
 import urls from 'common/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
@@ -29,15 +34,37 @@ class MainItems extends React.Component {
 class PublicProfile extends React.Component {
     render() {
         return (
-            <LoginButton className="nav-link" />
+            <NavLink tag={LoginButton} />
         )
     }
 }
 
 class MainProfile extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            dropdownOpen: false
+        };
+    }
+
+    toggle() {
+        this.setState({
+            dropdownOpen: !this.state.dropdownOpen
+        });
+    }
+
     render() {
         return (
-            <LogoutButton className="nav-link" />
+            <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                <DropdownToggle nav>
+                    {localStorage.email}
+                </DropdownToggle>
+                <DropdownMenu right>
+                    <DropdownItem header tag={LogoutButton}>Header</DropdownItem>
+                </DropdownMenu>
+            </NavDropdown>
         )
     }
 }
@@ -46,22 +73,17 @@ class ProfileButtons extends React.Component {
     render() {
         return (
             <Nav className="ml-auto" navbar>
-                <NavItem>
-                    {(() => {
-                        if (auth.loggedIn()) {
-                            return (<MainProfile />);
-                        } else {
-                            return (<Publicprofile />);
-                        }
-
-                    })()}
-                </NavItem>
+                {(() => {
+                    if (auth.loggedIn()) {
+                        return (<MainProfile />);
+                    } else {
+                        return (<PublicProfile />);
+                    }
+                })()}
             </Nav>
         )
     }
 }
-
-
 
 class Navbar extends React.Component {
     constructor(props) {
