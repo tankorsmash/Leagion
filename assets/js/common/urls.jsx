@@ -1,5 +1,6 @@
 let root = '/main';
 let app = `${root}/app`;
+let teams = `${app}/teams`;
 
 module.exports = {
 	root: root,
@@ -11,6 +12,9 @@ module.exports = {
 	//app
 	app: {
 		index: app,
+		teams: {
+			index: teams
+		},
 		admin: {
 
 		},
