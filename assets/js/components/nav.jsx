@@ -25,10 +25,7 @@ class MainItems extends React.Component {
         return (
             <Nav navbar>
                 <NavItem>
-                    <NavLink>wosdh</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink>lala</NavLink>
+                    <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
                 </NavItem>
             </Nav>
         )
