@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
          <div>
             this is Dashboard
          </div>
-      );        
+      );
    }
 }
 
@@ -34,7 +34,7 @@ class App extends React.Component {
          <Switch>
             <Route exact path={urls.app.index} component={Dashboard} />
          </Switch>
-      );        
+      );
    }
 }
 

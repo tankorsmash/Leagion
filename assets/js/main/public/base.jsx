@@ -20,6 +20,6 @@ class Public extends React.Component {
 			</Switch>
         );
     }
-} 
+}
 
 module.exports = Public;
