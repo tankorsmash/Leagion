@@ -7,6 +7,8 @@ bin/**
 **/xcuserdata/**
 **/build/**
 
+
+**__pycache__**
 *.pyc
 
 *.a
@@ -20,6 +22,7 @@ bin/**
 *~
 *.un
 *.swp
+*.orig
 
 *.lib
 *.dll
@@ -27,10 +30,7 @@ bin/**
 
 **/Debug/**
 
-*.tlog
-
 *ipch*
-proj.win32/Debug.win32/beatupisis.log
 
 *.exe
 *.apk
@@ -42,18 +42,6 @@ proj.win32/Debug.win32/beatupisis.log
 *tags*
 
 raw/*
-
-!raw/buildup_editor/*
-!raw/buildup_editor
-
-raw/buildup_editor/Resources
-raw/buildup_editor/Resources/*
-
-proj.win32/beatupisis.v12.suo
-proj.win32/Debug.win32/*
-
-
-proj.android/assets/*
 
 Doxy*
 
