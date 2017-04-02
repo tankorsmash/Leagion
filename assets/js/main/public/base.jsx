@@ -5,7 +5,7 @@ import urls from 'common/urls';
 class Index extends React.Component {
     render() {
         return (
-            <div>Your at the public page!</div>
+            <div>You're at the public page!</div>
         );
     }
 }
