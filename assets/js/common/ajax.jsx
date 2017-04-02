@@ -4,7 +4,7 @@
 //     url: ''
 //
 // }
-import {auth} from 'main/registration';
+import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
 let ajax = function(options) {
