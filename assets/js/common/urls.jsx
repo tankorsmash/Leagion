@@ -1,19 +1,19 @@
-let root = '/main';
-let app = `${root}/app`;
-let teams = `${app}/teams`;
+let rootUrl = '/main';
+let appUrl = `${rootUrl}/app`;
+let teamsUrl = `${appUrl}/teams`;
 
 module.exports = {
-	root: root,
+	root: rootUrl,
 
 	//registration
-	login: `${root}/login`,
-	register: `${root}/register`,
+	login: `${rootUrl}/login`,
+	register: `${rootUrl}/register`,
 
 	//app
 	app: {
-		index: app,
+		index: appUrl,
 		teams: {
-			index: teams
+			index: teamsUrl
 		},
 		admin: {
 
