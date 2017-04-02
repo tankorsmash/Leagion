@@ -5,10 +5,10 @@ import ajax from 'common/ajax';
 import urls from 'common/urls';
 import auth from 'main/auth';
 
-const LogoutButton = () => {
+const LogoutButton = ({...rest}) => {
     if (auth.loggedIn()) {
         return (
-            <Link to={urls.login} onClick={auth.logout}>
+            <Link {...rest} to={urls.login} onClick={auth.logout}>
                 Logout
             </Link>
         );
@@ -17,10 +17,10 @@ const LogoutButton = () => {
     }
 }
 
-const LoginButton = () => {
+const LoginButton = ({...rest}) => {
     if (!auth.loggedIn()) {
         return (
-            <Link to={urls.login}>Login</Link>
+            <Link {...rest} to={urls.login}>Login</Link>
         );
     } else {
         return null;
