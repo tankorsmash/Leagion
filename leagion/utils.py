@@ -3,40 +3,46 @@ import faker
 import random
 import datetime
 
-from leagion.models import User, Team, League, Match, Roster, Location
+from django.contrib.auth import get_user_model
+from leagion.models import Team, League, Match, Roster, Location
+
+User = get_user_model()
+
+viewnames_exposed_js = set()
+
+def reverse_js(view):
+    viewnames_exposed_js.add(view)
+    return view
 
 def generate_users(count, team=None):
     f = faker.Faker()
 
-    existing_usernames = list(User.objects.all().values_list("username", flat=True))
+    existing_emails = list(User.objects.all().values_list("email", flat=True))
 
     new_users = []
     for i in range(count):
-        #ensure unique username
-        username = f.user_name()
-        while username in existing_usernames:
-            username = f.user_name()
+        #ensure unique email
+        email = f.email()
+        while email in existing_emails:
+            email = f.email()
 
         user = User(
-            username=username,
-            email=f.email(),
+            email=email,
             first_name=f.first_name(),
             last_name=f.last_name(),
-            password=f.password()
         )
+        user.set_password('abc123')
         new_users.append(user)
 
     User.objects.bulk_create(new_users)
 
     #get the new users from the database so that they've got ids
-    created_users = User.objects.filter(username__in=[u.username for u in new_users])
+    created_users = User.objects.filter(email__in=[u.email for u in new_users])
 
     if team:
         team.players.add(*created_users)
 
     return created_users
-
-
 
 def generate_league(name=None, teams_count=5, players_in_team_count=15):
     print("generating league")
@@ -57,10 +63,8 @@ def generate_teams(league, team_count, players_count):
             name=f.street_name(),
             league=league
         )
-        print("generating players for team", i+1, "of", team_count)
+        print("generating players for team", i + 1, "of", team_count)
         generate_users(players_count, team)
-
-
 
 def generate_locations(location_count=10):
     f = faker.Faker()
@@ -81,7 +85,7 @@ def generate_roster(team, match):
         team=team,
         match=match,
     )
-    players=random.sample(
+    players = random.sample(
         list(team.players.all()),
         f.random_int(10, team.players.count())
     )

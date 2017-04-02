@@ -14,7 +14,9 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_PATH = os.path.abspath(os.path.join('..', BASE_DIR))
 
+from .local import *
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -28,6 +30,7 @@ ALLOWED_HOSTS = [".webfactional.com", ".leagionthebase.com"]
 
 ADMINS = [('TankorSmash', 'tankorsmash@gmail.com'), ]
 
+USER_DETAILS_SERIALIZER = 'leagion.api.serializers.UserSerializer'
 
 # Application definition
 
@@ -36,16 +39,24 @@ INSTALLED_APPS = [
 
     'django.contrib.admin',
     'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     'django_extensions',
 
     'rest_framework',
-
+    'allauth',
+    'allauth.account',
+    'rest_framework.authtoken',
+    'rest_auth',
+    'rest_auth.registration',
+    'webpack_loader'
 ]
+
+SITE_ID = 1 # for django rest auth
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -102,20 +113,37 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#for django rest auth
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.IsAuthenticated'
+        # 'rest_framework.permissions.AllowAny'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     )
 }
 
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -139,6 +167,10 @@ LOGIN_REDIRECT_URL = 'index'
 STATIC_URL = '/static/'
 #STATIC_ROOT = '/home/tankorsmash/webapps/leagion_static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'), # We do this so that django's collectstatic copies or our bundles to the STATIC_ROOT or syncs them to whatever storage we use.
+)
+
 # always include leagion.utils
 SHELL_PLUS_PRE_IMPORTS = (
     ('leagion', ('utils',)),
@@ -149,4 +181,5 @@ SHELL_PLUS_PRE_IMPORTS = (
     'django'
 )
 
-from .local import *
+# set auth user model to our own custom model
+AUTH_USER_MODEL = 'leagion.User'

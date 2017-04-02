@@ -6,6 +6,7 @@ from collections import Counter
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, render_to_response, get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth import get_user_model
 
 from django.views.generic import TemplateView, DetailView
 from django.template.response import TemplateResponse
@@ -14,7 +15,12 @@ from django.db.models import Q
 
 from django.utils.html import mark_safe
 
-from leagion.models import User, Team, League, Match, Roster
+from leagion.models import Team, League, Match, Roster
+
+User = get_user_model()
+
+class Main(TemplateView):
+    template_name = "react/main.html"
 
 # views
 class Index(TemplateView):
