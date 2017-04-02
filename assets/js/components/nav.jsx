@@ -26,6 +26,7 @@ class MainItems extends React.Component {
             <Nav navbar>
                 <NavItem>
                     <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
+                    <NavLink tag={Link} to={urls.app.matches.index}>Matches</NavLink>
                 </NavItem>
             </Nav>
         )

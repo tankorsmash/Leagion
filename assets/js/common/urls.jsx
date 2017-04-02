@@ -1,6 +1,7 @@
 let rootUrl = '/main';
 let appUrl = `${rootUrl}/app`;
 let teamsUrl = `${appUrl}/teams`;
+let matchesUrl = `${appUrl}/matches`;
 
 module.exports = {
 	root: rootUrl,
@@ -13,7 +14,10 @@ module.exports = {
 	app: {
 		index: appUrl,
 		teams: {
-			index: teamsUrl
+			index: teamsUrl,
+		},
+		matches: {
+			index: matchesUrl,
 		},
 		admin: {
 

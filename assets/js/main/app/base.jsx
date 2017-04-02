@@ -1,7 +1,10 @@
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+
 import Dashboard from 'main/app/dashboard';
 import Teams from 'main/app/teams';
+import Matches from 'main/app/matches';
 import auth from 'main/auth';
+
 import ajax from 'common/ajax';
 import urls from 'common/urls';
 
@@ -25,6 +28,7 @@ class App extends React.Component {
          <Switch>
             <Route exact path={urls.app.index} component={Dashboard} />
             <Route exact path={urls.app.teams.index} component={Teams} />
+            <Route exact path={urls.app.matches.index} component={Matches} />
          </Switch>
       );
    }
