@@ -25,9 +25,23 @@ class MainItems extends React.Component {
         return (
             <Nav navbar>
                 <NavItem>
+                    <NavLink>wosdh</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink>lala</NavLink>
                 </NavItem>
             </Nav>
         )
+    }
+}
+
+class ItemButtons extends React.Component {
+    render() {
+        if (auth.loggedIn()) {
+            return (<MainItems />);
+        } else {
+            return (<PublicItems />);
+        }
     }
 }
 
@@ -103,11 +117,12 @@ class Navbar extends React.Component {
         return (
             <div>
                 <BSNavbar color="faded" light toggleable>
-                    <NavbarToggler right onClick={this.toggle} />
                     <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
+                    <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
+                        <ItemButtons />
+                        <ProfileButtons />
                     </Collapse>
-                    <ProfileButtons />
                 </BSNavbar>
             </div>
         );
