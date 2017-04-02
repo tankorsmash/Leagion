@@ -2,6 +2,66 @@ import {Link} from 'react-router-dom';
 import { Collapse, Navbar as BSNavbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import urls from 'common/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
+import auth from 'main/auth';
+
+class PublicItems extends React.Component {
+    render() {
+        return (
+            <Nav navbar>
+                <NavItem>
+                </NavItem>
+            </Nav>
+        )
+    }
+}
+
+class MainItems extends React.Component {
+    render() {
+        return (
+            <Nav navbar>
+                <NavItem>
+                </NavItem>
+            </Nav>
+        )
+    }
+}
+
+class PublicProfile extends React.Component {
+    render() {
+        return (
+            <LoginButton className="nav-link" />
+        )
+    }
+}
+
+class MainProfile extends React.Component {
+    render() {
+        return (
+            <LogoutButton className="nav-link" />
+        )
+    }
+}
+
+class ProfileButtons extends React.Component {
+    render() {
+        return (
+            <Nav className="ml-auto" navbar>
+                <NavItem>
+                    {(() => {
+                        if (auth.loggedIn()) {
+                            return (<MainProfile />);
+                        } else {
+                            return (<Publicprofile />);
+                        }
+
+                    })()}
+                </NavItem>
+            </Nav>
+        )
+    }
+}
+
+
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -24,13 +84,8 @@ class Navbar extends React.Component {
                     <NavbarToggler right onClick={this.toggle} />
                     <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem>
-                                <LogoutButton className="nav-link" />
-                                <LoginButton className="nav-link" />
-                            </NavItem>
-                        </Nav>
                     </Collapse>
+                    <ProfileButtons />
                 </BSNavbar>
             </div>
         );
