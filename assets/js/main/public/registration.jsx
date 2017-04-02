@@ -91,7 +91,7 @@ class LoginForm extends RegisterBase {
                     <Input type="password" name="password" id="loginPassword" value={this.state.password} onChange={this.handleInputChange} />
                 </FormGroup>
                 <Button>Log In</Button>
-                <Link to={`${root}/register`}>Register</Link>
+                <Link to={urls.register}>Register</Link>
             </Form>
         );
     }
