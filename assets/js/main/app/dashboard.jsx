@@ -4,7 +4,7 @@ class Dashboard extends React.Component {
          <div>
             this is Dashboard
          </div>
-      );        
+      );
    }
 }
 
