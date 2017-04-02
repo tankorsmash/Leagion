@@ -5,28 +5,6 @@ import ajax from 'common/ajax';
 import urls from 'common/urls';
 import auth from 'main/auth';
 
-const LogoutButton = ({...rest}) => {
-    if (auth.loggedIn()) {
-        return (
-            <Link {...rest} to={urls.login} onClick={auth.logout}>
-                Logout
-            </Link>
-        );
-    } else {
-        return null;
-    }
-}
-
-const LoginButton = ({...rest}) => {
-    if (!auth.loggedIn()) {
-        return (
-            <Link {...rest} to={urls.login}>Login</Link>
-        );
-    } else {
-        return null;
-    }
-}
-
 class RegisterBase extends FormBase {
     handleSubmit(event) {
         event.preventDefault();
@@ -114,7 +92,5 @@ class LoginForm extends RegisterBase {
 module.exports = {
     RegisterForm: RegisterForm,
     LoginForm: LoginForm,
-    LogoutButton: LogoutButton,
-    LoginButton: LoginButton,
     auth: auth
 };
