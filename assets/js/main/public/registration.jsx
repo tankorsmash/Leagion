@@ -3,20 +3,7 @@ import {FormBase} from 'components/forms';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import ajax from 'common/ajax';
 import urls from 'common/urls';
-
-let auth = {
-    login: function(token) {
-        localStorage.logged_in = true;
-    },
-
-    logout: function() {
-        delete localStorage.logged_in;
-    },
-
-    loggedIn: function() {
-        return !!localStorage.logged_in;
-    }
-}
+import auth from 'main/auth';
 
 const LogoutButton = () => {
     if (auth.loggedIn()) {
@@ -57,14 +44,6 @@ class RegisterBase extends FormBase {
 
     }
 
-    render() {
-		if (auth.loggedIn()) {
-			return (<Redirect to={urls.app.index} />)
-        } else {
-            return this.getForm();
-        }
-    }
-
 }
 
 class RegisterForm extends RegisterBase {
@@ -81,7 +60,7 @@ class RegisterForm extends RegisterBase {
     }
 
 
-    getForm() {
+    render() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
@@ -114,7 +93,7 @@ class LoginForm extends RegisterBase {
         };
     }
 
-    getForm() {
+    render() {
         return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>

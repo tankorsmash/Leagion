@@ -2,9 +2,11 @@ import ajax from 'common/ajax';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
 import {Navbar} from 'components/nav';
-import {RegisterForm, LoginForm, auth} from 'main/registration';
+import {RegisterForm, LoginForm} from 'main/public/registration';
 import urls from 'common/urls';
-import App from 'main/app';
+import App from 'main/app/base';
+import Public from 'main/public/base';
+import auth from 'main/auth'
 
 const PrivateRoute = ({ component, ...rest }) => (
     <Route {...rest} render={props => (
@@ -13,19 +15,21 @@ const PrivateRoute = ({ component, ...rest }) => (
         ) : (
             <Redirect to={{
                 pathname: urls.login,
-                state: { from: props.location }
+                //state: { from: props.location }
             }}/>
         )
     )}/>
 )
 
-class Public extends React.Component {
-    render() {
-        return (
-            <div>Your at the public page!</div>
-        );
-    }
-}
+const PublicRoute = ({ component, ...rest }) => (
+    <Route {...rest} render={props => (
+        auth.loggedIn() ? (
+            <Redirect to={{ pathname: urls.app.index }}/>
+        ) : (
+            React.createElement(component, props)
+        )
+    )}/>
+)
 
 const FourOhFour = (props) => {
     return (
@@ -42,10 +46,8 @@ const Main = ({match}) => {
                     <Col>
                         <main>
                             <Switch>
-                                <Route exact path={urls.root} component={Public} />
-                                <Route path={urls.login} component={LoginForm} />
-                                <Route path={urls.register} component={RegisterForm} />
                                 <PrivateRoute path={urls.app.index} component={App}/>
+                                <PublicRoute path={urls.root} component={Public}/>
                                 <Route component={FourOhFour} />
                             </Switch>
                         </main>
@@ -58,15 +60,8 @@ const Main = ({match}) => {
 
 class Base extends React.Component {
     constructor(props) {
-
         super(props);
-        this.state = {
-            //isAuthenticated: false,
-        };
-    }
-
-    logout() {
-        //this.setState({isAuthenticated: false});
+        this.state = {};
     }
 
     render() {
