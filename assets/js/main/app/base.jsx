@@ -11,7 +11,6 @@ class App extends React.Component {
    }
 
    loadUserData() {
-
       ajax({
          url: reverse('rest_user_details'),
       }).then(data => {
