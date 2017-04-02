@@ -8,28 +8,21 @@ import App from 'main/app/base';
 import Public from 'main/public/base';
 import auth from 'main/auth'
 
-const PrivateRoute = ({ component, ...rest }) => (
-    <Route {...rest} render={props => (
-        auth.loggedIn() ? (
-            React.createElement(component, props)
-        ) : (
-            <Redirect to={{
-                pathname: urls.login,
-                //state: { from: props.location }
-            }}/>
-        )
-    )}/>
-)
+const PrivateRoute = (props) => {
+   if (auth.loggedIn()) {
+       return (<Route {...props} />);
+   } else  {
+       return <Redirect to={{ pathname: urls.login }}/>
+   }
+}
 
-const PublicRoute = ({ component, ...rest }) => (
-    <Route {...rest} render={props => (
-        auth.loggedIn() ? (
-            <Redirect to={{ pathname: urls.app.index }}/>
-        ) : (
-            React.createElement(component, props)
-        )
-    )}/>
-)
+const PublicRoute = (props) => {
+   if (auth.loggedIn()) {
+       return <Redirect to={{ pathname: urls.app.index }}/>
+   } else  {
+       return (<Route {...props} />);
+   }
+}
 
 const FourOhFour = (props) => {
     return (
@@ -37,25 +30,35 @@ const FourOhFour = (props) => {
     );
 }
 
-const Main = ({match}) => {
-    return (
-        <div>
-            <Navbar />
-            <Container>
-                <Row>
-                    <Col>
-                        <main>
-                            <Switch>
-                                <PrivateRoute path={urls.app.index} component={App}/>
-                                <PublicRoute path={urls.root} component={Public}/>
-                                <Route component={FourOhFour} />
-                            </Switch>
-                        </main>
-                    </Col>
-                </Row>
-            </Container>
-        </div>
-    );
+class Main extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: {}
+        };
+    }
+
+    render() {
+        return (
+            <div>
+                <Navbar user={this.state.user}/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <main>
+                                <Switch>
+                                    <PrivateRoute path={urls.app.index} component={App} />
+                                    <PublicRoute path={urls.root} component={Public}/>
+                                    <Route component={FourOhFour} />
+                                </Switch>
+                            </main>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+        );
+
+    }
 }
 
 class Base extends React.Component {
