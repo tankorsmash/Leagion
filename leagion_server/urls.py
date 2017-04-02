@@ -42,8 +42,6 @@ urlpatterns = [
 
     #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
     url(r'^man/', admin.site.urls),
-    # url(r'^lin/$', auth_views.login, name='login'),
-    # url(r'^lout/$', auth_views.logout, name='logout'),
 
     url(r'^$', views.Index.as_view(), name="index"),
     url(r'^main.*/$', views.Main.as_view(), name="main"),
