@@ -20,8 +20,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 from leagion import views
+
 from leagion.api.views import registration as reg_views
-from leagion.api.views import users as user_views
+from leagion.api.views import users as users_views
+from leagion.api.views import matches as matches_views
+from leagion.api.views import teams as teams_views
+from leagion.api.views import leagues as leagues_views
 
 urlpatterns = [
     #authentication
@@ -35,7 +39,7 @@ urlpatterns = [
     url(r'rgstr/', reg_views.RegisterView.as_view(), name='rest_register'),
     url(r'vrfyeml/', reg_views.VerifyEmailView.as_view(), name='rest_verify_email'),
 
-    url(r'usrdtls/', user_views.UserDetailsView.as_view(), name='rest_user_details'),
+    url(r'usrdtls/', users_views.UserDetailsView.as_view(), name='rest_user_details'),
 
     #django-allauth
     url(r'^accounts/', include('allauth.urls')),
@@ -50,9 +54,13 @@ urlpatterns = [
     url(r'^match/(?P<match_id>\d+)/$', views.MatchDetail.as_view(), name="match-detail"),
     url(r'^player/(?P<player_id>\d+)/$', views.PlayerDetail.as_view(), name="player-detail"),
 
-    url(r'^api/player/$', user_views.UserList.as_view(), name='api-player-list'),
-    url(r'^api/player/(?P<player_id>\d+)/$', user_views.UserDetail.as_view(), name='api-player-detail'),
-    url(r'^api/match/$', user_views.MatchList.as_view(), name='api-match-list'),
-    url(r'^api/match/(?P<match_id>\d+)/$', user_views.MatchDetail.as_view(), name='api-match-detail'),
+    url(r'^api/player/$', users_views.UserList.as_view(), name='api-player-list'),
+    url(r'^api/player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
+    url(r'^api/match/$', matches_views.MatchList.as_view(), name='api-match-list'),
+    url(r'^api/match/(?P<match_id>\d+)/$', matches_views.MatchDetail.as_view(), name='api-match-detail'),
+    url(r'^api/team/$', teams_views.TeamList.as_view(), name='api-team-list'),
+    url(r'^api/team/(?P<team_id>\d+)/$', teams_views.TeamDetail.as_view(), name='api-team-detail'),
+    url(r'^api/league/$', leagues_views.LeagueList.as_view(), name='api-league-list'),
+    url(r'^api/league/(?P<league_id>\d+)/$', leagues_views.LeagueDetail.as_view(), name='api-league-detail'),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
