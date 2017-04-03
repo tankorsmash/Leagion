@@ -31,17 +31,10 @@ const PublicRoute = (props) => {
 }
 
 class Main extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            user: {}
-        };
-    }
-
     render() {
         return (
             <div>
-                <Navbar user={this.state.user}/>
+                <Navbar/>
                 <Container>
                     <Row>
                         <Col>
