@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import { DropdownItem, DropdownMenu, NavLink } from 'reactstrap';
 
 class LeagueDropdownItem extends React.Component {
-   render(props) {
+   render() {
       return (
          <DropdownItem>
             <NavLink tag={Link} to={this.props.url}>{this.props.name}</NavLink>
@@ -15,7 +15,7 @@ class LeaguesDropdown extends React.Component {
     render() {
         let leagues = [];
         for (var i=0; i < 2; i++){
-           leagues.push(<LeagueDropdownItem url='#' name={`league #${i}`}/>);
+           leagues.push(<LeagueDropdownItem key={i} url='#' name={`league #${i}`}/>);
         };
 
         return (
