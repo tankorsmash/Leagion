@@ -8,6 +8,8 @@ import auth from 'main/auth';
 import ajax from 'common/ajax';
 import urls from 'common/urls';
 
+import {FourOhFour} from 'main/base/';
+
 class App extends React.Component {
    componentDidMount() {
       this.loadUserData();
@@ -26,9 +28,10 @@ class App extends React.Component {
    render() {
       return (
          <Switch>
-            <Route exact path={urls.app.index} component={Dashboard} />
-            <Route exact path={urls.app.teams.index} component={Teams} />
-            <Route exact path={urls.app.matches.index} component={Matches} />
+            <Route exact path={urls.app.tail} component={Dashboard} />
+            <Route exact path={urls.app.teams.tail} component={Teams} />
+            <Route exact path={urls.app.matches.tail} component={Matches} />
+            <Route path="**" component={FourOhFour} />
          </Switch>
       );
    }

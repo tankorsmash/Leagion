@@ -14,7 +14,7 @@ class Public extends React.Component {
     render() {
         return (
 			<Switch>
-				<Route exact path={urls.root} component={Index} />
+				{/* <Route exact path={urls.root} component={Index} /> */}
 				<Route path={urls.login} component={LoginForm} />
 				<Route path={urls.register} component={RegisterForm} />
 			</Switch>
