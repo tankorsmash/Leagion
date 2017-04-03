@@ -25,6 +25,7 @@ from leagion.api.views import (
     registration as reg_views,
     users as users_views,
     matches as matches_views,
+    rosters as rosters_views,
     teams as teams_views,
     leagues as leagues_views,
 )
@@ -60,6 +61,8 @@ urlpatterns = [
     url(r'^api/player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
     url(r'^api/match/$', matches_views.MatchList.as_view(), name='api-match-list'),
     url(r'^api/match/(?P<match_id>\d+)/$', matches_views.MatchDetail.as_view(), name='api-match-detail'),
+    url(r'^api/roster/$', rosters_views.RosterList.as_view(), name='api-roster-list'),
+    url(r'^api/roster/(?P<roster_id>\d+)/$', rosters_views.RosterDetail.as_view(), name='api-roster-detail'),
     url(r'^api/team/$', teams_views.TeamList.as_view(), name='api-team-list'),
     url(r'^api/team/(?P<team_id>\d+)/$', teams_views.TeamDetail.as_view(), name='api-team-detail'),
     url(r'^api/league/$', leagues_views.LeagueList.as_view(), name='api-league-list'),

@@ -30,7 +30,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
-
 class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
@@ -48,6 +47,8 @@ class TeamSerializer(serializers.ModelSerializer):
             'id', 'name', 'players', 'league'
         )
 
+    players = UserSerializer(many=True)
+
 
 class LeagueSerializer(serializers.ModelSerializer):
     class Meta:
@@ -55,3 +56,15 @@ class LeagueSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'teams'
         )
+
+    teams = TeamSerializer(many=True)
+
+
+class RosterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Roster
+        fields = ('id', 'team', 'players', 'match',)
+
+    team = TeamSerializer()
+    players = UserSerializer(many=True)
+    match = MatchSerializer()

@@ -9,6 +9,8 @@ var viewnames = {
     "api-match-list": "/api/match/",
     "api-player-detail": "/api/player/<player_id>/",
     "api-player-list": "/api/player/",
+    "api-roster-detail": "/api/roster/<roster_id>/",
+    "api-roster-list": "/api/roster/",
     "api-team-detail": "/api/team/<team_id>/",
     "api-team-list": "/api/team/",
     "rest_login": "/lin/",
