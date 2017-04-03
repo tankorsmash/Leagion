@@ -36,7 +36,7 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = (
             'id', 'match_datetime', 'location', 'league', 'duration_seconds',
-            'away_team', 'away_points','away_team', 'away_points', 'status',
+            'home_team', 'home_points','away_team', 'away_points', 'status',
             'postponed_to', 'postponed_from', 'pretty_name',
         )
 
