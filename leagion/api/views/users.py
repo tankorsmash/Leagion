@@ -9,10 +9,12 @@ from leagion.utils import reverse_js
 
 User = get_user_model()
 
+
 @reverse_js
 class UserList(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
+
 
 @reverse_js
 class UserDetail(generics.RetrieveUpdateAPIView):
@@ -20,6 +22,7 @@ class UserDetail(generics.RetrieveUpdateAPIView):
 
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
+
 
 @reverse_js
 class UserDetailsView(generics.RetrieveUpdateAPIView):
@@ -32,10 +35,12 @@ class UserDetailsView(generics.RetrieveUpdateAPIView):
     def get_queryset(self):
         return get_user_model().objects.none()
 
+
 @reverse_js
 class MatchList(generics.ListCreateAPIView):
     queryset = Match.objects.all()
     serializer_class = serializers.MatchSerializer
+
 
 @reverse_js
 class MatchDetail(generics.RetrieveUpdateAPIView):
