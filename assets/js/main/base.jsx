@@ -1,9 +1,11 @@
-import ajax from 'common/ajax';
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
-import {Navbar} from 'components/nav';
-import {RegisterForm, LoginForm} from 'main/public/registration';
+
+import ajax from 'common/ajax';
 import urls from 'common/urls';
+import {Navbar} from 'components/nav';
+
+import {RegisterForm, LoginForm} from 'main/public/registration';
 import App from 'main/app/base';
 import Public from 'main/public/base';
 import auth from 'main/auth'
@@ -78,4 +80,3 @@ class Base extends React.Component {
 }
 
 module.exports = Base;
-
