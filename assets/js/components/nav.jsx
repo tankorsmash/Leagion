@@ -21,11 +21,37 @@ class PublicItems extends React.Component {
 }
 
 class MainItems extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            leagueDropdownOpen: false
+        };
+    }
+
+    toggle() {
+        this.setState({
+            leagueDropdownOpen: !this.state.leagueDropdownOpen
+        });
+    }
     render() {
         return (
             <Nav navbar>
+                <NavDropdown isOpen={this.state.leagueDropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle nav caret>
+                        Leagues
+                    </DropdownToggle>
+                    <DropdownMenu right>
+                        <DropdownItem>
+                            <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
+                        </DropdownItem>
+                    </DropdownMenu>
+                </NavDropdown>
                 <NavItem>
                     <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
+                </NavItem>
+                <NavItem>
                     <NavLink tag={Link} to={urls.app.matches.index}>Matches</NavLink>
                 </NavItem>
             </Nav>
@@ -70,7 +96,7 @@ class MainProfile extends React.Component {
     render() {
         return (
             <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle nav>
+                <DropdownToggle nav caret>
                     {localStorage.email}
                 </DropdownToggle>
                 <DropdownMenu right>
