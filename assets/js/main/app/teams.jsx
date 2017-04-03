@@ -1,3 +1,5 @@
+import ajax from 'common/ajax';
+
 class Teams extends React.Component {
    render() {
       return (
