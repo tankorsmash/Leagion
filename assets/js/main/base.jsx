@@ -1,7 +1,6 @@
 import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
 
-import ajax from 'common/ajax';
 import urls from 'common/urls';
 import {Navbar} from 'components/nav';
 
