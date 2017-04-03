@@ -21,11 +21,13 @@ from django.contrib import admin
 
 from leagion import views
 
-from leagion.api.views import registration as reg_views
-from leagion.api.views import users as users_views
-from leagion.api.views import matches as matches_views
-from leagion.api.views import teams as teams_views
-from leagion.api.views import leagues as leagues_views
+from leagion.api.views import (
+    registration as reg_views,
+    users as users_views,
+    matches as matches_views,
+    teams as teams_views,
+    leagues as leagues_views,
+)
 
 urlpatterns = [
     #authentication
