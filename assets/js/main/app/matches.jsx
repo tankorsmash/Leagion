@@ -1,3 +1,8 @@
+function getRandomInt(min, max) {
+    //min and max inclusive
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 class Match extends React.Component {
    render() {
       return (
@@ -17,11 +22,6 @@ class Match extends React.Component {
          </div>
       );
    }
-}
-
-function getRandomInt(min, max) {
-    //min and max inclusive
-    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 class Matches extends React.Component {
