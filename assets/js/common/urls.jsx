@@ -3,8 +3,10 @@ let appUrl = `${rootUrl}/app`;
 let teamsUrl = `${appUrl}/teams`;
 let matchesUrl = `${appUrl}/matches`;
 
+let endOf = (path) => { return `${path}/`; };
+
 module.exports = {
-	root: rootUrl,
+    root: `${rootUrl}`,
 
 	//registration
 	login: `${rootUrl}/login`,
@@ -12,11 +14,14 @@ module.exports = {
 
 	//app
 	app: {
-		index: appUrl,
+        tail: appUrl,
+        index: endOf(appUrl),
 		teams: {
+			tail: endOf(teamsUrl),
 			index: teamsUrl,
 		},
 		matches: {
+			tail: endOf(matchesUrl),
 			index: matchesUrl,
 		},
 		admin: {

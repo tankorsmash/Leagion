@@ -11,24 +11,26 @@ import auth from 'main/auth'
 
 const PrivateRoute = (props) => {
    if (auth.loggedIn()) {
-       return (<Route {...props} />);
+       console.log("priv route");
+       return <Route {...props} />;
    } else  {
+       console.log("priv redir");
        return <Redirect to={{ pathname: urls.login }}/>
    }
 }
 
 const PublicRoute = (props) => {
    if (auth.loggedIn()) {
+       console.log("redir publ");
        return <Redirect to={{ pathname: urls.app.index }}/>
    } else  {
-       return (<Route {...props} />);
+       console.log("route publ");
+       return <Route {...props} />;
    }
 }
 
 const FourOhFour = (props) => {
-    return (
-        <div>404</div>
-    );
+    return <h1>404</h1> ;
 }
 
 class Main extends React.Component {
@@ -48,9 +50,9 @@ class Main extends React.Component {
                         <Col>
                             <main>
                                 <Switch>
-                                    <PrivateRoute path={urls.app.index} component={App} />
+                                    <PrivateRoute path={urls.app.base} component={App} />
                                     <PublicRoute path={urls.root} component={Public}/>
-                                    <Route component={FourOhFour} />
+                                    <Route path="**" component={FourOhFour} />
                                 </Switch>
                             </main>
                         </Col>
@@ -72,10 +74,13 @@ class Base extends React.Component {
 
         return (
             <Router>
-                <Route path={`${urls.root}/`} component={Main} />
+                <Route path={`${urls.root}`} component={Main} />
             </Router>
         );
     }
 }
 
-module.exports = Base;
+module.exports = {
+    Base:Base,
+    FourOhFour: FourOhFour
+};

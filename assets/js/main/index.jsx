@@ -2,7 +2,7 @@ require("expose-loader?reverse!common/reverse");
 
 import ReactDOM from 'react-dom';
 import { AppContainer  } from 'react-hot-loader';
-import Base from 'main/base';
+import { Base } from 'main/base';
 
 const render = Component => {
 	ReactDOM.render(
