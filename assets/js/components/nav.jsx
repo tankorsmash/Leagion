@@ -9,6 +9,8 @@ import urls from 'common/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
 
+import {LeaguesDropdown} from 'main/app/leagues';
+
 class PublicItems extends React.Component {
     render() {
         return (
@@ -42,11 +44,7 @@ class MainItems extends React.Component {
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <DropdownMenu right>
-                        <DropdownItem>
-                            <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
-                        </DropdownItem>
-                    </DropdownMenu>
+                    <LeaguesDropdown />
                 </NavDropdown>
                 <NavItem>
                     <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
