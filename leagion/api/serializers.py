@@ -30,6 +30,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         return user
 
+
 class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
@@ -37,4 +38,20 @@ class MatchSerializer(serializers.ModelSerializer):
             'id', 'match_datetime', 'location', 'league', 'duration_seconds',
             'away_team', 'away_points','away_team', 'away_points', 'status',
             'postponed_to', 'postponed_from', 'pretty_name',
+        )
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = (
+            'id', 'name', 'players', 'league'
+        )
+
+
+class LeagueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = League
+        fields = (
+            'id', 'name', 'teams'
         )
