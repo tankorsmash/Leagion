@@ -3,10 +3,14 @@
 //Do not modify by hand, it will get overwritten
 //see leagion reverse_js for what you want
 var viewnames = {
+    "api-league-detail": "/api/league/<league_id>/",
+    "api-league-list": "/api/league/",
     "api-match-detail": "/api/match/<match_id>/",
     "api-match-list": "/api/match/",
     "api-player-detail": "/api/player/<player_id>/",
     "api-player-list": "/api/player/",
+    "api-team-detail": "/api/team/<team_id>/",
+    "api-team-list": "/api/team/",
     "rest_login": "/lin/",
     "rest_logout": "/lout/",
     "rest_password_change": "/pswdchg/",
