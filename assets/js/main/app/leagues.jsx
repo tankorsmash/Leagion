@@ -24,27 +24,27 @@ class LeaguesDropdown extends React.Component {
     }
 
     componentDidMount() {
-      ajax({
-         url: reverse('api-league-list'),
-      }).then(data => {
-          this.setState({leagues: data});
-      });
+        ajax({
+            url: reverse('api-league-list'),
+        }).then(data => {
+            this.setState({leagues: data});
+        });
     }
 
     render() {
         return (
-           <DropdownMenu>
+            <DropdownMenu>
                 { this.state.leagues.map((league)=>{
                     return <LeagueDropdownItem
                         league={league}
                         key={league.id}
                     />
                 }) }
-           </DropdownMenu>
+            </DropdownMenu>
         );
     }
 }
 
 module.exports = {
-   LeaguesDropdown: LeaguesDropdown
+    LeaguesDropdown: LeaguesDropdown
 };

@@ -7,30 +7,27 @@ import {Navbar} from 'components/nav';
 import {RegisterForm, LoginForm} from 'main/public/registration';
 import App from 'main/app/base';
 import Public from 'main/public/base';
-import auth from 'main/auth'
+import auth from 'main/auth';
+import {FourOhFour} from 'components/error-pages';
 
 const PrivateRoute = (props) => {
-   if (auth.loggedIn()) {
-       console.log("priv route");
-       return <Route {...props} />;
-   } else  {
-       console.log("priv redir");
-       return <Redirect to={{ pathname: urls.login }}/>
-   }
+    if (auth.loggedIn()) {
+        console.log("priv route");
+        return <Route {...props} />;
+    } else  {
+        console.log("priv redir");
+        return <Redirect to={{ pathname: urls.login }}/>
+    }
 }
 
 const PublicRoute = (props) => {
-   if (auth.loggedIn()) {
-       console.log("redir publ");
-       return <Redirect to={{ pathname: urls.app.index }}/>
-   } else  {
-       console.log("route publ");
-       return <Route {...props} />;
-   }
-}
-
-const FourOhFour = (props) => {
-    return <h1>404</h1> ;
+    if (auth.loggedIn()) {
+        console.log("redir publ");
+        return <Redirect to={{ pathname: urls.app.index }}/>
+    } else  {
+        console.log("route publ");
+        return <Route {...props} />;
+    }
 }
 
 class Main extends React.Component {
@@ -50,9 +47,9 @@ class Main extends React.Component {
                         <Col>
                             <main>
                                 <Switch>
-                                    <PrivateRoute path={urls.app.base} component={App} />
+                                    <PrivateRoute path={urls.app.tail} component={App} />
                                     <PublicRoute path={urls.root} component={Public}/>
-                                    <Route path="**" component={FourOhFour} />
+                                    <Route component={FourOhFour} />
                                 </Switch>
                             </main>
                         </Col>
@@ -82,5 +79,4 @@ class Base extends React.Component {
 
 module.exports = {
     Base:Base,
-    FourOhFour: FourOhFour
 };
