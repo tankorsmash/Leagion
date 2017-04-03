@@ -47,7 +47,7 @@ class Main extends React.Component {
                         <Col>
                             <main>
                                 <Switch>
-                                    <PrivateRoute path={urls.app.tail} component={App} />
+                                    <PrivateRoute path={urls.app.index} component={App} />
                                     <PublicRoute path={urls.root} component={Public}/>
                                     <Route component={FourOhFour} />
                                 </Switch>
