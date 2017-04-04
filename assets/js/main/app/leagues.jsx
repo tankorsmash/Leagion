@@ -10,7 +10,7 @@ class LeagueDropdownItem extends React.Component {
         let league = this.props.league;
         let url = league.url || ".";
         return (
-            <DropdownItem onClick={(e)=> {this.props.updateCurrentLeague(this.props.league.id)}}>
+            <DropdownItem onClick={()=>{this.props.updateCurrentLeague(this.props.league.id)}}>
                 {league.name}
             </DropdownItem>
         );
