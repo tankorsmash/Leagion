@@ -44,7 +44,7 @@ class MainItems extends React.Component {
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <LeaguesDropdown />
+                    <LeaguesDropdown updateCurrentLeague={this.props.updateCurrentLeague} />
                 </NavDropdown>
                 <NavItem>
                     <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
@@ -60,7 +60,7 @@ class MainItems extends React.Component {
 class ItemButtons extends React.Component {
     render() {
         if (auth.loggedIn()) {
-            return (<MainItems />);
+            return (<MainItems updateCurrentLeague={this.props.updateCurrentLeague}/>);
         } else {
             return (<PublicItems />);
         }
@@ -142,7 +142,7 @@ class Navbar extends React.Component {
                     <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        <ItemButtons />
+                        <ItemButtons updateCurrentLeague={this.props.updateCurrentLeague} />
                         <ProfileButtons />
                     </Collapse>
                 </BSNavbar>
