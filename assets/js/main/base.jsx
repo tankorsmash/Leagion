@@ -8,6 +8,7 @@ import {RegisterForm, LoginForm} from 'main/public/registration';
 import App from 'main/app/base';
 import Public from 'main/public/base';
 import auth from 'main/auth';
+
 import {FourOhFour} from 'components/error-pages';
 
 const PrivateRoute = (props) => {
