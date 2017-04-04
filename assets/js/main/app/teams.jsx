@@ -48,17 +48,11 @@ class Teams extends React.Component {
             content = <Spinner spinnerName='three-bounce' />;
         } else {
             content = this.state.teams.map((team)=>{
-                return <Team
-                    team={team}
-                    key={team.id}
-                />
+                return <Team team={team} key={team.id} />
             })
         }
-        return (
-            <div>
-                {content}
-            </div>
-        );
+
+        return <div>{content}</div>;
     }
 }
 
