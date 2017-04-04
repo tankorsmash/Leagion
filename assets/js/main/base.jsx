@@ -35,13 +35,13 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <Navbar/>
+                <Navbar updateCurrentLeague={this.updateCurrentLeague}/>
                 <Container>
                     <Row>
                         <Col>
                             <main>
                                 <Switch>
-                                    <PrivateRoute path={urls.app.index} component={App} />
+                                    <PrivateRoute path={urls.app.index} component={() => (<App />)} />
                                     <PublicRoute path={urls.root} component={Public}/>
                                     <Route component={FourOhFour} />
                                 </Switch>
@@ -53,6 +53,11 @@ class Main extends React.Component {
         );
 
     }
+
+    updateCurrentLeague = (leagueId) => {
+        console.log("updating leagueId in App");
+        this.setState({'leagueId': leagueId});
+    };
 }
 
 class Base extends React.Component {
