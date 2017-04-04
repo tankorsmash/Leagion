@@ -1,6 +1,9 @@
 import ajax from 'common/ajax';
+var Spinner = require('react-spinkit');
 
 import {SimplePlayer} from 'main/app/players';
+
+const NOT_LOADED = -905639.6421;
 
 class Team extends React.Component {
     render() {
@@ -26,7 +29,7 @@ class Team extends React.Component {
 class Teams extends React.Component {
     constructor(props){
         super(props);
-        this.state = { teams: [] };
+        this.state = { teams: NOT_LOADED };
     }
 
     componentDidMount() {
@@ -38,14 +41,22 @@ class Teams extends React.Component {
     }
 
     render() {
+        let isLoaded = this.state.teams !== NOT_LOADED;
+
+        let content;
+        if (isLoaded == false) {
+            content = <Spinner spinnerName='three-bounce' />;
+        } else {
+            content = this.state.teams.map((team)=>{
+                return <Team
+                    team={team}
+                    key={team.id}
+                />
+            })
+        }
         return (
             <div>
-                { this.state.teams.map((team)=>{
-                    return <Team
-                        team={team}
-                        key={team.id}
-                    />
-                })}
+                {content}
             </div>
         );
     }
