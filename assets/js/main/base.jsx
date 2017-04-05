@@ -35,7 +35,7 @@ class Main extends React.Component {
     render() {
         return (
             <div>
-                <Navbar updateCurrentLeague={this.updateCurrentLeague}/>
+                <Navbar/>
                 <Container>
                     <Row>
                         <Col>
@@ -53,11 +53,6 @@ class Main extends React.Component {
         );
 
     }
-
-    updateCurrentLeague = (leagueId) => {
-        console.log("updating leagueId in App");
-        this.setState({'leagueId': leagueId});
-    };
 }
 
 class Base extends React.Component {
