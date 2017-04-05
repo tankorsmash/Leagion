@@ -5,13 +5,13 @@ import ajax from 'common/ajax';
 
 class LeagueDropdownItem extends React.Component {
     render() {
-        console.log("league.url isn't defined (TODO add it to LeagueSerializer in serializers.py)");
+        console.log("league.url isn't defined (TODO probably)");
 
         let league = this.props.league;
         let url = league.url || ".";
         return (
-            <DropdownItem onClick={()=>{this.props.updateCurrentLeague(this.props.league.id)}}>
-                {league.name}
+            <DropdownItem>
+                <NavLink tag={Link} to={url}>{league.name}</NavLink>
             </DropdownItem>
         );
     }
@@ -38,7 +38,6 @@ class LeaguesDropdown extends React.Component {
                     return <LeagueDropdownItem
                         league={league}
                         key={league.id}
-                        updateCurrentLeague={this.props.updateCurrentLeague}
                     />
                 }) }
             </DropdownMenu>
