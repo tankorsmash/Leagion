@@ -1,10 +1,22 @@
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+
 import ajax from 'common/ajax';
+import urls from 'common/urls';
 
 function getRandomInt(min, max) {
     //min and max inclusive
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+class MatchesCreate extends React.Component {
+    render() {
+        return (
+            <div className="">
+                This is MatchesCreate
+            </div>
+        );
+    }
+}
 
 class Match extends React.Component {
     render() {
@@ -31,7 +43,7 @@ class Match extends React.Component {
     }
 }
 
-class Matches extends React.Component {
+class MatchesList extends React.Component {
     constructor(props){
         super(props);
         this.state = { matches: [] };
@@ -58,6 +70,18 @@ class Matches extends React.Component {
           this.setState({matches: data});
       });
     }
+}
+
+class Matches extends React.Component {
+    render() {
+        return (
+			<Switch>
+				<Route exact path={urls.app.matches.create} component={MatchesCreate} />
+				<Route path={urls.app.matches.index} component={MatchesList} />
+			</Switch>
+        );
+    }
+
 }
 
 module.exports = Matches;

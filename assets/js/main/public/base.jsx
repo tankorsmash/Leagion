@@ -1,5 +1,7 @@
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+
 import {LoginForm, RegisterForm} from 'main/public/registration';
+
 import urls from 'common/urls';
 
 class Index extends React.Component {

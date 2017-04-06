@@ -38,6 +38,18 @@ class MainItems extends React.Component {
         });
     }
     render() {
+        let appUrls = urls.app;
+        let navUrls = [{
+            url: appUrls.teams.index,
+            text: "Teams"
+        },{
+            url: appUrls.matches.index,
+            text: "Matches"
+        },{
+            url: appUrls.matches.create,
+            text: "Create Match"
+        }];
+
         return (
             <Nav navbar>
                 <NavDropdown isOpen={this.state.leagueDropdownOpen} toggle={this.toggle}>
@@ -46,12 +58,11 @@ class MainItems extends React.Component {
                     </DropdownToggle>
                     <LeaguesDropdown />
                 </NavDropdown>
-                <NavItem>
-                    <NavLink tag={Link} to={urls.app.teams.index}>Teams</NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink tag={Link} to={urls.app.matches.index}>Matches</NavLink>
-                </NavItem>
+                { navUrls.map((navConf)=>{
+                    return (<NavItem>
+                        <NavLink tag={Link} to={navConf.url}>{navConf.text}</NavLink>
+                    </NavItem>)
+                }) }
             </Nav>
         )
     }
