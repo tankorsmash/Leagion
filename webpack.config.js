@@ -6,7 +6,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     context: __dirname,
 
-    devtool: 'source-map',
+    devtool: 'eval',
 
 	entry: {
 		vendor: [
@@ -29,6 +29,7 @@ module.exports = {
         publicPath: 'http://localhost:20034/assets/bundles/',
         path: path.resolve('./assets/bundles/'),
         filename: "[name].js",
+        devtoolModuleFilenameTemplate: '/[absolute-resource-path]', //for redbox stack trace
     },
 
     plugins: [
