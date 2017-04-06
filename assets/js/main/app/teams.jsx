@@ -49,7 +49,7 @@ class Teams extends React.Component {
         } else {
             content = this.state.teams.map((team)=>{
                 return <Team team={team} key={team.id} />
-            })
+            });
         }
 
         return <div>{content}</div>;

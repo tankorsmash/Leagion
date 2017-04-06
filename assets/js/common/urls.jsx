@@ -6,21 +6,22 @@ let matchesUrl = `${appUrl}/matches`;
 module.exports = {
     root: `${rootUrl}`,
 
-	//registration
-	login: `${rootUrl}/login`,
-	register: `${rootUrl}/register`,
+    //registration
+    login: `${rootUrl}/login`,
+    register: `${rootUrl}/register`,
 
-	//app
-	app: {
+    //app
+    app: {
         index: appUrl,
-		teams: {
-			index: teamsUrl,
-		},
-		matches: {
-			index: matchesUrl,
-		},
-		admin: {
+        teams: {
+            index: teamsUrl,
+        },
+        matches: {
+            index: matchesUrl,
+            create: `${matchesUrl}/create`,
+        },
+        admin: {
 
-		},
-	}
+        },
+    }
 }
