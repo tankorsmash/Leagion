@@ -71,10 +71,6 @@ class NavContextFilter extends React.Component {
             teamDropdownOpen: false,
             matchDropdownOpen: false,
             createDropdownOpen: false,
-
-            leagues: NOT_LOADED,
-            teams: NOT_LOADED,
-            matches: NOT_LOADED,
         };
     }
 
@@ -104,15 +100,6 @@ class NavContextFilter extends React.Component {
 
 
     render() {
-        let appUrls = urls.app;
-        let navUrls = [{
-            url: appUrls.teams.index,
-            text: "Teams"
-        },{
-            url: appUrls.matches.index,
-            text: "Matches"
-        },];
-
         return (
             <Nav navbar>
                 <NavDropdown key="league-dropdown" isOpen={this.state.leagueDropdownOpen} toggle={this.toggleLeagueDropdown}>
