@@ -5,13 +5,11 @@ import ajax from 'common/ajax';
 
 class LeagueDropdownItem extends React.Component {
     render() {
-        console.log("league.url isn't defined (TODO probably)");
-
-        let league = this.props.league;
-        let url = league.url || ".";
         return (
             <DropdownItem>
-                <NavLink tag={Link} to={url}>{league.name}</NavLink>
+                <NavLink tag={Link} to={this.props.league.url || ''}>
+                    {this.props.league.name}
+                </NavLink>
             </DropdownItem>
         );
     }
