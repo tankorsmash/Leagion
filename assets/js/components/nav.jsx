@@ -38,28 +38,26 @@ class ContextDropdownMenu extends React.Component {
         };
     };
 
+    componentDidMount() {
+        this.updateDataset();
+    }
+
     updateDataset() {
         ajax({
-            url: reverse(this.props.urlName),
+            url: reverse(this.props.datasourceUrlName),
         }).then(data => {
-
-            //filter down dataset (optional)
+            //filter down dataset if {filterByVal} is provided
             if (typeof this.props.filterByVal != "undefined") {
                 let fallbackFilter = (obj) => {
                     return obj[this.props.filterByAttr] == this.props.filterByVal;
                 };
                 data = data.filter(fallbackFilter );
-            } else {
             }
 
             this.setState({dataset: data});
         });
 
     };
-
-    componentDidMount() {
-        this.updateDataset();
-    }
 
     render() {
         return (
@@ -137,24 +135,6 @@ class NavContextFilter extends React.Component {
         this.setState({ matchId: match.id });
     }
 
-    filterByLeague = (team_datum) => {
-        if (this.state.leagueId != NOT_LOADED) {
-            return team_datum.league == this.state.leagueId;
-        } else {
-            return true;
-        }
-    }
-
-    filterByTeam = (match_datum) => {
-        if (this.state.teamId != NOT_LOADED) {
-            return match_datum.home_team.id == this.state.teamId ||
-                match_datum.away_team.id == this.state.teamId;
-        } else {
-            return true;
-        }
-    }
-
-
     render() {
         return (
             <Nav navbar>
@@ -162,21 +142,21 @@ class NavContextFilter extends React.Component {
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <ContextDropdownMenu updateContextFunc={this.updateLeagueId} urlName="api-league-list"/>
+                    <ContextDropdownMenu updateContextFunc={this.updateLeagueId} datasourceUrlName="api-league-list"/>
                 </NavDropdown>
 
                 <NavDropdown key="team-dropdown" isOpen={this.state.teamDropdownOpen} toggle={this.toggleTeamDropdown}>
                     <DropdownToggle nav caret>
                         Teams
                     </DropdownToggle>
-                    <ContextDropdownMenu filterByAttr="league" filterByVal={this.state.leagueId} updateContextFunc={this.updateTeamId} filterData={this.filterByLeague} urlName="api-team-list"/>
+                    <ContextDropdownMenu filterByAttr="league" filterByVal={this.state.leagueId} updateContextFunc={this.updateTeamId} datasourceUrlName="api-team-list"/>
                 </NavDropdown>
 
                 <NavDropdown key="match-dropdown" isOpen={this.state.matchDropdownOpen} toggle={this.toggleMatchDropdown}>
                     <DropdownToggle nav caret>
                         Matches
                     </DropdownToggle>
-                    <ContextDropdownMenu filterByAttr="away_team" filterByVal={this.state.teamId} updateContextFunc={this.updateMatchId} filterData={this.filterByTeam} nameAttr="pretty_name" urlName="api-match-list"/>
+                    <ContextDropdownMenu filterByAttr="away_team" filterByVal={this.state.teamId} updateContextFunc={this.updateMatchId} nameAttr="pretty_name" datasourceUrlName="api-match-list"/>
                 </NavDropdown>
 
                 <NavDropdown key="create-dropdown" isOpen={this.state.createDropdownOpen} toggle={this.toggleCreateDropdown}>
