@@ -1,3 +1,5 @@
+import ajax from 'common/ajax';
+
 import {Link} from 'react-router-dom';
 
 import { Collapse, Navbar as BSNavbar, NavbarToggler,
@@ -11,6 +13,8 @@ import auth from 'main/auth';
 
 import {LeaguesDropdownMenu} from 'main/app/leagues';
 
+const NOT_LOADED = -905639.6421;
+
 class PublicItems extends React.Component {
     render() {
         return (
@@ -22,22 +26,73 @@ class PublicItems extends React.Component {
     }
 }
 
-class MainItems extends React.Component {
+class ContextDropdownMenu extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { dataset: [] };
+    }
+
+    componentDidMount() {
+        ajax({
+            url: reverse(this.props.urlName),
+        }).then(data => {
+            this.setState({dataset: data});
+        });
+    }
+
+    render() {
+        return (
+            <DropdownMenu>
+                { this.state.dataset.map((datum, i)=>{
+                    return (
+                        <DropdownItem key={i}>
+                            <NavLink>
+                                { datum[this.props.nameAttr || "name"] }
+                            </NavLink>
+                        </DropdownItem>
+                    );
+                }) }
+            </DropdownMenu>
+        );
+    }
+}
+
+class NavContextFilter extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
+        this.toggleLeagueDropdown = this.toggleLeagueDropdown.bind(this);
+        this.toggleTeamDropdown = this.toggleTeamDropdown.bind(this);
+        this.toggleMatchDropdown = this.toggleMatchDropdown.bind(this);
         this.toggleCreateDropdown = this.toggleCreateDropdown.bind(this);
 
         this.state = {
             leagueDropdownOpen: false,
-            createDropdownOpen: false
+            teamDropdownOpen: false,
+            matchDropdownOpen: false,
+            createDropdownOpen: false,
+
+            leagues: NOT_LOADED,
+            teams: NOT_LOADED,
+            matches: NOT_LOADED,
         };
     }
 
-    toggle() {
+    toggleLeagueDropdown() {
         this.setState({
             leagueDropdownOpen: !this.state.leagueDropdownOpen
+        });
+    }
+
+    toggleTeamDropdown() {
+        this.setState({
+            teamDropdownOpen: !this.state.teamDropdownOpen
+        });
+    }
+
+    toggleMatchDropdown() {
+        this.setState({
+            matchDropdownOpen: !this.state.matchDropdownOpen
         });
     }
 
@@ -46,6 +101,7 @@ class MainItems extends React.Component {
             createDropdownOpen: !this.state.createDropdownOpen
         });
     }
+
 
     render() {
         let appUrls = urls.app;
@@ -59,18 +115,26 @@ class MainItems extends React.Component {
 
         return (
             <Nav navbar>
-                <NavDropdown key="league-dropdown" isOpen={this.state.leagueDropdownOpen} toggle={this.toggle}>
+                <NavDropdown key="league-dropdown" isOpen={this.state.leagueDropdownOpen} toggle={this.toggleLeagueDropdown}>
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <LeaguesDropdownMenu />
+                    <ContextDropdownMenu urlName="api-league-list"/>
                 </NavDropdown>
 
-                { navUrls.map((navConf)=>{
-                    return (<NavItem key={navConf.url}>
-                        <NavLink  tag={Link} to={navConf.url}>{navConf.text}</NavLink>
-                    </NavItem>)
-                }) }
+                <NavDropdown key="team-dropdown" isOpen={this.state.teamDropdownOpen} toggle={this.toggleTeamDropdown}>
+                    <DropdownToggle nav caret>
+                        Teams
+                    </DropdownToggle>
+                    <ContextDropdownMenu urlName="api-team-list"/>
+                </NavDropdown>
+
+                <NavDropdown key="match-dropdown" isOpen={this.state.matchDropdownOpen} toggle={this.toggleMatchDropdown}>
+                    <DropdownToggle nav caret>
+                        Matches
+                    </DropdownToggle>
+                    <ContextDropdownMenu nameAttr="pretty_name" urlName="api-match-list"/>
+                </NavDropdown>
 
                 <NavDropdown key="create-dropdown" isOpen={this.state.createDropdownOpen} toggle={this.toggleCreateDropdown}>
                     <DropdownToggle nav>
@@ -84,6 +148,17 @@ class MainItems extends React.Component {
                     </DropdownMenu>
                 </NavDropdown>
             </Nav>
+        );
+    }
+}
+
+class MainItems extends React.Component {
+    render() {
+        //TODO: make NavContextFilter not need the toplevel <Nav> inside it. I tried, but if the NavDropdowns arent the first child of Nav, the BS4 styling wont work
+        return (
+            <div>
+                <NavContextFilter />
+            </div>
         )
     }
 }
@@ -110,7 +185,7 @@ class MainProfile extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggle = this.toggle.bind(this);
+        this.toggleLeagueDropdown = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false
         };
