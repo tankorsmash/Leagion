@@ -15,7 +15,7 @@ class LeagueDropdownItem extends React.Component {
     }
 }
 
-class LeaguesDropdown extends React.Component {
+class LeaguesDropdownMenu extends React.Component {
     constructor(props){
         super(props);
         this.state = { leagues: [] };
@@ -44,5 +44,5 @@ class LeaguesDropdown extends React.Component {
 }
 
 module.exports = {
-    LeaguesDropdown: LeaguesDropdown
+    LeaguesDropdownMenu: LeaguesDropdownMenu
 };
