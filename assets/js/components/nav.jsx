@@ -29,24 +29,47 @@ class PublicItems extends React.Component {
 class ContextDropdownMenu extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { dataset: [] };
+        this.state = {dataset: [] };
     }
 
-    componentDidMount() {
+    componentWillReceiveProps(nextProps) {
+        if (this.props.filterByVal != nextProps.filterByVal) {
+            this.updateDataset();
+        };
+    };
+
+    updateDataset() {
         ajax({
             url: reverse(this.props.urlName),
         }).then(data => {
+
+            //filter down dataset (optional)
+            if (typeof this.props.filterByVal != "undefined") {
+                let fallbackFilter = (obj) => {
+                    return obj[this.props.filterByAttr] == this.props.filterByVal;
+                };
+                data = data.filter(fallbackFilter );
+            } else {
+            }
+
             this.setState({dataset: data});
         });
+
+    };
+
+    componentDidMount() {
+        this.updateDataset();
     }
 
     render() {
         return (
             <DropdownMenu>
                 { this.state.dataset.map((datum, i)=>{
+                    let fallbackUpdateFunc = (obj)=>{};
+                    let updateFunc = this.props.updateContextFunc || fallbackUpdateFunc;
                     return (
                         <DropdownItem key={i}>
-                            <NavLink>
+                            <NavLink onClick={()=>{updateFunc(datum)}}>
                                 { datum[this.props.nameAttr || "name"] }
                             </NavLink>
                         </DropdownItem>
@@ -71,6 +94,10 @@ class NavContextFilter extends React.Component {
             teamDropdownOpen: false,
             matchDropdownOpen: false,
             createDropdownOpen: false,
+
+            leagueId: NOT_LOADED,
+            teamId: NOT_LOADED,
+            matchId: NOT_LOADED,
         };
     }
 
@@ -98,6 +125,35 @@ class NavContextFilter extends React.Component {
         });
     }
 
+    updateLeagueId = (league) => {
+        this.setState({ leagueId: league.id });
+    }
+
+    updateTeamId = (team) => {
+        this.setState({ teamId: team.id });
+    }
+
+    updateMatchId = (match) => {
+        this.setState({ matchId: match.id });
+    }
+
+    filterByLeague = (team_datum) => {
+        if (this.state.leagueId != NOT_LOADED) {
+            return team_datum.league == this.state.leagueId;
+        } else {
+            return true;
+        }
+    }
+
+    filterByTeam = (match_datum) => {
+        if (this.state.teamId != NOT_LOADED) {
+            return match_datum.home_team.id == this.state.teamId ||
+                match_datum.away_team.id == this.state.teamId;
+        } else {
+            return true;
+        }
+    }
+
 
     render() {
         return (
@@ -106,21 +162,21 @@ class NavContextFilter extends React.Component {
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <ContextDropdownMenu urlName="api-league-list"/>
+                    <ContextDropdownMenu updateContextFunc={this.updateLeagueId} urlName="api-league-list"/>
                 </NavDropdown>
 
                 <NavDropdown key="team-dropdown" isOpen={this.state.teamDropdownOpen} toggle={this.toggleTeamDropdown}>
                     <DropdownToggle nav caret>
                         Teams
                     </DropdownToggle>
-                    <ContextDropdownMenu urlName="api-team-list"/>
+                    <ContextDropdownMenu filterByAttr="league" filterByVal={this.state.leagueId} updateContextFunc={this.updateTeamId} filterData={this.filterByLeague} urlName="api-team-list"/>
                 </NavDropdown>
 
                 <NavDropdown key="match-dropdown" isOpen={this.state.matchDropdownOpen} toggle={this.toggleMatchDropdown}>
                     <DropdownToggle nav caret>
                         Matches
                     </DropdownToggle>
-                    <ContextDropdownMenu nameAttr="pretty_name" urlName="api-match-list"/>
+                    <ContextDropdownMenu filterByAttr="away_team" filterByVal={this.state.teamId} updateContextFunc={this.updateMatchId} filterData={this.filterByTeam} nameAttr="pretty_name" urlName="api-match-list"/>
                 </NavDropdown>
 
                 <NavDropdown key="create-dropdown" isOpen={this.state.createDropdownOpen} toggle={this.toggleCreateDropdown}>
