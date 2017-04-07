@@ -65,11 +65,13 @@ class MainItems extends React.Component {
                     </DropdownToggle>
                     <LeaguesDropdown />
                 </NavDropdown>
+
                 { navUrls.map((navConf)=>{
                     return (<NavItem key={navConf.url}>
                         <NavLink  tag={Link} to={navConf.url}>{navConf.text}</NavLink>
                     </NavItem>)
                 }) }
+
                 <NavDropdown key="create-dropdown" isOpen={this.state.createDropdownOpen} toggle={this.toggleCreateDropdown}>
                     <DropdownToggle nav>
                         Create
