@@ -9,7 +9,7 @@ import urls from 'common/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
 
-import {LeaguesDropdown} from 'main/app/leagues';
+import {LeaguesDropdownMenu} from 'main/app/leagues';
 
 class PublicItems extends React.Component {
     render() {
@@ -63,7 +63,7 @@ class MainItems extends React.Component {
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <LeaguesDropdown />
+                    <LeaguesDropdownMenu />
                 </NavDropdown>
 
                 { navUrls.map((navConf)=>{
