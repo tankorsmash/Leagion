@@ -27,8 +27,11 @@ class MainItems extends React.Component {
         super(props);
 
         this.toggle = this.toggle.bind(this);
+        this.toggleCreateDropdown = this.toggleCreateDropdown.bind(this);
+
         this.state = {
-            leagueDropdownOpen: false
+            leagueDropdownOpen: false,
+            createDropdownOpen: false
         };
     }
 
@@ -37,6 +40,13 @@ class MainItems extends React.Component {
             leagueDropdownOpen: !this.state.leagueDropdownOpen
         });
     }
+
+    toggleCreateDropdown() {
+        this.setState({
+            createDropdownOpen: !this.state.createDropdownOpen
+        });
+    }
+
     render() {
         let appUrls = urls.app;
         let navUrls = [{
@@ -45,24 +55,32 @@ class MainItems extends React.Component {
         },{
             url: appUrls.matches.index,
             text: "Matches"
-        },{
-            url: appUrls.matches.create,
-            text: "Create Match"
-        }];
+        },];
 
         return (
             <Nav navbar>
-                <NavDropdown isOpen={this.state.leagueDropdownOpen} toggle={this.toggle}>
+                <NavDropdown key="league-dropdown" isOpen={this.state.leagueDropdownOpen} toggle={this.toggle}>
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
                     <LeaguesDropdown />
                 </NavDropdown>
                 { navUrls.map((navConf)=>{
-                    return (<NavItem>
-                        <NavLink tag={Link} to={navConf.url}>{navConf.text}</NavLink>
+                    return (<NavItem key={navConf.url}>
+                        <NavLink  tag={Link} to={navConf.url}>{navConf.text}</NavLink>
                     </NavItem>)
                 }) }
+                <NavDropdown key="create-dropdown" isOpen={this.state.createDropdownOpen} toggle={this.toggleCreateDropdown}>
+                    <DropdownToggle nav>
+                        Create
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem header>Create a ...</DropdownItem>
+                        <DropdownItem>League</DropdownItem>
+                        <DropdownItem>Team</DropdownItem>
+                        <DropdownItem>Match</DropdownItem>
+                    </DropdownMenu>
+                </NavDropdown>
             </Nav>
         )
     }
