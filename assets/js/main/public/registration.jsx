@@ -17,8 +17,8 @@ class RegisterBase extends FormBase {
         }).then(data => {
             auth.login(data.key);
             this.forceUpdate();
-        }).catch(r => {
-            throw('login error');
+        }).catch(data => {
+            toastr.error(data.result.non_field_errors);
         });
 
     }
