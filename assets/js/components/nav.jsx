@@ -14,6 +14,8 @@ import auth from 'main/auth';
 import {LeaguesDropdownMenu} from 'main/app/leagues';
 
 const NOT_LOADED = -905639.6421;
+const DO_NOTHING = ()=>{};
+const STOP_PROPAGATION = (e)=>{e.stopPropagation()};
 
 class PublicItems extends React.Component {
     render() {
@@ -66,14 +68,23 @@ class ContextDropdownMenu extends React.Component {
         return (
             <DropdownMenu>
                 { this.state.dataset.map((datum, i)=>{
-                    let fallbackUpdateFunc = (obj)=>{};
-                    let updateFunc = this.props.updateContextFunc || fallbackUpdateFunc;
+                    let updateFunc = this.props.updateContextFunc || DO_NOTHING;
                     return (
-                        <DropdownItem key={i}>
-                            <NavLink onClick={()=>{updateFunc(datum)}}>
+                        <span key={i}>
+                        <DropdownItem header>
                                 { datum[this.props.nameAttr || "name"] }
+                            </DropdownItem>
+                        <DropdownItem>
+                            <NavLink onClick={()=>{updateFunc(datum)}}>
+                                Filter by
                             </NavLink>
                         </DropdownItem>
+                        <DropdownItem>
+                            <Link to={`${this.props.detailUrlRoot}/${datum["id"]}`} className="nav-link">
+                                    Detail
+                            </Link>
+                        </DropdownItem>
+                        </span>
                     );
                 }) }
             </DropdownMenu>
@@ -156,6 +167,7 @@ class NavContextFilter extends React.Component {
                     <ContextDropdownMenu
                         updateContextFunc={this.updateLeagueId}
                         datasourceUrlName="api-league-list"
+                        detailUrlRoot={urls.app.leagues.index}
                     />
                 </NavDropdown>
 
@@ -174,6 +186,8 @@ class NavContextFilter extends React.Component {
                         filterByVal={this.state.leagueId}
                         updateContextFunc={this.updateTeamId}
                         datasourceUrlName="api-team-list"
+                        detailUrlRoot={urls.app.teams.index}
+
                     />
                 </NavDropdown>
 
@@ -193,6 +207,7 @@ class NavContextFilter extends React.Component {
                         updateContextFunc={this.updateMatchId}
                         nameAttr="pretty_name"
                         datasourceUrlName="api-match-list"
+                        detailUrlRoot={urls.app.matches.index}
                     />
                 </NavDropdown>
 
