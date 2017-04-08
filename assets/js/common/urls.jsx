@@ -16,12 +16,15 @@ module.exports = {
         index: appUrl,
         leagues: {
             index: leaguesUrl,
+            detail: `${leaguesUrl}/:leagueId?`,
         },
         teams: {
             index: teamsUrl,
+            detail: `${teamsUrl}/:teamId?`,
         },
         matches: {
             index: matchesUrl,
+            detail: `${matchesUrl}/:matchId?`,
             create: `${matchesUrl}/create`,
         },
         admin: {
