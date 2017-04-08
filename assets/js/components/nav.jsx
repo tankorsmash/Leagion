@@ -63,22 +63,29 @@ class ContextDropdownMenu extends React.Component {
     render() {
         return (
             <DropdownMenu>
+                <DropdownItem>
+                    <Link to={this.props.detailUrlRoot} className="nav-link">
+                            All
+                    </Link>
+                </DropdownItem>
+                <DropdownItem divider/>
                 { this.state.dataset.map((datum, i)=>{
                     let updateFunc = this.props.updateContextFunc || DO_NOTHING;
+                    let detailUrl = `${this.props.detailUrlRoot}/${datum["id"]}`
                     return (
                         <span key={i}>
                         <DropdownItem header>
                                 { datum[this.props.nameAttr || "name"] }
                             </DropdownItem>
                         <DropdownItem>
+                            <Link to={detailUrl} className="nav-link">
+                                    Detail
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
                             <NavLink onClick={()=>{updateFunc(datum)}}>
                                 Filter by
                             </NavLink>
-                        </DropdownItem>
-                        <DropdownItem>
-                            <Link to={`${this.props.detailUrlRoot}/${datum["id"]}`} className="nav-link">
-                                    Detail
-                            </Link>
                         </DropdownItem>
                         </span>
                     );
