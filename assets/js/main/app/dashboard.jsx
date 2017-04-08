@@ -6,7 +6,7 @@ import {
 import ajax from 'common/ajax';
 var Spinner = require('react-spinkit');
 
-const NOT_LOADED = -905639.6421;
+import {NOT_LOADED} from 'common/constants';
 
 class LeagueCard extends React.Component {
     constructor(props) {

@@ -1,24 +1,27 @@
 import {Link} from 'react-router-dom';
 import { DropdownItem, DropdownMenu, NavLink } from 'reactstrap';
+import Spinner from 'react-spinkit';
 
 import ajax from 'common/ajax';
 
-class LeagueDropdownItem extends React.Component {
+import {NOT_LOADED} from 'common/constants';
+
+class League extends React.Component {
     render() {
+        let league = this.props.league;
         return (
-            <DropdownItem>
-                <NavLink tag={Link} to={this.props.league.url || ''}>
-                    {this.props.league.name}
-                </NavLink>
-            </DropdownItem>
+            <div>
+                League name: { league.name }
+            </div>
         );
     }
 }
 
-class LeaguesDropdownMenu extends React.Component {
+
+class Leagues extends React.Component {
     constructor(props){
         super(props);
-        this.state = { leagues: [] };
+        this.state = { leagues: NOT_LOADED };
     }
 
     componentDidMount() {
@@ -30,19 +33,19 @@ class LeaguesDropdownMenu extends React.Component {
     }
 
     render() {
-        return (
-            <DropdownMenu>
-                { this.state.leagues.map((league)=>{
-                    return <LeagueDropdownItem
-                        league={league}
-                        key={league.id}
-                    />
-                }) }
-            </DropdownMenu>
-        );
+        let isLoaded = this.state.leagues !== NOT_LOADED;
+
+        let content;
+        if (isLoaded == false) {
+            content = <Spinner spinnerName='three-bounce' />;
+        } else {
+            content = this.state.leagues.map((league)=>{
+                return <League league={league} key={league.id} />
+            });
+        }
+
+        return <div>{content}</div>;
     }
 }
 
-module.exports = {
-    LeaguesDropdownMenu: LeaguesDropdownMenu
-};
+module.exports = Leagues;

@@ -3,7 +3,7 @@ var Spinner = require('react-spinkit');
 
 import {SimplePlayer} from 'main/app/players';
 
-const NOT_LOADED = -905639.6421;
+import {NOT_LOADED} from 'common/constants';
 
 class Team extends React.Component {
     render() {

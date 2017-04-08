@@ -11,11 +11,7 @@ import urls from 'common/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
 
-import {LeaguesDropdownMenu} from 'main/app/leagues';
-
-const NOT_LOADED = -905639.6421;
-const DO_NOTHING = ()=>{};
-const STOP_PROPAGATION = (e)=>{e.stopPropagation()};
+import {NOT_LOADED, DO_NOTHING, STOP_PROPAGATION} from 'common/constants';
 
 class PublicItems extends React.Component {
     render() {
