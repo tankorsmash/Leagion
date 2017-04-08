@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {LoginForm, RegisterForm} from 'main/public/registration';
 
 import urls from 'common/urls';
-import PublicNavbar from 'components/nav/public'
+import PublicNavbar from 'main/public/nav';
 
 class Index extends React.Component {
     render() {

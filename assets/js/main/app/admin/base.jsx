@@ -14,7 +14,7 @@ import Matches from 'main/app/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 
-import AdminNavbar from 'components/nav/admin';
+import AdminNavbar from 'main/app/admin/nav';
 
 class Admin extends React.Component {
     render() {
