@@ -22,7 +22,7 @@ class Admin extends React.Component {
     render() {
         return (
             <div>
-                <AdminNavbar/>
+                <AdminNavbar {...this.props} />
                 <Container>
                     <Row>
                         <Col>
