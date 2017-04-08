@@ -93,9 +93,9 @@ class NavContextFilter extends React.Component {
             matchDropdownOpen: false,
             createDropdownOpen: false,
 
-            leagueId: NOT_LOADED,
-            teamId: NOT_LOADED,
-            matchId: NOT_LOADED,
+            leagueId: localStorage.leagueId || NOT_LOADED,
+            teamId: localStorage.teamId || NOT_LOADED,
+            matchId: localStorage.matchId || NOT_LOADED,
         };
     }
 
@@ -125,14 +125,17 @@ class NavContextFilter extends React.Component {
 
     updateLeagueId = (league) => {
         this.setState({ leagueId: league.id });
+        localStorage.leagueId = league.id;
     }
 
     updateTeamId = (team) => {
         this.setState({ teamId: team.id });
+        localStorage.teamId = team.id;
     }
 
     updateMatchId = (match) => {
         this.setState({ matchId: match.id });
+        localStorage.matchId = match.id;
     }
 
     render() {
@@ -143,7 +146,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.leagueDropdownOpen}
                     toggle={this.toggleLeagueDropdown}>
 
-                    <DropdownToggle nav caret>
+                    <DropdownToggle nav >
                         Leagues
                     </DropdownToggle>
 
@@ -159,7 +162,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.teamDropdownOpen}
                     toggle={this.toggleTeamDropdown}>
 
-                    <DropdownToggle nav caret>
+                    <DropdownToggle nav >
                         Teams
                     </DropdownToggle>
 
@@ -177,7 +180,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.matchDropdownOpen}
                     toggle={this.toggleMatchDropdown}>
 
-                    <DropdownToggle nav caret>
+                    <DropdownToggle nav >
                         Matches
                     </DropdownToggle>
 
