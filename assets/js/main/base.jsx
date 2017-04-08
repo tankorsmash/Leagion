@@ -1,4 +1,6 @@
-import {BrowserRouter as Router, Route, Switch, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Route} from 'components/router';
+
 import {Container, Row, Col} from 'reactstrap';
 
 import urls from 'common/urls';

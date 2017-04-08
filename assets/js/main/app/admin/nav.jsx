@@ -250,7 +250,7 @@ class AdminProfile extends React.Component {
             <Nav className="ml-auto" navbar>
 				<NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 					<DropdownToggle nav caret>
-						{localStorage.email}
+						{this.props.user.email}
 					</DropdownToggle>
 					<DropdownMenu right>
 						<DropdownItem header tag={LogoutButton}>Header</DropdownItem>

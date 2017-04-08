@@ -1,5 +1,5 @@
 let auth = {
-    login: function(token) {
+    login: function() {
         localStorage.logged_in = true;
     },
 

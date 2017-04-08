@@ -45,11 +45,11 @@ class PlayerProfile extends React.Component {
             <Nav className="ml-auto" navbar>
 				<NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
 					<DropdownToggle nav caret>
-						{localStorage.email}
+						{this.props.user.email}
 					</DropdownToggle>
 					<DropdownMenu right>
-						<DropdownItem header tag={AdminButton}></DropdownItem>
-						<DropdownItem header tag={LogoutButton}></DropdownItem>
+						<DropdownItem tag={AdminButton}></DropdownItem>
+						<DropdownItem tag={LogoutButton}></DropdownItem>
 					</DropdownMenu>
 				</NavDropdown>
             </Nav>

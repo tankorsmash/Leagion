@@ -1,4 +1,6 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Route} from 'components/router';
+
 import {Container, Row, Col} from 'reactstrap';
 
 import ajax from 'common/ajax';
@@ -17,10 +19,11 @@ import {FourOhFour} from 'components/error-pages';
 import PlayerNavbar from 'main/app/player/nav';
 
 class Player extends React.Component {
+
     render() {
         return (
             <div>
-                <PlayerNavbar/>
+                <PlayerNavbar {...this.props}/>
                 <Container>
                     <Row>
                         <Col>
