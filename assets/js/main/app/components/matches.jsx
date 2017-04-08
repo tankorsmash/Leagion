@@ -74,7 +74,6 @@ class Matches extends React.Component {
         ajax({
             url: url,
         }).then(data => {
-            //if there's only one object, its a single detail match, so arrayify it
             this.setState(data);
         });
     }

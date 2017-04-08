@@ -1,22 +1,14 @@
-import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import {Container, Row, Col} from 'reactstrap';
 
-import ajax from 'common/ajax';
+import PlayerNavbar from 'main/app/player/nav';
 import playerUrls from 'main/app/player/urls';
-import {NOT_LOADED} from 'common/constants';
-
-import auth from 'main/auth';
 
 import Dashboard from 'main/app/player/dashboard';
-import Leagues from 'main/app/components/leagues';
-import Teams from 'main/app/components/teams';
-import Matches from 'main/app/components/matches';
-
+import League from 'main/app/player/league/base';
 import {FourOhFour} from 'components/error-pages';
-
-import PlayerNavbar from 'main/app/player/nav';
 
 class Player extends React.Component {
 
@@ -30,6 +22,7 @@ class Player extends React.Component {
                             <main>
                                 <Switch>
                                     <Route exact path={playerUrls.index} component={Dashboard} />
+                                    <Route path={leagueUrls.index} component={League} />
                                     <Route component={FourOhFour} />
                                 </Switch>
                             </main>
