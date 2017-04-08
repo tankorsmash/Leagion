@@ -2,7 +2,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
 
 import ajax from 'common/ajax';
-import urls from 'common/urls';
+import playerUrls from 'main/app/player/urls';
 import {NOT_LOADED} from 'common/constants';
 
 import auth from 'main/auth';
@@ -14,19 +14,20 @@ import Matches from 'main/app/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 
-import AdminNavbar from 'components/nav/admin';
+import PlayerNavbar from 'main/app/player/nav';
 
-class Admin extends React.Component {
+class Player extends React.Component {
     render() {
+        console.log('hisidh');
         return (
             <div>
-                <AdminNavbar/>
+                <PlayerNavbar/>
                 <Container>
                     <Row>
                         <Col>
                             <main>
                                 <Switch>
-                                    <Route exact path={urls.app.player.index} component={Dashboard} />
+                                    <Route exact path={playerUrls.index} component={Dashboard} />
                                     <Route component={FourOhFour} />
                                 </Switch>
                             </main>
@@ -38,4 +39,4 @@ class Admin extends React.Component {
     }
 }
 
-module.exports = Admin;
+module.exports = Player;

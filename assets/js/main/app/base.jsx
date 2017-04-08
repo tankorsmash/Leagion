@@ -9,16 +9,14 @@ import {NOT_LOADED} from 'common/constants';
 
 import auth from 'main/auth';
 
-import Dashboard from 'main/app/player/dashboard';
 import Leagues from 'main/app/components/leagues';
 import Teams from 'main/app/components/teams';
 import Matches from 'main/app/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 
-import Admin from 'main/app/admin/base'
-import Player from 'main/app/player/base'
-import AdminNavbar from 'components/nav/admin';
+import Admin from 'main/app/admin/base';
+import Player from 'main/app/player/base';
 
 class App extends React.Component {
     componentDidMount() {
@@ -36,25 +34,13 @@ class App extends React.Component {
     }
 
     render() {
-        console.log(adminUrls.index);
         return (
-            <div>
-                <AdminNavbar/>
-                <Container>
-                    <Row>
-                        <Col>
-                            <main>
-                                <Switch>
-                                    <Route exact path={appUrls.index} component={Dashboard} />
-                                    <Route path={adminUrls.index} component={Admin} />
-                                    <Route path={playerUrls.index} component={Player} />
-                                    <Route component={FourOhFour} />
-                                </Switch>
-                            </main>
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
+            <Switch>
+                <Route exact path={appUrls.index} component={Player} />
+                <Route path={adminUrls.index} component={Admin} />
+                <Route path={playerUrls.index} component={Player} />
+                <Route component={FourOhFour} />
+            </Switch>
         );
     }
 }
