@@ -4,7 +4,7 @@ let auth = {
     },
 
     logout: function() {
-        delete localStorage.logged_in;
+        localStorage.clear();
     },
 
     loggedIn: function() {

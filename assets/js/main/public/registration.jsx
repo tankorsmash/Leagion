@@ -15,10 +15,10 @@ class RegisterBase extends FormBase {
 			method: 'POST',
             data: this.state,
         }).then(data => {
-            auth.login(data.key);
+            auth.login();
             this.forceUpdate();
         }).catch(data => {
-            toastr.error(data.result.non_field_errors);
+            toastr.error(data.non_field_errors);
         });
 
     }
