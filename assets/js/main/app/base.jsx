@@ -32,9 +32,9 @@ class App extends React.Component {
       return (
          <Switch>
             <Route exact path={urls.app.index} component={Dashboard} />
-            <Route path={urls.app.leagues.index} component={Leagues} />
-            <Route path={urls.app.teams.index} component={Teams} />
-            <Route path={urls.app.matches.index} component={Matches} />
+            <Route path={urls.app.leagues.detail} component={Leagues} />
+            <Route path={urls.app.teams.detail} component={Teams} />
+            <Route path={urls.app.matches.detail} component={Matches} />
             <Route component={FourOhFour} />
          </Switch>
       );

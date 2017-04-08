@@ -25,10 +25,21 @@ class Leagues extends React.Component {
     }
 
     componentDidMount() {
+        this.updateDataset();
+    }
+
+    updateDataset() {
+        let url = reverse('api-league-list');
+
+        if (typeof this.props.match.params.leagueId != "undefined") {
+            url = url+this.props.match.params.leagueId;
+        };
+
         ajax({
-            url: reverse('api-league-list'),
+            url: url,
         }).then(data => {
-            this.setState({leagues: data});
+            //if there's only one object, its a single detail league, so arrayify it
+            this.setState({leagues: Array.isArray(data) ? data : [data]});
         });
     }
 
