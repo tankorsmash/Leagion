@@ -18,7 +18,6 @@ import PlayerNavbar from 'main/app/player/nav';
 
 class Player extends React.Component {
     render() {
-        console.log('hisidh');
         return (
             <div>
                 <PlayerNavbar/>
