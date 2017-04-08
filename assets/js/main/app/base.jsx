@@ -1,6 +1,8 @@
 import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 
+import ajax from 'common/ajax';
+
 import appUrls from 'main/app/urls';
 import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';

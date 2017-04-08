@@ -5,6 +5,7 @@ import {Container, Row, Col} from 'reactstrap';
 
 import PlayerNavbar from 'main/app/player/nav';
 import playerUrls from 'main/app/player/urls';
+import leagueUrls from 'main/app/player/league/urls';
 
 import Dashboard from 'main/app/player/dashboard';
 import League from 'main/app/player/league/base';
