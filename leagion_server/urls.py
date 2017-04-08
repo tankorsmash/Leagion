@@ -57,15 +57,6 @@ urlpatterns = [
     url(r'^match/(?P<match_id>\d+)/$', views.MatchDetail.as_view(), name="match-detail"),
     url(r'^player/(?P<player_id>\d+)/$', views.PlayerDetail.as_view(), name="player-detail"),
 
-    url(r'^api/player/$', users_views.UserList.as_view(), name='api-player-list'),
-    url(r'^api/player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
-    url(r'^api/match/$', matches_views.MatchList.as_view(), name='api-match-list'),
-    url(r'^api/match/(?P<match_id>\d+)/$', matches_views.MatchDetail.as_view(), name='api-match-detail'),
-    url(r'^api/roster/$', rosters_views.RosterList.as_view(), name='api-roster-list'),
-    url(r'^api/roster/(?P<roster_id>\d+)/$', rosters_views.RosterDetail.as_view(), name='api-roster-detail'),
-    url(r'^api/team/$', teams_views.TeamList.as_view(), name='api-team-list'),
-    url(r'^api/team/(?P<team_id>\d+)/$', teams_views.TeamDetail.as_view(), name='api-team-detail'),
-    url(r'^api/league/$', leagues_views.LeagueList.as_view(), name='api-league-list'),
-    url(r'^api/league/(?P<league_id>\d+)/$', leagues_views.LeagueDetail.as_view(), name='api-league-detail'),
+    url(r'^api/', include('leagion.api.urls')),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
