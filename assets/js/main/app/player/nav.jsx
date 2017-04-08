@@ -11,6 +11,7 @@ import urls from 'common/urls';
 import {LogoutButton, LoginButton, AdminButton} from 'components/buttons';
 import auth from 'main/auth';
 import {Navbar} from 'components/nav/base'
+import {BaseAppProfile} from 'main/app/components/nav';
 
 class PlayerItems extends React.Component {
     render() {
@@ -24,38 +25,10 @@ class PlayerItems extends React.Component {
     }
 }
 
-class PlayerProfile extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            dropdownOpen: false
-        };
-    }
-
-    toggle() {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    }
-
-    render() {
-        return (
-            <Nav className="ml-auto" navbar>
-				<NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-					<DropdownToggle nav caret>
-						{this.props.user.email}
-					</DropdownToggle>
-					<DropdownMenu right>
-						<DropdownItem tag={AdminButton}></DropdownItem>
-						<DropdownItem tag={LogoutButton}></DropdownItem>
-					</DropdownMenu>
-				</NavDropdown>
-            </Nav>
-        )
-    }
+class PlayerProfile extends BaseAppProfile {
+	items = [AdminButton, LogoutButton];
 }
+
 
 class PlayerNavbar extends Navbar {
 	itemComponent = PlayerItems;

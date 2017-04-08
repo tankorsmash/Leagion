@@ -38,9 +38,9 @@ class App extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path={appUrls.index} user={this.state.user} component={Player} />
-                <Route path={adminUrls.index} component={Admin} />
-                <Route path={playerUrls.index} component={Player} />
+                <Route exact path={appUrls.index} {...this.state} component={Player} />
+                <Route path={adminUrls.index} {...this.state} component={Admin} />
+                <Route path={playerUrls.index} {...this.state} component={Player} />
                 <Route component={FourOhFour} />
             </Switch>
         );
