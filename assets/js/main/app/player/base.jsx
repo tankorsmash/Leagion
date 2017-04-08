@@ -8,7 +8,7 @@ import playerUrls from 'main/app/player/urls';
 import leagueUrls from 'main/app/player/league/urls';
 
 import Dashboard from 'main/app/player/dashboard';
-import League from 'main/app/player/league/base';
+import {League} from 'main/app/player/league/base';
 import {FourOhFour} from 'components/error-pages';
 
 class Player extends React.Component {
