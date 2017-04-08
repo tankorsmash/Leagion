@@ -1,4 +1,5 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Route} from 'components/router';
 
 import ajax from 'common/ajax';
 import urls from 'common/urls';

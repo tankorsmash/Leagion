@@ -1,4 +1,6 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Route} from 'components/router';
+
 import {Container, Row, Col} from 'reactstrap';
 
 import {LoginForm, RegisterForm} from 'main/public/registration';

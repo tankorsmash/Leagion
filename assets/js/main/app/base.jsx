@@ -1,4 +1,6 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {Route} from 'components/router';
+
 import {Container, Row, Col} from 'reactstrap';
 
 import ajax from 'common/ajax';
@@ -19,24 +21,24 @@ import Admin from 'main/app/admin/base';
 import Player from 'main/app/player/base';
 
 class App extends React.Component {
-    componentDidMount() {
-        this.loadUserData();
+    constructor(props){
+        super(props);
+        this.state = { 
+            user: {}
+        };
     }
-
-    loadUserData() {
+    componentDidMount() {
         ajax({
             url: reverse('rest_user_details'),
         }).then(data => {
-            localStorage.id = data.id;
-            localStorage.email = data.email;
-            localStorage.name = data.name;
+            this.setState({user: data});
         });
     }
 
     render() {
         return (
             <Switch>
-                <Route exact path={appUrls.index} component={Player} />
+                <Route exact path={appUrls.index} user={this.state.user} component={Player} />
                 <Route path={adminUrls.index} component={Admin} />
                 <Route path={playerUrls.index} component={Player} />
                 <Route component={FourOhFour} />
