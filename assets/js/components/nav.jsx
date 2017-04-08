@@ -138,31 +138,65 @@ class NavContextFilter extends React.Component {
     render() {
         return (
             <Nav navbar>
-                <NavDropdown key="league-dropdown" isOpen={this.state.leagueDropdownOpen} toggle={this.toggleLeagueDropdown}>
+                <NavDropdown
+                    key="league-dropdown"
+                    isOpen={this.state.leagueDropdownOpen}
+                    toggle={this.toggleLeagueDropdown}>
+
                     <DropdownToggle nav caret>
                         Leagues
                     </DropdownToggle>
-                    <ContextDropdownMenu updateContextFunc={this.updateLeagueId} datasourceUrlName="api-league-list"/>
+
+                    <ContextDropdownMenu
+                        updateContextFunc={this.updateLeagueId}
+                        datasourceUrlName="api-league-list"
+                    />
                 </NavDropdown>
 
-                <NavDropdown key="team-dropdown" isOpen={this.state.teamDropdownOpen} toggle={this.toggleTeamDropdown}>
+                <NavDropdown
+                    key="team-dropdown"
+                    isOpen={this.state.teamDropdownOpen}
+                    toggle={this.toggleTeamDropdown}>
+
                     <DropdownToggle nav caret>
                         Teams
                     </DropdownToggle>
-                    <ContextDropdownMenu filterByAttr="league" filterByVal={this.state.leagueId} updateContextFunc={this.updateTeamId} datasourceUrlName="api-team-list"/>
+
+                    <ContextDropdownMenu
+                        filterByAttr="league"
+                        filterByVal={this.state.leagueId}
+                        updateContextFunc={this.updateTeamId}
+                        datasourceUrlName="api-team-list"
+                    />
                 </NavDropdown>
 
-                <NavDropdown key="match-dropdown" isOpen={this.state.matchDropdownOpen} toggle={this.toggleMatchDropdown}>
+                <NavDropdown
+                    key="match-dropdown"
+                    isOpen={this.state.matchDropdownOpen}
+                    toggle={this.toggleMatchDropdown}>
+
                     <DropdownToggle nav caret>
                         Matches
                     </DropdownToggle>
-                    <ContextDropdownMenu filterByAttr="away_team" filterByVal={this.state.teamId} updateContextFunc={this.updateMatchId} nameAttr="pretty_name" datasourceUrlName="api-match-list"/>
+
+                    <ContextDropdownMenu
+                        filterByAttr="away_team"
+                        filterByVal={this.state.teamId}
+                        updateContextFunc={this.updateMatchId}
+                        nameAttr="pretty_name"
+                        datasourceUrlName="api-match-list"
+                    />
                 </NavDropdown>
 
-                <NavDropdown key="create-dropdown" isOpen={this.state.createDropdownOpen} toggle={this.toggleCreateDropdown}>
+                <NavDropdown
+                    key="create-dropdown"
+                    isOpen={this.state.createDropdownOpen}
+                    toggle={this.toggleCreateDropdown}>
+
                     <DropdownToggle nav>
                         Create
                     </DropdownToggle>
+
                     <DropdownMenu>
                         <DropdownItem header>Create a ...</DropdownItem>
                         <DropdownItem>League</DropdownItem>
