@@ -16,7 +16,7 @@ class LeagueCard extends React.Component {
     render() {
         return (
             <Card>
-                <CardImg top width="100%" src={`https://placeholdit.imgix.net/~text?txtsize=33&txt=${this.props.league.name}&w=318&h=180`} alt="Card image cap" />
+                <CardImg top src={`https://placeholdit.imgix.net/~text?txtsize=33&txt=${this.props.league.name}&w=318&h=180`} alt="Card image cap" />
                 <CardBlock>
                     <CardTitle>{this.props.league.name}</CardTitle>
                     <CardSubtitle>Sport type?</CardSubtitle>
@@ -61,7 +61,6 @@ class LeftBar extends React.Component {
 
 
 class ContentHeader extends React.Component {
-
     render() {
         return (
             <div>
