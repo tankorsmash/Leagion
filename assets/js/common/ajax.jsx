@@ -7,15 +7,19 @@
 import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
-let ajax = function(options) {
-	let data = options.data || null;
+let ajax = function({data=null, method='GET', url=null}) {
+	if (!url) {
+		throw('you need a url to make an ajax call');
+	}
+
 	let body = null;
+
 	if (data) {
 		body = JSON.stringify(data);
 	}
 
 	let info = {
-		method: options.method || 'GET',
+		method: method,
 		body: body,
 		credentials: "same-origin",
 		headers: {
@@ -31,7 +35,7 @@ let ajax = function(options) {
 		(resolve, reject) => {
 			let error = false;
 
-			fetch(options.url, info)
+			fetch(url, info)
 				.then(r => {
 					if (r.status == 200) {
 					} else {
