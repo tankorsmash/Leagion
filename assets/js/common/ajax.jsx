@@ -41,15 +41,10 @@ let ajax = function(options) {
 					return r.json()
 				})
 				.then(data => {
-					let response = {
-						error: error,
-						result: data
-					}
-
 					if (error) {
-						reject(response);
+						reject(data);
 					} else {
-						resolve(response);
+						resolve(data);
 
 					}
 				});
