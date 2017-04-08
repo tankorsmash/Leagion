@@ -4,99 +4,12 @@ import {
 } from 'reactstrap';
 
 import ajax from 'common/ajax';
-var Spinner = require('react-spinkit');
-
-import {NOT_LOADED} from 'common/constants';
-
-class LeagueCard extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
-    render() {
-        return (
-            <Card>
-                <CardImg top src={`https://placeholdit.imgix.net/~text?txtsize=33&txt=${this.props.league.name}&w=318&h=180`} alt="Card image cap" />
-                <CardBlock>
-                    <CardTitle>{this.props.league.name}</CardTitle>
-                    <CardSubtitle>Sport type?</CardSubtitle>
-                    <CardText>I dunno, some hardcoded details about the league, maybe its team count or something.</CardText>
-                    <Button>Detail?</Button>
-                </CardBlock>
-            </Card>
-        );
-    }
-};
-
-class LeftBar extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = { leagues: NOT_LOADED };
-    };
-
-    componentDidMount() {
-        ajax({
-            url: reverse('api-league-list'),
-        }).then(data => {
-            this.setState({leagues: data});
-        });
-    }
-
-    render() {
-        let isLoaded = this.state.leagues !== NOT_LOADED;
-
-        let content;
-        if (isLoaded == false) {
-            content = <Spinner spinnerName='three-bounce' />;
-        } else {
-            content = this.state.leagues.map((league)=>{
-                return (<LeagueCard key={league.id} league={league} />);
-            });
-        }
-
-        return <div>{content}</div>;
-    }
-}
-
-
-class ContentHeader extends React.Component {
-    render() {
-        return (
-            <div>
-                <Jumbotron>
-                    <h1 className="display-3">Dashboard</h1>
-                    <p className="lead">Overview of the league management</p>
-                    <hr className="my-2" />
-                    <p>As a league manager, you're able to view all teams and players.
-                        You'll be able to create and edit teams,
-                        assign coaches and team managers, and set up schedules.</p>
-                    <p className="lead">
-                        <Button color="primary">Learn More</Button>
-                    </p>
-                </Jumbotron>
-            </div>
-        );
-    }
-};
-
-class MainContent extends React.Component {
-    render() {
-        return (
-            <div>
-                <ContentHeader/>
-            </div>
-        );
-    }
-};
-
 
 class Dashboard extends React.Component {
    render() {
       return (
          <Row>
-             <Col sm="4"><LeftBar/></Col>
-             <Col sm="8"><MainContent/></Col>
+            Player Dashboard
          </Row>
       );
    }

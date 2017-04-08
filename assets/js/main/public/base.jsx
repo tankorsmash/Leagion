@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {LoginForm, RegisterForm} from 'main/public/registration';
 
 import urls from 'common/urls';
+import PublicNavbar from 'components/nav/public'
 
 class Index extends React.Component {
     render() {
@@ -15,11 +16,22 @@ class Index extends React.Component {
 class Public extends React.Component {
     render() {
         return (
-			<Switch>
-				{/* <Route exact path={urls.root} component={Index} /> */}
-				<Route path={urls.login} component={LoginForm} />
-				<Route path={urls.register} component={RegisterForm} />
-			</Switch>
+            <div>
+                <PublicNavbar/>
+                <Container>
+                    <Row>
+                        <Col>
+                            <main>
+                                <Switch>
+                                    {/* <Route exact path={urls.root} component={Index} /> */}
+                                    <Route path={urls.login} component={LoginForm} />
+                                    <Route path={urls.register} component={RegisterForm} />
+                                </Switch>
+                            </main>
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
         );
     }
 }

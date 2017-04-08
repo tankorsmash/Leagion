@@ -2,9 +2,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
 
 import ajax from 'common/ajax';
-import appUrls from 'main/app/urls';
-import adminUrls from 'main/app/admin/urls';
-import playerUrls from 'main/app/player/urls';
+import urls from 'common/urls';
 import {NOT_LOADED} from 'common/constants';
 
 import auth from 'main/auth';
@@ -16,25 +14,9 @@ import Matches from 'main/app/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 
-import Admin from 'main/app/admin/base'
-import Player from 'main/app/player/base'
 import AdminNavbar from 'components/nav/admin';
 
-class App extends React.Component {
-    componentDidMount() {
-        this.loadUserData();
-    }
-
-    loadUserData() {
-        ajax({
-            url: reverse('rest_user_details'),
-        }).then(data => {
-            localStorage.id = data.id;
-            localStorage.email = data.email;
-            localStorage.name = data.name;
-        });
-    }
-
+class Admin extends React.Component {
     render() {
         return (
             <div>
@@ -44,9 +26,10 @@ class App extends React.Component {
                         <Col>
                             <main>
                                 <Switch>
-                                    <Route exact path={appUrls.index} component={Dashboard} />
-                                    <Route path={adminUrls.index} component={Admin} />
-                                    <Route path={playerUrls.index} component={Player} />
+                                    <Route exact path={urls.app.admin.index} component={Dashboard} />
+                                    <Route path={urls.app.admin.leagues.detail} component={Leagues} />
+                                    <Route path={urls.app.admin.teams.detail} component={Teams} />
+                                    <Route path={urls.app.admin.matches.detail} component={Matches} />
                                     <Route component={FourOhFour} />
                                 </Switch>
                             </main>
@@ -58,4 +41,4 @@ class App extends React.Component {
     }
 }
 
-module.exports = App;
+module.exports = Admin;
