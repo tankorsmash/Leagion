@@ -8,7 +8,7 @@ import { Collapse, Navbar as BSNavbar, NavbarToggler,
 } from 'reactstrap';
 
 import urls from 'common/urls';
-import {LogoutButton, LoginButton} from 'components/buttons';
+import {LogoutButton, LoginButton, AdminButton} from 'components/buttons';
 import auth from 'main/auth';
 import {Navbar} from 'components/nav/base'
 
@@ -48,7 +48,8 @@ class PlayerProfile extends React.Component {
 						{localStorage.email}
 					</DropdownToggle>
 					<DropdownMenu right>
-						<DropdownItem header tag={LogoutButton}>Header</DropdownItem>
+						<DropdownItem header tag={AdminButton}></DropdownItem>
+						<DropdownItem header tag={LogoutButton}></DropdownItem>
 					</DropdownMenu>
 				</NavDropdown>
             </Nav>

@@ -29,17 +29,29 @@ let ajax = function(options) {
 		// The resolver function is called with the ability to resolve or
 		// reject the promise
 		(resolve, reject) => {
+			let error = false;
+
 			fetch(options.url, info)
 				.then(r => {
 					if (r.status == 200) {
-						return r.json()
 					} else {
-						$.toastr.error(`bad request -> url:${r.url}, status ${r.status} - ${r.statusText}`);
-						reject(r);
+						error = true;
 					}
+
+					return r.json()
 				})
 				.then(data => {
-					resolve(data);
+					let response = {
+						error: error,
+						result: data
+					}
+
+					if (error) {
+						reject(response);
+					} else {
+						resolve(response);
+
+					}
 				});
 		}
 	);
