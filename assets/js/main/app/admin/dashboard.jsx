@@ -5,7 +5,7 @@ import {
 
 import ajax from 'common/ajax';
 
-import SpinBase from 'components/spinner';
+import {AsyncBase} from 'components/base';
 
 class LeagueCard extends React.Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class LeagueCard extends React.Component {
     }
 };
 
-class LeftBar extends SpinBase {
+class LeftBar extends AsyncBase {
     constructor(props) {
         super(props);
 

@@ -1,5 +1,6 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
+import {AsyncBase} from 'components/base';
 
 import playerUrls from 'main/app/player/urls';
 import leagueUrls from 'main/app/player/league/urls';
@@ -19,13 +20,11 @@ class LeagueListItem extends React.Component {
     }
 }
 
-class LeagueList extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = { leagues: [] };
-    }
+class LeagueList extends AsyncBase {
+    url = reverse('api-my-league-list');
+    state = { leagues: [] };
 
-    render() {
+    getComponent() {
         return (
             <div>
                 { this.state.leagues.map((league)=>{
@@ -38,19 +37,6 @@ class LeagueList extends React.Component {
         );
     }
 
-    componentDidMount() {
-        this.updateDataset();
-    }
-
-    updateDataset() {
-        let url = reverse('api-my-league-list');
-
-        ajax({
-            url: url,
-        }).then(data => {
-            this.setState({leagues: data});
-        });
-    }
 }
 class League extends React.Component {
 
