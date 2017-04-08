@@ -250,7 +250,7 @@ class MainProfile extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggleLeagueDropdown = this.toggle.bind(this);
+        this.toggle = this.toggle.bind(this);
         this.state = {
             dropdownOpen: false
         };
