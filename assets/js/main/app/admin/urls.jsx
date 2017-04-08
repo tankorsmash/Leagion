@@ -6,7 +6,7 @@ let teamsUrl = `${adminUrl}/teams`;
 let matchesUrl = `${adminUrl}/matches`;
 
 module.exports = {
-	adminIndex: adminUrl,
+	index: adminUrl,
 	leagues: {
 		index: leaguesUrl,
 		detail: `${leaguesUrl}/:leagueId?`,

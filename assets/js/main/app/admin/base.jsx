@@ -2,12 +2,12 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {Container, Row, Col} from 'reactstrap';
 
 import ajax from 'common/ajax';
-import urls from 'common/urls';
+import adminUrls from 'main/app/admin/urls';
 import {NOT_LOADED} from 'common/constants';
 
 import auth from 'main/auth';
 
-import Dashboard from 'main/app/player/dashboard';
+import Dashboard from 'main/app/admin/dashboard';
 import Leagues from 'main/app/components/leagues';
 import Teams from 'main/app/components/teams';
 import Matches from 'main/app/components/matches';
@@ -26,10 +26,10 @@ class Admin extends React.Component {
                         <Col>
                             <main>
                                 <Switch>
-                                    <Route exact path={urls.app.admin.index} component={Dashboard} />
-                                    <Route path={urls.app.admin.leagues.detail} component={Leagues} />
-                                    <Route path={urls.app.admin.teams.detail} component={Teams} />
-                                    <Route path={urls.app.admin.matches.detail} component={Matches} />
+                                    <Route exact path={adminUrls.index} component={Dashboard} />
+                                    <Route path={adminUrls.leagues.detail} component={Leagues} />
+                                    <Route path={adminUrls.teams.detail} component={Teams} />
+                                    <Route path={adminUrls.matches.detail} component={Matches} />
                                     <Route component={FourOhFour} />
                                 </Switch>
                             </main>
