@@ -154,6 +154,7 @@ class NavContextFilter extends React.Component {
                 </NavDropdown>
 
                 <NavDropdown
+                    className={this.state.leagueId == NOT_LOADED ? "hidden-xs-up" : ""}
                     key="team-dropdown"
                     isOpen={this.state.teamDropdownOpen}
                     toggle={this.toggleTeamDropdown}>
@@ -171,6 +172,7 @@ class NavContextFilter extends React.Component {
                 </NavDropdown>
 
                 <NavDropdown
+                    className={this.state.teamId == NOT_LOADED ? "hidden-xs-up" : ""}
                     key="match-dropdown"
                     isOpen={this.state.matchDropdownOpen}
                     toggle={this.toggleMatchDropdown}>
