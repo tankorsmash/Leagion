@@ -6,10 +6,10 @@ import {NOT_LOADED} from 'common/constants';
 
 import auth from 'main/auth';
 
-import Dashboard from 'main/app/dashboard';
-import Leagues from 'main/app/leagues';
-import Teams from 'main/app/teams';
-import Matches from 'main/app/matches';
+import Dashboard from 'main/app/player/dashboard';
+import Leagues from 'main/app/components/leagues';
+import Teams from 'main/app/components/teams';
+import Matches from 'main/app/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 

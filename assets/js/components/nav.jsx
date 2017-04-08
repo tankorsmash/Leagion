@@ -69,7 +69,7 @@ class ContextDropdownMenu extends React.Component {
                         <span key={i}>
                         <DropdownItem header>
                                 { datum[this.props.nameAttr || "name"] }
-                            </DropdownItem>
+                        </DropdownItem>
                         <DropdownItem>
                             <NavLink onClick={()=>{updateFunc(datum)}}>
                                 Filter by
