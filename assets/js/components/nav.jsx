@@ -46,12 +46,15 @@ class ContextDropdownMenu extends React.Component {
         ajax({
             url: reverse(this.props.datasourceUrlName),
         }).then(data => {
-            //filter down dataset if {filterByVal} is provided
-            if (typeof this.props.filterByVal != "undefined") {
-                let fallbackFilter = (obj) => {
-                    return obj[this.props.filterByAttr] == this.props.filterByVal;
+            let filterByVal = this.props.filterByVal;
+            let filterByAttr = this.props.filterByAttr;
+
+            //filter down dataset if {props.filterByVal} is provided
+            if (typeof filterByVal != "undefined") {
+                let filterDatasetFunc = (obj) => {
+                    return obj[filterByAttr] == filterByVal;
                 };
-                data = data.filter(fallbackFilter );
+                data = data.filter(filterDatasetFunc);
             }
 
             this.setState({dataset: data});
