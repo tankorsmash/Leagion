@@ -1,5 +1,6 @@
 let rootUrl = '/main';
 let appUrl = `${rootUrl}/app`;
+
 let leaguesUrl = `${appUrl}/leagues`;
 let teamsUrl = `${appUrl}/teams`;
 let matchesUrl = `${appUrl}/matches`;

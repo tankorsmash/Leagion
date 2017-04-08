@@ -33,12 +33,24 @@ class Teams extends React.Component {
     }
 
     componentDidMount() {
+        this.updateDataset();
+    }
+
+    updateDataset() {
+        let url = reverse('api-team-list');
+
+        if (typeof this.props.match.params.teamId != "undefined") {
+            url = url+this.props.match.params.teamId;
+        };
+
         ajax({
-            url: reverse('api-team-list'),
+            url: url,
         }).then(data => {
-            this.setState({teams: data});
+            //if there's only one object, its a single detail team, so arrayify it
+            this.setState({teams: Array.isArray(data) ? data : [data]});
         });
     }
+
 
     render() {
         let isLoaded = this.state.teams !== NOT_LOADED;
