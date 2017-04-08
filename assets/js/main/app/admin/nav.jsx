@@ -7,7 +7,7 @@ import { Collapse, Navbar as BSNavbar, NavbarToggler,
     DropdownItem, Nav, NavItem, NavLink
 } from 'reactstrap';
 
-import urls from 'common/urls';
+import adminUrls from 'main/app/admin/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
 import {Navbar} from 'components/nav/base'
@@ -153,7 +153,7 @@ class NavContextFilter extends React.Component {
                     <ContextDropdownMenu
                         updateContextFunc={this.updateLeagueId}
                         datasourceUrlName="api-league-list"
-                        detailUrlRoot={urls.app.leagues.index}
+                        detailUrlRoot={adminUrls.leagues.index}
                     />
                 </NavDropdown>
 
@@ -172,7 +172,7 @@ class NavContextFilter extends React.Component {
                         filterByVal={this.state.leagueId}
                         updateContextFunc={this.updateTeamId}
                         datasourceUrlName="api-team-list"
-                        detailUrlRoot={urls.app.teams.index}
+                        detailUrlRoot={adminUrls.teams.index}
 
                     />
                 </NavDropdown>
@@ -193,7 +193,7 @@ class NavContextFilter extends React.Component {
                         updateContextFunc={this.updateMatchId}
                         nameAttr="pretty_name"
                         datasourceUrlName="api-match-list"
-                        detailUrlRoot={urls.app.matches.index}
+                        detailUrlRoot={adminUrls.matches.index}
                     />
                 </NavDropdown>
 

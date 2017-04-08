@@ -19,6 +19,7 @@ class PublicItems extends React.Component {
         return (
             <Nav navbar>
                 <NavItem>
+                    Public Items
                 </NavItem>
             </Nav>
         )
@@ -36,8 +37,8 @@ class PublicProfile extends React.Component {
 }
 
 class PublicNavbar extends Navbar {
-	itemComponent = AdminItems;
-	profileComponent = AdminProfile;
+	itemComponent = PublicItems;
+	profileComponent = PublicProfile;
 
 }
 

@@ -34,8 +34,8 @@ class Navbar extends React.Component {
                     <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        {this.itemComponent}
-                        {this.profileComponent}
+                        {React.createElement(this.itemComponent, this.props)}
+                        {React.createElement(this.profileComponent, this.props)}
                     </Collapse>
                 </BSNavbar>
             </div>
