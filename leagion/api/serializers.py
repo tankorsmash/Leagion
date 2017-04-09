@@ -67,12 +67,20 @@ class LeagueSerializer(serializers.ModelSerializer):
             'id', 'name', 'seasons'
         )
 
+class SeasonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Season
+        fields = (
+            'id', 'start_date', 'end_date', 'teams'
+        )
+
     seasons = SeasonSerializer(many=True)
 
-class MyLeagueSerializer(serializers.ModelSerializer):
+class MySeasonSerializer(serializers.ModelSerializer):
     my_team = serializers.SerializerMethodField('get_team')
+
     class Meta:
-        model = League
+        model = Season
         fields = (
             'id', 'name', 'teams', 'my_team'
         )

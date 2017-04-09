@@ -22,3 +22,17 @@ class SeasonDetail(generics.RetrieveUpdateAPIView):
 
     queryset = Season.objects.all()
     serializer_class = serializers.SeasonSerializer
+
+@reverse_js
+class MySeasonList(SeasonList):
+    serializer_class = serializers.MySeasonSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Season.objects.filter(teams__players=user).distinct()
+
+@reverse_js
+class MySeasonDetail(SeasonDetail):
+    def get_queryset(self):
+        user = self.request.user
+        return Season.objects.filter(teams__players=user).distinct()
