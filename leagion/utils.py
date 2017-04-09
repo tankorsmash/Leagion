@@ -4,7 +4,7 @@ import random
 import datetime
 
 from django.contrib.auth import get_user_model
-from leagion.models import Team, League, Match, Roster, Location
+from leagion.models import Team, League, Match, Roster, Location, Season
 
 User = get_user_model()
 
@@ -44,24 +44,40 @@ def generate_users(count, team=None):
 
     return created_users
 
-def generate_league(name=None, teams_count=5, players_in_team_count=15):
+def generate_league(name=None):
     print("generating league")
     if name is None:
         f = faker.Faker()
         name = f.company()+" League"
     league = League.objects.create(name=name)
 
-    print("generating teams for league")
-    generate_teams(league, teams_count, players_in_team_count)
+    print("generating season for league")
+    generate_season(league)
 
     return league
 
-def generate_teams(league, team_count, players_count):
+def generate_season(league, start_date=None, end_date=None, teams_count=5, players_in_team_count=15):
+    print("generating season")
+    f = faker.Faker()
+
+    if start_date is None:
+        start_date = f.date_object()
+    if end_date is None:
+        end_date = start_date + datetime.timedelta(weeks=32)
+
+    season = Season.objects.create(league=league, start_date=start_date, end_date=end_date)
+
+    print("generating teams for league")
+    generate_teams(season, teams_count, players_in_team_count)
+
+    return season
+
+def generate_teams(season, team_count, players_count):
     f = faker.Faker()
     for i in range(team_count):
         team = Team.objects.create(
             name=f.street_name(),
-            league=league
+            season=season
         )
         print("generating players for team", i + 1, "of", team_count)
         generate_users(players_count, team)
@@ -94,7 +110,7 @@ def generate_roster(team, match):
 
     return roster
 
-def generate_match(league, home_team, away_team, location, postponed_match=None):
+def generate_match(season, home_team, away_team, location, postponed_match=None):
     f = faker.Faker()
 
     #if not postponed:
@@ -121,7 +137,7 @@ def generate_match(league, home_team, away_team, location, postponed_match=None)
         match_datetime=match_datetime,
         location=location,
         duration_seconds=duration_seconds,
-        league=league
+        season=season
     )
 
     if postponed_match is not None:
@@ -134,8 +150,8 @@ def generate_match(league, home_team, away_team, location, postponed_match=None)
 
     return match
 
-def generate_matches(league, match_count=10):
-    teams = list(league.teams.all())
+def generate_matches(season, match_count=10):
+    teams = list(season.teams.all())
 
     locations = Location.objects.all()
     if not locations:
@@ -147,7 +163,7 @@ def generate_matches(league, match_count=10):
         home_team, away_team = random.sample(teams, 2)
         location = random.choice(locations)
 
-        match = generate_match(league, home_team=home_team, away_team=away_team, location=location, postponed_match=None)
+        match = generate_match(season, home_team=home_team, away_team=away_team, location=location, postponed_match=None)
         matches.append(match)
 
         # should_postpone = True
@@ -160,7 +176,7 @@ def generate_matches(league, match_count=10):
 
             new_location = random.choice(locations)
 
-            new_match = generate_match(league, home_team=None, away_team=None, location=new_location, postponed_match=match)
+            new_match = generate_match(season, home_team=None, away_team=None, location=new_location, postponed_match=match)
             match.refresh_from_db()
 
             matches.append(new_match)
@@ -170,4 +186,5 @@ def generate_matches(league, match_count=10):
 
 def generate_all():
     league = generate_league()
-    matches = generate_matches(league)
+    for season in league.seasons.all():
+        generate_matches(season)

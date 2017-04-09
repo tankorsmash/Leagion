@@ -99,7 +99,7 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 class Team(models.Model):
     name = models.CharField(max_length=255)
     players = models.ManyToManyField(User, related_name="teams")
-    league = models.ForeignKey("League", related_name="teams")
+    season = models.ForeignKey("Season", related_name="teams")
 
     def __unicode__(self):
         return "Team: {name}".format(name=self.name)
@@ -107,6 +107,17 @@ class Team(models.Model):
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
 
+
+class Season(models.Model):
+    start_date = models.DateField()
+    end_date = models.DateField()
+    league = models.ForeignKey("League", related_name="seasons")
+
+    def __unicode__(self):
+        return "Season: {}-{}".format(start_date, end_date)
+
+    def __repr__(self):
+        return "<%s>" % str(self).encode("utf-8")
 
 class League(models.Model):
     name = models.CharField(max_length=255)
@@ -116,6 +127,7 @@ class League(models.Model):
 
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
+
 
 
 class Location(models.Model):
@@ -156,7 +168,7 @@ class Match(models.Model):
 
     location = models.ForeignKey(Location, null=True, blank=True, related_name="matches")
 
-    league = models.ForeignKey(League, null=False, related_name="matches")
+    season = models.ForeignKey(Season, null=False, related_name="matches")
 
     duration_seconds = models.IntegerField(null=True, blank=True, default=0)
 
