@@ -11,7 +11,7 @@ class Season extends React.Component {
         let season = this.props.season;
         return (
             <div>
-                Season name: { season.name }
+                Season name: { season.pretty_name }
             </div>
         );
     }
@@ -30,7 +30,6 @@ class Seasons extends React.Component {
         ajax({
             url: url,
         }).then(data => {
-            //if there's only one object, its a single detail season, so arrayify it
             this.setState({seasons: data});
         });
     }
