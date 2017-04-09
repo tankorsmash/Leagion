@@ -8,6 +8,7 @@ import adminUrls from 'main/app/admin/urls';
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
 import Leagues from 'main/app/components/leagues';
+import Seasons from 'main/app/components/seasons';
 import Teams from 'main/app/components/teams';
 import Matches from 'main/app/components/matches';
 
@@ -26,7 +27,7 @@ class Admin extends React.Component {
                                 <Switch>
                                     <Route exact path={adminUrls.index} {...this.props} component={Dashboard} />
                                     <Route path={adminUrls.leagues.detail} {...this.props} component={Leagues} />
-                                    <Route path={adminUrls.seasons.detail} {...this.props} component={Leagues} />
+                                    <Route path={adminUrls.seasons.detail} {...this.props} component={Seasons} />
                                     <Route path={adminUrls.teams.detail} {...this.props} component={Teams} />
                                     <Route path={adminUrls.matches.detail} {...this.props} component={Matches} />
                                     <Route component={FourOhFour} />
