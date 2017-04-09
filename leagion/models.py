@@ -119,6 +119,14 @@ class Season(models.Model):
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
 
+    @property
+    def pretty_name(self):
+        return "Season: {start_date} - {end_date}".format(
+            start_date=self.start_date,
+            end_date=self.end_date,
+        )
+
+
 class League(models.Model):
     name = models.CharField(max_length=255)
 
