@@ -56,7 +56,7 @@ class Matches extends React.Component {
         ajax({
             url: url,
         }).then(data => {
-            this.setState(data);
+            this.setState({matches: data});
         });
     }
 }
