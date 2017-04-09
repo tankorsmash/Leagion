@@ -11,7 +11,6 @@ class PlayerItems extends React.Component {
         return (
             <Nav navbar>
                 <NavItem>
-                    Player nav item
                 </NavItem>
             </Nav>
         )

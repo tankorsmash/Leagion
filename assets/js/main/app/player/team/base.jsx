@@ -11,57 +11,34 @@ import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class TeamListItem extends React.Component {
-    render() {
-        let league = this.props.league;
-        return (
-            <Link to={`${teamUrls.index}/${team.id}`}>{team.name}</Link>
-        );
-    }
-}
-
-class TeamList extends AsyncBase {
-    url = reverse('api-my-team-list');
-    state = { leagues: [] };
-
-    getComponent() {
-        return (
-            <div>
-                { this.state.teams.map((team)=>{
-                    return <TeamListItem
-                        league={team}
-                        key={team.id}
-                    />
-                }) }
-            </div>
-        );
-    }
-}
-
 class TeamDetail extends AsyncBase {
-    url = reverse('api-my-team-detail');
-    state = { team: [] };
+    state = { team: {} };
+
+    getUrl() {
+        return reverse('api-my-team-detail', {team_id: this.props});
+    }
 
     getComponent() {
+        let team = this.state.team;
+
         return (
             <div>
-                { this.state.teams.map((team)=>{
-                    return <TeamsListItem
-                        league={team}
-                        key={team.id}
-                    />
-                }) }
+                <MatchList matches={this.state.team.matches} />
             </div>
         );
     }
+}
+const what = () => {
+    return (<span> hello </span>);
 }
 
 class Team extends React.Component {
 
+    //<Route exact path={teamUrls.index} component={TeamList} />
     render() {
         return (
             <Switch>
-                <Route path={TeamUrls.index} component={TeamList} />
+                <Route path={teamUrls.detail} component={what} />
                 <Route component={FourOhFour} />
             </Switch>
         );
@@ -70,6 +47,5 @@ class Team extends React.Component {
 
 module.exports = {
     Team: Team,
-    TeamList: TeamList,
 };
 
