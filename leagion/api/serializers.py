@@ -54,7 +54,7 @@ class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
         fields = (
-            'id', 'start_date', 'end_date', 'league', 'teams'
+            'id', 'start_date', 'end_date', 'league', 'teams', 'pretty_name',
         )
 
     teams = TeamSerializer(many=True)

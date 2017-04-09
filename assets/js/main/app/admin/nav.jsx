@@ -215,7 +215,6 @@ class NavContextFilter extends React.Component {
                         updateContextFunc={this.updateTeamId}
                         datasourceUrlName="api-team-list"
                         detailUrlRoot={adminUrls.teams.index}
-                        nameAttr="pretty_name"
 
                     />
                 </NavDropdown>
