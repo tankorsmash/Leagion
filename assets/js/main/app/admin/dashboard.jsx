@@ -4,9 +4,8 @@ import {
 } from 'reactstrap';
 
 import ajax from 'common/ajax';
-var Spinner = require('react-spinkit');
 
-import {NOT_LOADED} from 'common/constants';
+import {AsyncBase} from 'components/base';
 
 class LeagueCard extends React.Component {
     constructor(props) {
@@ -28,11 +27,11 @@ class LeagueCard extends React.Component {
     }
 };
 
-class LeftBar extends React.Component {
+class LeftBar extends AsyncBase {
     constructor(props) {
         super(props);
 
-        this.state = { leagues: NOT_LOADED };
+        this.state['leagues'] = [];
     };
 
     componentDidMount() {
@@ -40,22 +39,18 @@ class LeftBar extends React.Component {
             url: reverse('api-league-list'),
         }).then(data => {
             this.setState({leagues: data});
+            this.loaded();
         });
     }
 
-    render() {
-        let isLoaded = this.state.leagues !== NOT_LOADED;
-
-        let content;
-        if (isLoaded == false) {
-            content = <Spinner spinnerName='three-bounce' />;
-        } else {
-            content = this.state.leagues.map((league)=>{
-                return (<LeagueCard key={league.id} league={league} />);
-            });
-        }
-
-        return <div>{content}</div>;
+    getComponent() {
+        return (
+            <div>
+                {this.state.leagues.map((league)=>{
+                    return (<LeagueCard key={league.id} league={league} />);
+                })}
+            </div>
+        )
     }
 }
 
@@ -92,14 +87,14 @@ class MainContent extends React.Component {
 
 
 class Dashboard extends React.Component {
-   render() {
-      return (
-         <Row>
-             <Col sm="4"><LeftBar/></Col>
-             <Col sm="8"><MainContent/></Col>
-         </Row>
-      );
-   }
+    render() {
+        return (
+            <Row>
+                <Col sm="4"><LeftBar/></Col>
+                <Col sm="8"><MainContent/></Col>
+            </Row>
+        );
+    }
 }
 
 module.exports = Dashboard;

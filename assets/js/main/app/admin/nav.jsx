@@ -7,22 +7,13 @@ import { Collapse, Navbar as BSNavbar, NavbarToggler,
     DropdownItem, Nav, NavItem, NavLink
 } from 'reactstrap';
 
-import urls from 'common/urls';
+import adminUrls from 'main/app/admin/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
+import {Navbar} from 'components/nav/base'
+import {BaseAppProfile} from 'main/app/components/nav';
 
 import {NOT_LOADED, DO_NOTHING, STOP_PROPAGATION} from 'common/constants';
-
-class PublicItems extends React.Component {
-    render() {
-        return (
-            <Nav navbar>
-                <NavItem>
-                </NavItem>
-            </Nav>
-        )
-    }
-}
 
 class ContextDropdownMenu extends React.Component {
     constructor(props) {
@@ -74,19 +65,19 @@ class ContextDropdownMenu extends React.Component {
                     let detailUrl = `${this.props.detailUrlRoot}/${datum["id"]}`
                     return (
                         <span key={i}>
-                        <DropdownItem header>
+                            <DropdownItem header>
                                 { datum[this.props.nameAttr || "name"] }
                             </DropdownItem>
-                        <DropdownItem>
-                            <Link to={detailUrl} className="nav-link">
+                            <DropdownItem>
+                                <Link to={detailUrl} className="nav-link">
                                     Detail
-                            </Link>
-                        </DropdownItem>
-                        <DropdownItem>
-                            <NavLink onClick={()=>{updateFunc(datum)}}>
-                                Filter by
-                            </NavLink>
-                        </DropdownItem>
+                                </Link>
+                            </DropdownItem>
+                            <DropdownItem>
+                                <NavLink onClick={()=>{updateFunc(datum)}}>
+                                    Filter by
+                                </NavLink>
+                            </DropdownItem>
                         </span>
                     );
                 }) }
@@ -170,7 +161,7 @@ class NavContextFilter extends React.Component {
                     <ContextDropdownMenu
                         updateContextFunc={this.updateLeagueId}
                         datasourceUrlName="api-league-list"
-                        detailUrlRoot={urls.app.leagues.index}
+                        detailUrlRoot={adminUrls.leagues.index}
                     />
                 </NavDropdown>
 
@@ -189,7 +180,7 @@ class NavContextFilter extends React.Component {
                         filterByVal={this.state.leagueId}
                         updateContextFunc={this.updateTeamId}
                         datasourceUrlName="api-team-list"
-                        detailUrlRoot={urls.app.teams.index}
+                        detailUrlRoot={adminUrls.teams.index}
 
                     />
                 </NavDropdown>
@@ -210,7 +201,7 @@ class NavContextFilter extends React.Component {
                         updateContextFunc={this.updateMatchId}
                         nameAttr="pretty_name"
                         datasourceUrlName="api-match-list"
-                        detailUrlRoot={urls.app.matches.index}
+                        detailUrlRoot={adminUrls.matches.index}
                     />
                 </NavDropdown>
 
@@ -235,7 +226,7 @@ class NavContextFilter extends React.Component {
     }
 }
 
-class MainItems extends React.Component {
+class AdminItems extends React.Component {
     render() {
         //TODO: make NavContextFilter not need the toplevel <Nav> inside it. I tried, but if the NavDropdowns arent the first child of Nav, the BS4 styling wont work
         return (
@@ -246,100 +237,14 @@ class MainItems extends React.Component {
     }
 }
 
-class ItemButtons extends React.Component {
-    render() {
-        if (auth.loggedIn()) {
-            return (<MainItems />);
-        } else {
-            return (<PublicItems />);
-        }
-    }
+class AdminProfile extends BaseAppProfile {
+	items = [LogoutButton]
 }
 
-class PublicProfile extends React.Component {
-    render() {
-        return (
-            <NavLink tag={LoginButton} />
-        )
-    }
+class AdminNavbar extends Navbar {
+	itemComponent = AdminItems;
+	profileComponent = AdminProfile;
 }
 
-class MainProfile extends React.Component {
-    constructor(props) {
-        super(props);
+module.exports = AdminNavbar;
 
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            dropdownOpen: false
-        };
-    }
-
-    toggle() {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    }
-
-    render() {
-        return (
-            <NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                <DropdownToggle nav caret>
-                    {localStorage.email}
-                </DropdownToggle>
-                <DropdownMenu right>
-                    <DropdownItem header tag={LogoutButton}>Header</DropdownItem>
-                </DropdownMenu>
-            </NavDropdown>
-        )
-    }
-}
-
-class ProfileButtons extends React.Component {
-    render() {
-        return (
-            <Nav className="ml-auto" navbar>
-                {(() => {
-                    if (auth.loggedIn()) {
-                        return (<MainProfile />);
-                    } else {
-                        return (<PublicProfile />);
-                    }
-                })()}
-            </Nav>
-        )
-    }
-}
-
-class Navbar extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.toggle = this.toggle.bind(this);
-        this.state = {
-            isOpen: false
-        };
-    }
-    toggle() {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
-    render() {
-        return (
-            <div>
-                <BSNavbar color="faded" light toggleable>
-                    <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <ItemButtons />
-                        <ProfileButtons />
-                    </Collapse>
-                </BSNavbar>
-            </div>
-        );
-    }
-}
-
-module.exports = {
-    Navbar: Navbar
-}

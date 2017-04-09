@@ -22,3 +22,17 @@ class LeagueDetail(generics.RetrieveUpdateAPIView):
 
     queryset = League.objects.all()
     serializer_class = serializers.LeagueSerializer
+
+@reverse_js
+class MyLeagueList(LeagueList):
+    serializer_class = serializers.MyLeagueSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return League.objects.filter(teams__players=user).distinct()
+
+@reverse_js
+class MyLeagueDetail(LeagueDetail):
+    def get_queryset(self):
+        user = self.request.user
+        return League.objects.filter(teams__players=user).distinct()

@@ -6,12 +6,12 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 module.exports = {
     context: __dirname,
 
-    devtool: 'eval',
+    devtool: 'source-map',
 
 	entry: {
 		vendor: [
             "expose-loader?React!react",
-            "expose-loader?$!jquery/dist/jquery.slim",
+            "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
 			'react-hot-loader/patch',
 			'webpack-dev-server/client?http://localhost:20034',

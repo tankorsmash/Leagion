@@ -59,6 +59,19 @@ class LeagueSerializer(serializers.ModelSerializer):
 
     teams = TeamSerializer(many=True)
 
+class MyLeagueSerializer(serializers.ModelSerializer):
+    my_team = serializers.SerializerMethodField('get_team')
+    class Meta:
+        model = League
+        fields = (
+            'id', 'name', 'teams', 'my_team'
+        )
+
+    def get_team(self, obj):
+        user = self.context['request'].user
+        team = Team.objects.get(players=user)
+        serializer = TeamSerializer(team)
+        return serializer.data
 
 class RosterSerializer(serializers.ModelSerializer):
     class Meta:
