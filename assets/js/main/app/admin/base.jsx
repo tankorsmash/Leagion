@@ -26,6 +26,7 @@ class Admin extends React.Component {
                                 <Switch>
                                     <Route exact path={adminUrls.index} {...this.props} component={Dashboard} />
                                     <Route path={adminUrls.leagues.detail} {...this.props} component={Leagues} />
+                                    <Route path={adminUrls.seasons.detail} {...this.props} component={Leagues} />
                                     <Route path={adminUrls.teams.detail} {...this.props} component={Teams} />
                                     <Route path={adminUrls.matches.detail} {...this.props} component={Matches} />
                                     <Route component={FourOhFour} />
