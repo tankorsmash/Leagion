@@ -6,18 +6,6 @@ import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
 
-class SeasonJumbo extends React.Component {
-    render() {
-        let season = this.props.season;
-        return (
-            <Jumbotron>
-                <Link to={`${seasonUrls.index}/${season.id}`}>{season.name}</Link>
-            </Jumbotron>
-        );
-    }
-}
-
-
 class Season extends React.Component {
     render() {
         let season = this.props.season;
