@@ -26,7 +26,7 @@ const LeagueCard = (props) => {
                     <CardSubtitle>{league.sport}</CardSubtitle>
                     <CardText>
                         Team: {<Link to={`${teamUrls.index}/${league.my_team.id}`}>{league.my_team.name}</Link>}
-                    
+                        Upcoming Match: 
                     </CardText>
                 </CardBlock>
             </Card>
