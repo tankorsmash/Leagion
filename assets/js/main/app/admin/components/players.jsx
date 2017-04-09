@@ -1,4 +1,3 @@
-
 //going to be used elsewhere than just PlayerDetail, like in Rosters and Teams,
 // so we need to keep this Component as simple as possible
 class SimplePlayer extends React.Component {
