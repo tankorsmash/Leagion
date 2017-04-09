@@ -1,7 +1,7 @@
 import ajax from 'common/ajax';
 var Spinner = require('react-spinkit');
 
-import {SimplePlayer} from 'main/app/components/players';
+import {SimplePlayer} from 'main/app/admin/components/players';
 
 import {NOT_LOADED} from 'common/constants';
 
