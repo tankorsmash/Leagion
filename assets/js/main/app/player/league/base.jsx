@@ -1,6 +1,6 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
-import {AsyncBase} from 'components/base';
+import SpinLoader from 'components/spinloader';
 
 import { Card, CardImg, CardText, CardBlock,
     CardTitle, CardSubtitle, Button, Jumbotron } from 'reactstrap';
@@ -12,21 +12,41 @@ import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class LeagueList extends AsyncBase {
-    url = reverse('api-my-league-list');
-    state = { leagues: [] };
+class LeagueList extends React.Component {
+    
+    constructor(props) {
+        super(props);
 
-    getComponent() {
+        this.state = { 
+            leagues: [],
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-my-league-list'),
+        }).then(data => {
+            this.setState({
+                leagues: data,
+                loaded: true
+            });
+        });
+    }
+
+    render() {
         return (
-            <div>
-                <h2>Leagues</h2>
-                { this.state.leagues.map((league)=>{
-                    return <LeagueJumbo
-                        league={league}
-                        key={league.id}
-                    />
-                }) }
-            </div>
+            <SpinLoader loaded={this.loaded}>
+                <div>
+                    <h2>My Teams</h2>
+                    { this.state.leagues.map((league)=>{
+                        return <LeagueJumbo
+                            league={league}
+                            key={league.id}
+                        />
+                    }) }
+                </div>
+            </SpinLoader>
         );
     }
 }

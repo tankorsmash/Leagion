@@ -3,6 +3,6 @@ let index = `${playerUrls.index}/team`;
 
 module.exports = {
 	index: index,
-	detail: `${index}/:teamId?`,
+	detail: `${index}/:teamId`,
 }
 
