@@ -10,7 +10,7 @@ const SeasonCard = (props) => {
         <div>
             <Card>
                 <CardBlock>
-                    <CardTitle><Link to={`${seasonUrls.index}/${season.id}`}>{season.name}</Link></CardTitle>
+                    <CardTitle><Link to={`${seasonUrls.index}/${season.id}`}>{season.pretty_name}</Link></CardTitle>
                     <CardSubtitle>{season.sport}</CardSubtitle>
                     <CardText>
                         Team: {<Link to={`${teamUrls.index}/${season.my_team.id}`}>{season.my_team.name}</Link>}

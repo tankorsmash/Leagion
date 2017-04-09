@@ -19,6 +19,7 @@ class LeagueList extends AsyncBase {
     getComponent() {
         return (
             <div>
+                <h2>Leagues</h2>
                 { this.state.leagues.map((league)=>{
                     return <LeagueJumbo
                         league={league}

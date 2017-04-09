@@ -1,5 +1,6 @@
 from django.conf.urls import url, include
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 
 from rest_framework import routers, serializers, viewsets
 
@@ -44,10 +45,22 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'players', 'season'
+            'id', 'name', 'players', 'season', 'matches'
         )
 
+    matches = serializers.SerializerMethodField('get_ordered_matches')
     players = UserSerializer(many=True)
+
+    def get_ordered_matches(self, obj):
+        user = self.context['request'].user
+
+        matches = Match.objects.filter(
+            Q(home_team=obj) |
+            Q(away_team=obj)
+        ).order_by('match_datetime')
+
+        serializer = MatchSerializer(matches, many=True)
+        return serializer.data
 
 
 class SeasonSerializer(serializers.ModelSerializer):
@@ -60,27 +73,25 @@ class SeasonSerializer(serializers.ModelSerializer):
     teams = TeamSerializer(many=True)
 
 
+class MySeasonSerializer(SeasonSerializer):
+    class Meta(SeasonSerializer.Meta):
+        fields = SeasonSerializer.Meta.fields + ('my_team',)
+
+    my_team = serializers.SerializerMethodField('get_team')
+
+    def get_team(self, obj):
+        user = self.context['request'].user
+        team = Team.objects.get(players=user)
+        serializer = TeamSerializer(team, context=self.context)
+        return serializer.data
+
+
 class LeagueSerializer(serializers.ModelSerializer):
     class Meta:
         model = League
         fields = (
             'id', 'name', 'seasons'
         )
-
-class MySeasonSerializer(serializers.ModelSerializer):
-    my_team = serializers.SerializerMethodField('get_team')
-
-    class Meta:
-        model = Season
-        fields = (
-            'id', 'start_date', 'end_date', 'league', 'teams', 'pretty_name', 'my_team'
-        )
-
-    def get_team(self, obj):
-        user = self.context['request'].user
-        team = Team.objects.get(players=user)
-        serializer = TeamSerializer(team)
-        return serializer.data
 
 
 class MyLeagueSerializer(LeagueSerializer):
@@ -95,8 +106,9 @@ class MyLeagueSerializer(LeagueSerializer):
     def get_seasons(self, obj):
         user = self.context['request'].user
         seasons = Season.objects.filter(teams__players=user)
-        serializer = MySeasonSerializer(seasons, many=True, context={'request': self.context['request']})
+        serializer = MySeasonSerializer(seasons, many=True, context=self.context)
         return serializer.data
+
 
 class RosterSerializer(serializers.ModelSerializer):
     class Meta:
