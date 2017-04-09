@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import routers, serializers, viewsets
 
-from leagion.models import Match, Roster, Team, League
+from leagion.models import Match, Roster, Team, League, Season
 
 User = get_user_model()
 
@@ -34,7 +34,7 @@ class MatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = (
-            'id', 'match_datetime', 'location', 'league', 'duration_seconds',
+            'id', 'match_datetime', 'location', 'season', 'duration_seconds',
             'home_team', 'home_points','away_team', 'away_points', 'status',
             'postponed_to', 'postponed_from', 'pretty_name',
         )
@@ -44,20 +44,30 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'players', 'league'
+            'id', 'name', 'players', 'season'
         )
 
     players = UserSerializer(many=True)
+
+
+class SeasonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Season
+        fields = (
+            'id', 'start_date', 'end_date', 'league', 'teams'
+        )
+
+    teams = TeamSerializer(many=True)
 
 
 class LeagueSerializer(serializers.ModelSerializer):
     class Meta:
         model = League
         fields = (
-            'id', 'name', 'teams'
+            'id', 'name', 'seasons'
         )
 
-    teams = TeamSerializer(many=True)
+    seasons = SeasonSerializer(many=True)
 
 class MyLeagueSerializer(serializers.ModelSerializer):
     my_team = serializers.SerializerMethodField('get_team')
