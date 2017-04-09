@@ -91,17 +91,20 @@ class NavContextFilter extends React.Component {
         super(props);
 
         this.toggleLeagueDropdown = this.toggleLeagueDropdown.bind(this);
+        this.toggleSeasonDropdown = this.toggleSeasonDropdown.bind(this);
         this.toggleTeamDropdown = this.toggleTeamDropdown.bind(this);
         this.toggleMatchDropdown = this.toggleMatchDropdown.bind(this);
         this.toggleCreateDropdown = this.toggleCreateDropdown.bind(this);
 
         this.state = {
             leagueDropdownOpen: false,
+            seasonDropdownOpen: false,
             teamDropdownOpen: false,
             matchDropdownOpen: false,
             createDropdownOpen: false,
 
             leagueId: localStorage.leagueId || NOT_LOADED,
+            seasonId: localStorage.seasonId || NOT_LOADED,
             teamId: localStorage.teamId || NOT_LOADED,
             matchId: localStorage.matchId || NOT_LOADED,
         };
@@ -110,6 +113,12 @@ class NavContextFilter extends React.Component {
     toggleLeagueDropdown() {
         this.setState({
             leagueDropdownOpen: !this.state.leagueDropdownOpen
+        });
+    }
+
+    toggleSeasonDropdown() {
+        this.setState({
+            seasonDropdownOpen: !this.state.seasonDropdownOpen
         });
     }
 
@@ -136,6 +145,11 @@ class NavContextFilter extends React.Component {
         localStorage.leagueId = league.id;
     }
 
+    updateSeasonId = (season) => {
+        this.setState({ seasonId: season.id });
+        localStorage.seasonId = season.id;
+    }
+
     updateTeamId = (team) => {
         this.setState({ teamId: team.id });
         localStorage.teamId = team.id;
@@ -149,6 +163,7 @@ class NavContextFilter extends React.Component {
     render() {
         return (
             <Nav navbar>
+                {/* Leagues */}
                 <NavDropdown
                     key="league-dropdown"
                     isOpen={this.state.leagueDropdownOpen}
@@ -165,8 +180,27 @@ class NavContextFilter extends React.Component {
                     />
                 </NavDropdown>
 
+                {/* Seasons */}
                 <NavDropdown
-                    className={this.state.leagueId == NOT_LOADED ? "hidden-xs-up" : ""}
+                    key="season-dropdown"
+                    isOpen={this.state.seasonDropdownOpen}
+                    toggle={this.toggleSeasonDropdown}>
+
+                    <DropdownToggle nav >
+                        Seasons
+                    </DropdownToggle>
+
+                    <ContextDropdownMenu
+                        updateContextFunc={this.updateSeasonId}
+                        datasourceUrlName="api-season-list"
+                        detailUrlRoot={adminUrls.seasons.index}
+                        nameAttr="pretty_name"
+                    />
+                </NavDropdown>
+
+                {/* Teams */}
+                <NavDropdown
+                    className={this.state.seasonId == NOT_LOADED ? "hidden-xs-up" : ""}
                     key="team-dropdown"
                     isOpen={this.state.teamDropdownOpen}
                     toggle={this.toggleTeamDropdown}>
@@ -176,15 +210,17 @@ class NavContextFilter extends React.Component {
                     </DropdownToggle>
 
                     <ContextDropdownMenu
-                        filterByAttr="league"
-                        filterByVal={this.state.leagueId}
+                        filterByAttr="season"
+                        filterByVal={this.state.seasonId}
                         updateContextFunc={this.updateTeamId}
                         datasourceUrlName="api-team-list"
                         detailUrlRoot={adminUrls.teams.index}
+                        nameAttr="pretty_name"
 
                     />
                 </NavDropdown>
 
+                {/* Matches */}
                 <NavDropdown
                     className={this.state.teamId == NOT_LOADED ? "hidden-xs-up" : ""}
                     key="match-dropdown"
@@ -205,6 +241,7 @@ class NavContextFilter extends React.Component {
                     />
                 </NavDropdown>
 
+                {/* Create */}
                 <NavDropdown
                     key="create-dropdown"
                     isOpen={this.state.createDropdownOpen}

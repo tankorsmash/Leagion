@@ -9,6 +9,7 @@ from leagion.api.views import (
     rosters as rosters_views,
     teams as teams_views,
     leagues as leagues_views,
+    seasons as seasons_views,
 )
 
 urlpatterns = [
@@ -28,5 +29,8 @@ urlpatterns = [
     url(r'^league/(?P<league_id>\d+)/$', leagues_views.LeagueDetail.as_view(), name='api-league-detail'),
     url(r'^me/league/$', leagues_views.MyLeagueList.as_view(), name='api-my-league-list'),
     url(r'^me/league/(?P<league_id>\d+)/$', leagues_views.MyLeagueDetail.as_view(), name='api-my-league-detail'),
+
+    url(r'^season/$', seasons_views.SeasonList.as_view(), name='api-season-list'),
+    url(r'^season/(?P<season_id>\d+)/$', seasons_views.SeasonDetail.as_view(), name='api-season-detail'),
 
 ]
