@@ -5,11 +5,8 @@ import {AsyncBase} from 'components/base';
 import { Card, CardImg, CardText, CardBlock,
     CardTitle, CardSubtitle, Button, Jumbotron } from 'reactstrap';
 
-import playerUrls from 'main/app/player/urls';
+import {LeagueJumbo} from 'components/app/league'
 import leagueUrls from 'main/app/player/league/urls';
-import teamUrls from 'main/app/player/team/urls';
-
-import Dashboard from 'main/app/player/dashboard';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -23,7 +20,7 @@ class LeagueList extends AsyncBase {
         return (
             <div>
                 { this.state.leagues.map((league)=>{
-                    return <LeagueCard
+                    return <LeagueJumbo
                         league={league}
                         key={league.id}
                     />
