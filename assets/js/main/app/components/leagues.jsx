@@ -1,22 +1,10 @@
 import {Link} from 'react-router-dom';
-import { DropdownItem, DropdownMenu, NavLink, Jumbotron } from 'reactstrap';
+import { DropdownItem, DropdownMenu, NavLink } from 'reactstrap';
 import Spinner from 'react-spinkit';
 
 import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
-
-class LeagueJumbo extends React.Component {
-    render() {
-        let league = this.props.league;
-        return (
-            <Jumbotron>
-                <Link to={`${leagueUrls.index}/${league.id}`}>{league.name}</Link>
-            </Jumbotron>
-        );
-    }
-}
-
 
 class League extends React.Component {
     render() {
