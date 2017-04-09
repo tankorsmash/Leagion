@@ -1,44 +1,42 @@
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
+import {Route} from 'components/router';
 
 import ajax from 'common/ajax';
-import urls from 'common/urls';
-import {NOT_LOADED} from 'common/constants';
 
-import auth from 'main/auth';
+import appUrls from 'main/app/urls';
+import adminUrls from 'main/app/admin/urls';
+import playerUrls from 'main/app/player/urls';
 
-import Dashboard from 'main/app/dashboard';
-import Leagues from 'main/app/leagues';
-import Teams from 'main/app/teams';
-import Matches from 'main/app/matches';
-
+import Admin from 'main/app/admin/base';
+import Player from 'main/app/player/base';
 import {FourOhFour} from 'components/error-pages';
 
+
 class App extends React.Component {
-   componentDidMount() {
-      this.loadUserData();
-   }
+    constructor(props){
+        super(props);
+        this.state = { 
+            user: {}
+        };
+    }
+    componentDidMount() {
+        ajax({
+            url: reverse('rest_user_details'),
+        }).then(data => {
+            this.setState({user: data});
+        });
+    }
 
-   loadUserData() {
-      ajax({
-         url: reverse('rest_user_details'),
-      }).then(data => {
-         localStorage.id = data.id;
-         localStorage.email = data.email;
-         localStorage.name = data.name;
-      });
-   }
-
-   render() {
-      return (
-         <Switch>
-            <Route exact path={urls.app.index} component={Dashboard} />
-            <Route path={urls.app.leagues.detail} component={Leagues} />
-            <Route path={urls.app.teams.detail} component={Teams} />
-            <Route path={urls.app.matches.detail} component={Matches} />
-            <Route component={FourOhFour} />
-         </Switch>
-      );
-   }
+    render() {
+        return (
+            <Switch>
+                <Route exact path={appUrls.index} {...this.state} component={Player} />
+                <Route path={adminUrls.index} {...this.state} component={Admin} />
+                <Route path={playerUrls.index} {...this.state} component={Player} />
+                <Route component={FourOhFour} />
+            </Switch>
+        );
+    }
 }
 
 module.exports = App;

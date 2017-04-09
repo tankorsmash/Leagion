@@ -2,7 +2,8 @@ import {Redirect, Link} from 'react-router-dom';
 import {FormBase} from 'components/forms';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
 import ajax from 'common/ajax';
-import urls from 'common/urls';
+import appUrls from 'main/app/urls';
+import publicUrls from 'main/public/urls';
 import auth from 'main/auth';
 
 class RegisterBase extends FormBase {
@@ -14,17 +15,17 @@ class RegisterBase extends FormBase {
 			method: 'POST',
             data: this.state,
         }).then(data => {
-            auth.login(data.key);
+            auth.login();
             this.forceUpdate();
-        }).catch(r => {
-            throw('login error');
+        }).catch(data => {
+            toastr.error(data.non_field_errors);
         });
 
     }
 
     render() {
 		if (auth.loggedIn()) {
-			return (<Redirect to={urls.app.index} />)
+			return (<Redirect to={appUrls.index} />)
         } else {
             return this.getForm();
         }
@@ -91,7 +92,7 @@ class LoginForm extends RegisterBase {
                     <Input type="password" name="password" id="loginPassword" value={this.state.password} onChange={this.handleInputChange} />
                 </FormGroup>
                 <Button>Log In</Button>
-                <Link to={urls.register}>Register</Link>
+                <Link to={publicUrls.register}>Register</Link>
             </Form>
         );
     }

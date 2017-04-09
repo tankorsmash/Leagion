@@ -34,17 +34,3 @@ class UserDetailsView(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return get_user_model().objects.none()
-
-
-@reverse_js
-class MatchList(generics.ListCreateAPIView):
-    queryset = Match.objects.all()
-    serializer_class = serializers.MatchSerializer
-
-
-@reverse_js
-class MatchDetail(generics.RetrieveUpdateAPIView):
-    lookup_url_kwarg = "match_id"
-
-    queryset = Match.objects.all()
-    serializer_class = serializers.MatchSerializer

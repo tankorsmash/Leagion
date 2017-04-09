@@ -7,15 +7,19 @@
 import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
-let ajax = function(options) {
-	let data = options.data || null;
+let ajax = function({data=null, method='GET', url=null}) {
+	if (!url) {
+		throw('you need a url to make an ajax call');
+	}
+
 	let body = null;
+
 	if (data) {
 		body = JSON.stringify(data);
 	}
 
 	let info = {
-		method: options.method || 'GET',
+		method: method,
 		body: body,
 		credentials: "same-origin",
 		headers: {
@@ -29,17 +33,24 @@ let ajax = function(options) {
 		// The resolver function is called with the ability to resolve or
 		// reject the promise
 		(resolve, reject) => {
-			fetch(options.url, info)
+			let error = false;
+
+			fetch(url, info)
 				.then(r => {
 					if (r.status == 200) {
-						return r.json()
 					} else {
-						$.toastr.error(`bad request -> url:${r.url}, status ${r.status} - ${r.statusText}`);
-						reject(r);
+						error = true;
 					}
+
+					return r.json()
 				})
 				.then(data => {
-					resolve(data);
+					if (error) {
+						reject(data);
+					} else {
+						resolve(data);
+
+					}
 				});
 		}
 	);

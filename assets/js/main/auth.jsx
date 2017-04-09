@@ -1,10 +1,10 @@
 let auth = {
-    login: function(token) {
+    login: function() {
         localStorage.logged_in = true;
     },
 
     logout: function() {
-        delete localStorage.logged_in;
+        localStorage.clear();
     },
 
     loggedIn: function() {

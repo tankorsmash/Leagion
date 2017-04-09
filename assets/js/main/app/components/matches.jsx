@@ -53,15 +53,10 @@ class Matches extends React.Component {
     updateDataset() {
         let url = reverse('api-match-list');
 
-        if (typeof this.props.match.params.matchId != "undefined") {
-            url = url+this.props.match.params.matchId;
-        };
-
         ajax({
             url: url,
         }).then(data => {
-            //if there's only one object, its a single detail match, so arrayify it
-            this.setState({matches: Array.isArray(data) ? data : [data]});
+            this.setState(data);
         });
     }
 }
