@@ -43,7 +43,7 @@ class Teams extends React.Component {
             url: url,
         }).then(data => {
             //if there's only one object, its a single detail team, so arrayify it
-            this.setState(data);
+            this.setState({teams: data});
         });
     }
 
