@@ -36,7 +36,7 @@ class LeagueList extends React.Component {
 
     render() {
         return (
-            <SpinLoader loaded={this.loaded}>
+            <SpinLoader loaded={this.state.loaded}>
                 <div>
                     <h2>My Teams</h2>
                     { this.state.leagues.map((league)=>{
