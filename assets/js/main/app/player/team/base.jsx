@@ -1,35 +1,44 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
-import {AsyncBase} from 'components/base';
+import SpinLoader from 'components/spinloader';
 
 import playerUrls from 'main/app/player/urls';
 import teamUrls from 'main/app/player/team/urls';
 
-import Dashboard from 'main/app/player/dashboard';
+import {MatchList} from 'components/app/match';
 
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class TeamDetail extends AsyncBase {
-    state = { team: {} };
+class TeamDetail extends React.Component {
+    constructor(props) {
+        super(props);
 
-    getUrl() {
-        return reverse('api-my-team-detail', {team_id: this.props});
+        this.state = { 
+            team: {},
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-team-detail', {team_id: this.props.match.params.teamId}),
+        }).then(data => {
+            this.setState({
+                team: data,
+                loaded: true
+            });
+        });
     }
 
-    getComponent() {
-        let team = this.state.team;
-
+    render() {
         return (
-            <div>
+            <SpinLoader loaded={this.state.loaded}>
                 <MatchList matches={this.state.team.matches} />
-            </div>
+            </SpinLoader>
         );
     }
-}
-const what = () => {
-    return (<span> hello </span>);
 }
 
 class Team extends React.Component {
@@ -38,7 +47,7 @@ class Team extends React.Component {
     render() {
         return (
             <Switch>
-                <Route path={teamUrls.detail} component={what} />
+                <Route path={teamUrls.detail} component={TeamDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );

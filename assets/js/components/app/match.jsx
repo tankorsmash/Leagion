@@ -1,9 +1,11 @@
+import {Link} from 'react-router-dom';
 import { ListGroup, ListGroupItem } from 'reactstrap';
+import matchUrls from 'main/app/player/match/urls';
 
 const MatchList = (props) => {
 	return (
 		<ListGroup>
-			{team.matches.map((match, i) => {
+			{props.matches.map((match, i) => {
 				return (
 					<ListGroupItem>
 						<Link to={`${matchUrls.index}/${match.id}`}>
