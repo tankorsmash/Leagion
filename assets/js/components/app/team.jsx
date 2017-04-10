@@ -16,7 +16,7 @@ const TeamCard = (props) => {
         
         matchComp = (
             <span>
-                Upcoming Match: {
+                {
                     <Link to={`${matchUrls.index}/${match.id}`}>
                         {match.pretty_name}
                     </Link>
@@ -24,6 +24,12 @@ const TeamCard = (props) => {
             </span>
         );
 
+    } else {
+        matchComp = (
+            <span>
+                No Matches for this team yet
+            </span>
+        );
     }
 
     return (
@@ -37,14 +43,13 @@ const TeamCard = (props) => {
                         <br/>
                         Season: {<Link to={`${seasonUrls.index}/${season.id}`}>{season.pretty_name}</Link>}
                         <br/>
-                        {matchComp}
+                        Upcoming Match: {matchComp}
                     </CardText>
                 </CardBlock>
             </Card>
         </div>
     );
 };
-
 
 module.exports = {
 	TeamCard: TeamCard,
