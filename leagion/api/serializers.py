@@ -93,6 +93,8 @@ class LeagueSerializer(serializers.ModelSerializer):
             'id', 'name', 'seasons'
         )
 
+    seasons = SeasonSerializer(many=True)
+
 
 class MyLeagueSerializer(LeagueSerializer):
     my_seasons = serializers.SerializerMethodField('get_seasons')
