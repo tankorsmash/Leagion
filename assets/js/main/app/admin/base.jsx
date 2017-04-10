@@ -17,10 +17,13 @@ import {FourOhFour} from 'components/error-pages';
 
 class Admin extends React.Component {
     render() {
+        let style = {
+            backgroundColor: "white",
+        };
         return (
-            <div>
+            <div className="bg-faded">
                 <AdminNavbar {...this.props} />
-                <Container>
+                <Container style={style}>
                     <Row>
                         <Col>
                             <Switch>
