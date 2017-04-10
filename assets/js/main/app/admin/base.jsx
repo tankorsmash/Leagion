@@ -14,11 +14,13 @@ import Matches from 'main/app/admin/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 
+import style from 'app.scss';
+
 
 class Admin extends React.Component {
     render() {
         let style = {
-            backgroundColor: "white",
+            // backgroundColor: "white",
         };
         return (
             <div className="bg-faded">
