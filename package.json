@@ -17,7 +17,13 @@
     "url": "https://github.com/tankorsmash/Leagion/issues"
   },
   "homepage": "https://github.com/tankorsmash/Leagion#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "node-sass": "^4.5.2",
+    "postcss-loader": "^1.3.3",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.16.1",
+    "webpack": "^2.3.3"
+  },
   "dependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.24.0",

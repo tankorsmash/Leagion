@@ -3,27 +3,27 @@ var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
-module.exports = {
+module.exports = modulePaths => ({
     context: __dirname,
 
     devtool: 'source-map',
 
-	entry: {
-		vendor: [
+    entry: {
+        vendor: [
             "expose-loader?React!react",
             "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
-			'react-hot-loader/patch',
-			'webpack-dev-server/client?http://localhost:20034',
-			'webpack/hot/only-dev-server',
-			'babel-polyfill',
-			'whatwg-fetch',
-			'./assets/js/vendor/index',
-		],
-		main: [
-			'./assets/js/main/index'
-		]
-	},
+            'react-hot-loader/patch',
+            'webpack-dev-server/client?http://localhost:20034',
+            'webpack/hot/only-dev-server',
+            'babel-polyfill',
+            'whatwg-fetch',
+            './assets/js/vendor/index',
+        ],
+        main: [
+            './assets/js/main/index'
+        ]
+    },
 
     output: {
         publicPath: 'http://localhost:20034/assets/bundles/',
@@ -34,14 +34,14 @@ module.exports = {
 
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-		new webpack.NamedModulesPlugin(),
-		new webpack.NoEmitOnErrorsPlugin(),
-		// do not emit compiled assets that include errors
+        new webpack.NamedModulesPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
+        // do not emit compiled assets that include errors
         new webpack.ProvidePlugin({
             'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
         }),
         new BundleTracker({filename: './webpack-stats.json'}),
-		new ExtractTextPlugin('[name].css'),
+        new ExtractTextPlugin('[name].css'),
     ],
 
     module: {
@@ -51,9 +51,26 @@ module.exports = {
             loader: 'babel-loader',
             query: {
                 presets: ['es2015', 'react', 'stage-2'],
-				plugins: ["react-hot-loader/babel"]
+                plugins: ["react-hot-loader/babel"]
             }
-        } , {
+        }, {
+            test: /\.scss$/,
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: [{
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true,
+                    }
+                } ,{
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: true,
+                        includePaths: modulePaths
+                    }
+                }]
+            }),
+        },{
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('css-loader')
         }],
@@ -64,7 +81,8 @@ module.exports = {
             'node_modules',
             'bower_components',
             path.resolve(__dirname, 'assets/js/'),
+            path.resolve(__dirname, 'assets/style/'),
         ],
-        extensions: ['*', '.js', '.jsx', 'css'],
+        extensions: ['*', '.js', '.jsx', '.scss', 'css'],
     },
-}
+})
