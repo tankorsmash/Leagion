@@ -1,67 +1,53 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
-import {AsyncBase} from 'components/base';
+import SpinLoader from 'components/spinloader';
 
 import playerUrls from 'main/app/player/urls';
 import teamUrls from 'main/app/player/team/urls';
 
-import Dashboard from 'main/app/player/dashboard';
+import {MatchList} from 'components/app/match';
 
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class TeamListItem extends React.Component {
+class TeamDetail extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            team: {},
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-team-detail', {team_id: this.props.match.params.teamId}),
+        }).then(data => {
+            this.setState({
+                team: data,
+                loaded: true
+            });
+        });
+    }
+
     render() {
-        let league = this.props.league;
         return (
-            <Link to={`${teamUrls.index}/${team.id}`}>{team.name}</Link>
-        );
-    }
-}
-
-class TeamList extends AsyncBase {
-    url = reverse('api-my-team-list');
-    state = { leagues: [] };
-
-    getComponent() {
-        return (
-            <div>
-                { this.state.teams.map((team)=>{
-                    return <TeamListItem
-                        league={team}
-                        key={team.id}
-                    />
-                }) }
-            </div>
-        );
-    }
-}
-
-class TeamDetail extends AsyncBase {
-    url = reverse('api-my-team-detail');
-    state = { team: [] };
-
-    getComponent() {
-        return (
-            <div>
-                { this.state.teams.map((team)=>{
-                    return <TeamsListItem
-                        league={team}
-                        key={team.id}
-                    />
-                }) }
-            </div>
+            <SpinLoader loaded={this.state.loaded}>
+                <MatchList matches={this.state.team.matches} />
+            </SpinLoader>
         );
     }
 }
 
 class Team extends React.Component {
 
+    //<Route exact path={teamUrls.index} component={TeamList} />
     render() {
         return (
             <Switch>
-                <Route path={TeamUrls.index} component={TeamList} />
+                <Route path={teamUrls.detail} component={TeamDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );
@@ -70,6 +56,5 @@ class Team extends React.Component {
 
 module.exports = {
     Team: Team,
-    TeamList: TeamList,
 };
 

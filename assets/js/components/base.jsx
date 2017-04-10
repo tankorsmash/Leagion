@@ -12,10 +12,6 @@ class AsyncBase extends React.Component {
         Object.assign(this.state, state);
     };
 
-    getExtraState() {
-        return {}
-    }
-
     loaded() {
         this.setState({isLoaded: true});
     }
@@ -46,3 +42,4 @@ class AsyncBase extends React.Component {
 module.exports = {
     AsyncBase: AsyncBase,
 };
+
