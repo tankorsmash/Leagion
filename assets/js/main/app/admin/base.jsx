@@ -23,16 +23,14 @@ class Admin extends React.Component {
                 <Container>
                     <Row>
                         <Col>
-                            <main>
-                                <Switch>
-                                    <Route exact path={adminUrls.index}  component={Dashboard} />
-                                    <Route path={adminUrls.leagues.detail}  component={Leagues} />
-                                    <Route path={adminUrls.seasons.detail}  component={Seasons} />
-                                    <Route path={adminUrls.teams.detail}  component={Teams} />
-                                    <Route path={adminUrls.matches.detail}  component={Matches} />
-                                    <Route component={FourOhFour} />
-                                </Switch>
-                            </main>
+                            <Switch>
+                                <Route exact path={adminUrls.index}  component={Dashboard} />
+                                <Route path={adminUrls.leagues.detail}  component={Leagues} />
+                                <Route path={adminUrls.seasons.detail}  component={Seasons} />
+                                <Route path={adminUrls.teams.detail}  component={Teams} />
+                                <Route path={adminUrls.matches.detail}  component={Matches} />
+                                <Route component={FourOhFour} />
+                            </Switch>
                         </Col>
                     </Row>
                 </Container>
