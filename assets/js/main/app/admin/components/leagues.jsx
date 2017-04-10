@@ -1,24 +1,32 @@
 import {Link} from 'react-router-dom';
-import { DropdownItem, DropdownMenu, NavLink } from 'reactstrap';
+import {
+    DropdownItem, DropdownMenu, NavLink,
+    Row, Col
+} from 'reactstrap';
+
 import Spinner from 'react-spinkit';
 
 import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
 
-class League extends React.Component {
+class LeagueRow extends React.Component {
     render() {
         let league = this.props.league;
+
+        const style = {
+            borderBottom: "1px solid black"
+        };
         return (
-            <div>
-                League name: { league.name }
-            </div>
+            <Row style={style}>
+                { league.name }
+            </Row>
         );
     }
 }
 
 
-class Leagues extends React.Component {
+class LeaguesList extends React.Component {
     constructor(props){
         super(props);
         this.state = { leagues: NOT_LOADED };
@@ -43,12 +51,26 @@ class Leagues extends React.Component {
             content = <Spinner spinnerName='three-bounce' />;
         } else {
             content = this.state.leagues.map((league)=>{
-                return <League league={league} key={league.id} />
+                return (
+                    <LeagueRow league={league} key={league.id} />
+                );
             });
         }
 
-        return <div>{content}</div>;
+        return (
+            <div>
+                {content}
+            </div>
+        );
     }
 }
+
+class Leagues extends React.Component {
+    render() {
+        return (
+            <LeaguesList/>
+        );
+    };
+};
 
 module.exports = Leagues;
