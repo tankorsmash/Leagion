@@ -10,16 +10,50 @@ import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
 
+class TeamRow extends React.Component {
+    render() {
+        return (
+            <Row className="pl-1">
+                <Col>
+                    { this.props.team.name }
+                </Col>
+            </Row>
+        );
+    }
+}
+
+class SeasonRow extends React.Component {
+    render() {
+        let teams = this.props.season.teams.map((team, i)=>{
+            return ( <TeamRow key={i} team={team} /> );
+        });
+        return (
+            <Row className="pl-1">
+                <Col>
+                    <h4> { this.props.season.pretty_name } </h4>
+                    { teams }
+                </Col>
+            </Row>
+        );
+    }
+}
+
 class LeagueRow extends React.Component {
     render() {
         let league = this.props.league;
 
-        const style = {
-            borderBottom: "1px solid black"
-        };
+        let seasons = league.seasons.map((season, i)=>{
+            return (
+                <SeasonRow key={i} season={season}/>
+            );
+        });
+
         return (
-            <Row style={style}>
-                { league.name }
+            <Row className="mt-3">
+                <Col>
+                    <h3> { league.name } </h3>
+                    { seasons }
+                </Col>
             </Row>
         );
     }
@@ -38,7 +72,6 @@ class LeaguesList extends React.Component {
         ajax({
             url: url,
         }).then(data => {
-            //if there's only one object, its a single detail league, so arrayify it
             this.setState({leagues: data});
         });
     }
