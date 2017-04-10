@@ -49,7 +49,7 @@ class LeagueRow extends React.Component {
         });
 
         return (
-            <Row className="mt-3">
+            <Row className="mb-3">
                 <Col>
                     <h3> { league.name } </h3>
                     { seasons }

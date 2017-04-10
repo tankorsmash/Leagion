@@ -34,7 +34,7 @@ class Navbar extends React.Component {
 
         return (
             <div>
-                <BSNavbar style={style} className="mb-2" light toggleable>
+                <BSNavbar style={style} className="mb-3" light toggleable>
                     <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
