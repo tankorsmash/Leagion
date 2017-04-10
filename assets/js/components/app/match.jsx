@@ -7,7 +7,7 @@ const MatchList = (props) => {
 		<ListGroup>
 			{props.matches.map((match, i) => {
 				return (
-					<ListGroupItem>
+					<ListGroupItem key={i}>
 						<Link to={`${matchUrls.index}/${match.id}`}>
 							{match.pretty_name}
 						</Link>
