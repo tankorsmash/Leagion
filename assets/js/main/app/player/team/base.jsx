@@ -21,7 +21,7 @@ class TeamDetail extends React.Component {
         };
     };
 
-    componentDidMount() {
+    componentWillReceiveProps() {
         ajax({
             url: reverse('api-team-detail', {team_id: this.props.match.params.teamId}),
         }).then(data => {
