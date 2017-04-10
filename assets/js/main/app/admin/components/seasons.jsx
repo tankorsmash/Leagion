@@ -1,5 +1,9 @@
 import {Link} from 'react-router-dom';
-import { DropdownItem, DropdownMenu, NavLink, Jumbotron } from 'reactstrap';
+import {
+    DropdownItem, DropdownMenu, NavLink, Jumbotron,
+    Row, Col, Card
+} from 'reactstrap';
+
 import Spinner from 'react-spinkit';
 
 import ajax from 'common/ajax';
@@ -18,7 +22,7 @@ class Season extends React.Component {
 }
 
 
-class Seasons extends React.Component {
+class SeasonsList extends React.Component {
     constructor(props){
         super(props);
         this.state = { seasons: NOT_LOADED };
@@ -47,6 +51,14 @@ class Seasons extends React.Component {
         }
 
         return <div>{content}</div>;
+    }
+}
+
+class Seasons extends React.Component {
+    render() {
+        return (
+            <SeasonsList/>
+        );
     }
 }
 
