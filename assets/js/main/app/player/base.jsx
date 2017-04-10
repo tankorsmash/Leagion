@@ -16,10 +16,13 @@ import {FourOhFour} from 'components/error-pages';
 class Player extends React.Component {
 
     render() {
+        let style = {
+            backgroundColor: "white",
+        };
         return (
-            <div>
+            <div className="bg-faded">
                 <PlayerNavbar {...this.props}/>
-                <Container>
+                <Container style={style}>
                     <Row>
                         <Col>
                             <main>
