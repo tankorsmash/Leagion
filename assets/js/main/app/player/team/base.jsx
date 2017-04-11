@@ -1,11 +1,13 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
+import {Row, Col} from 'reactstrap';
 
 import playerUrls from 'main/app/player/urls';
 import teamUrls from 'main/app/player/team/urls';
 
 import {MatchList} from 'components/app/match';
+import {TeamPlayerTable} from 'components/app/player';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -35,7 +37,14 @@ class TeamDetail extends React.Component {
     render() {
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <MatchList matches={this.state.team.matches} />
+                <Row>
+                    <Col md="6">
+                        <TeamPlayerTable players={this.state.team.players} />
+                    </Col>
+                    <Col md="6">
+                        <MatchList matches={this.state.team.matches} />
+                    </Col>
+                </Row>
             </SpinLoader>
         );
     }
