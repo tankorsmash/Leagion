@@ -23,7 +23,7 @@ class TeamDetail extends React.Component {
         };
     };
 
-    componentWillReceiveProps() {
+    componentDidMount() {
         ajax({
             url: reverse('api-team-detail', {team_id: this.props.match.params.teamId}),
         }).then(data => {
@@ -39,9 +39,11 @@ class TeamDetail extends React.Component {
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
                     <Col md="6">
+                        <h5>Players</h5>
                         <TeamPlayerTable players={this.state.team.players} />
                     </Col>
                     <Col md="6">
+                        <h5>Matches</h5>
                         <MatchList matches={this.state.team.matches} />
                     </Col>
                 </Row>
