@@ -58,7 +58,7 @@ class Team extends React.Component {
     render() {
         return (
             <Switch>
-                <Route path={teamUrls.detail} component={TeamDetail} />
+                <Route exact path={teamUrls.detail} component={TeamDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );
