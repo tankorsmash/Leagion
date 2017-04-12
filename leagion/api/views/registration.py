@@ -1,12 +1,8 @@
-from rest_framework import generics
-from rest_framework.permissions import AllowAny
-from rest_framework.authentication import BasicAuthentication
 from django.contrib.auth import get_user_model
 
 from rest_auth.views import (
     LoginView as AuthLoginView,
     LogoutView as AuthLogoutView,
-    UserDetailsView as AuthUserDetailsView,
     PasswordResetView as AuthPasswordResetView,
     PasswordResetConfirmView as AuthPasswordResetConfirmView,
     PasswordChangeView as AuthPasswordChangeView
