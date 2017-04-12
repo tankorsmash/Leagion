@@ -1,9 +1,8 @@
 from rest_framework import generics
-from rest_framework import permissions
 from django.contrib.auth import get_user_model
 
-from leagion.api import serializers
-from leagion.models import Match, Roster, Team, League
+from leagion.api.serializers.teams import TeamSerializer
+from leagion.models import Team
 
 from leagion.utils import reverse_js
 
@@ -13,7 +12,7 @@ User = get_user_model()
 @reverse_js
 class TeamList(generics.ListCreateAPIView):
     queryset = Team.objects.all()
-    serializer_class = serializers.TeamSerializer
+    serializer_class = TeamSerializer
 
 
 @reverse_js
@@ -21,4 +20,4 @@ class TeamDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "team_id"
 
     queryset = Team.objects.all()
-    serializer_class = serializers.TeamSerializer
+    serializer_class = TeamSerializer
