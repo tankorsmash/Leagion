@@ -9,6 +9,8 @@ var viewnames = {
     "api-match-list": "/api/match/",
     "api-my-league-detail": "/api/me/league/<league_id>/",
     "api-my-league-list": "/api/me/league/",
+    "api-my-season-detail": "/api/me/season/<season_id>/",
+    "api-my-season-list": "/api/me/season/",
     "api-player-detail": "/api/player/<player_id>/",
     "api-player-list": "/api/player/",
     "api-roster-detail": "/api/roster/<roster_id>/",
