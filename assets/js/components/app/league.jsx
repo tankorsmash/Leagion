@@ -23,6 +23,15 @@ const LeagueJumbo = (props) => {
 	);
 };
 
+const LeagueLink = (props) => {
+	return (
+		<Link to={`${leagueUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
+
 module.exports = {
 	LeagueJumbo: LeagueJumbo,
+	LeagueLink: LeagueLink,
 }

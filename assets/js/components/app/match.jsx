@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
+import {TeamLink} from 'components/app/team';
 
 const MatchTable = (props) => {
     return (
@@ -19,9 +20,9 @@ const MatchTable = (props) => {
                 {props.matches.map((match, i) => {
                     return (
                         <tr key={i}>
-                            <td>{match.home_team.name}</td>
+							<td><TeamLink id={match.home_team.id} text={match.home_team.name}/></td>
                             <td>vs.</td>
-                            <td>{match.away_team.name}</td>
+							<td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
                             <td>{match.pretty_date}</td>
                             <td>{match.pretty_time}</td>
                             <td>{match.location.name}</td>
@@ -48,8 +49,18 @@ const MatchList = (props) => {
 		</ListGroup>
 	);
 };
+
+const MatchLink = (props) => {
+	return (
+		<Link to={`${matchUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
+
 module.exports = {
 	MatchList: MatchList,
 	MatchTable: MatchTable,
+	MatchLink: MatchLink,
 }
 

@@ -25,7 +25,15 @@ const SeasonCard = (props) => {
     );
 };
 
+const SeasonLink = (props) => {
+	return (
+		<Link to={`${seasonUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
 
 module.exports = {
 	SeasonCard: SeasonCard,
+	SeasonLink: SeasonLink,
 }
