@@ -9,20 +9,24 @@ const SeasonScheduleTable = (props) => {
         <Table>
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Time</th>
                     <th>Home Team</th>
                     <th></th>
                     <th>Away Team</th>
-                    <th>Email</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Location</th>
                 </tr>
             </thead>
             <tbody>
-                {props.players.map((player, i) => {
+                {props.season.matches.map((match, i) => {
                     return (
                         <tr key={i}>
-                            <td>{player.full_name}</td>
-                            <td>{player.email}</td>
+                            <td>{match.home_team.name}</td>
+                            <td>vs.</td>
+                            <td>{match.away_team.name}</td>
+                            <td>{match.pretty_date}</td>
+                            <td>{match.pretty_time}</td>
+                            <td>{match.location.name}</td>
                         </tr>
                     )
                 })}
@@ -55,4 +59,5 @@ const SeasonCard = (props) => {
 
 module.exports = {
 	SeasonCard: SeasonCard,
+	SeasonScheduleTable: SeasonScheduleTable,
 }

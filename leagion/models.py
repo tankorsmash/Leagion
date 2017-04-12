@@ -208,7 +208,7 @@ class Match(models.Model):
 
     @property
     def pretty_date(self):
-        return self.match_datetime.strftime('%A, %b %w, %Y')
+        return self.match_datetime.strftime('%A, %b %d, %Y')
 
     @property
     def pretty_time(self):

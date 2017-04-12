@@ -2,6 +2,7 @@ import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
 import {AsyncBase} from 'components/base';
 import SpinLoader from 'components/spinloader';
+import {SeasonScheduleTable} from 'components/app/season';
 
 import {Row, Col} from 'reactstrap';
 
@@ -36,7 +37,7 @@ class SeasonSchedule extends React.Component {
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
-                    {console.log(this.state.season)}
+                    <SeasonScheduleTable season={this.state.season}/>
                 </Row>
             </SpinLoader>
         );
