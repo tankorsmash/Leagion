@@ -51,6 +51,15 @@ const TeamCard = (props) => {
     );
 };
 
+const TeamLink = (props) => {
+	return (
+		<Link to={`${teamUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
+
 module.exports = {
 	TeamCard: TeamCard,
+	TeamLink: TeamLink,
 }

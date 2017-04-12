@@ -37,6 +37,7 @@ class SeasonSchedule extends React.Component {
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
+                    <h5>{this.state.season.pretty_name}</h5>
                     <MatchTable matches={this.state.season.matches}/>
                 </Row>
             </SpinLoader>
