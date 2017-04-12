@@ -3,6 +3,14 @@ import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
 
+const MatchLink = (props) => {
+	return (
+		<Link to={`${matchUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
+
 const MatchTable = (props) => {
     return (
         <Table>
@@ -47,14 +55,6 @@ const MatchList = (props) => {
 				)
 			})}
 		</ListGroup>
-	);
-};
-
-const MatchLink = (props) => {
-	return (
-		<Link to={`${matchUrls.index}/${props.id}`}>
-			{props.text}
-		</Link>
 	);
 };
 

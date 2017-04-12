@@ -24,6 +24,7 @@ urlpatterns = [
 
     url(r'^team/$', teams_views.TeamList.as_view(), name='api-team-list'),
     url(r'^team/(?P<team_id>\d+)/$', teams_views.TeamDetail.as_view(), name='api-team-detail'),
+    url(r'^me/team/$', teams_views.MyTeamList.as_view(), name='api-my-team-list'),
 
     url(r'^league/$', leagues_views.LeagueList.as_view(), name='api-league-list'),
     url(r'^league/(?P<league_id>\d+)/$', leagues_views.LeagueDetail.as_view(), name='api-league-detail'),

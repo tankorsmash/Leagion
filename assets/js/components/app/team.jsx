@@ -5,10 +5,20 @@ import teamUrls from 'main/app/player/team/urls';
 import leagueUrls from 'main/app/player/league/urls';
 import matchUrls from 'main/app/player/match/urls';
 
+import {LeagueLink} from 'components/app/league';
+import {SeasonLink} from 'components/app/season';
+
+const TeamLink = (props) => {
+	return (
+		<Link to={`${teamUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
+
+
 const TeamCard = (props) => {
     let team = props.team;
-    let league = props.league;
-    let season = props.season;
     let matchComp = null;
 
     if (team.matches.length > 0) {
@@ -36,12 +46,14 @@ const TeamCard = (props) => {
         <div>
             <Card>
                 <CardBlock>
-                    <CardTitle><Link to={`${teamUrls.index}/${team.id}`}>{team.name}</Link></CardTitle>
+                    <CardTitle>
+                        <TeamLink id={team.id} text={team.name}/>
+                    </CardTitle>
                     <CardSubtitle>{team.sport}</CardSubtitle>
                     <CardText>
-                        League: {<Link to={`${leagueUrls.index}/${league.id}`}>{league.name}</Link>}
+                        League: <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
                         <br/>
-                        Season: {<Link to={`${seasonUrls.index}/${season.id}`}>{season.pretty_name}</Link>}
+                        Season: <SeasonLink id={team.season.id} text={team.season.pretty_date}/>
                         <br/>
                         Upcoming Match: {matchComp}
                     </CardText>
@@ -49,14 +61,6 @@ const TeamCard = (props) => {
             </Card>
         </div>
     );
-};
-
-const TeamLink = (props) => {
-	return (
-		<Link to={`${teamUrls.index}/${props.id}`}>
-			{props.text}
-		</Link>
-	);
 };
 
 module.exports = {
