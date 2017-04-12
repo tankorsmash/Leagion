@@ -6,6 +6,7 @@ import {Row, Col} from 'reactstrap';
 import seasonUrls from 'main/app/player/season/urls';
 import teamUrls from 'main/app/player/team/urls';
 
+import {TeamCard} from 'components/app/team';
 import {MatchList} from 'components/app/match';
 import {TeamPlayerTable} from 'components/app/player';
 
@@ -56,12 +57,63 @@ class TeamDetail extends React.Component {
     }
 }
 
+class TeamList extends React.Component {
+    
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            teams: [],
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-my-team-list'),
+        }).then(data => {
+            this.setState({
+                teams: data,
+                loaded: true
+            });
+        });
+    }
+
+    render() {
+        return (
+            <SpinLoader loaded={this.state.loaded}>
+                <div>
+                    <h2>My Teams</h2>
+                    {this.state.teams.map((team, i) => {
+                        return (
+                            <Col md="6" key={i}>
+                                <TeamCard team={team} />
+                            </Col>
+                        );
+                    })}
+                </div>
+            </SpinLoader>
+        );
+    }
+}
+const LeagueJumbo = (props) => {
+	let league = props.league;
+
+	return (
+		<Jumbotron>
+			<h2>
+				<Link to={`${leagueUrls.index}/${league.id}`}>{league.name}</Link>
+			</h2>
+		</Jumbotron>
+	);
+};
+
 class Team extends React.Component {
 
-    //<Route exact path={teamUrls.index} component={TeamList} />
     render() {
         return (
             <Switch>
+                <Route exact path={teamUrls.index} component={TeamList} />
                 <Route exact path={teamUrls.detail} component={TeamDetail} />
                 <Route component={FourOhFour} />
             </Switch>
@@ -71,5 +123,6 @@ class Team extends React.Component {
 
 module.exports = {
     Team: Team,
+    TeamList: TeamList,
 };
 

@@ -21,3 +21,10 @@ class TeamDetail(generics.RetrieveUpdateAPIView):
 
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+
+@reverse_js
+class MyTeamList(TeamList):
+
+    def get_queryset(self):
+        user = self.request.user
+        return Team.objects.filter(players=user)
