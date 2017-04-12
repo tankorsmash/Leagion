@@ -16,6 +16,14 @@ const TeamLink = (props) => {
 	);
 };
 
+const TeamListLink = (props) => {
+	return (
+		<Link to={`${teamUrls.index}`}>
+			{props.text}
+		</Link>
+	);
+};
+
 
 const TeamCard = (props) => {
     let team = props.team;
@@ -66,4 +74,5 @@ const TeamCard = (props) => {
 module.exports = {
 	TeamCard: TeamCard,
 	TeamLink: TeamLink,
+	TeamListLink: TeamListLink,
 }
