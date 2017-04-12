@@ -3,7 +3,7 @@ import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 
-import playerUrls from 'main/app/player/urls';
+import seasonUrls from 'main/app/player/season/urls';
 import teamUrls from 'main/app/player/team/urls';
 
 import {MatchList} from 'components/app/match';
@@ -20,8 +20,7 @@ class TeamDetail extends React.Component {
         this.state = { 
             team: {},
             loaded: false
-        };
-    };
+        }; };
 
     componentDidMount() {
         ajax({
@@ -39,12 +38,17 @@ class TeamDetail extends React.Component {
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
                     <Col md="6">
-                        <h5>Players</h5>
-                        <TeamPlayerTable players={this.state.team.players} />
-                    </Col>
-                    <Col md="6">
+                        <h5>
+                            <Link to={`${seasonUrls.index}/${this.state.team.season}`}>
+                                View Season Schedule
+                            </Link>
+                        </h5>
                         <h5>Matches</h5>
                         <MatchList matches={this.state.team.matches} />
+                    </Col>
+                    <Col md="6">
+                        <h5>Players</h5>
+                        <TeamPlayerTable players={this.state.team.players} />
                     </Col>
                 </Row>
             </SpinLoader>

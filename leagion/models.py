@@ -121,9 +121,17 @@ class Season(models.Model):
 
     @property
     def pretty_name(self):
-        return "Season: {start_date} - {end_date}".format(
-            start_date=self.start_date,
-            end_date=self.end_date,
+        return "{}: {}".format(self.league.name, self.pretty_date)
+
+    @property
+    def league_name(self):
+        return self.league.name
+
+    @property
+    def pretty_date(self):
+        return "{start_date} - {end_date}".format(
+            start_date=self.start_date.strftime('%b, %Y'),
+            end_date=self.end_date.strftime('%b, %Y'),
         )
 
 
@@ -197,6 +205,14 @@ class Match(models.Model):
             away_team=self.away_team.name,
             location=self.location.name
         )
+
+    @property
+    def pretty_date(self):
+        return self.match_datetime.strftime('%A, %b %w, %Y')
+
+    @property
+    def pretty_time(self):
+        return self.match_datetime.strftime('%I:%M %p')
 
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")

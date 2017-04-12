@@ -32,5 +32,7 @@ urlpatterns = [
 
     url(r'^season/$', seasons_views.SeasonList.as_view(), name='api-season-list'),
     url(r'^season/(?P<season_id>\d+)/$', seasons_views.SeasonDetail.as_view(), name='api-season-detail'),
+    url(r'^me/season/$', seasons_views.SeasonList.as_view(), name='api-my-season-list'),
+    url(r'^me/season/(?P<season_id>\d+)/$', seasons_views.SeasonDetail.as_view(), name='api-my-season-detail'),
 
 ]

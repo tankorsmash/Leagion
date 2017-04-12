@@ -1,9 +1,9 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
 import {AsyncBase} from 'components/base';
+import SpinLoader from 'components/spinloader';
 
-import { Card, CardImg, CardText, CardBlock,
-  CardTitle, CardSubtitle, Button, CardLink } from 'reactstrap';
+import {Row, Col} from 'reactstrap';
 
 import seasonUrls from 'main/app/player/season/urls';
 
@@ -11,29 +11,34 @@ import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class SeasonListItem extends React.Component {
-    render() {
-        let season = this.props.season;
-        return (
-            <Link to={`${seasonUrls.index}/${season.id}`}>{season.name}</Link>
-        );
+class SeasonSchedule extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            season: {},
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-my-season-detail', {season_id: this.props.match.params.seasonId}),
+        }).then(data => {
+            this.setState({
+                season: data,
+                loaded: true
+            });
+        });
     }
-}
 
-class SeasonList extends AsyncBase {
-    url = reverse('api-my-season-list');
-    state = { seasons: [] };
-
-    getComponent() {
+    render() {
         return (
-            <div>
-                { this.state.seasons.map((season)=>{
-                    return <SeasonListItem
-                        season={season}
-                        key={season.id}
-                    />
-                }) }
-            </div>
+            <SpinLoader loaded={this.state.loaded}>
+                <Row>
+                    {console.log(this.state.season)}
+                </Row>
+            </SpinLoader>
         );
     }
 }
@@ -44,7 +49,7 @@ class Season extends React.Component {
     render() {
         return (
             <Switch>
-                <Route path={seasonUrls.index} component={SeasonList} />
+                <Route exact path={seasonUrls.detail} component={SeasonSchedule} />
                 <Route component={FourOhFour} />
             </Switch>
         );
@@ -53,7 +58,5 @@ class Season extends React.Component {
 
 module.exports = {
     Season: Season,
-    SeasonList: SeasonList,
-
 };
 

@@ -37,7 +37,8 @@ class MatchSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'match_datetime', 'location', 'season', 'duration_seconds',
             'home_team', 'home_points', 'away_team', 'away_points', 'status',
-            'postponed_to', 'postponed_from', 'pretty_name',
+            'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
+            'pretty_time'
         )
 
 
@@ -67,10 +68,19 @@ class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
         fields = (
-            'id', 'start_date', 'end_date', 'league', 'teams', 'pretty_name',
+            'id', 'start_date', 'end_date', 'league', 'teams', 'pretty_date', 'matches'
         )
 
     teams = TeamSerializer(many=True)
+    matches = serializers.SerializerMethodField('get_ordered_matches')
+
+    def get_ordered_matches(self, obj):
+        user = self.context['request'].user
+
+        matches = Match.objects.filter(season=obj).order_by('match_datetime')
+
+        serializer = MatchSerializer(matches, many=True)
+        return serializer.data
 
 
 class MySeasonSerializer(SeasonSerializer):
