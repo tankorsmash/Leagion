@@ -9,6 +9,7 @@ import teamUrls from 'main/app/player/team/urls';
 import {TeamCard} from 'components/app/team';
 import {MatchList} from 'components/app/match';
 import {TeamPlayerTable} from 'components/app/player';
+import {SeasonLink} from 'components/app/season';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -20,6 +21,7 @@ class TeamDetail extends React.Component {
 
         this.state = { 
             team: {},
+            season: {},
             loaded: false
         }; };
 
@@ -29,20 +31,20 @@ class TeamDetail extends React.Component {
         }).then(data => {
             this.setState({
                 team: data,
+                season: data.season,
                 loaded: true
             });
         });
     }
 
     render() {
+        console.log(this.state.team);
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
                     <Col md="6">
                         <h5>
-                            <Link to={`${seasonUrls.index}/${this.state.team.season}`}>
-                                View Season Schedule
-                            </Link>
+                            <SeasonLink id={this.state.season.id} text="View Season Schedule"/>
                         </h5>
                         <h5>Matches</h5>
                         <MatchList matches={this.state.team.matches} />
