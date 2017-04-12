@@ -2,7 +2,7 @@ import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
 import {AsyncBase} from 'components/base';
 import SpinLoader from 'components/spinloader';
-import {SeasonScheduleTable} from 'components/app/season';
+import {MatchTable} from 'components/app/match';
 
 import {Row, Col} from 'reactstrap';
 
@@ -37,7 +37,7 @@ class SeasonSchedule extends React.Component {
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
-                    <SeasonScheduleTable season={this.state.season}/>
+                    <MatchTable matches={this.state.season.matches}/>
                 </Row>
             </SpinLoader>
         );
