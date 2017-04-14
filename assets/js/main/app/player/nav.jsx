@@ -2,10 +2,9 @@ import ajax from 'common/ajax';
 
 import {Nav, NavItem, NavLink as NavLinkStrap} from 'reactstrap';
 import {NavLink, Link} from 'react-router-dom';
+import {List, ListItem} from 'material-ui/List';
 
 import {LogoutButton, AdminButton} from 'components/buttons';
-import {Appbar} from 'components/nav/base'
-import {BaseAppProfile} from 'main/app/components/nav';
 import {TeamListLink} from 'components/app/team';
 
 import teamUrls from 'main/app/player/team/urls';
@@ -18,27 +17,17 @@ const TeamLink = (props) => {
     )
 }
 
-class PlayerItems extends React.Component {
+class PlayerNavDrawer extends React.Component {
     render() {
-        console.log(this.props);
-        return (
-            <Nav navbar>
-                <NavItem>
-                    <NavLinkStrap tag={TeamLink} />
-                </NavItem>
-            </Nav>
-        )
+		return (
+			<div>
+				<List>
+					<ListItem primaryText="Inbox" />
+					<ListItem primaryText="Starred" />
+				</List>
+			</div>
+		)
     }
 }
 
-class PlayerProfile extends BaseAppProfile {
-	items = [AdminButton, LogoutButton];
-}
-
-class PlayerNavbar extends Appbar {
-	itemComponent = PlayerItems;
-	profileComponent = PlayerProfile;
-
-}
-
-module.exports = PlayerNavbar;
+module.exports = PlayerNavDrawer;

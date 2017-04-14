@@ -2,8 +2,12 @@ import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import {Container, Row, Col} from 'reactstrap';
+import {Appbar} from 'components/nav/base';
+import Drawer from 'material-ui/Drawer';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
 
-import PlayerNavbar from 'main/app/player/nav';
+import PlayerDrawerItems from 'main/app/player/nav';
 import playerUrls from 'main/app/player/urls';
 import leagueUrls from 'main/app/player/league/urls';
 import seasonUrls from 'main/app/player/season/urls';
@@ -22,7 +26,9 @@ class Player extends React.Component {
     render() {
         return (
             <div>
-                <PlayerNavbar {...this.props}/>
+                <Appbar>
+					<PlayerDrawerItems/>
+				</Appbar>
                 <Container>
                     <Row>
                         <Col>
