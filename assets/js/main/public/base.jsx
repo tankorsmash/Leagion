@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import {Container, Row, Col} from 'reactstrap';
@@ -6,7 +6,6 @@ import {Container, Row, Col} from 'reactstrap';
 import {LoginForm, RegisterForm} from 'main/public/registration';
 
 import publicUrls from 'main/public/urls';
-import PublicNavbar from 'main/public/nav';
 
 class Index extends React.Component {
     render() {
@@ -20,7 +19,6 @@ class Public extends React.Component {
     render() {
         return (
             <div>
-                <PublicNavbar/>
                 <Container>
                     <Row>
                         <Col>
@@ -29,6 +27,7 @@ class Public extends React.Component {
                                     {/* <Route exact path={urls.root} component={Index} /> */}
                                     <Route path={publicUrls.login} component={LoginForm} />
                                     <Route path={publicUrls.register} component={RegisterForm} />
+                                    <Redirect to={publicUrls.login} />
                                 </Switch>
                             </main>
                         </Col>

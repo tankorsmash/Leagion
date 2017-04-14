@@ -16,20 +16,16 @@ import {FourOhFour} from 'components/error-pages';
 
 const PrivateRoute = (props) => {
     if (auth.loggedIn()) {
-        console.log("priv route");
         return <Route {...props} />;
     } else  {
-        console.log("priv redir");
         return <Redirect to={{ pathname: publicUrls.login }}/>
     }
 }
 
 const PublicRoute = (props) => {
     if (auth.loggedIn()) {
-        console.log("redir publ");
         return <Redirect to={{ pathname: appUrls.index }}/>
     } else  {
-        console.log("route publ");
         return <Route {...props} />;
     }
 }
