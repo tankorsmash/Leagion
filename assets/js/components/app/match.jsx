@@ -16,24 +16,26 @@ const MatchTable = (props) => {
         <Table>
             <thead>
                 <tr>
+                    <th>Date</th>
+                    <th>Time</th>
                     <th>Home Team</th>
                     <th></th>
                     <th>Away Team</th>
-                    <th>Date</th>
-                    <th>Time</th>
                     <th>Location</th>
+                    <th>Results</th>
                 </tr>
             </thead>
             <tbody>
                 {props.matches.map((match, i) => {
                     return (
                         <tr key={i}>
+                            <td><MatchLink id={match.id} text={match.pretty_date}/></td>
+                            <td>{match.pretty_time}</td>
 							<td><TeamLink id={match.home_team.id} text={match.home_team.name}/></td>
                             <td>vs.</td>
 							<td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
-                            <td>{match.pretty_date}</td>
-                            <td>{match.pretty_time}</td>
                             <td>{match.location.name}</td>
+                            <td>{match.home_points} - {match.away_points}</td>
                         </tr>
                     )
                 })}
