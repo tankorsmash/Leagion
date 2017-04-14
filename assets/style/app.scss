@@ -1,4 +1,14 @@
+@import 'common/variables';
+
 .container {
-    background-color: white;
+    //background-color: white;
     padding: 15px;
+}
+
+body {
+    background-color: $white
+}
+
+nav {
+    background-color: $greye;
 }
