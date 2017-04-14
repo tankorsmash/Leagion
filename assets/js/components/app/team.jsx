@@ -61,7 +61,7 @@ const TeamCard = (props) => {
                     <CardText>
                         League: <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
                         <br/>
-                        Season: <SeasonLink id={team.season.id} text={team.season.pretty_date}/>
+                        Season {team.season.pretty_date}: <SeasonLink id={team.season.id} text="View Schedule"/>
                         <br/>
                         Upcoming Match: {matchComp}
                     </CardText>

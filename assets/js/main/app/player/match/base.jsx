@@ -30,15 +30,17 @@ class MatchDetail extends React.Component {
     }
 
     render() {
+        let match = this.state.match;
+        let away_team = match.away_team || {};
+        let home_team = match.home_team || {};
 		console.log(this.state.match);
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <Row>
-                    <Col md="6">
-                    </Col>
-                    <Col md="6">
-                    </Col>
-                </Row>
+                <div>
+                    Score:
+                    {away_team.name}: {match.away_points}
+                    {home_team.name}: {match.home_points}
+                </div>
             </SpinLoader>
         );
     }

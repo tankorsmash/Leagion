@@ -7,7 +7,7 @@ import seasonUrls from 'main/app/player/season/urls';
 import teamUrls from 'main/app/player/team/urls';
 
 import {TeamCard} from 'components/app/team';
-import {MatchList} from 'components/app/match';
+import {MatchTable} from 'components/app/match';
 import {TeamPlayerTable} from 'components/app/player';
 import {SeasonLink} from 'components/app/season';
 
@@ -21,7 +21,6 @@ class TeamDetail extends React.Component {
 
         this.state = { 
             team: {},
-            season: {},
             loaded: false
         }; };
 
@@ -31,29 +30,26 @@ class TeamDetail extends React.Component {
         }).then(data => {
             this.setState({
                 team: data,
-                season: data.season,
                 loaded: true
             });
         });
     }
 
     render() {
-        console.log(this.state.team);
+        let season = this.state.team.season || {}
+        let league = season.league || {}
+
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <Row>
-                    <Col md="6">
-                        <h5>
-                            <SeasonLink id={this.state.season.id} text="View Season Schedule"/>
-                        </h5>
-                        <h5>Matches</h5>
-                        <MatchList matches={this.state.team.matches} />
-                    </Col>
-                    <Col md="6">
-                        <h5>Players</h5>
-                        <TeamPlayerTable players={this.state.team.players} />
-                    </Col>
-                </Row>
+                <div>
+                    <h2>{this.state.team.name}</h2>
+                    <h5>{league.name}</h5>
+                    <h5>{season.pretty_date}: <SeasonLink id={season.id} text="View Season Schedule"/></h5>
+                    <h5>Matches</h5>
+                    <MatchTable matches={this.state.team.matches} />
+                    <h5>Players</h5>
+                    <TeamPlayerTable players={this.state.team.players} />
+                </div>
             </SpinLoader>
         );
     }
