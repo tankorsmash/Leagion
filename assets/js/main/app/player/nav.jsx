@@ -4,7 +4,7 @@ import {Nav, NavItem, NavLink as NavLinkStrap} from 'reactstrap';
 import {NavLink, Link} from 'react-router-dom';
 
 import {LogoutButton, AdminButton} from 'components/buttons';
-import {Navbar} from 'components/nav/base'
+import {Appbar} from 'components/nav/base'
 import {BaseAppProfile} from 'main/app/components/nav';
 import {TeamListLink} from 'components/app/team';
 
@@ -35,7 +35,7 @@ class PlayerProfile extends BaseAppProfile {
 	items = [AdminButton, LogoutButton];
 }
 
-class PlayerNavbar extends Navbar {
+class PlayerNavbar extends Appbar {
 	itemComponent = PlayerItems;
 	profileComponent = PlayerProfile;
 

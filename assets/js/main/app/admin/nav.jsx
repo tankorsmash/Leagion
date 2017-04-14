@@ -10,7 +10,7 @@ import { Collapse, Navbar as BSNavbar, NavbarToggler,
 import adminUrls from 'main/app/admin/urls';
 import {LogoutButton, LoginButton} from 'components/buttons';
 import auth from 'main/auth';
-import {Navbar} from 'components/nav/base'
+import {Appbar} from 'components/nav/base'
 import {BaseAppProfile} from 'main/app/components/nav';
 
 import {NOT_LOADED, DO_NOTHING, STOP_PROPAGATION} from 'common/constants';
@@ -277,7 +277,7 @@ class AdminProfile extends BaseAppProfile {
 	items = [LogoutButton]
 }
 
-class AdminNavbar extends Navbar {
+class AdminNavbar extends Appbar {
 	itemComponent = AdminItems;
 	profileComponent = AdminProfile;
 }
