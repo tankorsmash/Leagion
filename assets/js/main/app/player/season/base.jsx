@@ -36,10 +36,11 @@ class SeasonSchedule extends React.Component {
     render() {
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <Row>
-                    <h5>{this.state.season.pretty_name}</h5>
+                <div>
+                    <h4>{this.state.season.pretty_name}</h4>
+                    <h5>Season Schedule</h5>
                     <MatchTable matches={this.state.season.matches}/>
-                </Row>
+                </div>
             </SpinLoader>
         );
     }

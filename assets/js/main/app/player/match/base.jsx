@@ -4,7 +4,7 @@ import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 
 import matchUrls from 'main/app/player/match/urls';
-
+import {MatchCard} from 'components/app/match';
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
@@ -14,9 +14,7 @@ class MatchDetail extends React.Component {
         super(props);
 
         this.state = { 
-            match: {},
-            loaded: false
-        }; };
+            match: {}, loaded: false }; };
 
     componentDidMount() {
         ajax({
@@ -36,11 +34,14 @@ class MatchDetail extends React.Component {
 		console.log(this.state.match);
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    Score:
-                    {away_team.name}: {match.away_points}
-                    {home_team.name}: {match.home_points}
-                </div>
+                <Row>
+                    <Col md="4">
+                        <MatchCard match={match}/>
+                    </Col>
+                    <Col md="8">
+                        My Roster
+                    </Col>
+                </Row>
             </SpinLoader>
         );
     }

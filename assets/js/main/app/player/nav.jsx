@@ -24,7 +24,6 @@ class PlayerItems extends React.Component {
         return (
             <Nav navbar>
                 <NavItem>
-                    <NavLinkStrap tag={TeamLink} />
                 </NavItem>
             </Nav>
         )

@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import { ListGroup, ListGroupItem, Table } from 'reactstrap';
+import { Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
 
@@ -60,9 +61,32 @@ const MatchList = (props) => {
 	);
 };
 
+const MatchCard = (props) => {
+    let match = props.match;
+
+    return (
+        <div>
+            <Card>
+                <CardBlock>
+                    <CardTitle>
+                        <TeamLink id={match.home_team.id} text={match.home_team.name}/>
+                        <span> vs. </span>
+                        <TeamLink id={match.away_team.id} text={match.away_team.name}/>
+                    </CardTitle>
+                    <CardSubtitle>{match.pretty_date} at {match.pretty_time}</CardSubtitle>
+                    <CardText>
+                        Score: {match.home_points} - {match.away_points}
+                    </CardText>
+                </CardBlock>
+            </Card>
+        </div>
+    );
+};
+
 module.exports = {
 	MatchList: MatchList,
 	MatchTable: MatchTable,
 	MatchLink: MatchLink,
+	MatchCard: MatchCard,
 }
 
