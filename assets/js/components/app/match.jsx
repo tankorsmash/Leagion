@@ -98,10 +98,36 @@ const MatchCard = (props) => {
     );
 };
 
+const BattingOrderTable = (props) => {
+    let players = props.batters;
+
+    return (
+        <Table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {props.batters.map((batter, i) => {
+                    return (
+                        <tr key={i}>
+                            <td>{batter.index}</td>
+                            <td>{batter.player.name}</td>
+                        </tr>
+                    )
+                })}
+            </tbody>
+        </Table>
+    );
+}
+
 module.exports = {
 	MatchList: MatchList,
 	MatchTable: MatchTable,
 	MatchLink: MatchLink,
 	MatchCard: MatchCard,
+	BattingOrderTable: BattingOrderTable,
 }
 

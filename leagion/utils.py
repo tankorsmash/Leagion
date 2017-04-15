@@ -4,7 +4,7 @@ import random
 import datetime
 
 from django.contrib.auth import get_user_model
-from leagion.models import Team, League, Match, Roster, Location, Season
+from leagion.models import Team, League, Match, Roster, Location, Season, Batter
 
 User = get_user_model()
 
@@ -95,18 +95,29 @@ def generate_locations(location_count=10):
 
     return locations
 
-def generate_roster(team, match):
+def generate_batter(roster, player, index):
+    f = faker.Faker()
+    batter = Batter.objects.create(
+        index=index,
+        player=player,
+        roster=roster
+    )
+
+    return batter
+
+def generate_roster(team):
     f = faker.Faker()
     roster = Roster.objects.create(
         team=team,
-        match=match,
     )
-    players = random.sample(
+
+    player_sample = random.sample(
         list(team.players.all()),
         f.random_int(10, team.players.count())
     )
 
-    roster.players.add(*players)
+    for i, player in enumerate(player_sample):
+        generate_batter(roster, player, i)
 
     return roster
 
@@ -124,16 +135,20 @@ def generate_match(season, home_team, away_team, location, postponed_match=None)
     else:
         match_datetime = postponed_match.match_datetime + datetime.timedelta(days=7)
         home_team, away_team = postponed_match.home_team, postponed_match.away_team
-        home_points = 0
-        away_points = 0
-        duration_seconds = 0
+        home_points = None
+        away_points = None
+        duration_seconds = None
 
+    home_roster = generate_roster(home_team)
+    away_roster = generate_roster(away_team)
 
     match = Match.objects.create(
         home_team=home_team,
         home_points=home_points,
+        home_roster=home_roster,
         away_team=away_team,
         away_points=away_points,
+        away_roster=away_roster,
         match_datetime=match_datetime,
         location=location,
         duration_seconds=duration_seconds,
@@ -144,9 +159,6 @@ def generate_match(season, home_team, away_team, location, postponed_match=None)
         match.postposted_from = postponed_match
         match.save()
         postponed_match.save() #related instance needs to get saved too
-
-    generate_roster(home_team, match)
-    generate_roster(away_team, match)
 
     return match
 

@@ -20,7 +20,6 @@ const TeamLink = (props) => {
 
 class PlayerItems extends React.Component {
     render() {
-        console.log(this.props);
         return (
             <Nav navbar>
                 <NavItem>

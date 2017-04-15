@@ -160,6 +160,15 @@ class Location(models.Model):
         return "<%s>" % str(self).encode("utf-8")
 
 
+class Roster(models.Model):
+    team = models.ForeignKey(Team, related_name="+")
+    players = models.ManyToManyField(User, through='Batter')
+
+class Batter(models.Model):
+    index = models.IntegerField(null=True)
+    player = models.ForeignKey(User, related_name="+")
+    roster = models.ForeignKey(Roster, related_name='batters')
+
 class Match(models.Model):
     """
     should this be a MatchRecord? not all games are played or rescheduled
@@ -176,9 +185,11 @@ class Match(models.Model):
 
     home_team = models.ForeignKey(Team, related_name="home_matches")
     home_points = models.IntegerField(null=True, blank=True, default=0)
+    home_roster = models.ForeignKey(Roster, related_name="home_rosters")
 
     away_team = models.ForeignKey(Team, related_name="away_matches")
     away_points = models.IntegerField(null=True, blank=True, default=0)
+    away_roster = models.ForeignKey(Roster, related_name="away_rosters")
 
     match_datetime = models.DateTimeField()
 
@@ -248,10 +259,3 @@ class Match(models.Model):
                 status = "-"
 
         return status
-
-
-class Roster(models.Model):
-    team = models.ForeignKey(Team, related_name="+")
-    players = models.ManyToManyField(User, related_name="+")
-
-    match = models.ForeignKey(Match, related_name="rosters")

@@ -1,15 +1,26 @@
 from rest_framework import serializers
 
-from leagion.models import Roster
-from leagion.api.serializers.teams import TeamSerializer
+from leagion.models import Roster, Batter, Team
 from leagion.api.serializers.users import UserSerializer
-from leagion.api.serializers.matches import MatchSerializer
+
+class ShallowTeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = (
+            'id', 'name', 'season'
+        )
+
+class BatterSerializer(serializers.ModelSerializer):
+    player = UserSerializer()
+
+    class Meta:
+        model = Batter
+        fields = ('id', 'index', 'player')
 
 class RosterSerializer(serializers.ModelSerializer):
+    team = ShallowTeamSerializer()
+    players = BatterSerializer(source='batters', many=True)
+
     class Meta:
         model = Roster
-        fields = ('id', 'team', 'players', 'match',)
-
-    team = TeamSerializer()
-    players = UserSerializer(many=True)
-    match = MatchSerializer()
+        fields = ('id', 'team', 'players')
