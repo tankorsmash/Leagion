@@ -113,8 +113,8 @@ const BattingOrderTable = (props) => {
                 {props.batters.map((batter, i) => {
                     return (
                         <tr key={i}>
-                            <td>{batter.index}</td>
-                            <td>{batter.player.name}</td>
+                            <th scope="row">{batter.index + 1}</th>
+                            <td>{batter.player.full_name}</td>
                         </tr>
                     )
                 })}
