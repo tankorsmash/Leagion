@@ -35,11 +35,8 @@ class MatchDetail extends React.Component {
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Row>
-                    <Col md="4">
+                    <Col md={{size:6, offset:3}}>
                         <MatchCard match={match}/>
-                    </Col>
-                    <Col md="8">
-                        My Roster
                     </Col>
                 </Row>
             </SpinLoader>

@@ -68,14 +68,29 @@ const MatchCard = (props) => {
         <div>
             <Card>
                 <CardBlock>
-                    <CardTitle>
-                        <TeamLink id={match.home_team.id} text={match.home_team.name}/>
-                        <span> vs. </span>
-                        <TeamLink id={match.away_team.id} text={match.away_team.name}/>
+                    <CardTitle className="text-center">
+                        <Table> 
+                            <thead>
+                                <tr>
+                                    <th className="text-center"><TeamLink id={match.home_team.id} text={match.home_team.name}/></th>
+                                    <th className="text-center">vs.</th>
+                                    <th className="text-center"><TeamLink id={match.away_team.id} text={match.away_team.name}/></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{match.home_points}</td>
+                                    <td></td>
+                                    <td>{match.away_points}</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                        {match.pretty_date}
+                        <br/>
+                        {match.pretty_time}
                     </CardTitle>
-                    <CardSubtitle>{match.pretty_date} at {match.pretty_time}</CardSubtitle>
+                    <CardSubtitle></CardSubtitle>
                     <CardText>
-                        Score: {match.home_points} - {match.away_points}
                     </CardText>
                 </CardBlock>
             </Card>
