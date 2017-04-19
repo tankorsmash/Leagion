@@ -16,8 +16,6 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_PATH = os.path.abspath(os.path.join('..', BASE_DIR))
 
-from .local import *
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -162,3 +160,5 @@ SHELL_PLUS_PRE_IMPORTS = (
 
 # set auth user model to our own custom model
 AUTH_USER_MODEL = 'leagion.User'
+
+from .local import *
