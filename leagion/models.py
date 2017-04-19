@@ -121,9 +121,17 @@ class Season(models.Model):
 
     @property
     def pretty_name(self):
-        return "Season: {start_date} - {end_date}".format(
-            start_date=self.start_date,
-            end_date=self.end_date,
+        return "{}: {}".format(self.league.name, self.pretty_date)
+
+    @property
+    def league_name(self):
+        return self.league.name
+
+    @property
+    def pretty_date(self):
+        return "{start_date} - {end_date}".format(
+            start_date=self.start_date.strftime('%b, %Y'),
+            end_date=self.end_date.strftime('%b, %Y'),
         )
 
 
@@ -152,6 +160,15 @@ class Location(models.Model):
         return "<%s>" % str(self).encode("utf-8")
 
 
+class Roster(models.Model):
+    team = models.ForeignKey(Team, related_name="+")
+    players = models.ManyToManyField(User, through='Batter')
+
+class Batter(models.Model):
+    index = models.IntegerField(null=True)
+    player = models.ForeignKey(User, related_name="+")
+    roster = models.ForeignKey(Roster, related_name='batters')
+
 class Match(models.Model):
     """
     should this be a MatchRecord? not all games are played or rescheduled
@@ -168,9 +185,11 @@ class Match(models.Model):
 
     home_team = models.ForeignKey(Team, related_name="home_matches")
     home_points = models.IntegerField(null=True, blank=True, default=0)
+    home_roster = models.ForeignKey(Roster, related_name="home_rosters")
 
     away_team = models.ForeignKey(Team, related_name="away_matches")
     away_points = models.IntegerField(null=True, blank=True, default=0)
+    away_roster = models.ForeignKey(Roster, related_name="away_rosters")
 
     match_datetime = models.DateTimeField()
 
@@ -197,6 +216,14 @@ class Match(models.Model):
             away_team=self.away_team.name,
             location=self.location.name
         )
+
+    @property
+    def pretty_date(self):
+        return self.match_datetime.strftime('%A, %b %d, %Y')
+
+    @property
+    def pretty_time(self):
+        return self.match_datetime.strftime('%I:%M %p')
 
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
@@ -232,10 +259,3 @@ class Match(models.Model):
                 status = "-"
 
         return status
-
-
-class Roster(models.Model):
-    team = models.ForeignKey(Team, related_name="+")
-    players = models.ManyToManyField(User, related_name="+")
-
-    match = models.ForeignKey(Match, related_name="rosters")

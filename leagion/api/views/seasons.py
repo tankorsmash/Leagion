@@ -1,9 +1,8 @@
 from rest_framework import generics
-from rest_framework import permissions
 from django.contrib.auth import get_user_model
 
-from leagion.api import serializers
-from leagion.models import Match, Roster, Team, Season
+from leagion.api.serializers.seasons import SeasonSerializer, MySeasonSerializer
+from leagion.models import Season
 
 from leagion.utils import reverse_js
 
@@ -13,7 +12,7 @@ User = get_user_model()
 @reverse_js
 class SeasonList(generics.ListCreateAPIView):
     queryset = Season.objects.all()
-    serializer_class = serializers.SeasonSerializer
+    serializer_class = SeasonSerializer
 
 
 @reverse_js
@@ -21,11 +20,11 @@ class SeasonDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "season_id"
 
     queryset = Season.objects.all()
-    serializer_class = serializers.SeasonSerializer
+    serializer_class = SeasonSerializer
 
 @reverse_js
 class MySeasonList(SeasonList):
-    serializer_class = serializers.MySeasonSerializer
+    serializer_class = MySeasonSerializer
 
     def get_queryset(self):
         user = self.request.user

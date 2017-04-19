@@ -23,7 +23,7 @@ class Admin extends React.Component {
             // backgroundColor: "white",
         };
         return (
-            <div className="bg-faded">
+            <div>
                 <AdminNavbar {...this.props} />
                 <Container style={style}>
                     <Row>

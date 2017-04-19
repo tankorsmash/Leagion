@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import {Container, Row, Col} from 'reactstrap';
@@ -16,20 +16,16 @@ import {FourOhFour} from 'components/error-pages';
 
 const PrivateRoute = (props) => {
     if (auth.loggedIn()) {
-        console.log("priv route");
         return <Route {...props} />;
     } else  {
-        console.log("priv redir");
         return <Redirect to={{ pathname: publicUrls.login }}/>
     }
 }
 
 const PublicRoute = (props) => {
     if (auth.loggedIn()) {
-        console.log("redir publ");
         return <Redirect to={{ pathname: appUrls.index }}/>
     } else  {
-        console.log("route publ");
         return <Route {...props} />;
     }
 }

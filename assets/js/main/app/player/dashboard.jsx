@@ -5,12 +5,12 @@ import {
 
 import ajax from 'common/ajax';
 
-import {LeagueList} from 'main/app/player/league/base';
+import {TeamList} from 'main/app/player/team/base';
 
 class Dashboard extends React.Component {
    render() {
       return (
-         <LeagueList/>
+         <TeamList/>
       );
    }
 }

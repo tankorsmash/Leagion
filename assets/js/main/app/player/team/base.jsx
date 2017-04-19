@@ -1,11 +1,15 @@
 import {Switch, Link} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
+import {Row, Col} from 'reactstrap';
 
-import playerUrls from 'main/app/player/urls';
+import seasonUrls from 'main/app/player/season/urls';
 import teamUrls from 'main/app/player/team/urls';
 
-import {MatchList} from 'components/app/match';
+import {TeamCard} from 'components/app/team';
+import {MatchTable} from 'components/app/match';
+import {TeamPlayerTable} from 'components/app/player';
+import {SeasonLink} from 'components/app/season';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -18,8 +22,7 @@ class TeamDetail extends React.Component {
         this.state = { 
             team: {},
             loaded: false
-        };
-    };
+        }; };
 
     componentDidMount() {
         ajax({
@@ -33,21 +36,83 @@ class TeamDetail extends React.Component {
     }
 
     render() {
+        let season = this.state.team.season || {}
+        let league = season.league || {}
+
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <MatchList matches={this.state.team.matches} />
+                <div>
+                    <h2>{this.state.team.name}</h2>
+                    <h5>{league.name}</h5>
+                    <h5>{season.pretty_date}: <SeasonLink id={season.id} text="View Season Schedule"/></h5>
+                    <h5>Matches</h5>
+                    <MatchTable matches={this.state.team.matches} />
+                    <h5>Players</h5>
+                    <TeamPlayerTable players={this.state.team.players} />
+                </div>
             </SpinLoader>
         );
     }
 }
 
+class TeamList extends React.Component {
+    
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            teams: [],
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-my-team-list'),
+        }).then(data => {
+            this.setState({
+                teams: data,
+                loaded: true
+            });
+        });
+    }
+
+    render() {
+        return (
+            <SpinLoader loaded={this.state.loaded}>
+                <div>
+                    <h2>My Teams</h2>
+                    {this.state.teams.map((team, i) => {
+                        return (
+                            <Col md="6" key={i}>
+                                <TeamCard team={team} />
+                            </Col>
+                        );
+                    })}
+                </div>
+            </SpinLoader>
+        );
+    }
+}
+const LeagueJumbo = (props) => {
+	let league = props.league;
+
+	return (
+		<Jumbotron>
+			<h2>
+				<Link to={`${leagueUrls.index}/${league.id}`}>{league.name}</Link>
+			</h2>
+		</Jumbotron>
+	);
+};
+
 class Team extends React.Component {
 
-    //<Route exact path={teamUrls.index} component={TeamList} />
     render() {
         return (
             <Switch>
-                <Route path={teamUrls.detail} component={TeamDetail} />
+                <Route exact path={teamUrls.index} component={TeamList} />
+                <Route exact path={teamUrls.detail} component={TeamDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );
@@ -56,5 +121,6 @@ class Team extends React.Component {
 
 module.exports = {
     Team: Team,
+    TeamList: TeamList,
 };
 

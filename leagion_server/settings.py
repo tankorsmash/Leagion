@@ -26,7 +26,7 @@ SECRET_KEY = ')3-^3j&1(0e35&ld30u&x-hw6rf*5^u2)y26&o*9u^m-o-dt09'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = [".webfactional.com", ".leagionthebase.com"]
+ALLOWED_HOSTS = [] #we need to update this with whatever host we get on, otherwise django wont run
 
 ADMINS = [('TankorSmash', 'tankorsmash@gmail.com'), ]
 
@@ -60,7 +60,6 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware', #dont need this
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -68,7 +67,6 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'leagion_server.urls'
-
 
 TEMPLATES = [
     {
