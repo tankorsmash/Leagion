@@ -92,7 +92,7 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
     def full_name(self):
         return self.get_full_name()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.email
 
 #model data
@@ -101,7 +101,7 @@ class Team(models.Model):
     players = models.ManyToManyField(User, related_name="teams")
     season = models.ForeignKey("Season", related_name="teams")
 
-    def __unicode__(self):
+    def __str__(self):
         return "Team: {name}".format(name=self.name)
 
     def __repr__(self):
@@ -113,7 +113,7 @@ class Season(models.Model):
     end_date = models.DateField()
     league = models.ForeignKey("League", related_name="seasons")
 
-    def __unicode__(self):
+    def __str__(self):
         return "Season: {}-{}".format(start_date, end_date)
 
     def __repr__(self):
@@ -138,7 +138,7 @@ class Season(models.Model):
 class League(models.Model):
     name = models.CharField(max_length=255)
 
-    def __unicode__(self):
+    def __str__(self):
         return "League: {name}".format(name=self.name)
 
     def __repr__(self):
@@ -153,7 +153,7 @@ class Location(models.Model):
 
     name = models.CharField(max_length=255) #ie Fenway Park
 
-    def __unicode__(self):
+    def __str__(self):
         return "Location: {name}".format(name=self.name)
 
     def __repr__(self):
@@ -204,7 +204,7 @@ class Match(models.Model):
     #if a match's status was Postponed, match.postponed_to would point to a new match to replace it
     postponed_to = models.OneToOneField("Match", blank=True, null=True, related_name="postponed_from")
 
-    def __unicode__(self):
+    def __str__(self):
         return "Match: {}".format(
             self.pretty_name
         )
