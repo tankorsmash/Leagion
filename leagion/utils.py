@@ -102,8 +102,7 @@ def generate_locations(location_count=10):
     return locations
 
 def generate_batter(roster, player, index):
-    f = faker.Faker()
-    batter = Batter.objects.create(
+    batter = Batter(
         index=index,
         player=player,
         roster=roster
@@ -112,6 +111,7 @@ def generate_batter(roster, player, index):
     return batter
 
 def generate_roster(team):
+    print("generating roster for team", str(team))
     f = faker.Faker()
     roster = Roster.objects.create(
         team=team,
@@ -122,8 +122,10 @@ def generate_roster(team):
         f.random_int(10, team.players.count())
     )
 
+    batters = []
     for i, player in enumerate(player_sample):
-        generate_batter(roster, player, i)
+        batters.append(generate_batter(roster, player, i))
+    Batter.objects.bulk_create(batters)
 
     return roster
 
@@ -184,8 +186,6 @@ def generate_matches(season, match_count=10):
         match = generate_match(season, home_team=home_team, away_team=away_team, location=location, postponed_match=None)
         matches.append(match)
 
-        # should_postpone = True
-        #1 in 25 chance its a postponed game
         should_postpone = random.randint(0, 5) == 0
         if should_postpone:
             print("generating postponed match for ", i+1, "of", match_count)
