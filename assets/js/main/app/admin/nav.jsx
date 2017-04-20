@@ -56,7 +56,7 @@ class ContextDropdownMenu extends React.Component {
             <DropdownMenu>
                 <DropdownItem>
                     <Link to={this.props.detailUrlRoot} className="nav-link">
-                            All
+                            View All
                     </Link>
                 </DropdownItem>
                 <DropdownItem divider/>
@@ -70,7 +70,7 @@ class ContextDropdownMenu extends React.Component {
                             </DropdownItem>
                             <DropdownItem>
                                 <Link to={detailUrl} className="nav-link">
-                                    Detail
+                                    View
                                 </Link>
                             </DropdownItem>
                             <DropdownItem>
@@ -251,7 +251,7 @@ class NavContextFilter extends React.Component {
                     </DropdownToggle>
 
                     <DropdownMenu>
-                        <DropdownItem header>Create a ...</DropdownItem>
+                        <DropdownItem header>Create ...</DropdownItem>
                         <DropdownItem>League</DropdownItem>
                         <DropdownItem>Team</DropdownItem>
                         <DropdownItem>Match</DropdownItem>
