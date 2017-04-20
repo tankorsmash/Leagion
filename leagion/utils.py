@@ -4,7 +4,13 @@ import random
 import datetime
 
 from django.contrib.auth import get_user_model
-from leagion.models import Team, League, Match, Roster, Location, Season, Batter
+from django.conf import settings
+
+from leagion.models import (
+    Team, League, Match, Roster,
+    Location, Season, Batter,
+    User
+)
 
 User = get_user_model()
 
@@ -195,8 +201,28 @@ def generate_matches(season, match_count=10):
 
     return matches
 
+def generate_superuser():
+    try:
+        DEFAULT_ADMIN_DATA = settings.DEFAULT_ADMIN_DATA
+        superuser = User.objects.create_superuser(
+            email=DEFAULT_ADMIN_DATA['email'],
+            password=DEFAULT_ADMIN_DATA['password'],
+            first_name=DEFAULT_ADMIN_DATA['first_name'],
+            last_name=DEFAULT_ADMIN_DATA['last_name'],
+        )
+        superuser.is_staff = True
+        superuser.save()
+
+        print("created superuser", superuser)
+
+    except AttributeError as e:
+        print(e)
+        print("See note in settings.py about DEFAULT_ADMIN_DATA if you want to autogenerate a staff/superuser")
+
 
 def generate_all():
+    generate_superuser()
+
     league = generate_league()
     for season in league.seasons.all():
         generate_matches(season)

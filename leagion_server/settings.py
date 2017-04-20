@@ -16,6 +16,8 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_PATH = os.path.abspath(os.path.join('..', BASE_DIR))
 
+DEBUG = TEMPLATE_DEBUG = False
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
@@ -160,5 +162,17 @@ SHELL_PLUS_PRE_IMPORTS = (
 
 # set auth user model to our own custom model
 AUTH_USER_MODEL = 'leagion.User'
+
+"""
+sample DEFAULT_ADMIN_DATA to be implemented in local.py
+ DEFAULT_ADMIN_DATA = {
+    "email": "fake@mail.com",
+    "password": "hunter12",
+    "first_name": "John",
+    "last_name": "Doe",
+ }
+
+this is used in generate_all to save on having to recreate a superuser all the time
+"""
 
 from .local import *
