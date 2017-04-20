@@ -19,13 +19,10 @@ import style from 'app.scss';
 
 class Admin extends React.Component {
     render() {
-        let style = {
-            // backgroundColor: "white",
-        };
         return (
             <div>
                 <AdminNavbar {...this.props} />
-                <Container style={style}>
+                <Container>
                     <Row>
                         <Col>
                             <Switch>
