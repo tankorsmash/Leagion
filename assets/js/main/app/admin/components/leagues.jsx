@@ -9,6 +9,7 @@ import Spinner from 'react-spinkit';
 import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
+import {buildPageTitle} from 'common/utils';
 
 class TeamRow extends React.Component {
     render() {
@@ -100,6 +101,7 @@ class LeaguesList extends React.Component {
 
 class Leagues extends React.Component {
     render() {
+        buildPageTitle("Leagues");
         return (
             <LeaguesList/>
         );

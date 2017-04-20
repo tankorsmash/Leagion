@@ -13,11 +13,10 @@ import {FourOhFour} from 'components/error-pages';
 import ajax from 'common/ajax';
 
 class LeagueList extends React.Component {
-    
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             leagues: [],
             loaded: false
         };
@@ -66,6 +65,4 @@ class League extends React.Component {
 module.exports = {
     League: League,
     LeagueList: LeagueList,
-
 };
-

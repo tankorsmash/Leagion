@@ -5,6 +5,8 @@ import {
 
 import ajax from 'common/ajax';
 
+import {buildPageTitle} from 'common/utils';
+
 import {AsyncBase} from 'components/base';
 
 class LeagueCard extends React.Component {
@@ -88,6 +90,8 @@ class MainContent extends React.Component {
 
 class Dashboard extends React.Component {
     render() {
+        buildPageTitle("Admin Dashboard");
+
         return (
             <Row>
                 <Col sm="4"><LeftBar/></Col>
