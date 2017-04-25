@@ -4,6 +4,7 @@ var Spinner = require('react-spinkit');
 import {SimplePlayer} from 'main/app/admin/components/players';
 
 import {NOT_LOADED} from 'common/constants';
+import {buildPageTitle} from 'common/utils';
 
 class Team extends React.Component {
     render() {
@@ -64,4 +65,16 @@ class Teams extends React.Component {
     }
 }
 
-module.exports = Teams;
+
+class TeamsCreate extends React.Component {
+    render() {
+        buildPageTitle("Teams Create");
+        return (
+            <div> Teams Create </div>
+        );
+    };
+};
+module.exports = {
+    Teams: Teams,
+    TeamsCreate: TeamsCreate
+};

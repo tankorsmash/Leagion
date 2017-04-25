@@ -9,6 +9,7 @@ import Spinner from 'react-spinkit';
 import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
+import {buildPageTitle} from 'common/utils';
 
 class Season extends React.Component {
     render() {
@@ -62,4 +63,16 @@ class Seasons extends React.Component {
     }
 }
 
-module.exports = Seasons;
+class SeasonsCreate extends React.Component {
+    render() {
+        buildPageTitle("Seasons Create");
+        return (
+            <div> Seasons Create </div>
+        );
+    };
+};
+
+module.exports = {
+    Seasons: Seasons,
+    SeasonsCreate: SeasonsCreate
+};

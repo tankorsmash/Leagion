@@ -1,6 +1,8 @@
 import ajax from 'common/ajax';
 import urls from 'common/urls';
 
+import {buildPageTitle} from 'common/utils';
+
 class Match extends React.Component {
     render() {
         let match = this.props.match;
@@ -61,4 +63,15 @@ class Matches extends React.Component {
     }
 }
 
-module.exports = Matches;
+class MatchesCreate extends React.Component {
+    render() {
+        buildPageTitle("Matches Create");
+        return (
+            <div> Matches Create </div>
+        );
+    };
+};
+module.exports = {
+    Matches: Matches,
+    MatchesCreate: MatchesCreate
+};

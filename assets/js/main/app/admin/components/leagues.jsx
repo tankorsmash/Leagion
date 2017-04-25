@@ -108,4 +108,15 @@ class Leagues extends React.Component {
     };
 };
 
-module.exports = Leagues;
+class LeaguesCreate extends React.Component {
+    render() {
+        buildPageTitle("Leagues Create");
+        return (
+            <div> Leagues Create </div>
+        );
+    };
+};
+module.exports = {
+    Leagues: Leagues,
+    LeaguesCreate: LeaguesCreate
+};
