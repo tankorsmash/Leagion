@@ -169,9 +169,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.leagueDropdownOpen}
                     toggle={this.toggleLeagueDropdown}>
 
-                    <DropdownToggle nav >
-                        Leagues
-                    </DropdownToggle>
+                    <DropdownToggle nav >Leagues</DropdownToggle>
 
                     <ContextDropdownMenu
                         updateContextFunc={this.updateLeagueId}
@@ -186,9 +184,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.seasonDropdownOpen}
                     toggle={this.toggleSeasonDropdown}>
 
-                    <DropdownToggle nav >
-                        Seasons
-                    </DropdownToggle>
+                    <DropdownToggle nav >Seasons</DropdownToggle>
 
                     <ContextDropdownMenu
                         updateContextFunc={this.updateSeasonId}
@@ -205,9 +201,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.teamDropdownOpen}
                     toggle={this.toggleTeamDropdown}>
 
-                    <DropdownToggle nav >
-                        Teams
-                    </DropdownToggle>
+                    <DropdownToggle nav >Teams</DropdownToggle>
 
                     <ContextDropdownMenu
                         filterByAttr="season"
@@ -226,9 +220,7 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.matchDropdownOpen}
                     toggle={this.toggleMatchDropdown}>
 
-                    <DropdownToggle nav >
-                        Matches
-                    </DropdownToggle>
+                    <DropdownToggle nav >Matches</DropdownToggle>
 
                     <ContextDropdownMenu
                         filterByAttr="away_team"
@@ -246,15 +238,25 @@ class NavContextFilter extends React.Component {
                     isOpen={this.state.createDropdownOpen}
                     toggle={this.toggleCreateDropdown}>
 
-                    <DropdownToggle nav>
-                        Create
-                    </DropdownToggle>
+                    <DropdownToggle nav>Create</DropdownToggle>
 
                     <DropdownMenu>
                         <DropdownItem header>Create ...</DropdownItem>
-                        <DropdownItem>League</DropdownItem>
-                        <DropdownItem>Team</DropdownItem>
-                        <DropdownItem>Match</DropdownItem>
+                        <DropdownItem>
+                            <Link to={adminUrls.leagues.create} className="nav-link">
+                                    League
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to={adminUrls.teams.create} className="nav-link">
+                                    Team
+                            </Link>
+                        </DropdownItem>
+                        <DropdownItem>
+                            <Link to={adminUrls.matches.create} className="nav-link">
+                                    Match
+                            </Link>
+                        </DropdownItem>
                     </DropdownMenu>
                 </NavDropdown>
             </Nav>

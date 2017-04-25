@@ -10,19 +10,22 @@ module.exports = {
 	index: adminUrl,
 	leagues: {
 		index: leaguesUrl,
+		create: `${leaguesUrl}/create`,
 		detail: `${leaguesUrl}/:leagueId?`,
 	},
 	seasons: {
 		index: seasonsUrl,
+		create: `${seasonsUrl}/create`,
 		detail: `${seasonsUrl}/:seasonId?`,
 	},
 	teams: {
 		index: teamsUrl,
+		create: `${teamsUrl}/create`,
 		detail: `${teamsUrl}/:teamId?`,
 	},
 	matches: {
 		index: matchesUrl,
-		detail: `${matchesUrl}/:matchId?`,
 		create: `${matchesUrl}/create`,
+		detail: `${matchesUrl}/:matchId?`,
 	},
 }
