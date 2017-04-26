@@ -9,7 +9,7 @@ class LeagueSerializer(serializers.ModelSerializer):
             'id', 'name', 'seasons'
         )
 
-    seasons = SeasonSerializer(many=True)
+    seasons = SeasonSerializer(many=True, read_only=True)
 
 
 class MyLeagueSerializer(LeagueSerializer):
