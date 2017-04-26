@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {
     DropdownItem, DropdownMenu, NavLink,
-    Row, Col
+    Row, Col, FormGroup, Form, Button, Label, Input
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
@@ -108,14 +108,37 @@ class Leagues extends React.Component {
     };
 };
 
+class LeagueCreateForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {'name': ''};
+    }
+
+    render() {
+        return (
+            <Form>
+                <FormGroup>
+                    <Label for="name">Name</Label>
+                    <Input type="text" name="name" id="name" placeholder="Eastern Conference"/>
+                </FormGroup>
+                <Button type="submit" >Submit</Button>
+            </Form>
+        );
+    };
+};
+
 class LeaguesCreate extends React.Component {
     render() {
         buildPageTitle("Leagues Create");
         return (
-            <div> Leagues Create </div>
+            <div>
+                Leagues Create
+                <LeagueCreateForm/>
+            </div>
         );
     };
 };
+
 module.exports = {
     Leagues: Leagues,
     LeaguesCreate: LeaguesCreate
