@@ -37,8 +37,7 @@ let ajax = function({data=null, method='GET', url=null}) {
 
 			fetch(url, info)
 				.then(r => {
-					if (r.status == 200) {
-					} else {
+					if (r.status != 200 && r.status != 201) {
 						error = true;
 					}
 
