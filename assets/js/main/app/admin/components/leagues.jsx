@@ -7,6 +7,7 @@ import {
 import Spinner from 'react-spinkit';
 
 import ajax from 'common/ajax';
+import reverse from 'common/reverse';
 
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
@@ -114,12 +115,33 @@ class LeagueCreateForm extends React.Component {
         this.state = {'name': ''};
     }
 
+    onSubmit = (e) => {
+        e.preventDefault();
+
+        ajax({
+            url:reverse('api-league-list'),
+            method: 'POST',
+            data: {
+                name: this.state.name,
+            }
+        });
+    }
+
+    onChange = (e) => {
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        this.setState({
+            [name]: value
+        });
+    }
+
     render() {
         return (
-            <Form>
+            <Form onSubmit={this.onSubmit} >
                 <FormGroup>
                     <Label for="name">Name</Label>
-                    <Input type="text" name="name" id="name" placeholder="Eastern Conference"/>
+                    <Input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" placeholder="Eastern Conference"/>
                 </FormGroup>
                 <Button type="submit" >Submit</Button>
             </Form>
@@ -132,7 +154,7 @@ class LeaguesCreate extends React.Component {
         buildPageTitle("Leagues Create");
         return (
             <div>
-                Leagues Create
+                <h3>Leagues Create</h3>
                 <LeagueCreateForm/>
             </div>
         );
