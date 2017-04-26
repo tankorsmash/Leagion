@@ -35,6 +35,7 @@ function reverse(urlname, kwargs) {
     kwargs = kwargs || {};
 
     if (url === undefined) {
+        debugger;
         throw 'reverse failed. Incorrect urlname: ' + urlname;
     }
 
@@ -43,6 +44,7 @@ function reverse(urlname, kwargs) {
         url = url.replace('<' + kwarg + '>', value);
     }
     if (url.includes('<')) {
+        debugger;
         throw 'reverse failed. Missing kwargs. urlname: ' + urlname + '. kwargs: ' + JSON.stringify(kwargs) + '. url: ' + url;
     }
     return url;
