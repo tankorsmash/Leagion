@@ -24,7 +24,24 @@ class Season extends React.Component {
                     </CardTitle>
                     <CardSubtitle>Card subtitle</CardSubtitle>
                     <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                    <Button>Button</Button>
+                    <Button>Details</Button>
+                </CardBlock>
+            </Card>
+        );
+    }
+}
+
+class CreateSeasonPlaceholder extends React.Component {
+    render() {
+        return (
+            <Card>
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Create%20a%20season&w=318&h=180" alt="Card image cap" />
+                <CardBlock>
+                    <CardTitle>
+                        Create a season
+                    </CardTitle>
+                    <CardText>Create and add a season to this league</CardText>
+                    <Button>Create (placeholder)</Button>
                 </CardBlock>
             </Card>
         );
@@ -58,6 +75,7 @@ class SeasonsList extends React.Component {
             let seasons = this.state.seasons.map((season)=>{
                 return <Season season={season} key={season.id} />
             });
+            seasons.push(<CreateSeasonPlaceholder/>);
 
             content = [];
             for (let i = 0; i <= seasons.length; i+=3) {
