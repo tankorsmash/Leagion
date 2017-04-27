@@ -225,6 +225,7 @@ class LeagueDetail extends React.Component {
                     You'll be able to create and edit teams,
                     assign coaches and team managers, and set up schedules.</p>
 
+                <p className="lead">Seasons</p>
                 <Seasons leagueId={this.state.leagueId} />
             </div>
         );

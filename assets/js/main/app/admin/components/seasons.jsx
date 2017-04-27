@@ -22,7 +22,7 @@ class Season extends React.Component {
         let season = this.props.season;
         return (
             <Card>
-                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97120&w=318&h=120" alt="Card image cap" />
                 <CardBlock>
                     <CardTitle>
                         { season.start_date } to {season.end_date}
@@ -144,7 +144,7 @@ class CreateSeasonPlaceholder extends React.Component {
     render() {
         return (
             <Card>
-                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Create%20a%20season&w=318&h=180" alt="Card image cap" />
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=Create%20a%20season&w=318&h=120" alt="Card image cap" />
                 <CardBlock>
                     <CardTitle>
                         Create a season
