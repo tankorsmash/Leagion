@@ -71,6 +71,11 @@ class CreateSeasonModal extends FormBase {
                 'modal': false,
             });
 
+            //regenerate season grid in league detail
+            if (this.props.triggerRefreshOnGrid !== undefined) {
+                this.props.triggerRefreshOnGrid();
+            };
+
         }, error => {
             console.log("failed:", error);
             this.setState({'created': false});
@@ -117,10 +122,10 @@ class CreateSeasonModal extends FormBase {
                                 <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
 
                                 <Label for="">Start date:</Label>
-                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
+                                <Datetime input={false} dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
 
                                 <Label for="name">End date:</Label>
-                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
+                                <Datetime input={false} dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -144,7 +149,10 @@ class CreateSeasonPlaceholder extends React.Component {
                         Create a season
                     </CardTitle>
                     <CardText>Add a season to the league.</CardText>
-                    <CreateSeasonModal leagueId={this.props.leagueId} buttonLabel="Create"/>
+                    <CreateSeasonModal
+                        triggerRefreshOnGrid={this.props.triggerRefreshOnGrid}
+                        leagueId={this.props.leagueId}
+                        buttonLabel="Create"/>
                 </CardBlock>
             </Card>
         );
@@ -159,6 +167,10 @@ class SeasonsList extends React.Component {
     }
 
     componentDidMount() {
+        this.updateDataset();
+    }
+
+    updateDataset = () => {
         let url = reverse('api-season-list');
 
         ajax({
@@ -178,7 +190,13 @@ class SeasonsList extends React.Component {
             let seasons = this.state.seasons.map((season)=>{
                 return <Season season={season} key={season.id} />
             });
-            seasons.push(<CreateSeasonPlaceholder leagueId={this.props.leagueId} />);
+
+            //append placeholder card
+            seasons.push(
+                <CreateSeasonPlaceholder
+                    triggerRefreshOnGrid={this.updateDataset}
+                    leagueId={this.props.leagueId} />
+            );
 
             content = [];
             for (let i = 0; i <= seasons.length; i+=3) {
