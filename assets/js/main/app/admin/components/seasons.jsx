@@ -2,7 +2,9 @@ import {Link} from 'react-router-dom';
 import {
     DropdownItem, DropdownMenu, NavLink, Jumbotron,
     Row, Col, Card, CardImg, CardText, CardBlock,
-  CardTitle, CardSubtitle, Button
+    FormGroup, Form, Button, Label, Input,
+    CardTitle, CardSubtitle,
+    Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
@@ -31,6 +33,50 @@ class Season extends React.Component {
     }
 }
 
+class CreateSeasonModal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false
+    };
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <Button onClick={this.toggle}>{this.props.buttonLabel}</Button>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}>Add a season</ModalHeader>
+          <ModalBody>
+              <Form>
+                <FormGroup>
+                    <Label for="name">Season name:</Label>
+                    <Input type="text" name="name" id="name" placeholder="2016 Season"/>
+                    <Label for="">Start date:</Label>
+                    <Input type="date" name="start_date" id="start_date" placeholder="Jan 8th 2016"/>
+                    <Label for="name">End date:</Label>
+                    <Input type="date" name="end_date" id="end_date" placeholder="Aug 21st 2018"/>
+                </FormGroup>
+                </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
+}
+
 class CreateSeasonPlaceholder extends React.Component {
     render() {
         return (
@@ -40,8 +86,8 @@ class CreateSeasonPlaceholder extends React.Component {
                     <CardTitle>
                         Create a season
                     </CardTitle>
-                    <CardText>Create and add a season to this league</CardText>
-                    <Button>Create (placeholder)</Button>
+                    <CardText>Add a season to the league.</CardText>
+                    <CreateSeasonModal buttonLabel="Create"/>
                 </CardBlock>
             </Card>
         );
@@ -79,11 +125,12 @@ class SeasonsList extends React.Component {
 
             content = [];
             for (let i = 0; i <= seasons.length; i+=3) {
-                content.push(<Row>
-                    <Col key={i} xs="4"> {seasons[i]} </Col>
-                    <Col key={i+1} xs="4"> {seasons[i+1]} </Col>
-                    <Col key={i+2} xs="4"> {seasons[i+2]} </Col>
-                </Row>);
+                content.push(
+                    <Row key={i}>
+                        <Col key={i} xs="4"> {seasons[i]} </Col>
+                        <Col key={i+1} xs="4"> {seasons[i+1]} </Col>
+                        <Col key={i+2} xs="4"> {seasons[i+2]} </Col>
+                    </Row>);
             };
         }
 
