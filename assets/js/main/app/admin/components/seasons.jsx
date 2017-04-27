@@ -68,6 +68,7 @@ class CreateSeasonModal extends FormBase {
             this.setState({
                 'created': true,
                 'redirectUrl': redirectUrl,
+                'modal': false,
             });
 
         }, error => {
@@ -77,12 +78,21 @@ class CreateSeasonModal extends FormBase {
     }
 
     handleStartDateChange = (moment) => {
+        if (!moment._isAMomentObject){
+            console.warn("invalid date format for start date");
+            return;
+        };
         this.setState({
             "start_date": moment.format("YYYY-MM-DD"),
         });
     };
 
     handleEndDateChange = (moment) => {
+        if (!moment._isAMomentObject){
+            console.warn("invalid date format for end date");
+            return;
+        };
+
         this.setState({
             "end_date": moment.format("YYYY-MM-DD"),
         });
