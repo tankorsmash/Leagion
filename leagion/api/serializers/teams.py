@@ -22,6 +22,17 @@ class ShallowSeasonSerializer(serializers.ModelSerializer):
             'id', 'pretty_date', 'league'
         )
 
+class ShallowMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+
+        fields = (
+            'id', 'match_datetime', 'location', 'season', 'duration_seconds',
+            'home_team', 'home_points', 'away_team', 'away_points', 'status',
+            'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
+            'pretty_time', 'home_roster', 'away_roster'
+        )
+
 class TeamSerializer(serializers.ModelSerializer):
     matches = serializers.SerializerMethodField('get_ordered_matches')
     players = UserSerializer(many=True)
@@ -39,5 +50,5 @@ class TeamSerializer(serializers.ModelSerializer):
             Q(away_team=obj)
         ).order_by('match_datetime')
 
-        serializer = MatchSerializer(matches, many=True)
+        serializer = ShallowMatchSerializer(matches, many=True)
         return serializer.data

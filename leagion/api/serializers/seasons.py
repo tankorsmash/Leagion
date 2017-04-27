@@ -12,13 +12,14 @@ class SeasonSerializer(serializers.ModelSerializer):
         )
 
     teams = TeamSerializer(many=True)
-    matches = serializers.SerializerMethodField('get_ordered_matches')
-
-    def get_ordered_matches(self, obj):
-        matches = Match.objects.filter(season=obj).order_by('match_datetime')
-
-        serializer = MatchSerializer(matches, many=True)
-        return serializer.data
+    # 
+    # matches = serializers.SerializerMethodField('get_ordered_matches')
+    #
+    # def get_ordered_matches(self, obj):
+    #     matches = Match.objects.filter(season=obj).order_by('match_datetime')
+    #
+    #     serializer = MatchSerializer(matches, many=True)
+    #     return serializer.data
 
 
 class MySeasonSerializer(SeasonSerializer):
