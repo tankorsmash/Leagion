@@ -137,6 +137,7 @@ class LeagueCreateForm extends FormBase {
             }
         }).then(data => {
             console.log("success: created League", data);
+            toastr.success("League Created!");
             let redirectUrl = adminUrls.leagues.index+'/'+data.id;
             this.setState({
                 'created': true,

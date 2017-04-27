@@ -71,6 +71,7 @@ class CreateSeasonModal extends FormBase {
                 'modal': false,
             });
 
+            toastr.success("Season Created!");
             //regenerate season grid in league detail
             if (this.props.triggerRefreshOnGrid !== undefined) {
                 this.props.triggerRefreshOnGrid();
@@ -122,10 +123,10 @@ class CreateSeasonModal extends FormBase {
                                 <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
 
                                 <Label for="">Start date:</Label>
-                                <Datetime input={false} dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
+                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
 
                                 <Label for="name">End date:</Label>
-                                <Datetime input={false} dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
+                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
