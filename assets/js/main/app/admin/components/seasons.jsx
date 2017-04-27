@@ -35,15 +35,18 @@ class Season extends React.Component {
     }
 }
 
-class SeasonCreateForm extends FormBase {
+class CreateSeasonModal extends FormBase {
     constructor(props) {
         super(props);
         this.state = {
+            'modal': false,
             'name': '',
             'start_date': '',
             'end_date': '',
             'created': false,
         };
+
+        this.toggle = this.toggle.bind(this);
     }
 
     handleSubmit = (e) => {
@@ -55,7 +58,8 @@ class SeasonCreateForm extends FormBase {
             data: {
                 name: this.state.name,
                 start_date: this.state.start_date,
-                end_Date: this.state.end_Date,
+                end_date: this.state.end_date,
+                league: this.props.leagueId,
             }
         }).then(data => {
             console.log("success: created season", data);
@@ -71,59 +75,40 @@ class SeasonCreateForm extends FormBase {
         });
     }
 
+    toggle() {
+        this.setState({
+            modal: !this.state.modal
+        });
+    }
+
     render() {
         return (
-            <Form onSubmit={this.handleSubmit} >
-                <FormGroup>
-                    <Label for="name">League name:</Label>
-                    <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
+            <div>
+                <Button onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                    <ModalHeader toggle={this.toggle}>Add a season</ModalHeader>
+                    <ModalBody>
+                        <Form onSubmit={this.handleSubmit} >
+                            <FormGroup>
+                                <Label for="name">League name:</Label>
+                                <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
 
-                    <Label for="">Start date:</Label>
-                    <Input onChange={this.handleInputChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="Jan 8th 2016"/>
+                                <Label for="">Start date:</Label>
+                                <Input onChange={this.handleInputChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
 
-                    <Label for="name">End date:</Label>
-                    <Input onChange={this.handleInputChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="Aug 21st 2018"/>
-
-                    <Button type="submit" >Create!</Button>
-                </FormGroup>
-            </Form>
+                                <Label for="name">End date:</Label>
+                                <Input onChange={this.handleInputChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
+                            </FormGroup>
+                        </Form>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.handleSubmit}>Create!</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
         );
-    };
-};
-
-class CreateSeasonModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      modal: false
-    };
-
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
-    this.setState({
-      modal: !this.state.modal
-    });
-  }
-
-  render() {
-    return (
-      <div>
-        <Button onClick={this.toggle}>{this.props.buttonLabel}</Button>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-          <ModalHeader toggle={this.toggle}>Add a season</ModalHeader>
-          <ModalBody>
-              <SeasonCreateForm/>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
-  }
+    }
 }
 
 class CreateSeasonPlaceholder extends React.Component {
@@ -136,7 +121,7 @@ class CreateSeasonPlaceholder extends React.Component {
                         Create a season
                     </CardTitle>
                     <CardText>Add a season to the league.</CardText>
-                    <CreateSeasonModal buttonLabel="Create"/>
+                    <CreateSeasonModal leagueId={this.props.leagueId} buttonLabel="Create"/>
                 </CardBlock>
             </Card>
         );
@@ -170,7 +155,7 @@ class SeasonsList extends React.Component {
             let seasons = this.state.seasons.map((season)=>{
                 return <Season season={season} key={season.id} />
             });
-            seasons.push(<CreateSeasonPlaceholder/>);
+            seasons.push(<CreateSeasonPlaceholder leagueId={this.props.leagueId} />);
 
             content = [];
             for (let i = 0; i <= seasons.length; i+=3) {
@@ -190,7 +175,7 @@ class SeasonsList extends React.Component {
 class Seasons extends React.Component {
     render() {
         return (
-            <SeasonsList/>
+            <SeasonsList leagueId={this.props.leagueId} />
         );
     }
 }
