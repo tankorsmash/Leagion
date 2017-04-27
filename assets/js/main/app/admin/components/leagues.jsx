@@ -1,4 +1,5 @@
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
+import {browserHistory} from 'react-router';
 import {
     DropdownItem, DropdownMenu, NavLink,
     Row, Col, FormGroup, Form, Button, Label, Input
@@ -9,8 +10,12 @@ import Spinner from 'react-spinkit';
 import ajax from 'common/ajax';
 import reverse from 'common/reverse';
 
+import adminUrls from 'main/app/admin/urls';
+
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
+import {FormBase} from 'components/forms';
+
 
 class TeamRow extends React.Component {
     render() {
@@ -109,13 +114,16 @@ class Leagues extends React.Component {
     };
 };
 
-class LeagueCreateForm extends React.Component {
+class LeagueCreateForm extends FormBase {
     constructor(props) {
         super(props);
-        this.state = {'name': ''};
+        this.state = {
+            'name': '',
+            'created': false,
+        };
     }
 
-    onSubmit = (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
 
         ajax({
@@ -124,26 +132,32 @@ class LeagueCreateForm extends React.Component {
             data: {
                 name: this.state.name,
             }
-        });
-    }
+        }).then(data => {
+            console.log("success: created League", data);
+            let redirectUrl = adminUrls.leagues.index+'/'+data.id;
+            this.setState({
+                'created': true,
+                'redirectUrl': redirectUrl,
+            });
 
-    onChange = (e) => {
-        const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        this.setState({
-            [name]: value
+        }, error => {
+            console.log("failed:", data);
+            this.setState({'created': false});
         });
     }
 
     render() {
         return (
-            <Form onSubmit={this.onSubmit} >
+            <Form onSubmit={this.handleSubmit} >
                 <FormGroup>
                     <Label for="name">League name:</Label>
-                    <Input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" placeholder="Eastern Conference"/>
+                    <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="Eastern Conference"/>
                 </FormGroup>
                 <Button type="submit" >Create!</Button>
+
+                { this.state.created &&
+                            (<Redirect to={this.state.redirectUrl} />)
+                }
             </Form>
         );
     };
