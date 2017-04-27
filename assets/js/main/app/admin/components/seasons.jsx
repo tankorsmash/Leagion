@@ -172,7 +172,7 @@ class SeasonsList extends React.Component {
     }
 
     updateDataset = () => {
-        let url = reverse('api-season-list');
+        let url = reverse('api-league-season-list', {"league_id": this.props.leagueId});
 
         ajax({
             url: url,

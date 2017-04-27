@@ -5,6 +5,7 @@
 var viewnames = {
     "api-league-detail": "/api/league/<league_id>/",
     "api-league-list": "/api/league/",
+    "api-league-season-list": "/api/league/<league_id>/seasons/",
     "api-match-detail": "/api/match/<match_id>/",
     "api-match-list": "/api/match/",
     "api-my-league-detail": "/api/me/league/<league_id>/",
@@ -35,7 +36,6 @@ function reverse(urlname, kwargs) {
     kwargs = kwargs || {};
 
     if (url === undefined) {
-        debugger;
         throw 'reverse failed. Incorrect urlname: ' + urlname;
     }
 
@@ -44,7 +44,6 @@ function reverse(urlname, kwargs) {
         url = url.replace('<' + kwarg + '>', value);
     }
     if (url.includes('<')) {
-        debugger;
         throw 'reverse failed. Missing kwargs. urlname: ' + urlname + '. kwargs: ' + JSON.stringify(kwargs) + '. url: ' + url;
     }
     return url;
