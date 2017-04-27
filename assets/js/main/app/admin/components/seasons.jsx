@@ -8,6 +8,7 @@ import {
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
+import Datetime from 'react-datetime';
 
 import {FormBase} from 'components/forms';
 
@@ -75,6 +76,18 @@ class CreateSeasonModal extends FormBase {
         });
     }
 
+    handleStartDateChange = (moment) => {
+        this.setState({
+            "start_date": moment.format("YYYY-MM-DD"),
+        });
+    };
+
+    handleEndDateChange = (moment) => {
+        this.setState({
+            "end_date": moment.format("YYYY-MM-DD"),
+        });
+    };
+
     toggle() {
         this.setState({
             modal: !this.state.modal
@@ -94,10 +107,10 @@ class CreateSeasonModal extends FormBase {
                                 <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
 
                                 <Label for="">Start date:</Label>
-                                <Input onChange={this.handleInputChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
+                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
 
                                 <Label for="name">End date:</Label>
-                                <Input onChange={this.handleInputChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
+                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
