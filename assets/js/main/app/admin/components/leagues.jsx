@@ -140,10 +140,10 @@ class LeagueCreateForm extends React.Component {
         return (
             <Form onSubmit={this.onSubmit} >
                 <FormGroup>
-                    <Label for="name">Name</Label>
+                    <Label for="name">League name:</Label>
                     <Input onChange={this.onChange} value={this.state.name} type="text" name="name" id="name" placeholder="Eastern Conference"/>
                 </FormGroup>
-                <Button type="submit" >Submit</Button>
+                <Button type="submit" >Create!</Button>
             </Form>
         );
     };
@@ -151,10 +151,10 @@ class LeagueCreateForm extends React.Component {
 
 class LeaguesCreate extends React.Component {
     render() {
-        buildPageTitle("Leagues Create");
+        buildPageTitle("Create League");
         return (
             <div>
-                <h3>Leagues Create</h3>
+                <h3>Create a league</h3>
                 <LeagueCreateForm/>
             </div>
         );
