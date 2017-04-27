@@ -10,9 +10,10 @@ class SeasonSerializer(serializers.ModelSerializer):
             'id', 'start_date', 'end_date', 'league', 'teams',
 			'pretty_date', 'pretty_name', 'matches'
         )
+        read_only_fields = ("teams", "matches")
 
-    teams = TeamSerializer(many=True)
-    # 
+    teams = TeamSerializer(many=True, read_only=True)
+
     # matches = serializers.SerializerMethodField('get_ordered_matches')
     #
     # def get_ordered_matches(self, obj):
