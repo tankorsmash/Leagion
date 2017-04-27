@@ -17,6 +17,8 @@ import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
 import {FormBase} from 'components/forms';
 
+import {Seasons, SeasonsCreate} from 'main/app/admin/components/seasons';
+
 
 class TeamRow extends React.Component {
     render() {
@@ -221,9 +223,8 @@ class LeagueDetail extends React.Component {
                 <p>As a league manager, you're able to view all teams and players.
                     You'll be able to create and edit teams,
                     assign coaches and team managers, and set up schedules.</p>
-                <p className="lead">
-                    <Button color="primary">Learn More</Button>
-                </p>
+
+                <Seasons/>
             </div>
         );
     };

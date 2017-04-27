@@ -1,7 +1,8 @@
 import {Link} from 'react-router-dom';
 import {
     DropdownItem, DropdownMenu, NavLink, Jumbotron,
-    Row, Col, Card
+    Row, Col, Card, CardImg, CardText, CardBlock,
+  CardTitle, CardSubtitle, Button
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
@@ -15,9 +16,17 @@ class Season extends React.Component {
     render() {
         let season = this.props.season;
         return (
-            <div>
-                Season name: { season.pretty_name }
-            </div>
+            <Card>
+                <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+                <CardBlock>
+                    <CardTitle>
+                        Season name: { season.pretty_name }
+                    </CardTitle>
+                    <CardSubtitle>Card subtitle</CardSubtitle>
+                    <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+                    <Button>Button</Button>
+                </CardBlock>
+            </Card>
         );
     }
 }
@@ -46,9 +55,18 @@ class SeasonsList extends React.Component {
         if (isLoaded == false) {
             content = <Spinner spinnerName='three-bounce' />;
         } else {
-            content = this.state.seasons.map((season)=>{
+            let seasons = this.state.seasons.map((season)=>{
                 return <Season season={season} key={season.id} />
             });
+
+            content = [];
+            for (let i = 0; i <= seasons.length; i+=3) {
+                content.push(<Row>
+                    <Col key={i} xs="4"> {seasons[i]} </Col>
+                    <Col key={i+1} xs="4"> {seasons[i+1]} </Col>
+                    <Col key={i+2} xs="4"> {seasons[i+2]} </Col>
+                </Row>);
+            };
         }
 
         return <div>{content}</div>;
