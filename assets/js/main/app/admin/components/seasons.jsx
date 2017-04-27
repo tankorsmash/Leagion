@@ -9,6 +9,8 @@ import {
 
 import Spinner from 'react-spinkit';
 
+import {FormBase} from 'components/forms';
+
 import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
@@ -33,6 +35,62 @@ class Season extends React.Component {
     }
 }
 
+class SeasonCreateForm extends FormBase {
+    constructor(props) {
+        super(props);
+        this.state = {
+            'name': '',
+            'start_date': '',
+            'end_date': '',
+            'created': false,
+        };
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        ajax({
+            url:reverse('api-season-list'),
+            method: 'POST',
+            data: {
+                name: this.state.name,
+                start_date: this.state.start_date,
+                end_Date: this.state.end_Date,
+            }
+        }).then(data => {
+            console.log("success: created season", data);
+            let redirectUrl = this.props.redirectUrl; //adminUrls.seasons.index+'/'+data.id;
+            this.setState({
+                'created': true,
+                'redirectUrl': redirectUrl,
+            });
+
+        }, error => {
+            console.log("failed:", error);
+            this.setState({'created': false});
+        });
+    }
+
+    render() {
+        return (
+            <Form onSubmit={this.handleSubmit} >
+                <FormGroup>
+                    <Label for="name">League name:</Label>
+                    <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
+
+                    <Label for="">Start date:</Label>
+                    <Input onChange={this.handleInputChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="Jan 8th 2016"/>
+
+                    <Label for="name">End date:</Label>
+                    <Input onChange={this.handleInputChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="Aug 21st 2018"/>
+
+                    <Button type="submit" >Create!</Button>
+                </FormGroup>
+            </Form>
+        );
+    };
+};
+
 class CreateSeasonModal extends React.Component {
   constructor(props) {
     super(props);
@@ -56,16 +114,7 @@ class CreateSeasonModal extends React.Component {
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Add a season</ModalHeader>
           <ModalBody>
-              <Form>
-                <FormGroup>
-                    <Label for="name">Season name:</Label>
-                    <Input type="text" name="name" id="name" placeholder="2016 Season"/>
-                    <Label for="">Start date:</Label>
-                    <Input type="date" name="start_date" id="start_date" placeholder="Jan 8th 2016"/>
-                    <Label for="name">End date:</Label>
-                    <Input type="date" name="end_date" id="end_date" placeholder="Aug 21st 2018"/>
-                </FormGroup>
-                </Form>
+              <SeasonCreateForm/>
           </ModalBody>
           <ModalFooter>
             <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
