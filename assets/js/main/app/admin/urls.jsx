@@ -11,7 +11,7 @@ module.exports = {
 	leagues: {
 		index: leaguesUrl,
 		create: `${leaguesUrl}/create`,
-		detail: `${leaguesUrl}/:leagueId?`,
+		detail: `${leaguesUrl}/:leagueId`,
 	},
 	seasons: {
 		index: seasonsUrl,

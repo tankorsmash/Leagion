@@ -2,7 +2,8 @@ import {Link, Redirect} from 'react-router-dom';
 import {browserHistory} from 'react-router';
 import {
     DropdownItem, DropdownMenu, NavLink,
-    Row, Col, FormGroup, Form, Button, Label, Input
+    Row, Col, FormGroup, Form, Button, Label, Input,
+    Jumbotron,
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
@@ -109,7 +110,7 @@ class Leagues extends React.Component {
     render() {
         buildPageTitle("Leagues");
         return (
-            <LeaguesList/>
+            <LeaguesList  />
         );
     };
 };
@@ -175,7 +176,61 @@ class LeaguesCreate extends React.Component {
     };
 };
 
+class LeagueDetail extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            leagueId: this.props.match.params.leagueId,
+            league: []
+        };
+    }
+
+    componentDidMount() {
+        this.updateDataset();
+    }
+
+    /* without componentWillReceiveProps, routing back to this component, like league/1 to league/2, the data wouldn't update */
+    componentWillReceiveProps(nextProps) {
+        if (this.props.match.params.leagueId != nextProps.match.params.leagueId) {
+            this.updateDataset();
+        };
+    };
+
+
+    updateDataset() {
+        if (this.props.match.params.leagueId) {
+            console.log("making request");
+            let url = reverse('api-league-detail', {"league_id" : this.props.match.params.leagueId});
+
+            ajax({
+                url: url,
+            }).then(data => {
+                console.log("received data:", data);
+                this.setState({league: data});
+            });
+        };
+    }
+    render() {
+        buildPageTitle("League Detail");
+        return (
+            <div>
+                <h1 className="display-3">{ this.state.league.name }</h1>
+                <p className="lead">League overview</p>
+                <hr className="my-2" />
+                <p>As a league manager, you're able to view all teams and players.
+                    You'll be able to create and edit teams,
+                    assign coaches and team managers, and set up schedules.</p>
+                <p className="lead">
+                    <Button color="primary">Learn More</Button>
+                </p>
+            </div>
+        );
+    };
+};
+
 module.exports = {
+    LeagueDetail: LeagueDetail,
     Leagues: Leagues,
     LeaguesCreate: LeaguesCreate
 };
