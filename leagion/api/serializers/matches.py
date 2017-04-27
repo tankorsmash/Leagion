@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from leagion.models import Match, Team
+from leagion.models import Match, Team, Location
 from leagion.api.serializers.rosters import RosterSerializer
 
 
@@ -12,7 +12,7 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
 
 class ShallowLocationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Team
+        model = Location
         fields = (
             'id', 'name'
         )
