@@ -163,6 +163,8 @@ class NavContextFilter extends React.Component {
     render() {
         return (
             <Nav navbar>
+                <Link className="nav-link" to={adminUrls.index}> Dashboard </Link>
+
                 {/* Leagues */}
                 <NavDropdown
                     key="league-dropdown"
