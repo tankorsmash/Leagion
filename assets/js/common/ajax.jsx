@@ -7,7 +7,7 @@
 import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
-let ajax = function({data=null, method='GET', url=null}) {
+let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
 	if (!url) {
 		throw('you need a url to make an ajax call');
 	}
@@ -23,10 +23,13 @@ let ajax = function({data=null, method='GET', url=null}) {
 		body: body,
 		credentials: "same-origin",
 		headers: {
-			"X-CSRFToken": getCookie("csrftoken"),
 			"Accept": "application/json",
 			"Content-Type": "application/json"
 		},
+	}
+
+	if (requireLogin) {
+		info.headers.Authorization = `Token ${localStorage.token}`;
 	}
 
 	return new Promise(

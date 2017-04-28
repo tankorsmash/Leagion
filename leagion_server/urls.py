@@ -50,8 +50,8 @@ urlpatterns = [
     #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
     url(r'^man/', admin.site.urls),
 
-    url(r'^main.*/$', views.Main.as_view(), name="main"),
-
     url(r'^api/', include('leagion.api.urls')),
+
+    url(r'^.*$', views.Main.as_view(), name="main"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

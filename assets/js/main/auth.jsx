@@ -1,6 +1,6 @@
 let auth = {
-    login: function() {
-        localStorage.logged_in = true;
+    login: function(token) {
+        localStorage.token = token;
     },
 
     logout: function() {
@@ -8,7 +8,7 @@ let auth = {
     },
 
     loggedIn: function() {
-        return !!localStorage.logged_in;
+        return !!localStorage.token;
     }
 }
 
