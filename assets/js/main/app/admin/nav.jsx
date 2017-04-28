@@ -22,7 +22,7 @@ class ContextDropdownMenu extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.props.filterByVal != nextProps.filterByVal) {
+        if (true) { //TODO: check nextProps against this.props to see if its actually different
             this.updateDataset();
         };
     };
@@ -35,17 +35,6 @@ class ContextDropdownMenu extends React.Component {
         ajax({
             url: reverse(this.props.datasourceUrlName),
         }).then(data => {
-            let filterByVal = this.props.filterByVal;
-            let filterByAttr = this.props.filterByAttr;
-
-            //filter down dataset if {props.filterByVal} is provided
-            if (typeof filterByVal != "undefined") {
-                let filterDatasetFunc = (obj) => {
-                    return obj[filterByAttr] == filterByVal;
-                };
-                data = data.filter(filterDatasetFunc);
-            }
-
             this.setState({dataset: data});
         });
 
@@ -60,23 +49,15 @@ class ContextDropdownMenu extends React.Component {
                     </Link>
                 </DropdownItem>
                 <DropdownItem divider/>
+
                 { this.state.dataset.map((datum, i)=>{
-                    let updateFunc = this.props.updateContextFunc || DO_NOTHING;
                     let detailUrl = `${this.props.detailUrlRoot}/${datum["id"]}`
                     return (
                         <span key={i}>
-                            <DropdownItem header>
-                                { datum[this.props.nameAttr || "name"] }
-                            </DropdownItem>
                             <DropdownItem>
                                 <Link to={detailUrl} className="nav-link">
-                                    View
+                                { datum[this.props.nameAttr || "name"] }
                                 </Link>
-                            </DropdownItem>
-                            <DropdownItem>
-                                <NavLink onClick={()=>{updateFunc(datum)}}>
-                                    Filter by
-                                </NavLink>
                             </DropdownItem>
                         </span>
                     );
@@ -140,26 +121,6 @@ class NavContextFilter extends React.Component {
         });
     }
 
-    updateLeagueId = (league) => {
-        this.setState({ leagueId: league.id });
-        localStorage.leagueId = league.id;
-    }
-
-    updateSeasonId = (season) => {
-        this.setState({ seasonId: season.id });
-        localStorage.seasonId = season.id;
-    }
-
-    updateTeamId = (team) => {
-        this.setState({ teamId: team.id });
-        localStorage.teamId = team.id;
-    }
-
-    updateMatchId = (match) => {
-        this.setState({ matchId: match.id });
-        localStorage.matchId = match.id;
-    }
-
     render() {
         return (
             <Nav navbar>
@@ -174,7 +135,6 @@ class NavContextFilter extends React.Component {
                     <DropdownToggle nav >Leagues</DropdownToggle>
 
                     <ContextDropdownMenu
-                        updateContextFunc={this.updateLeagueId}
                         datasourceUrlName="api-league-list"
                         detailUrlRoot={adminUrls.leagues.index}
                     />
@@ -189,7 +149,6 @@ class NavContextFilter extends React.Component {
                     <DropdownToggle nav >Seasons</DropdownToggle>
 
                     <ContextDropdownMenu
-                        updateContextFunc={this.updateSeasonId}
                         datasourceUrlName="api-season-list"
                         detailUrlRoot={adminUrls.seasons.index}
                         nameAttr="pretty_name"
@@ -198,7 +157,6 @@ class NavContextFilter extends React.Component {
 
                 {/* Teams */}
                 <NavDropdown
-                    className={this.state.seasonId == NOT_LOADED ? "hidden-xs-up" : ""}
                     key="team-dropdown"
                     isOpen={this.state.teamDropdownOpen}
                     toggle={this.toggleTeamDropdown}>
@@ -206,18 +164,13 @@ class NavContextFilter extends React.Component {
                     <DropdownToggle nav >Teams</DropdownToggle>
 
                     <ContextDropdownMenu
-                        filterByAttr="season"
-                        filterByVal={this.state.seasonId}
-                        updateContextFunc={this.updateTeamId}
                         datasourceUrlName="api-team-list"
                         detailUrlRoot={adminUrls.teams.index}
-
                     />
                 </NavDropdown>
 
                 {/* Matches */}
                 <NavDropdown
-                    className={this.state.teamId == NOT_LOADED ? "hidden-xs-up" : ""}
                     key="match-dropdown"
                     isOpen={this.state.matchDropdownOpen}
                     toggle={this.toggleMatchDropdown}>
@@ -225,9 +178,6 @@ class NavContextFilter extends React.Component {
                     <DropdownToggle nav >Matches</DropdownToggle>
 
                     <ContextDropdownMenu
-                        filterByAttr="away_team"
-                        filterByVal={this.state.teamId}
-                        updateContextFunc={this.updateMatchId}
                         nameAttr="pretty_name"
                         datasourceUrlName="api-match-list"
                         detailUrlRoot={adminUrls.matches.index}
