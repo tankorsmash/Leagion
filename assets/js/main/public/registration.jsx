@@ -12,10 +12,11 @@ class RegisterBase extends FormBase {
 
         ajax({
             url: reverse(this.url),
+            requireLogin: false,
 			method: 'POST',
             data: this.state,
         }).then(data => {
-            auth.login();
+            auth.login(data.key);
             this.forceUpdate();
         }).catch(data => {
             toastr.error(data.non_field_errors);
