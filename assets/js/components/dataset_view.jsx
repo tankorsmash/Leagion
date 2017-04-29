@@ -17,6 +17,10 @@ export class DatasetView extends React.Component {
         return {};
     }
 
+    getIsLoaded() {
+        return this.state[this.datasetStateAttr] !== NOT_LOADED;
+    }
+
     constructor(props){
         super(props);
         this.state = { [this.datasetStateAttr]: NOT_LOADED };
