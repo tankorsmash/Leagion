@@ -8,59 +8,59 @@ import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
 let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
-	if (!url) {
-		throw('you need a url to make an ajax call');
-	}
+    if (!url) {
+        throw('you need a url to make an ajax call');
+    }
 
-	if (url.includes("undefined")) {
-		console.warn(`'undefined' found in URL, potential for unset variables upstream in '${url}'`)
-	}
+    if (url.includes("undefined")) {
+        console.warn(`'undefined' found in URL, potential for unset variables upstream in '${url}'`)
+    }
 
-	let body = null;
+    let body = null;
 
-	if (data) {
-		body = JSON.stringify(data);
-	}
+    if (data) {
+        body = JSON.stringify(data);
+    }
 
-	let info = {
-		method: method,
-		body: body,
-		credentials: "same-origin",
-		headers: {
-			"Accept": "application/json",
-			"Content-Type": "application/json"
-		},
-	}
+    let info = {
+        method: method,
+        body: body,
+        credentials: "same-origin",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+    }
 
-	if (requireLogin) {
-		info.headers.Authorization = `Token ${localStorage.token}`;
-	}
+    if (requireLogin) {
+        info.headers.Authorization = `Token ${localStorage.token}`;
+    }
 
-	return new Promise(
-		// The resolver function is called with the ability to resolve or
-		// reject the promise
-		(resolve, reject) => {
-			let error = false;
+    return new Promise(
+        // The resolver function is called with the ability to resolve or
+        // reject the promise
+        (resolve, reject) => {
+            let error = false;
 
-			fetch(url, info)
-				.then(r => {
-					const good_statuses = [200, 201];
-					if (good_statuses.includes(r.status) == false) {
-						error = true;
-					}
+            fetch(url, info)
+                .then(r => {
+                    const good_statuses = [200, 201];
+                    if (good_statuses.includes(r.status) == false) {
+                        error = true;
+                    }
 
-					return r.json()
-				})
-				.then(data => {
-					if (error) {
-						reject(data);
-					} else {
-						resolve(data);
+                    return r.json()
+                })
+                .then(data => {
+                    if (error) {
+                        reject(data);
+                    } else {
+                        resolve(data);
 
-					}
-				});
-		}
-	);
+                    }
+                });
+        }
+    );
 
 }
 
