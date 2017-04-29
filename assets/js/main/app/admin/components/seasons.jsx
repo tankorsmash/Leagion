@@ -233,7 +233,17 @@ class SeasonsCreate extends React.Component {
     };
 };
 
+class SeasonDetail extends React.Component {
+    render() {
+        buildPageTitle("Seasons Detail");
+        return (
+            <div> Seasons Detail </div>
+        );
+    };
+};
+
 module.exports = {
     Seasons: Seasons,
+    SeasonDetail: SeasonDetail,
     SeasonsCreate: SeasonsCreate
 };

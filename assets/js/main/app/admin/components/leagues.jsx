@@ -16,6 +16,7 @@ import adminUrls from 'main/app/admin/urls';
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
 import {FormBase} from 'components/forms';
+import {DatasetView} from 'components/dataset_view';
 
 import {Seasons, SeasonsCreate} from 'main/app/admin/components/seasons';
 
@@ -70,41 +71,32 @@ class LeagueRow extends React.Component {
 }
 
 
-class LeaguesList extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = { leagues: NOT_LOADED };
+class LeaguesList extends DatasetView {
+    get datasetStateAttr() {
+        return "leagues";
     }
 
-    componentDidMount() {
-        let url = reverse('api-league-list');
+    get datasetViewName() {
+        return "api-league-list";
+    }
 
-        ajax({
-            url: url,
-        }).then(data => {
-            this.setState({leagues: data});
-        });
+    get datasetViewKwargs() {
+        return {};
     }
 
     render() {
         let isLoaded = this.state.leagues !== NOT_LOADED;
 
-        let content;
         if (isLoaded == false) {
-            content = <Spinner spinnerName='three-bounce' />;
+            return (<Spinner spinnerName='three-bounce' />);
         } else {
-            content = this.state.leagues.map((league)=>{
+            let leagueRows = this.state.leagues.map((league)=>{
                 return (
                     <LeagueRow league={league} key={league.id} />
                 );
             });
+            return (<div> {leagueRows} </div>);
         }
-
-        return (
-            <div>
-                {content}
-            </div>
-        );
     }
 }
 

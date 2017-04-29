@@ -33,7 +33,7 @@ class Admin extends React.Component {
                                 <Route path={adminUrls.leagues.index}  component={Leagues} />
 
                                 <Route exact path={adminUrls.seasons.create}  component={SeasonsCreate} />
-                                <Route path={adminUrls.seasons.detail}  component={Seasons} />
+                                <Route exact path={adminUrls.seasons.detail}  component={Seasons} />
 
                                 <Route exact path={adminUrls.teams.create}  component={TeamsCreate} />
                                 <Route path={adminUrls.teams.detail}  component={Teams} />
