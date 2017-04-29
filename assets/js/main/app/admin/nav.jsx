@@ -15,104 +15,15 @@ import {BaseAppProfile} from 'main/app/components/nav';
 
 import {NOT_LOADED, DO_NOTHING, STOP_PROPAGATION} from 'common/constants';
 
-class ContextDropdownMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {dataset: [] };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (true) { //TODO: check nextProps against this.props to see if its actually different
-            this.updateDataset();
-        };
-    };
-
-    componentDidMount() {
-        this.updateDataset();
-    }
-
-    updateDataset() {
-        ajax({
-            url: reverse(this.props.datasourceUrlName),
-        }).then(data => {
-            this.setState({dataset: data});
-        });
-
-    };
-
-    render() {
-        return (
-            <DropdownMenu>
-                <DropdownItem>
-                    <Link to={this.props.detailUrlRoot} className="nav-link">
-                            View All
-                    </Link>
-                </DropdownItem>
-                <DropdownItem divider/>
-
-                { this.state.dataset.map((datum, i)=>{
-                    let detailUrl = `${this.props.detailUrlRoot}/${datum["id"]}`
-                    return (
-                        <span key={i}>
-                            <DropdownItem>
-                                <Link to={detailUrl} className="nav-link">
-                                { datum[this.props.nameAttr || "name"] }
-                                </Link>
-                            </DropdownItem>
-                        </span>
-                    );
-                }) }
-            </DropdownMenu>
-        );
-    }
-}
-
-class NavContextFilter extends React.Component {
+class AdminNavItems extends React.Component {
     constructor(props) {
         super(props);
 
-        this.toggleLeagueDropdown = this.toggleLeagueDropdown.bind(this);
-        this.toggleSeasonDropdown = this.toggleSeasonDropdown.bind(this);
-        this.toggleTeamDropdown = this.toggleTeamDropdown.bind(this);
-        this.toggleMatchDropdown = this.toggleMatchDropdown.bind(this);
         this.toggleCreateDropdown = this.toggleCreateDropdown.bind(this);
 
         this.state = {
-            leagueDropdownOpen: false,
-            seasonDropdownOpen: false,
-            teamDropdownOpen: false,
-            matchDropdownOpen: false,
             createDropdownOpen: false,
-
-            leagueId: localStorage.leagueId || NOT_LOADED,
-            seasonId: localStorage.seasonId || NOT_LOADED,
-            teamId: localStorage.teamId || NOT_LOADED,
-            matchId: localStorage.matchId || NOT_LOADED,
         };
-    }
-
-    toggleLeagueDropdown() {
-        this.setState({
-            leagueDropdownOpen: !this.state.leagueDropdownOpen
-        });
-    }
-
-    toggleSeasonDropdown() {
-        this.setState({
-            seasonDropdownOpen: !this.state.seasonDropdownOpen
-        });
-    }
-
-    toggleTeamDropdown() {
-        this.setState({
-            teamDropdownOpen: !this.state.teamDropdownOpen
-        });
-    }
-
-    toggleMatchDropdown() {
-        this.setState({
-            matchDropdownOpen: !this.state.matchDropdownOpen
-        });
     }
 
     toggleCreateDropdown() {
@@ -127,62 +38,24 @@ class NavContextFilter extends React.Component {
                 <Link className="nav-link" to={adminUrls.index}> Dashboard </Link>
 
                 {/* Leagues */}
-                <NavDropdown
-                    key="league-dropdown"
-                    isOpen={this.state.leagueDropdownOpen}
-                    toggle={this.toggleLeagueDropdown}>
-
-                    <DropdownToggle nav >Leagues</DropdownToggle>
-
-                    <ContextDropdownMenu
-                        datasourceUrlName="api-league-list"
-                        detailUrlRoot={adminUrls.leagues.index}
-                    />
-                </NavDropdown>
+                <Link to={adminUrls.leagues.index} className="nav-link">
+                    Leagues
+                </Link>
 
                 {/* Seasons */}
-                <NavDropdown
-                    key="season-dropdown"
-                    isOpen={this.state.seasonDropdownOpen}
-                    toggle={this.toggleSeasonDropdown}>
-
-                    <DropdownToggle nav >Seasons</DropdownToggle>
-
-                    <ContextDropdownMenu
-                        datasourceUrlName="api-season-list"
-                        detailUrlRoot={adminUrls.seasons.index}
-                        nameAttr="pretty_name"
-                    />
-                </NavDropdown>
+                <Link to={adminUrls.seasons.index} className="nav-link">
+                    Seasons
+                </Link>
 
                 {/* Teams */}
-                <NavDropdown
-                    key="team-dropdown"
-                    isOpen={this.state.teamDropdownOpen}
-                    toggle={this.toggleTeamDropdown}>
-
-                    <DropdownToggle nav >Teams</DropdownToggle>
-
-                    <ContextDropdownMenu
-                        datasourceUrlName="api-team-list"
-                        detailUrlRoot={adminUrls.teams.index}
-                    />
-                </NavDropdown>
+                <Link to={adminUrls.teams.index} className="nav-link">
+                    Teams
+                </Link>
 
                 {/* Matches */}
-                <NavDropdown
-                    key="match-dropdown"
-                    isOpen={this.state.matchDropdownOpen}
-                    toggle={this.toggleMatchDropdown}>
-
-                    <DropdownToggle nav >Matches</DropdownToggle>
-
-                    <ContextDropdownMenu
-                        nameAttr="pretty_name"
-                        datasourceUrlName="api-match-list"
-                        detailUrlRoot={adminUrls.matches.index}
-                    />
-                </NavDropdown>
+                <Link to={adminUrls.matches.index} className="nav-link">
+                    Matches
+                </Link>
 
                 {/* Create */}
                 <NavDropdown
@@ -216,23 +89,12 @@ class NavContextFilter extends React.Component {
     }
 }
 
-class AdminItems extends React.Component {
-    render() {
-        //TODO: make NavContextFilter not need the toplevel <Nav> inside it. I tried, but if the NavDropdowns arent the first child of Nav, the BS4 styling wont work
-        return (
-            <div>
-                <NavContextFilter />
-            </div>
-        )
-    }
-}
-
 class AdminProfile extends BaseAppProfile {
 	items = [LogoutButton]
 }
 
 class AdminNavbar extends Appbar {
-	itemComponent = AdminItems;
+	itemComponent = AdminNavItems;
 	profileComponent = AdminProfile;
 }
 
