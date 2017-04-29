@@ -85,7 +85,7 @@ class LeaguesList extends DatasetView {
     }
 
     render() {
-        let isLoaded = this.state.leagues !== NOT_LOADED;
+        let isLoaded = this.getIsLoaded();
 
         if (isLoaded == false) {
             return (<Spinner spinnerName='three-bounce' />);
