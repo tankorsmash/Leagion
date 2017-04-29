@@ -12,6 +12,10 @@ let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
 		throw('you need a url to make an ajax call');
 	}
 
+	if (url.includes("undefined")) {
+		console.warn(`'undefined' found in URL, potential for unset variables upstream in '${url}'`)
+	}
+
 	let body = null;
 
 	if (data) {
@@ -40,7 +44,8 @@ let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
 
 			fetch(url, info)
 				.then(r => {
-					if (r.status != 200 && r.status != 201) {
+					const good_statuses = [200, 201];
+					if (good_statuses.includes(r.status) == false) {
 						error = true;
 					}
 

@@ -178,6 +178,8 @@ class SeasonsList extends React.Component {
             url: url,
         }).then(data => {
             this.setState({seasons: data});
+        }, error => {
+            console.warn(error);
         });
     }
 
