@@ -53,7 +53,7 @@ class Base extends React.Component {
 
         return (
             <Router>
-                <Route path={`${urls.root}`} component={Main} />
+                <Route path={`/`} component={Main} />
             </Router>
         );
     }

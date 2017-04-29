@@ -31,7 +31,7 @@ class Appbar extends React.Component {
         return (
             <div>
                 <Navbar className="mb-3" light toggleable>
-                    <NavbarBrand href={urls.root}>Leagion</NavbarBrand>
+                    <NavbarBrand href='/'>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         {React.createElement(this.itemComponent, this.props)}

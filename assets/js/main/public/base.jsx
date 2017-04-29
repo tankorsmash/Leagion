@@ -24,7 +24,7 @@ class Public extends React.Component {
                         <Col>
                             <main>
                                 <Switch>
-                                    {/* <Route exact path={urls.root} component={Index} /> */}
+                                    {/* <Route exact path='/' component={Index} /> */}
                                     <Route path={publicUrls.login} component={LoginForm} />
                                     <Route path={publicUrls.register} component={RegisterForm} />
                                     <Redirect to={publicUrls.login} />
