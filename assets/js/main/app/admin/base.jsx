@@ -8,7 +8,7 @@ import adminUrls from 'main/app/admin/urls';
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
 import {LeagueDetail, Leagues, LeaguesCreate} from 'main/app/admin/components/leagues';
-import {Seasons, SeasonsCreate} from 'main/app/admin/components/seasons';
+import {Seasons, SeasonDetail, SeasonsCreate} from 'main/app/admin/components/seasons';
 import {Teams, TeamsCreate} from 'main/app/admin/components/teams';
 import {Matches, MatchesCreate} from 'main/app/admin/components/matches';
 
@@ -33,7 +33,7 @@ class Admin extends React.Component {
                                 <Route path={adminUrls.leagues.index}  component={Leagues} />
 
                                 <Route exact path={adminUrls.seasons.create}  component={SeasonsCreate} />
-                                <Route exact path={adminUrls.seasons.detail}  component={Seasons} />
+                                <Route exact path={adminUrls.seasons.detail}  component={SeasonDetail} />
 
                                 <Route exact path={adminUrls.teams.create}  component={TeamsCreate} />
                                 <Route path={adminUrls.teams.detail}  component={Teams} />

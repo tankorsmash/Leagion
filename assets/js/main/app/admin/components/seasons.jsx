@@ -16,6 +16,7 @@ import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
+import {DatasetView} from 'components/dataset_view';
 
 class Season extends React.Component {
     render() {
@@ -233,11 +234,25 @@ class SeasonsCreate extends React.Component {
     };
 };
 
-class SeasonDetail extends React.Component {
+class SeasonDetail extends DatasetView {
+    get datasetStateAttr() {
+        return "season";
+    }
+
+    get datasetViewName() {
+        return "api-season-detail";
+    }
+
+    get datasetViewKwargs() {
+        return {season_id: this.props.match.params.seasonId };
+    }
+
     render() {
         buildPageTitle("Seasons Detail");
+        let isLoaded = this.getIsLoaded();
+
         return (
-            <div> Seasons Detail </div>
+            <div> Seasons Detail : {isLoaded.toString()} </div>
         );
     };
 };
