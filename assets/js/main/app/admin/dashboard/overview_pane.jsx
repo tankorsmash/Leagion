@@ -3,32 +3,28 @@ import {
     Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
 } from 'reactstrap';
 
+import FontAwesome from 'react-fontawesome';
+
 class NotificationCard extends React.Component {
     render() {
         return (
             <Card inverse color="primary">
                 <CardHeader>
                     <Row>
-                        <div className="col-3"> <i className="fa fa-comments fa-5x"></i>
-                        </div>
-                        <div className="col-9 text-right">
-                            <div className="huge">26</div>
+                        <Col xs="3"> <FontAwesome name="comments" size="5x"/> </Col>
+                        <Col xs="9" className="text-right">
+                            <div className="display-4">26</div>
                             <div>New Comments!</div>
-                        </div>
+                        </Col>
                     </Row>
                 </CardHeader>
+
                 <a href="#">
-
                     <div className="card-footer">
-
                         <span className="float-left">View Details</span>
-
                         <span className="float-right"><i className="fa fa-arrow-circle-right"></i></span>
-
                         <div className="clearfix"></div>
-
                     </div>
-
                 </a>
             </Card>
         );
@@ -38,9 +34,11 @@ class NotificationCard extends React.Component {
 export class OverviewPane extends React.Component {
     render() {
         return (
-            <div>
+            <Row className="d-flex justify-content-around">
                 <NotificationCard/>
-            </div>
+                <NotificationCard/>
+                <NotificationCard/>
+            </Row>
         );
     }
 }
