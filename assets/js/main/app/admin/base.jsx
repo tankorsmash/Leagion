@@ -1,7 +1,7 @@
 import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 
-import {Container, Row, Col} from 'reactstrap';
+import {Row, Col} from 'reactstrap';
 
 import adminUrls from 'main/app/admin/urls';
 

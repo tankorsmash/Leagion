@@ -49,13 +49,30 @@ NotificationCard.propTypes = {
     color: PropTypes.string,
 };
 
-export class OverviewPane extends React.Component {
+class NotificationCards extends React.Component {
     render() {
         return (
             <Row className="d-flex justify-content-around align-items-stretch">
                 <Col md="3"> <NotificationCard headline="Players joined" iconName="users" color="info"/> </Col>
                 <Col md="3"> <NotificationCard headline="Matches played" iconName="star" color="success" /> </Col>
                 <Col md="3"> <NotificationCard headline="Teams registered" iconName="th-list" count={12}/> </Col>
+            </Row>
+        );
+    }
+};
+
+export class OverviewPane extends React.Component {
+    render() {
+        return (
+            <Row>
+                <Col>
+                    <Row>
+                        <Col> <NotificationCards/> </Col>
+                    </Row>
+                    <Row>
+                        <Col> <h1> Overview</h1> </Col>
+                    </Row>
+                </Col>
             </Row>
         );
     }
