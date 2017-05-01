@@ -5,6 +5,8 @@ import {Container, Row, Col} from 'reactstrap';
 
 import adminUrls from 'main/app/admin/urls';
 
+import 'font-awesome-webpack';
+
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
 import {LeagueDetail, Leagues, LeaguesCreate} from 'main/app/admin/components/leagues';
