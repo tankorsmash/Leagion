@@ -52,10 +52,10 @@ NotificationCard.propTypes = {
 export class OverviewPane extends React.Component {
     render() {
         return (
-            <Row className="d-flex justify-content-around">
-                <NotificationCard color="info"/>
-                <NotificationCard color="success" />
-                <NotificationCard count={12}/>
+            <Row className="d-flex justify-content-around align-items-stretch">
+                <Col md="3"> <NotificationCard headline="Players joined" iconName="users" color="info"/> </Col>
+                <Col md="3"> <NotificationCard headline="Matches played" iconName="star" color="success" /> </Col>
+                <Col md="3"> <NotificationCard headline="Teams registered" iconName="th-list" count={12}/> </Col>
             </Row>
         );
     }
