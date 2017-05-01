@@ -1,3 +1,4 @@
+import Spinner from 'react-spinkit';
 import {
     Container, Row, Col, Jumbotron, Button,
     Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
@@ -10,7 +11,7 @@ import adminUrls from 'main/app/admin/urls';
 
 import {buildPageTitle} from 'common/utils';
 
-import {AsyncBase} from 'components/base';
+import {DatasetView} from 'components/dataset_view';
 
 class LeagueCard extends React.Component {
     constructor(props) {
@@ -75,13 +76,30 @@ class OverviewPane extends React.Component {
     };
 };
 
-class LeaguesPane extends React.Component {
-    render() {
-        return (
-            <div> LeaguesPane </div>
-        );
+class LeaguesPane extends DatasetView {
+    get datasetStateAttr() {
+        return "leagues";
     };
-};
+
+    get datasetViewName() {
+        return "api-league-list";
+    }
+
+    render() {
+        if (this.getIsLoaded() == false){
+            return (<Spinner spinnerName='three-bounce' />);
+        } else {
+            return (
+                <div>
+                    { this.state.leagues.map((league)=>{
+                        return (<LeagueCard key={league.id} league={league} />);
+                    })}
+                </div>
+            );
+        }
+    }
+}
+
 
 class TeamsPane extends React.Component {
     render() {
@@ -152,10 +170,10 @@ class Dashboard extends React.Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col className="bg-faded" sm="3">
+                    <Col className="bg-faded" sm="2">
                         {this._renderTabs()}
                     </Col>
-                    <Col sm="9">
+                    <Col sm="10">
                         {this._renderActivePane()}
                     </Col>
                 </Row>
