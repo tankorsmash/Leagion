@@ -13,6 +13,8 @@ import {buildPageTitle} from 'common/utils';
 
 import {DatasetView} from 'components/dataset_view';
 
+import {OverviewPane} from 'main/app/admin/dashboard/overview_pane';
+
 class LeagueCard extends React.Component {
     constructor(props) {
         super(props);
@@ -66,14 +68,6 @@ class MainContent extends React.Component {
             </div>
         );
     }
-};
-
-class OverviewPane extends React.Component {
-    render() {
-        return (
-            <div> <ContentHeader/> </div>
-        );
-    };
 };
 
 class LeaguesPane extends DatasetView {
