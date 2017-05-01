@@ -20,7 +20,7 @@ import style from 'app.scss';
 class Admin extends React.Component {
     render() {
         return (
-            <div>
+            <div id="leagion-admin" >
                 <AdminNavbar {...this.props} />
                 <Switch>
                     <Route exact path={adminUrls.index}  component={Dashboard} />

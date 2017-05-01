@@ -70,7 +70,7 @@ class MainContent extends React.Component {
 class OverviewPane extends React.Component {
     render() {
         return (
-            <div> Overview </div>
+            <div> <ContentHeader/> </div>
         );
     };
 };
