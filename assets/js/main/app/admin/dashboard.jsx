@@ -99,10 +99,12 @@ class Dashboard extends React.Component {
         buildPageTitle("Admin Dashboard");
 
         return (
-            <Row>
-                <Col sm="4"><LeftBar/></Col>
-                <Col sm="8"><MainContent/></Col>
-            </Row>
+            <Container fluid>
+                <Row>
+                    <Col className="bg-faded" sm="3"><LeftBar/></Col>
+                    <Col sm="9"><MainContent/></Col>
+                </Row>
+            </Container>
         );
     }
 }

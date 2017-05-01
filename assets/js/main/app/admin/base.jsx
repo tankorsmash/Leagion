@@ -22,30 +22,24 @@ class Admin extends React.Component {
         return (
             <div>
                 <AdminNavbar {...this.props} />
-                <Container>
-                    <Row>
-                        <Col>
-                            <Switch>
-                                <Route exact path={adminUrls.index}  component={Dashboard} />
+                <Switch>
+                    <Route exact path={adminUrls.index}  component={Dashboard} />
 
-                                <Route exact path={adminUrls.leagues.create}  component={LeaguesCreate} />
-                                <Route path={adminUrls.leagues.detail}  component={LeagueDetail} />
-                                <Route path={adminUrls.leagues.index}  component={Leagues} />
+                    <Route exact path={adminUrls.leagues.create}  component={LeaguesCreate} />
+                    <Route path={adminUrls.leagues.detail}  component={LeagueDetail} />
+                    <Route path={adminUrls.leagues.index}  component={Leagues} />
 
-                                <Route exact path={adminUrls.seasons.create}  component={SeasonsCreate} />
-                                <Route exact path={adminUrls.seasons.detail}  component={SeasonDetail} />
+                    <Route exact path={adminUrls.seasons.create}  component={SeasonsCreate} />
+                    <Route exact path={adminUrls.seasons.detail}  component={SeasonDetail} />
 
-                                <Route exact path={adminUrls.teams.create}  component={TeamsCreate} />
-                                <Route path={adminUrls.teams.detail}  component={Teams} />
+                    <Route exact path={adminUrls.teams.create}  component={TeamsCreate} />
+                    <Route path={adminUrls.teams.detail}  component={Teams} />
 
-                                <Route exact path={adminUrls.matches.create}  component={MatchesCreate} />
-                                <Route path={adminUrls.matches.detail}  component={Matches} />
+                    <Route exact path={adminUrls.matches.create}  component={MatchesCreate} />
+                    <Route path={adminUrls.matches.detail}  component={Matches} />
 
-                                <Route component={FourOhFour} />
-                            </Switch>
-                        </Col>
-                    </Row>
-                </Container>
+                    <Route component={FourOhFour} />
+                </Switch>
             </div>
         );
     }

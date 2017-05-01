@@ -99,4 +99,3 @@ class AdminNavbar extends Appbar {
 }
 
 module.exports = AdminNavbar;
-
