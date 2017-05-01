@@ -1,6 +1,7 @@
 import {
     Container, Row, Col, Jumbotron, Button,
-    Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle
+    Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
+    Nav, NavLink, NavItem
 } from 'reactstrap';
 import {Link, Redirect} from 'react-router-dom';
 
@@ -35,33 +36,6 @@ class LeagueCard extends React.Component {
     }
 };
 
-class LeftBar extends AsyncBase {
-    constructor(props) {
-        super(props);
-
-        this.state['leagues'] = [];
-    };
-
-    componentDidMount() {
-        ajax({
-            url: reverse('api-league-list'),
-        }).then(data => {
-            this.setState({leagues: data});
-            this.loaded();
-        });
-    }
-
-    getComponent() {
-        return (
-            <div>
-                {this.state.leagues.map((league)=>{
-                    return (<LeagueCard key={league.id} league={league} />);
-                })}
-            </div>
-        )
-    }
-}
-
 
 class ContentHeader extends React.Component {
     render() {
@@ -93,16 +67,97 @@ class MainContent extends React.Component {
     }
 };
 
+class OverviewPane extends React.Component {
+    render() {
+        return (
+            <div> Overview </div>
+        );
+    };
+};
+
+class LeaguesPane extends React.Component {
+    render() {
+        return (
+            <div> LeaguesPane </div>
+        );
+    };
+};
+
+class TeamsPane extends React.Component {
+    render() {
+        return (
+            <div> TeamsPane </div>
+        );
+    };
+};
 
 class Dashboard extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeTabId: 'overview',
+        };
+
+        this.tabs = [{
+            'id': 'overview',
+            'name': 'Overview',
+            'pane': <OverviewPane/>,
+        },{
+            'id': 'leagues',
+            'name': 'Leagues',
+            'pane': <LeaguesPane/>,
+        },{
+            'id': 'teams',
+            'name': 'Teams',
+            'pane': <TeamsPane/>,
+        },];
+    };
+
+    setActiveTabId(tabId){
+        this.setState({
+            activeTabId: tabId,
+        });
+    }
+
+    _renderTabs(){
+        const navItems = this.tabs.map((tab)=>{
+            return (
+                <NavItem onClick={(e)=>{this.setActiveTabId(tab.id)}} key={tab.id} >
+                    <NavLink href="#" key={tab.id} active={tab.id==this.state.activeTabId}>
+                        {tab.name}
+                    </NavLink>
+                </NavItem>
+            );
+        });
+
+        return (
+            <Nav pills vertical>
+                { navItems }
+            </Nav>
+        );
+    }
+
+    _renderActivePane(){
+        const activeTab = this.tabs.filter((tab)=>{
+            return tab.id === this.state.activeTabId;
+        });
+
+        //assume only one match
+        return activeTab[0].pane;
+    }
+
     render() {
         buildPageTitle("Admin Dashboard");
 
         return (
             <Container fluid>
                 <Row>
-                    <Col className="bg-faded" sm="3"><LeftBar/></Col>
-                    <Col sm="9"><MainContent/></Col>
+                    <Col className="bg-faded" sm="3">
+                        {this._renderTabs()}
+                    </Col>
+                    <Col sm="9">
+                        {this._renderActivePane()}
+                    </Col>
                 </Row>
             </Container>
         );
