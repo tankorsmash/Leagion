@@ -50,14 +50,28 @@ class LeaguesPane extends DatasetView {
     }
 
     render() {
-        if (this.getIsLoaded() == false){
+        if (this.getIsLoaded() == false) {
             return (<Spinner spinnerName='three-bounce' />);
         } else {
+            const leagueList = this.state.leagues.map((league) => {
+                return <LeagueCard league={league} />;
+            });
+
+            let rows = [];
+            for (let i = 0; i <= leagueList.length; i+=3) {
+                rows.push(
+                    <Row key={i}>
+                        <Col md="4"> {leagueList[i]} </Col>
+                        <Col md="4"> {leagueList[i+1]} </Col>
+                        <Col md="4"> {leagueList[i+2]} </Col>
+                    </Row>
+                );
+            };
+
             return (
                 <div>
-                    { this.state.leagues.map((league)=>{
-                        return (<LeagueCard key={league.id} league={league} />);
-                    })}
+                    <h3> Leagues </h3>
+                    { rows }
                 </div>
             );
         }
