@@ -235,16 +235,17 @@ class SeasonsCreate extends React.Component {
 };
 
 class SeasonDetail extends DatasetView {
-    datasetStateAttr: "season";
-    datasetViewName: "api-season-detail";
-    datasetViewKwargs: {season_id: 0}; //set in ctor
+    get datasetStateAttr() {
+        return "season";
+    }
 
-    constructor(props){
-        //hack to dynamically update the datasetViewKwargs because it doesn't
-        //have access to 'this' on a class level
-        super(props);
-        this.datasetViewKwargs = {season_id: this.props.match.params.seasonId };
-    };
+    get datasetViewName() {
+        return "api-season-detail";
+    }
+
+    get datasetViewKwargs() {
+        return {season_id: this.props.match.params.seasonId };
+    }
 
     render() {
         buildPageTitle("Seasons Detail");

@@ -4,9 +4,18 @@ import reverse from 'common/reverse';
 import {NOT_LOADED} from 'common/constants';
 
 export class DatasetView extends React.Component {
-    datasetStateAttr: "datasetStateAttr";
-    datasetViewName: "unset-dataset-view-name";
-    datasetViewKwargs: {}; // ie: {kwargName: "kwargValue"}; can set this in the ctor if you need access to `this`
+    get datasetStateAttr() {
+        return "datasetStateAttr";
+    }
+
+    get datasetViewName() {
+        return "unset-dataset-view-name";
+    }
+
+    get datasetViewKwargs() {
+        // ie: return {kwargName: "kwargValue"};
+        return {};
+    }
 
     getIsLoaded() {
         return this.state[this.datasetStateAttr] !== NOT_LOADED;

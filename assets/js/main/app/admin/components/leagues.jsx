@@ -72,8 +72,17 @@ class LeagueRow extends React.Component {
 
 
 class LeaguesList extends DatasetView {
-    datasetStateAttr: "leagues";
-    datasetViewName: "api-league-list";
+    get datasetStateAttr() {
+        return "leagues";
+    }
+
+    get datasetViewName() {
+        return "api-league-list";
+    }
+
+    get datasetViewKwargs() {
+        return {};
+    }
 
     render() {
         let isLoaded = this.getIsLoaded();
