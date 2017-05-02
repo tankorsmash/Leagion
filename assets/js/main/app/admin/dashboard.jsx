@@ -25,9 +25,6 @@ class TeamsPane extends React.Component {
 class Dashboard extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            activeTabId: 'overview',
-        };
 
         this.tabs = [{
             'id': 'overview',
@@ -42,9 +39,33 @@ class Dashboard extends React.Component {
             'name': 'Teams',
             'pane': <TeamsPane/>,
         },];
+
+        const hash = window.location.hash;
+        let activeTabId = 'overview';
+        if (hash) {
+            activeTabId = this.cleanTabId(hash.substring(1));
+        };
+
+        this.state = {
+            activeTabId: activeTabId,
+        };
     };
 
+    cleanTabId(tabId){
+        const validTabIds = this.tabs.map((tab) => {
+            return tab.id;
+        });
+
+        if (validTabIds.includes(tabId)) {
+            return tabId;
+        } else {
+            console.info("invalid tab id, defaulting to overview");
+            return "overview";
+        }
+    }
+
     setActiveTabId(tabId){
+        window.location.hash = `#${tabId}`;
         this.setState({
             activeTabId: tabId,
         });
