@@ -24,6 +24,7 @@ class Admin extends React.Component {
                 <AdminNavbar {...this.props} />
                 <Switch>
                     <Redirect exact from={adminUrls.index} to={adminUrls.dashboard.overview} />
+                    <Redirect exact from={adminUrls.dashboard.index} to={adminUrls.dashboard.overview} />
                     <Route path={adminUrls.dashboard.index}  component={Dashboard} />
 
                     <Route exact path={adminUrls.leagues.create}  component={LeaguesCreate} />

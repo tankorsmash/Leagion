@@ -71,7 +71,6 @@ class Dashboard extends React.Component {
 
     render() {
         buildPageTitle("Admin Dashboard");
-
         return (
             <Container fluid>
                 <Row>
@@ -87,7 +86,7 @@ class Dashboard extends React.Component {
                             }
 
                             {/* fallback to overview if provided garbage tab name */}
-                            <Redirect from={adminUrls.dashboard} to={adminUrls.dashboard.overview} />
+                            <Redirect from={adminUrls.dashboard.index} to={adminUrls.dashboard.overview} />
                         </Switch>
 
                     </Col>
