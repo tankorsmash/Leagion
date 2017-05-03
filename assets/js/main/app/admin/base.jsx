@@ -1,4 +1,4 @@
-import {Switch} from 'react-router-dom';
+import {Switch, Redirect} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import {Row, Col} from 'reactstrap';
@@ -23,7 +23,7 @@ class Admin extends React.Component {
             <div id="leagion-admin" >
                 <AdminNavbar {...this.props} />
                 <Switch>
-                    <Route exact path={adminUrls.index}  component={Dashboard} />
+                    <Redirect exact from={adminUrls.index} to={adminUrls.dashboard.overview} />
                     <Route path={adminUrls.dashboard.index}  component={Dashboard} />
 
                     <Route exact path={adminUrls.leagues.create}  component={LeaguesCreate} />
