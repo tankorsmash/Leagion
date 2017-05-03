@@ -85,6 +85,9 @@ class Dashboard extends React.Component {
                                     return <Route key={tab.id} path={this.buildUrlFromId(tab.id)} component={tab.pane} />
                                 })
                             }
+
+                            {/* fallback to overview if provided garbage tab name */}
+                            <Redirect from={adminUrls.dashboard} to={adminUrls.dashboard.overview} />
                         </Switch>
 
                     </Col>
