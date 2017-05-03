@@ -7,6 +7,8 @@ import FontAwesome from 'react-fontawesome';
 
 import PropTypes from 'prop-types';
 
+import {DatasetView} from 'components/dataset_view';
+
 class NotificationCard extends React.Component {
     render() {
         return (
@@ -49,13 +51,22 @@ NotificationCard.propTypes = {
     color: PropTypes.string,
 };
 
-class NotificationCards extends React.Component {
+class NotificationCards extends DatasetView {
+    get datasetViewName() {
+        return "api-stats-index";
+    }
+
     render() {
+        if (this.getIsLoaded() == false) {
+            return <Row/>;
+        };
+
+        const stats = this.state.dataset;
         return (
             <Row className="d-flex justify-content-around align-items-stretch">
-                <Col md="3"> <NotificationCard headline="Players joined" iconName="users" color="info"/> </Col>
-                <Col md="3"> <NotificationCard headline="Matches played" iconName="star" color="success" /> </Col>
-                <Col md="3"> <NotificationCard headline="Teams registered" iconName="th-list" count={12}/> </Col>
+                <Col md="3"> <NotificationCard count={stats.player_count} headline="Players registered" iconName="users" color="info"/> </Col>
+                <Col md="3"> <NotificationCard count={stats.match_count} headline="Matches played" iconName="star" color="success" /> </Col>
+                <Col md="3"> <NotificationCard count={stats.team_count} headline="Teams registered" iconName="th-list" /> </Col>
             </Row>
         );
     }
