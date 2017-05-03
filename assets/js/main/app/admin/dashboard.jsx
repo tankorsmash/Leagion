@@ -4,7 +4,8 @@ import {
     Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
     Nav, NavLink, NavItem
 } from 'reactstrap';
-import {Link, Redirect} from 'react-router-dom';
+import {Switch, Link, Redirect} from 'react-router-dom';
+import {Route} from 'components/router';
 
 import {buildPageTitle} from 'common/utils';
 
@@ -12,6 +13,8 @@ import {DatasetView} from 'components/dataset_view';
 
 import {OverviewPane} from 'main/app/admin/dashboard/overview_pane';
 import {LeaguesPane} from 'main/app/admin/dashboard/leagues_pane';
+
+import adminUrls from 'main/app/admin/urls';
 
 
 class TeamsPane extends React.Component {
@@ -29,53 +32,30 @@ class Dashboard extends React.Component {
         this.tabs = [{
             'id': 'overview',
             'name': 'Overview',
-            'pane': <OverviewPane/>,
+            'pane': OverviewPane,
         },{
             'id': 'leagues',
             'name': 'Leagues',
-            'pane': <LeaguesPane/>,
+            'pane': LeaguesPane,
         },{
             'id': 'teams',
             'name': 'Teams',
-            'pane': <TeamsPane/>,
+            'pane': TeamsPane,
         },];
 
-        const hash = window.location.hash;
-        let activeTabId = 'overview';
-        if (hash) {
-            activeTabId = this.cleanTabId(hash.substring(1));
-        };
-
-        this.state = {
-            activeTabId: activeTabId,
-        };
     };
 
-    cleanTabId(tabId){
-        const validTabIds = this.tabs.map((tab) => {
-            return tab.id;
-        });
 
-        if (validTabIds.includes(tabId)) {
-            return tabId;
-        } else {
-            console.info("invalid tab id, defaulting to overview");
-            return "overview";
-        }
-    }
-
-    setActiveTabId(tabId){
-        window.location.hash = `#${tabId}`;
-        this.setState({
-            activeTabId: tabId,
-        });
+    buildUrlFromId(id) {
+        return `${adminUrls.dashboard.index}/${id}`;
     }
 
     _renderTabs(){
         const navItems = this.tabs.map((tab)=>{
+            const matchesUrl = window.location.pathname==this.buildUrlFromId(tab.id);
             return (
-                <NavItem onClick={(e)=>{this.setActiveTabId(tab.id)}} key={tab.id} >
-                    <NavLink href="#" key={tab.id} active={tab.id==this.state.activeTabId}>
+                <NavItem key={tab.id} >
+                    <NavLink tag={Link} to={this.buildUrlFromId(tab.id)} active={matchesUrl}>
                         {tab.name}
                     </NavLink>
                 </NavItem>
@@ -89,15 +69,6 @@ class Dashboard extends React.Component {
         );
     }
 
-    _renderActivePane(){
-        const activeTab = this.tabs.filter((tab)=>{
-            return tab.id === this.state.activeTabId;
-        });
-
-        //assume only one match
-        return activeTab[0].pane;
-    }
-
     render() {
         buildPageTitle("Admin Dashboard");
 
@@ -105,10 +76,17 @@ class Dashboard extends React.Component {
             <Container fluid>
                 <Row>
                     <Col className="bg-faded" sm="2">
-                        {this._renderTabs()}
+                        { this._renderTabs() }
                     </Col>
                     <Col sm="10">
-                        {this._renderActivePane()}
+                        <Switch>
+                            {
+                                this.tabs.map((tab) => {
+                                    return <Route key={tab.id} path={this.buildUrlFromId(tab.id)} component={tab.pane} />
+                                })
+                            }
+                        </Switch>
+
                     </Col>
                 </Row>
             </Container>

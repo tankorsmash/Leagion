@@ -8,6 +8,12 @@ let matchesUrl = `${adminUrl}/matches`;
 
 module.exports = {
 	index: adminUrl,
+    dashboard: {
+        index: adminUrl,
+        overview: `${adminUrl}/overview`,
+        leagues: `${adminUrl}/leagues`,
+        teams: `${adminUrl}/teams`,
+    },
 	leagues: {
 		index: leaguesUrl,
 		create: `${leaguesUrl}/create`,
