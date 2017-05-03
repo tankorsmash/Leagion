@@ -5,7 +5,7 @@ import {NOT_LOADED} from 'common/constants';
 
 export class DatasetView extends React.Component {
     get datasetStateAttr() {
-        return "datasetStateAttr";
+        return "dataset";
     }
 
     get datasetViewName() {
@@ -13,7 +13,7 @@ export class DatasetView extends React.Component {
     }
 
     get datasetViewKwargs() {
-        // ie: return {kwargName: "kwargValue"};
+        // for example, {kwargName: "kwargValue"};
         return {};
     }
 
