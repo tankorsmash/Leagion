@@ -36,54 +36,6 @@ class AdminNavItems extends React.Component {
         return (
             <Nav navbar>
                 <Link className="nav-link" to={adminUrls.dashboard.index}> Dashboard </Link>
-
-                {/* Leagues */}
-                <Link to={adminUrls.leagues.index} className="nav-link">
-                    Leagues
-                </Link>
-
-                {/* Seasons */}
-                <Link to={adminUrls.seasons.index} className="nav-link">
-                    Seasons
-                </Link>
-
-                {/* Teams */}
-                <Link to={adminUrls.teams.index} className="nav-link">
-                    Teams
-                </Link>
-
-                {/* Matches */}
-                <Link to={adminUrls.matches.index} className="nav-link">
-                    Matches
-                </Link>
-
-                {/* Create */}
-                <NavDropdown
-                    key="create-dropdown"
-                    isOpen={this.state.createDropdownOpen}
-                    toggle={this.toggleCreateDropdown}>
-
-                    <DropdownToggle nav>Create</DropdownToggle>
-
-                    <DropdownMenu>
-                        <DropdownItem header>Create ...</DropdownItem>
-                        <DropdownItem>
-                            <Link to={adminUrls.leagues.create} className="nav-link">
-                                    League
-                            </Link>
-                        </DropdownItem>
-                        <DropdownItem>
-                            <Link to={adminUrls.teams.create} className="nav-link">
-                                    Team
-                            </Link>
-                        </DropdownItem>
-                        <DropdownItem>
-                            <Link to={adminUrls.matches.create} className="nav-link">
-                                    Match
-                            </Link>
-                        </DropdownItem>
-                    </DropdownMenu>
-                </NavDropdown>
             </Nav>
         );
     }
