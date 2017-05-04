@@ -78,47 +78,36 @@ class SeasonCell extends React.Component {
     }
 }
 
-class LeaguesTable extends React.Component {
-    renderCell(index, column, league) {
+class GeneralTable extends React.Component {
+    renderCell(index, column, rowData) {
         //if there's a component to render, use that, otherwise build a plain <td>
         if (column.component) {
             const CellComponent = column.component;
             return (
-                <CellComponent key={index} data={league} />
+                <CellComponent key={index} data={rowData} />
             );
         } else {
             return (
-                <td key={index}> {league[column.id]} </td>
+                <td key={index}> {rowData[column.id]} </td>
             );
         };
     }
 
     render() {
-        let columns = [{
-            id: "id",
-            title: "ID",
-        },{
-            id: "name",
-            title: "Name",
-        },{
-            id: "seasons",
-            title: "Seasons",
-            component: SeasonCell,
-        }];
-
-        const leagues = this.props.leagues;
+        const rowData = this.props.rowData;
+        const columns = this.props.columns;
 
         return (
             <Table striped>
                 <TableHead columns={columns}/>
                 <tbody>
                     {
-                        leagues.map((league, i) => {
+                        rowData.map((row, i) => {
                             return (
                                 <tr key={i}>
                                     {
                                         columns.map((column, i) => {
-                                            return this.renderCell(i, column, league);
+                                            return this.renderCell(i, column, row);
                                         })
                                     }
                                 </tr>
@@ -144,8 +133,20 @@ export class LeaguesPane extends DatasetView {
         if (this.getIsLoaded() == false) {
             return (<Spinner spinnerName='three-bounce' />);
         } else {
+            let columns = [{
+                id: "id",
+                title: "ID",
+            },{
+                id: "name",
+                title: "Name",
+            },{
+                id: "seasons",
+                title: "Seasons",
+                component: SeasonCell,
+            }];
+
             // let content = buildLeagueCards(this.state.leagues);
-            let content = <LeaguesTable leagues={this.state.leagues} />;
+            let content = <GeneralTable columns={columns} rowData={this.state.leagues} />;
             return (
                 <div>
                     <h3> Leagues </h3>
