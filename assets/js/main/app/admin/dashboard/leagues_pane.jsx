@@ -11,50 +11,6 @@ import {GeneralTable} from 'main/app/admin/components/table'
 
 import adminUrls from 'main/app/admin/urls';
 
-class LeagueCard extends React.Component {
-    constructor(props) {
-        super(props);
-    };
-
-    render() {
-        return (
-            <Card>
-                <CardImg top src={`https://placeholdit.imgix.net/~text?txtsize=33&txt=${this.props.league.name}&w=318&h=180`} alt="Card image cap" />
-                <CardBlock>
-                    <CardTitle>{this.props.league.name}</CardTitle>
-                    <CardSubtitle>Sport type?</CardSubtitle>
-                    <CardText>I dunno, some hardcoded details about the league, maybe its team count or something.</CardText>
-                    <Link to={`${adminUrls.leagues.index}/${this.props.league.id}`}>
-                        <Button>
-                            View
-                        </Button>
-                    </Link>
-                </CardBlock>
-            </Card>
-        );
-    }
-};
-
-function buildLeagueCards(leagues) {
-    const leagueList = leagues.map((league) => {
-        return <LeagueCard league={league} />;
-    });
-
-    let rows = [];
-    for (let i = 0; i <= leagueList.length; i+=3) {
-        rows.push(
-            <Row key={i}>
-                <Col md="4"> {leagueList[i]} </Col>
-                <Col md="4"> {leagueList[i+1]} </Col>
-                <Col md="4"> {leagueList[i+2]} </Col>
-            </Row>
-        );
-    };
-
-    return rows;
-};
-
-
 class SeasonCell extends React.Component {
     render() {
         const league = this.props.data;
@@ -77,27 +33,25 @@ export class LeaguesPane extends DatasetView {
     render() {
         if (this.getIsLoaded() == false) {
             return (<Spinner spinnerName='three-bounce' />);
-        } else {
-            let columns = [{
-                id: "id",
-                title: "ID",
-            },{
-                id: "name",
-                title: "Name",
-            },{
-                id: "seasons",
-                title: "Seasons",
-                component: SeasonCell,
-            }];
-
-            // let content = buildLeagueCards(this.state.leagues);
-            let content = <GeneralTable columns={columns} rowData={this.state.leagues} />;
-            return (
-                <div>
-                    <h3> Leagues </h3>
-                    { content }
-                </div>
-            );
         }
+
+        let columns = [{
+            id: "id",
+            title: "ID",
+        },{
+            id: "name",
+            title: "Name",
+        },{
+            id: "seasons",
+            title: "Seasons",
+            component: SeasonCell,
+        }];
+
+        return (
+            <div>
+                <h3> Leagues </h3>
+                <GeneralTable columns={columns} rowData={this.state.leagues} />;
+            </div>
+        );
     }
 }
