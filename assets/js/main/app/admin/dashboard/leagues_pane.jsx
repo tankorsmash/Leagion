@@ -13,6 +13,7 @@ import {GeneralTable} from 'main/app/admin/components/table'
 import ajax from 'common/ajax';
 
 import adminUrls from 'main/app/admin/urls';
+import pathToRegex from 'path-to-regexp';
 
 import {FormBase} from 'components/forms';
 
@@ -21,6 +22,16 @@ class SeasonCell extends React.Component {
         const league = this.props.data;
         return (
             <td> {league.seasons.length}</td>
+        );
+    }
+}
+
+class LeagueNameCell extends React.Component {
+    render() {
+        const league = this.props.data;
+        const url = pathToRegex.compile(adminUrls.leagues.detail)({leagueId:league.id});
+        return (
+            <td> <Link to={url}>{league.name}</Link></td>
         );
     }
 }
@@ -116,6 +127,7 @@ export class LeaguesPane extends DatasetView {
         },{
             id: "name",
             title: "Name",
+            component: LeagueNameCell,
         },{
             id: "seasons",
             title: "Seasons",
