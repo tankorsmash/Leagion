@@ -4,7 +4,7 @@ import {
     Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
     Nav, NavLink, NavItem
 } from 'reactstrap';
-import {Switch, Link, Redirect} from 'react-router-dom';
+import {Switch, Link, Redirect, NavLink as RouterNavLink} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import {buildPageTitle} from 'common/utils';
@@ -45,12 +45,11 @@ class Dashboard extends React.Component {
 
     _renderTabs(){
         const navItems = this.tabs.map((tab)=>{
-            const matchesUrl = window.location.pathname==this.buildUrlFromId(tab.id);
             return (
                 <NavItem key={tab.id} >
-                    <NavLink tag={Link} to={this.buildUrlFromId(tab.id)} active={matchesUrl}>
+                    <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
                         {tab.name}
-                    </NavLink>
+                    </RouterNavLink>
                 </NavItem>
             );
         });
