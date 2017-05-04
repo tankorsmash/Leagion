@@ -1,8 +1,4 @@
-import {
-    Container, Row, Col, Jumbotron, Button,
-    Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
-    Nav, NavLink, NavItem, Table
-} from 'reactstrap';
+import { Table } from 'reactstrap';
 
 class TableHead extends React.Component {
     render() {
@@ -20,30 +16,55 @@ class TableHead extends React.Component {
     };
 }
 
-class TableRow extends React.Component {
-    renderCell(index, column, rowData) {
+class TableCell extends React.Component {
+    render() {
+        const column = this.props.column;
+        const rowData = this.props.rowData;
+
         //if there's a component to render, use that, otherwise build a plain <td>
         if (column.component) {
             const CellComponent = column.component;
             return (
-                <CellComponent key={index} data={rowData} />
+                <CellComponent data={rowData} />
             );
         } else {
             return (
-                <td key={index}> {rowData[column.id]} </td>
+                <td> {rowData[column.id]} </td>
             );
         };
-    }
+    };
+}
 
+
+class TableRow extends React.Component {
     render() {
         return (
             <tr>
                 {
                     this.props.columns.map((column, i) => {
-                        return this.renderCell(i, column, this.props.rowData);
+                        return (<TableCell key={i} column={column} rowData={this.props.rowData} />);
                     })
                 }
             </tr>
+        );
+    }
+}
+
+class TableBody extends React.Component {
+    render() {
+        const rowData = this.props.rowData;
+        const columns = this.props.columns;
+
+        return (
+            <tbody>
+                {
+                    rowData.map((row, i) => {
+                        return (
+                            <TableRow key={i} columns={columns} rowData={row}/>
+                        );
+                    })
+                }
+            </tbody>
         );
     }
 }
@@ -56,15 +77,7 @@ export class GeneralTable extends React.Component {
         return (
             <Table striped>
                 <TableHead columns={columns}/>
-                <tbody>
-                    {
-                        rowData.map((row, i) => {
-                            return (
-                                <TableRow key={i} columns={columns} rowData={row}/>
-                            );
-                        })
-                    }
-                </tbody>
+                <TableBody columns={columns} rowData={rowData} />
             </Table>
         );
     };
