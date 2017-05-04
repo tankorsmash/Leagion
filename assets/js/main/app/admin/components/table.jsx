@@ -75,7 +75,7 @@ export class GeneralTable extends React.Component {
         const columns = this.props.columns;
 
         return (
-            <Table striped>
+            <Table hover striped>
                 <TableHead columns={columns}/>
                 <TableBody columns={columns} rowData={rowData} />
             </Table>

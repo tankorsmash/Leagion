@@ -13,17 +13,10 @@ import {DatasetView} from 'components/dataset_view';
 
 import {OverviewPane} from 'main/app/admin/dashboard/overview_pane';
 import {LeaguesPane} from 'main/app/admin/dashboard/leagues_pane';
+import {TeamsPane} from 'main/app/admin/dashboard/teams_pane';
 
 import adminUrls from 'main/app/admin/urls';
 
-
-class TeamsPane extends React.Component {
-    render() {
-        return (
-            <div> TeamsPane </div>
-        );
-    };
-};
 
 class Dashboard extends React.Component {
     constructor(props) {
