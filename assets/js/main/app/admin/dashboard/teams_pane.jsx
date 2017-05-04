@@ -63,7 +63,7 @@ export class TeamsPane extends DatasetView {
         return (
             <div>
                 <h3> Teams </h3>
-                <GeneralTable columns={columns} rowData={this.state.teams} />;
+                <GeneralTable columns={columns} rowData={this.state.teams} />
             </div>
         );
     }
