@@ -48,7 +48,11 @@ class TeamSerializer(serializers.ModelSerializer):
         matches = Match.objects.filter(
             Q(home_team=obj) |
             Q(away_team=obj)
-        ).order_by('match_datetime')
+        ).order_by('match_datetime').select_related(
+            "home_team", "home_roster",
+            "away_team", "away_roster",
+            "location", "season"
+        )
 
         serializer = ShallowMatchSerializer(matches, many=True)
         return serializer.data
