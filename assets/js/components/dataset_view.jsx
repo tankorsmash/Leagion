@@ -17,14 +17,18 @@ export class DatasetView extends React.Component {
         return {};
     }
 
-    getIsLoaded() {
-        return this.state[this.datasetStateAttr] !== NOT_LOADED;
-    }
-
     constructor(props){
         super(props);
-        this.state = { [this.datasetStateAttr]: NOT_LOADED };
+        this.state = {
+            [this.datasetStateAttr]: [],
+            isLoaded: false,
+        };
     }
+
+    getIsLoaded() {
+        return this.state.isLoaded;
+    }
+
 
     componentDidMount() {
         this.updateDataset();
@@ -36,7 +40,10 @@ export class DatasetView extends React.Component {
         ajax({
             url: url,
         }).then(data => {
-            this.setState({[this.datasetStateAttr]: data});
+            this.setState({
+                [this.datasetStateAttr]: data,
+                isLoaded: true,
+            });
         }, error => {
             console.warn(error);
         });

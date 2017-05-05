@@ -117,10 +117,6 @@ export class LeaguesPane extends DatasetView {
     }
 
     render() {
-        if (this.getIsLoaded() == false) {
-            return (<Spinner spinnerName='three-bounce' />);
-        }
-
         let columns = [{
             id: "id",
             title: "ID",
