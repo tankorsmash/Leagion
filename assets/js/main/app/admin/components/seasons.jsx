@@ -3,7 +3,7 @@ import {
     DropdownItem, DropdownMenu, NavLink, Jumbotron,
     Row, Col, Card, CardImg, CardText, CardBlock,
     FormGroup, Form, Button, Label, Input,
-    CardTitle, CardSubtitle,
+    CardTitle, CardSubtitle, Container,
     Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
 
@@ -12,6 +12,7 @@ import Datetime from 'react-datetime';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
+import {DATE_FORMAT} from 'main/app/admin/constants';
 
 import {FormBase} from 'components/forms';
 
@@ -99,7 +100,7 @@ class CreateSeasonModal extends FormBase {
             return;
         };
         this.setState({
-            "start_date": moment.format("YYYY-MM-DD"),
+            "start_date": moment.format(DATE_FORMAT),
         });
     };
 
@@ -110,7 +111,7 @@ class CreateSeasonModal extends FormBase {
         };
 
         this.setState({
-            "end_date": moment.format("YYYY-MM-DD"),
+            "end_date": moment.format(DATE_FORMAT),
         });
     };
 
@@ -133,10 +134,10 @@ class CreateSeasonModal extends FormBase {
                                 <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="2016-2018 Season"/>
 
                                 <Label for="">Start date:</Label>
-                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
+                                <Datetime dateFormat={DATE_FORMAT} timeFormat={false} onChange={this.handleStartDateChange} value={this.state.start_date} type="date" name="start_date" id="start_date" placeholder="2016/01/30"/>
 
                                 <Label for="name">End date:</Label>
-                                <Datetime dateFormat="YYYY-MM-DD" timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
+                                <Datetime dateFormat={DATE_FORMAT} timeFormat={false} onChange={this.handleEndDateChange} value={this.state.end_date} type="date" name="end_date" id="end_date" placeholder="2017/03/20"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>
@@ -261,7 +262,9 @@ class SeasonDetail extends DatasetView {
         let isLoaded = this.getIsLoaded();
 
         return (
-            <div> Seasons Detail : {isLoaded.toString()} </div>
+            <Container fluid>
+                Seasons Detail : {isLoaded.toString()}
+            </Container>
         );
     };
 };
