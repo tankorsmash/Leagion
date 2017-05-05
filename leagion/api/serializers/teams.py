@@ -44,15 +44,9 @@ class TeamSerializer(serializers.ModelSerializer):
             'id', 'name', 'players', 'season', 'matches'
         )
 
-    def get_ordered_matches(self, obj):
-        matches = Match.objects.filter(
-            Q(home_team=obj) |
-            Q(away_team=obj)
-        ).order_by('match_datetime').select_related(
-            "home_team", "home_roster",
-            "away_team", "away_roster",
-            "location", "season"
-        )
+    def get_ordered_matches(self, team):
+        matches = list(team.home_matches.all()) + list(team.away_matches.all())
+        matches = sorted(matches, key=lambda m: m.match_datetime)
 
         serializer = ShallowMatchSerializer(matches, many=True)
         return serializer.data
