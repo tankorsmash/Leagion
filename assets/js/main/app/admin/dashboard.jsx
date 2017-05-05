@@ -14,6 +14,7 @@ import {DatasetView} from 'components/dataset_view';
 import {OverviewPane} from 'main/app/admin/dashboard/overview_pane';
 import {LeaguesPane} from 'main/app/admin/dashboard/leagues_pane';
 import {TeamsPane} from 'main/app/admin/dashboard/teams_pane';
+import {PlayersPane} from 'main/app/admin/dashboard/players_pane';
 
 import adminUrls from 'main/app/admin/urls';
 
@@ -34,6 +35,10 @@ class Dashboard extends React.Component {
             'id': 'teams',
             'name': 'Teams',
             'pane': TeamsPane,
+        },{
+            'id': 'players',
+            'name': 'Players',
+            'pane': PlayersPane,
         },];
 
     };
