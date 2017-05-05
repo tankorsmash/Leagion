@@ -10,6 +10,9 @@ import {
 import Spinner from 'react-spinkit';
 import Datetime from 'react-datetime';
 
+import adminUrls from 'main/app/admin/urls';
+import pathToRegex from 'path-to-regexp';
+
 import {FormBase} from 'components/forms';
 
 import ajax from 'common/ajax';
@@ -21,6 +24,7 @@ import {DatasetView} from 'components/dataset_view';
 class Season extends React.Component {
     render() {
         let season = this.props.season;
+        const url = pathToRegex.compile(adminUrls.seasons.detail)({seasonId: season.id});
         return (
             <Card>
                 <CardImg top width="100%" src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97120&w=318&h=120" alt="Card image cap" />
@@ -28,9 +32,14 @@ class Season extends React.Component {
                     <CardTitle>
                         { season.start_date } to {season.end_date}
                     </CardTitle>
-                    <CardSubtitle>Card subtitle</CardSubtitle>
+                    <CardSubtitle>Notes</CardSubtitle>
+
                     <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                    <Button>Details</Button>
+                    <Button>
+                        <Link to={url}>
+                            Details
+                        </Link>
+                    </Button>
                 </CardBlock>
             </Card>
         );
