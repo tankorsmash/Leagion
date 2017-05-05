@@ -3,6 +3,15 @@ from leagion.models import Season, Match, Team
 from leagion.api.serializers.teams import TeamSerializer
 from leagion.api.serializers.matches import MatchSerializer
 
+
+class ShallowTeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = (
+            'id', 'name', 'season'
+        )
+
+
 class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
@@ -12,15 +21,7 @@ class SeasonSerializer(serializers.ModelSerializer):
         )
         read_only_fields = ("teams", "matches")
 
-    teams = TeamSerializer(many=True, read_only=True)
-
-    # matches = serializers.SerializerMethodField('get_ordered_matches')
-    #
-    # def get_ordered_matches(self, obj):
-    #     matches = Match.objects.filter(season=obj).order_by('match_datetime')
-    #
-    #     serializer = MatchSerializer(matches, many=True)
-    #     return serializer.data
+    teams = ShallowTeamSerializer(many=True, read_only=True)
 
 
 class MySeasonSerializer(SeasonSerializer):
