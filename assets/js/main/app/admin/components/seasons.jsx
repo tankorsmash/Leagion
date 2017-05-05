@@ -259,11 +259,28 @@ class SeasonDetail extends DatasetView {
 
     render() {
         buildPageTitle("Seasons Detail");
-        let isLoaded = this.getIsLoaded();
+        if (this.getIsLoaded() == false) {
+            return <Container fluid/>;
+        };
+
+        const season = this.state.season;
 
         return (
             <Container fluid>
-                Seasons Detail : {isLoaded.toString()}
+                <div className="d-flex justify-content-start">
+                    <h4 className="pr-1">
+                        { season.pretty_date }
+                    </h4>
+                    <div>
+                        <small className="text-muted"> { season.league.name } </small>
+                    </div>
+                </div>
+                <div>
+                    Matches played: { season.matches.length }
+                </div>
+                <div>
+                    Teams: { season.teams.length }
+                </div>
             </Container>
         );
     };
