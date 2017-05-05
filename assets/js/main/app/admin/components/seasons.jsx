@@ -196,7 +196,7 @@ class SeasonsList extends React.Component {
             });
 
             //append placeholder card
-            seasons.push(
+            seasons.unshift(
                 <CreateSeasonPlaceholder
                     triggerRefreshOnGrid={this.updateDataset}
                     leagueId={this.props.leagueId} />

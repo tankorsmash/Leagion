@@ -3,7 +3,7 @@ import {browserHistory} from 'react-router';
 import {
     DropdownItem, DropdownMenu, NavLink,
     Row, Col, FormGroup, Form, Button, Label, Input,
-    Jumbotron,
+    Jumbotron, Container,
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
@@ -209,7 +209,7 @@ class LeagueDetail extends React.Component {
     render() {
         buildPageTitle("League Detail");
         return (
-            <div>
+            <Container fluid>
                 <h1 className="display-3">{ this.state.league.name }</h1>
                 <p className="lead">League overview</p>
                 <hr className="my-2" />
@@ -218,8 +218,9 @@ class LeagueDetail extends React.Component {
                     assign coaches and team managers, and set up schedules.</p>
 
                 <p className="lead">Seasons</p>
+
                 <Seasons leagueId={this.state.leagueId} />
-            </div>
+            </Container>
         );
     };
 };
