@@ -9,6 +9,7 @@ import {
 
 import Spinner from 'react-spinkit';
 import Datetime from 'react-datetime';
+import Moment from 'react-moment';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -269,7 +270,9 @@ class SeasonDetail extends DatasetView {
             <Container fluid>
                 <div className="d-flex justify-content-start">
                     <h4 className="pr-1">
-                        { season.pretty_date }
+                        <Moment format="MMMM, Y" date={ season.start_date }/>
+                        &nbsp;-&nbsp;
+                        <Moment format="MMMM, Y" date={ season.end_date }/>
                     </h4>
                     <div>
                         <small className="text-muted"> { season.league.name } </small>
