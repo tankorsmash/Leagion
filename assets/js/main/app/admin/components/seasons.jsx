@@ -245,7 +245,77 @@ class SeasonsCreate extends React.Component {
     };
 };
 
+class SeasonDateEditor extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            expanded: false,
+            date : this.props.date,
+        };
+    }
+
+    handleDateChanged = (moment) => {
+        if (!moment._isAMomentObject){
+            console.warn("invalid date format for start date");
+            return;
+        };
+
+        const serializedDate = moment.format(DATE_FORMAT);
+
+        this.setState({
+            date : serializedDate,
+            expanded: !this.state.expanded,
+        });
+
+        ajax({
+            url:this.props.putUrl,
+            method: 'PATCH',
+            data: {
+                [this.props.putKwarg]: serializedDate,
+            }
+
+        }).then(data => {
+            console.log("success: updated", data);
+            toastr.success("Season updated!");
+        }, error => {
+            console.log("failed:", error);
+            toastr.error("Season update failed, please try again.");
+        });
+
+        console.log("updating seasondate state");
+
+    };
+
+
+    render() {
+        if (this.state.expanded == false) {
+            return  <Moment onClick={(e)=>{this.setState({expanded: true});}} format="MMMM, Y" date={ this.state.date }/>;
+        } else {
+            return (
+                <Datetime
+                    dateFormat={DATE_FORMAT}
+                    timeFormat={false}
+                    closeOnSelect={true}
+                    disableOnClickOutside={true}
+                    input={false}
+                    onChange={this.handleDateChanged}
+                    onBlur={(e)=>{this.setState({expanded: true});}}
+                    defaultValue={ this.state.date }/>
+            );
+        }
+    }
+};
+
 class SeasonDetail extends DatasetView {
+    constructor(props){
+        super(props);
+
+        //DatasetView sets state already
+        this.state['start_date_expanded'] = false;
+        this.state['end_date_expanded'] = false;
+
+    }
     get datasetStateAttr() {
         return "season";
     }
@@ -264,15 +334,16 @@ class SeasonDetail extends DatasetView {
             return <Container fluid/>;
         };
 
-        const season = this.state.season;
+        let season = this.state.season;
 
+        const url = reverse("api-season-detail", {season_id: season.id});
         return (
             <Container fluid>
                 <div className="d-flex justify-content-start">
                     <h4 className="pr-1">
-                        <Moment format="MMMM, Y" date={ season.start_date }/>
+                        <SeasonDateEditor putKwarg="start_date" putUrl={url} date={this.state.season.start_date} />
                         &nbsp;-&nbsp;
-                        <Moment format="MMMM, Y" date={ season.end_date }/>
+                        <SeasonDateEditor putKwarg="end_date" putUrl={url} date={this.state.season.end_date} />
                     </h4>
                     <div>
                         <small className="text-muted"> { season.league.name } </small>
