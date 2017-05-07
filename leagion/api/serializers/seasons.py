@@ -18,17 +18,25 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
             'id', 'name'
         )
 
+class ShallowMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+        fields = (
+            'id', 'pretty_name'
+        )
+
 
 class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
         fields = (
             'id', 'start_date', 'end_date', 'league', 'teams',
-			'pretty_date', 'pretty_name', 'matches'
+            'pretty_date', 'pretty_name', 'matches'
         )
         read_only_fields = ("teams", "matches")
 
     teams = ShallowTeamSerializer(many=True, read_only=True)
+    matches = ShallowMatchSerializer(many=True, read_only=True)
     league = ShallowLeagueSerializer(read_only=True)
 
 

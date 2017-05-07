@@ -13,7 +13,9 @@ import Moment from 'react-moment';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
+
 import {DATE_FORMAT} from 'main/app/admin/constants';
+import {GeneralTable} from 'main/app/admin/components/table'
 
 import {FormBase} from 'components/forms';
 
@@ -336,6 +338,16 @@ class SeasonDetail extends DatasetView {
 
         let season = this.state.season;
 
+        const matchColumns = [{
+            id: "pretty_name",
+            title: `Match (total: ${season.matches.length})`,
+        }];
+
+        const teamColumns = [{
+            id: "name",
+            title: `Team (total: ${season.teams.length})`,
+        }];
+
         const url = reverse("api-season-detail", {season_id: season.id});
         return (
             <Container fluid>
@@ -350,10 +362,10 @@ class SeasonDetail extends DatasetView {
                     </div>
                 </div>
                 <div>
-                    Matches played: { season.matches.length }
+                    <GeneralTable columns={teamColumns} rowData={season.teams} />
                 </div>
                 <div>
-                    Teams: { season.teams.length }
+                    <GeneralTable columns={matchColumns} rowData={season.matches} />
                 </div>
             </Container>
         );
