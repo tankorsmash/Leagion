@@ -175,7 +175,7 @@ class CreateSeasonPlaceholder extends React.Component {
 }
 
 
-class SeasonsList extends React.Component {
+class SeasonsCardList extends React.Component {
     constructor(props){
         super(props);
         this.state = { seasons: NOT_LOADED };
@@ -227,14 +227,6 @@ class SeasonsList extends React.Component {
         }
 
         return <div>{content}</div>;
-    }
-}
-
-class Seasons extends React.Component {
-    render() {
-        return (
-            <SeasonsList leagueId={this.props.leagueId} />
-        );
     }
 }
 
@@ -377,7 +369,7 @@ class SeasonDetail extends DatasetView {
 };
 
 module.exports = {
-    Seasons: Seasons,
+    SeasonsCardList: SeasonsCardList,
     SeasonDetail: SeasonDetail,
     SeasonsCreate: SeasonsCreate
 };

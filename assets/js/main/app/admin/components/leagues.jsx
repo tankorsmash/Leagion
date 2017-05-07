@@ -18,7 +18,7 @@ import {buildPageTitle} from 'common/utils';
 import {FormBase} from 'components/forms';
 import {DatasetView} from 'components/dataset_view';
 
-import {Seasons, SeasonsCreate} from 'main/app/admin/components/seasons';
+import {SeasonsCardList, SeasonsCreate} from 'main/app/admin/components/seasons';
 import {AjaxUpdate} from 'main/app/admin/components/seasons';
 
 
@@ -220,7 +220,7 @@ class LeagueDetail extends React.Component {
 
                 <p className="lead">Seasons</p>
 
-                <Seasons leagueId={this.state.leagueId} />
+                <SeasonsCardList leagueId={this.state.leagueId} />
             </Container>
         );
     };

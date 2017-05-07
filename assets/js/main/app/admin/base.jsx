@@ -8,7 +8,7 @@ import adminUrls from 'main/app/admin/urls';
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
 import {LeagueDetail, Leagues, LeaguesCreate} from 'main/app/admin/components/leagues';
-import {Seasons, SeasonDetail, SeasonsCreate} from 'main/app/admin/components/seasons';
+import {SeasonDetail, SeasonsCreate} from 'main/app/admin/components/seasons';
 import {TeamDetail, TeamsCreate} from 'main/app/admin/components/teams';
 import {MatchDetail, MatchesCreate} from 'main/app/admin/components/matches';
 
