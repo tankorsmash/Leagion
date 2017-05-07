@@ -18,66 +18,6 @@ import pathToRegex from 'path-to-regexp';
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
 
-class Match extends React.Component {
-    render() {
-        let match = this.props.match;
-        return (
-            <div>
-                Match name: { match.name }
-
-                <div className="pl-sm-3">
-                    {/* { match.players.map(player => { */}
-                    {/*     return <SimplePlayer */}
-                    {/*         player={player} */}
-                    {/*         key={player.id} */}
-                    {/*     /> */}
-                    {/* }) } */}
-                </div>
-            </div>
-        );
-    }
-}
-
-
-class Matches extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = { matches: NOT_LOADED };
-    }
-
-    componentDidMount() {
-        this.updateDataset();
-    }
-
-    updateDataset() {
-        let url = reverse('api-match-list');
-
-        ajax({
-            url: url,
-        }).then(data => {
-            //if there's only one object, its a single detail match, so arrayify it
-            this.setState({matches: data});
-        });
-    }
-
-
-    render() {
-        let isLoaded = this.state.matches !== NOT_LOADED;
-
-        let content;
-        if (isLoaded == false) {
-            content = <Spinner spinnerName='three-bounce' />;
-        } else {
-            content = this.state.matches.map((match)=>{
-                return <Match match={match} key={match.id} />
-            });
-        }
-
-        return <div>{content}</div>;
-    }
-}
-
-
 class MatchDetail extends DatasetView {
     get datasetStateAttr() {
         return "match";
@@ -138,7 +78,6 @@ class MatchesCreate extends React.Component {
 };
 
 module.exports = {
-    Matches: Matches,
     MatchDetail: MatchDetail,
     MatchesCreate: MatchesCreate
 };
