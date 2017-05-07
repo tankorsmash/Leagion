@@ -338,14 +338,18 @@ class SeasonDetail extends DatasetView {
 
         let season = this.state.season;
 
+        const matchUrlizer = pathToRegex.compile(adminUrls.matches.detail);
         const matchColumns = [{
             id: "pretty_name",
             title: `Match (total: ${season.matches.length})`,
+            component: props => <td> <Link to={matchUrlizer({matchId: props.data.id})}> {props.data.pretty_name} </Link> </td>
         }];
 
+        const teamUrlizer = pathToRegex.compile(adminUrls.teams.detail);
         const teamColumns = [{
             id: "name",
             title: `Team (total: ${season.teams.length})`,
+            component: props => <td> <Link to={teamUrlizer({teamId: props.data.id})}> {props.data.name} </Link> </td>
         }];
 
         const url = reverse("api-season-detail", {season_id: season.id});
