@@ -1,6 +1,8 @@
 import ajax from 'common/ajax';
 var Spinner = require('react-spinkit');
 
+import {Container, Row, Col} from 'reactstrap';
+
 import {SimplePlayer} from 'main/app/admin/components/players';
 
 import {NOT_LOADED} from 'common/constants';
@@ -66,6 +68,15 @@ class Teams extends React.Component {
 }
 
 
+class TeamDetail extends React.Component {
+    render() {
+        buildPageTitle("Team Detail");
+        return (
+            <Container fluid> Team Detail </Container>
+        );
+    };
+};
+
 class TeamsCreate extends React.Component {
     render() {
         buildPageTitle("Teams Create");
@@ -74,7 +85,9 @@ class TeamsCreate extends React.Component {
         );
     };
 };
+
 module.exports = {
     Teams: Teams,
+    TeamDetail: TeamDetail,
     TeamsCreate: TeamsCreate
 };
