@@ -1,6 +1,21 @@
+import PropTypes from 'prop-types';
 import ajax from 'common/ajax';
 
 class AjaxTextInputUpdate extends React.Component {
+    static propTypes = {
+        data: PropTypes.string.isRequired,
+        putUrl: PropTypes.string.isRequired,
+        putKwarg: PropTypes.string.isRequired,
+
+        successMessage: PropTypes.string,
+        errorMessage: PropTypes.string,
+    }
+
+    static defaultProps = {
+        successMessage: "Updated successfully!",
+        errorMessage: "Update failed, please try again.",
+    }
+
     constructor(props){
         super(props);
 
@@ -33,19 +48,19 @@ class AjaxTextInputUpdate extends React.Component {
 
         }).then(data => {
             console.log("success: updated", data);
-            toastr.success("Season updated!");
+            toastr.success(this.props.successMessage);
         }, error => {
             console.log("failed:", error);
-            toastr.error("Season update failed, please try again.");
+            toastr.error(this.props.errorMessage);
         });
 
     };
 
-    setExpanded() {
+    setExpanded = () => {
         this.setState({expanded: true});
     };
 
-    setCollapsed() {
+    setCollapsed = () => {
         this.setState({expanded: false});
     };
 
