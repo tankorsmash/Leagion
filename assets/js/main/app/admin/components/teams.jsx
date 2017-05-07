@@ -6,6 +6,7 @@ import {Container, Row, Col} from 'reactstrap';
 import {DatasetView} from 'components/dataset_view';
 
 import {SimplePlayer} from 'main/app/admin/components/players';
+import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
@@ -87,8 +88,19 @@ class TeamDetail extends DatasetView {
         if (this.getIsLoaded() == false) {
             return (<Row>UNLOADED </Row>);
         };
+
+        const team = this.state.team;
+        const putUrl = reverse("api-team-detail", {team_id: team.id});
         return (
-            <Container fluid> Team Detail </Container>
+            <Container fluid>
+                <h5> Team Detail </h5>
+
+                Name:
+                <AjaxTextInputUpdate
+                    data={ this.state.team.name }
+                    putUrl={putUrl}
+                    putKwarg="name" />
+            </Container>
         );
     };
 };

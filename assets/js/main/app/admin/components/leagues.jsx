@@ -19,6 +19,7 @@ import {FormBase} from 'components/forms';
 import {DatasetView} from 'components/dataset_view';
 
 import {Seasons, SeasonsCreate} from 'main/app/admin/components/seasons';
+import {AjaxUpdate} from 'main/app/admin/components/seasons';
 
 
 class TeamRow extends React.Component {

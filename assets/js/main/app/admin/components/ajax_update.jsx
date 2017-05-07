@@ -1,23 +1,72 @@
-import React, { Component, PropTypes } from 'react';
-import styles from './AjaxUpdate.css';
+import ajax from 'common/ajax';
 
-class AjaxUpdate extends Component {
-    static propTypes = {
-        children: PropTypes.node,
-        className: PropTypes.string,
+class AjaxTextInputUpdate extends React.Component {
+    constructor(props){
+        super(props);
+
+        this.state = {
+            expanded: false,
+            data : this.props.data,
+        };
+    }
+
+    handleDataChanged = (event) => {
+        let data = event.target.value;
+
+        this.setCollapsed();
+
+        //dont do anything else if it's the same
+        if (data == this.state.data) {
+            return;
+        };
+
+        this.setState({
+            data : data,
+        });
+
+        ajax({
+            url:this.props.putUrl,
+            method: 'PATCH',
+            data: {
+                [this.props.putKwarg]: data,
+            }
+
+        }).then(data => {
+            console.log("success: updated", data);
+            toastr.success("Season updated!");
+        }, error => {
+            console.log("failed:", error);
+            toastr.error("Season update failed, please try again.");
+        });
+
     };
 
-    constructor(props) {
-        super(props);
-    }
+    setExpanded() {
+        this.setState({expanded: true});
+    };
+
+    setCollapsed() {
+        this.setState({expanded: false});
+    };
+
 
     render() {
-        return (
-            <div className={styles.base}>
-                
-            </div>
-        );
+        if (this.state.expanded == false) {
+            return  (
+                <div onClick={this.setExpanded}>
+                    { this.state.data }
+                </div>
+            );
+        } else {
+            return (
+                <input
+                    onBlur={this.handleDataChanged}
+                    defaultValue={ this.state.data }/>
+            );
+        }
     }
-}
+};
 
-export default AjaxUpdate;
+module.exports = {
+    AjaxTextInputUpdate: AjaxTextInputUpdate,
+}
