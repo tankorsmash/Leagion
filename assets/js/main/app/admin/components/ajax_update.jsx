@@ -75,6 +75,7 @@ class AjaxTextInputUpdate extends React.Component {
         } else {
             return (
                 <input
+                    autoFocus
                     onBlur={this.handleDataChanged}
                     defaultValue={ this.state.data }/>
             );
