@@ -10,7 +10,7 @@ import Dashboard from 'main/app/admin/dashboard';
 import {LeagueDetail, Leagues, LeaguesCreate} from 'main/app/admin/components/leagues';
 import {Seasons, SeasonDetail, SeasonsCreate} from 'main/app/admin/components/seasons';
 import {TeamDetail, TeamsCreate} from 'main/app/admin/components/teams';
-import {Matches, MatchesCreate} from 'main/app/admin/components/matches';
+import {MatchDetail, MatchesCreate} from 'main/app/admin/components/matches';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -38,7 +38,7 @@ class Admin extends React.Component {
                     <Route path={adminUrls.teams.detail}  component={TeamDetail} />
 
                     <Route exact path={adminUrls.matches.create}  component={MatchesCreate} />
-                    <Route path={adminUrls.matches.detail}  component={Matches} />
+                    <Route path={adminUrls.matches.detail}  component={MatchDetail} />
 
                     <Route component={FourOhFour} />
                 </Switch>
