@@ -3,6 +3,8 @@ var Spinner = require('react-spinkit');
 
 import {Container, Row, Col} from 'reactstrap';
 
+import {DatasetView} from 'components/dataset_view';
+
 import {SimplePlayer} from 'main/app/admin/components/players';
 
 import {NOT_LOADED} from 'common/constants';
@@ -68,9 +70,23 @@ class Teams extends React.Component {
 }
 
 
-class TeamDetail extends React.Component {
+class TeamDetail extends DatasetView {
+    get datasetStateAttr() {
+        return "team";
+    }
+
+    get datasetViewName() {
+        return "api-team-detail";
+    }
+
+    get datasetViewKwargs() {
+        return {team_id: this.props.match.params.teamId};
+    }
     render() {
         buildPageTitle("Team Detail");
+        if (this.getIsLoaded() == false) {
+            return (<Row>UNLOADED </Row>);
+        };
         return (
             <Container fluid> Team Detail </Container>
         );
