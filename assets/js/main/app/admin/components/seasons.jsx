@@ -200,37 +200,30 @@ class SeasonsCardList extends React.Component {
     render() {
         let isLoaded = this.state.seasons !== NOT_LOADED;
 
-        let content;
         if (isLoaded == false) {
-            content = <Spinner spinnerName='three-bounce' />;
-        } else {
-            let seasons = this.state.seasons.map((season)=>{
-                return <Season season={season} key={season.id} />
-            });
-
-            //append placeholder card
-            seasons.unshift(
-                <CreateSeasonPlaceholder
-                    triggerRefreshOnGrid={this.updateDataset}
-                    leagueId={this.props.leagueId} />
-            );
-
-            content = [];
-            const columnCount = 4;
-            const columnWidth = 3;
-            for (let i = 0; i <= seasons.length; i+=columnCount) {
-                content.push(
-                    <Row key={i}>
-                        {
-                            [...Array(columnCount)].map((el, ii) => {
-                            return (<Col key={i+ii} xs={columnWidth}> {seasons[i+ii]} </Col>);
-                        })
-                        }
-                    </Row>);
-            };
+            return <Spinner spinnerName='three-bounce' />;
         }
 
-        return <div>{content}</div>;
+        let seasons = this.state.seasons.map((season)=>{
+            return <Season season={season} key={season.id} />
+        });
+
+        //append placeholder card
+        seasons.unshift(
+            <CreateSeasonPlaceholder
+                triggerRefreshOnGrid={this.updateDataset}
+                leagueId={this.props.leagueId} />
+        );
+
+        return (
+            <Row key="1">
+                {
+                    seasons.map((el, i) => {
+                        return ( <Col className="card-deck mb-1" key={i} lg={3} md={4} sm={6} xs={12} > {el} </Col>);
+                    })
+                }
+            </Row>
+        );
     }
 }
 
