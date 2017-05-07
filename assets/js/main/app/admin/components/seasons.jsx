@@ -216,12 +216,16 @@ class SeasonsCardList extends React.Component {
             );
 
             content = [];
-            for (let i = 0; i <= seasons.length; i+=3) {
+            const columnCount = 4;
+            const columnWidth = 3;
+            for (let i = 0; i <= seasons.length; i+=columnCount) {
                 content.push(
                     <Row key={i}>
-                        <Col key={i} xs="4"> {seasons[i]} </Col>
-                        <Col key={i+1} xs="4"> {seasons[i+1]} </Col>
-                        <Col key={i+2} xs="4"> {seasons[i+2]} </Col>
+                        {
+                            [...Array(columnCount)].map((el, ii) => {
+                            return (<Col key={i+ii} xs={columnWidth}> {seasons[i+ii]} </Col>);
+                        })
+                        }
                     </Row>);
             };
         }
