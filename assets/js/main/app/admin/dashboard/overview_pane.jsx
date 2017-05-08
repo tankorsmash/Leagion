@@ -176,6 +176,7 @@ class MatchesPlayed extends DatasetView {
 
         let chartOptions = {
             responsive: true,
+            maintainAspectRatio: false,
         };
 
         return <BarChart data={chartData} options={chartOptions} />
