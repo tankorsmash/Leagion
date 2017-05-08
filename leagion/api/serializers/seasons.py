@@ -22,7 +22,7 @@ class ShallowMatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
         fields = (
-            'id', 'pretty_name'
+            'id', 'pretty_name', 'match_datetime'
         )
 
 

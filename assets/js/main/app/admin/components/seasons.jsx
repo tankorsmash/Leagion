@@ -10,6 +10,7 @@ import {
 import Spinner from 'react-spinkit';
 import Datetime from 'react-datetime';
 import Moment from 'react-moment';
+import moment from 'moment';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -332,7 +333,16 @@ class SeasonDetail extends DatasetView {
             id: "pretty_name",
             title: `Match (total: ${season.matches.length})`,
             component: props => <td> <Link to={matchUrlizer({matchId: props.data.id})}> {props.data.pretty_name} </Link> </td>
+        },{
+            id: "match_datetime",
+            title: `When`,
+            component: props => <td> <Moment format="YYYY-MM-DD @ HH:SS" date={props.data.match_datetime}/> </td>
         }];
+
+        const sortedMatches = season.matches.sort(
+            (left, right) => {
+                return moment(left.match_datetime) - moment(right.match_datetime)
+            });
 
         const teamUrlizer = pathToRegex.compile(adminUrls.teams.detail);
         const teamColumns = [{
@@ -358,7 +368,7 @@ class SeasonDetail extends DatasetView {
                     <GeneralTable columns={teamColumns} rowData={season.teams} />
                 </div>
                 <div>
-                    <GeneralTable columns={matchColumns} rowData={season.matches} />
+                    <GeneralTable columns={matchColumns} rowData={sortedMatches} />
                 </div>
             </Container>
         );
