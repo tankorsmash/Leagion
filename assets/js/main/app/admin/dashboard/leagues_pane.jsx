@@ -86,7 +86,8 @@ class CreateLeagueModal extends FormBase {
     render() {
         return (
             <div>
-                <Button onClick={this.toggle}>{this.props.buttonLabel}</Button>
+                <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
+
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Create League</ModalHeader>
                     <ModalBody>

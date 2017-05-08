@@ -77,6 +77,7 @@ class NotificationCards extends DatasetView {
                         count={stats.player_count}
                         actionHref={adminUrls.dashboard.players}
                         headline="Players registered"
+                        actionLine="View Players"
                         iconName="users"
                         color="info"/>
                 </Col>
@@ -84,6 +85,7 @@ class NotificationCards extends DatasetView {
                     <NotificationCard
                         count={stats.league_count}
                         actionHref={adminUrls.dashboard.leagues}
+                        actionLine="View Leagues"
                         headline="Leagues created"
                         iconName="users" color="warning"/>
                 </Col>
@@ -91,12 +93,14 @@ class NotificationCards extends DatasetView {
                     <NotificationCard
                         count={stats.match_count}
                         headline="Matches played"
+                        actionLine="PLACEHOLDER"
                         iconName="star"
                         color="success" />
                 </Col>
                 <Col md="3">
                     <NotificationCard
                         count={stats.team_count}
+                        actionLine="View Teams"
                         actionHref={adminUrls.dashboard.teams}
                         headline="Teams registered"
                         iconName="th-list" />
@@ -194,7 +198,7 @@ export class OverviewPane extends React.Component {
                         <Col> <NotificationCards/> </Col>
                     </Row>
                     <div>
-                        <h4> Matches (30 days)</h4>
+                        <h4> Matches <small> (30 days) </small></h4>
                         <MatchesPlayedChart/>
                     </div>
                 </Col>
