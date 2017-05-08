@@ -11,7 +11,12 @@ User = get_user_model()
 
 @reverse_js
 class MatchList(generics.ListCreateAPIView):
-    queryset = Match.objects.all()
+    queryset = Match.objects.all().select_related(
+        "season", "location",
+        'away_team', 'away_roster',
+        'home_team', 'home_roster',
+    )
+
     serializer_class = MatchSerializer
 
 

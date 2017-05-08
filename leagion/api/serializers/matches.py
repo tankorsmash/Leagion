@@ -18,12 +18,6 @@ class ShallowLocationSerializer(serializers.ModelSerializer):
         )
 
 class MatchSerializer(serializers.ModelSerializer):
-    home_team = ShallowTeamSerializer(read_only=True)
-    away_team = ShallowTeamSerializer(read_only=True)
-    location = ShallowLocationSerializer(read_only=True)
-    home_roster = RosterSerializer(read_only=True)
-    away_roster = RosterSerializer(read_only=True)
-
     class Meta:
         model = Match
 
@@ -33,3 +27,13 @@ class MatchSerializer(serializers.ModelSerializer):
             'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
             'pretty_time', 'home_roster', 'away_roster'
         )
+
+    home_team = ShallowTeamSerializer(read_only=True)
+    away_team = ShallowTeamSerializer(read_only=True)
+    location = ShallowLocationSerializer(read_only=True)
+
+    #TODO fix app/match.jsx to either use this OR move BattingOrderTable to DatasetView
+    # and use a specific api-roster-detail. The non shallow serializer is too heavy
+    # home_roster = RosterSerializer(read_only=True)
+    # away_roster = RosterSerializer(read_only=True)
+
