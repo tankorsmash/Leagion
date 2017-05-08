@@ -14,6 +14,7 @@ module.exports = {
         overview: `${dashboardUrl}/overview`,
         leagues: `${dashboardUrl}/leagues`,
         teams: `${dashboardUrl}/teams`,
+        players: `${dashboardUrl}/players`,
     },
 	leagues: {
 		index: leaguesUrl,

@@ -75,6 +75,7 @@ class NotificationCards extends DatasetView {
                 <Col md="3">
                     <NotificationCard
                         count={stats.player_count}
+                        actionHref={adminUrls.dashboard.players}
                         headline="Players registered"
                         iconName="users"
                         color="info"/>
