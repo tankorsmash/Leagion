@@ -124,7 +124,7 @@ function enumerateDaysBetweenDatesInclusive(startDate, endDate) {
     return dates;
 };
 
-class MatchesPlayed extends DatasetView {
+class MatchesPlayedChart extends DatasetView {
     get datasetViewName() {
         return "api-match-list";
     }
@@ -194,10 +194,8 @@ export class OverviewPane extends React.Component {
                         <Col> <NotificationCards/> </Col>
                     </Row>
                     <div>
-                        <h1> Overview</h1>
-
-                        <h4> Matches played this month</h4>
-                        <MatchesPlayed/>
+                        <h4> Matches (30 days)</h4>
+                        <MatchesPlayedChart/>
                     </div>
                 </Col>
             </Row>
