@@ -4,14 +4,16 @@ import {
 } from 'reactstrap';
 
 import {Link} from 'react-router-dom';
-
 import FontAwesome from 'react-fontawesome';
+import {Line as LineChart, Bar as BarChart} from 'react-chartjs';
 
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import {DatasetView} from 'components/dataset_view';
 
 import adminUrls from 'main/app/admin/urls';
+import {DATE_FORMAT} from 'main/app/admin/constants';
 
 class NotificationCard extends React.Component {
     render() {
@@ -103,17 +105,98 @@ class NotificationCards extends DatasetView {
     }
 };
 
+function enumerateDaysBetweenDatesInclusive(startDate, endDate) {
+    let dates = [];
+
+    let currDate = startDate.clone().startOf('day');
+    dates.push(currDate.format(DATE_FORMAT));
+
+    let lastDate = endDate.clone().startOf('day');
+
+    while(currDate.add(1, 'days').diff(lastDate) < 0) {
+        let clone = currDate.clone()
+        let formattedClone = clone.format(DATE_FORMAT);
+        dates.push(formattedClone);
+    }
+
+    dates.push(lastDate.format(DATE_FORMAT));
+    return dates;
+};
+
+class MatchesPlayed extends DatasetView {
+    get datasetViewName() {
+        return "api-match-list";
+    }
+    get datasetStateAttr() {
+        return "matches";
+    }
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return <div> Loading matches played...</div>;
+        };
+
+        let labels = [];
+
+        //get the match_datetimes from matches
+        let allMatchDatetimes = [];
+        for (let match of this.state.matches) {
+            let match_datetime = moment(match.match_datetime);
+            allMatchDatetimes.push(match_datetime)
+        }
+        allMatchDatetimes = allMatchDatetimes.sort((l, r) => { return l-r });
+
+        //build an array of the last month in days formatted as YYYY-MM-DD
+        let startDate = moment().subtract(1, 'months'); //1 month ago
+        let endDate = moment();
+        let dateRange = enumerateDaysBetweenDatesInclusive(startDate, endDate);
+
+        const data = dateRange.map((formattedDateStr) => {
+            //add the formatted date to the labels
+            labels.push(formattedDateStr);
+
+            return allMatchDatetimes.reduce((total, el) => {
+
+                if (el.format(DATE_FORMAT) == formattedDateStr) {
+                    return total + 1;
+                };
+
+                return total;
+            }, 0);
+        });
+
+        let chartData = {
+            labels: labels,
+            datasets: [{
+                label: 'Matches Played',
+                data: data,
+                borderWidth: 1
+            }]
+        };
+
+        let chartOptions = {
+            responsive: true,
+        };
+
+        return <BarChart data={chartData} options={chartOptions} />
+    }
+};
+
 export class OverviewPane extends React.Component {
     render() {
+
         return (
             <Row>
                 <Col>
                     <Row>
                         <Col> <NotificationCards/> </Col>
                     </Row>
-                    <Row>
-                        <Col> <h1> Overview</h1> </Col>
-                    </Row>
+                    <div>
+                        <h1> Overview</h1>
+
+                        <h4> Matches played this month</h4>
+                        <MatchesPlayed/>
+                    </div>
                 </Col>
             </Row>
         );
