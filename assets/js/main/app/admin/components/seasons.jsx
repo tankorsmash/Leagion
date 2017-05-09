@@ -68,32 +68,32 @@ class CreateSeasonModal extends FormBase {
     handleSubmit = (e) => {
         e.preventDefault();
 
+        let formData = {
+            name: this.state.name,
+            start_date: this.state.start_date,
+            end_date: this.state.end_date,
+            league_id: this.props.leagueId,
+        }
+
         ajax({
             url:reverse('api-season-list'),
             method: 'POST',
-            data: {
-                name: this.state.name,
-                start_date: this.state.start_date,
-                end_date: this.state.end_date,
-                league_id: this.props.leagueId,
-            }
+            data: formData,
         }).then(data => {
-            console.log("success: created season", data);
-            let redirectUrl = this.props.redirectUrl; //adminUrls.seasons.index+'/'+data.id;
             this.setState({
                 'created': true,
-                'redirectUrl': redirectUrl,
+                'redirectUrl': this.props.redirectUrl,
                 'modal': false,
             });
 
             toastr.success("Season Created!");
+
             //regenerate season grid in league detail
             if (this.props.triggerRefreshOnGrid !== undefined) {
                 this.props.triggerRefreshOnGrid();
             };
 
         }, error => {
-            console.log("failed:", error);
             this.setState({'created': false});
         });
     }
