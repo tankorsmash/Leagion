@@ -63,11 +63,13 @@ class TeamDetail extends DatasetView {
                         putKwarg="name" />
                 </h5>
 
-                <div>
-                    <GeneralTable columns={playersColumns} rowData={team.players} />
-                </div>
-                <div>
-                    <GeneralTable columns={matchColumns} rowData={team.matches} />
+                <div className="d-flex justify-content-around">
+                    <div className="">
+                        <GeneralTable columns={playersColumns} rowData={team.players} />
+                    </div>
+                    <div>
+                        <GeneralTable columns={matchColumns} rowData={team.matches} />
+                    </div>
                 </div>
             </Container>
         );
