@@ -84,46 +84,39 @@ class LeaguesCreate extends React.Component {
     };
 };
 
-class LeagueDetail extends React.Component {
+class LeagueDetail extends DatasetView {
+    get datasetStateAttr() {
+        return "league";
+    }
+
+    get datasetViewName() {
+        return "api-league-detail";
+    }
+
+    get datasetViewKwargs() {
+        return { league_id: this.state.leagueId };
+    }
+
     constructor(props){
         super(props);
 
+        let leagueId = this.props.match.params.leagueId;
         this.state = {
-            leagueId: this.props.match.params.leagueId,
-            league: []
+            ...this.state,
+            leagueId: leagueId,
         };
     }
 
-    componentDidMount() {
-        this.updateDataset();
-    }
-
-    /* without componentWillReceiveProps, routing back to this component, like league/1 to league/2, the data wouldn't update */
-    componentWillReceiveProps(nextProps) {
-        if (this.props.match.params.leagueId != nextProps.match.params.leagueId) {
-            this.updateDataset();
-        };
-    };
-
-
-    updateDataset() {
-        if (this.props.match.params.leagueId) {
-            console.log("making request");
-            let url = reverse('api-league-detail', {"league_id" : this.props.match.params.leagueId});
-
-            ajax({
-                url: url,
-            }).then(data => {
-                console.log("received data:", data);
-                this.setState({league: data});
-            });
-        };
-    }
     render() {
         buildPageTitle("League Detail");
+
+        if (this.getIsLoaded() == false) {
+            return <Container fluid />;
+        };
+
         return (
             <Container fluid>
-                <h1 className="display-3">{ this.state.league.name }</h1>
+                <h1 className="display-3">{ this.state.league.name || "League" }</h1>
                 <p className="lead">League overview</p>
                 <hr className="my-2" />
                 <p>As a league manager, you're able to view all teams and players.
