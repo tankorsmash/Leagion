@@ -19,7 +19,7 @@ import {FormBase} from 'components/forms';
 import {DatasetView} from 'components/dataset_view';
 
 import {SeasonsCardList, SeasonsCreate} from 'main/app/admin/components/seasons';
-import {AjaxUpdate} from 'main/app/admin/components/seasons';
+import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 
 class LeagueCreateForm extends FormBase {
@@ -114,9 +114,15 @@ class LeagueDetail extends DatasetView {
             return <Container fluid />;
         };
 
+        const putUrl = reverse("api-league-detail", {league_id: this.state.league.id});
         return (
             <Container fluid>
-                <h1 className="display-3">{ this.state.league.name || "League" }</h1>
+                <h1 className="display-3">
+                    <AjaxTextInputUpdate
+                        data={ this.state.league.name }
+                        putUrl={putUrl}
+                        putKwarg="name"/>
+                </h1>
                 <p className="lead">League overview</p>
                 <hr className="my-2" />
                 <p>As a league manager, you're able to view all teams and players.
