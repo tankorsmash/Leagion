@@ -75,7 +75,7 @@ class CreateSeasonModal extends FormBase {
                 name: this.state.name,
                 start_date: this.state.start_date,
                 end_date: this.state.end_date,
-                league: this.props.leagueId,
+                league_id: this.props.leagueId,
             }
         }).then(data => {
             console.log("success: created season", data);

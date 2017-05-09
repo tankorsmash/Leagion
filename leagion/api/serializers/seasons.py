@@ -30,13 +30,15 @@ class SeasonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Season
         fields = (
-            'id', 'start_date', 'end_date', 'league', 'teams',
+            'id', 'start_date', 'end_date', 'league', 'league_id', 'teams',
             'pretty_date', 'pretty_name', 'matches'
         )
         read_only_fields = ("teams", "matches")
 
     teams = ShallowTeamSerializer(many=True, read_only=True)
     matches = ShallowMatchSerializer(many=True, read_only=True)
+
+    league_id = serializers.IntegerField() #writable, while the serialize is readonly
     league = ShallowLeagueSerializer(read_only=True)
 
 
