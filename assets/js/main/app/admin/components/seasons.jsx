@@ -10,8 +10,10 @@ import {
 
 import Spinner from 'react-spinkit';
 import Datetime from 'react-datetime';
+
 import Moment from 'react-moment';
 import moment from 'moment';
+import uuid from 'uuid';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -302,9 +304,13 @@ class SeasonDateEditor extends React.Component {
 
 class MatchDatetimeCell extends React.Component {
     render() {
+        let elemId = uuid.v4();
         return (
             <td>
-                <Moment fromNow format="YYYY-MM-DD @ HH:SS" date={this.props.data.match_datetime}/>
+                <Moment id={elemId} fromNow date={this.props.data.match_datetime}/>
+                <UncontrolledTooltip placement="top" delay={{show: 200, hide:200}} target={elemId}>
+                    <Moment format="YYYY-MM-DD @ HH:SS" date={this.props.data.match_datetime}/>
+                </UncontrolledTooltip>
             </td>
         );
     }
