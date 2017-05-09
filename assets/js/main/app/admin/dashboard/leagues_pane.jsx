@@ -119,9 +119,6 @@ export class LeaguesPane extends DatasetView {
 
     render() {
         let columns = [{
-            id: "id",
-            title: "ID",
-        },{
             id: "name",
             title: "Name",
             component: LeagueNameCell,

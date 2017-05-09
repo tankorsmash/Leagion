@@ -12,9 +12,6 @@ export class PlayersPane extends DatasetView {
 
     render() {
         let columns = [{
-            id: "id",
-            title: "ID",
-        },{
             id: "full_name",
             title: "Name",
         },{

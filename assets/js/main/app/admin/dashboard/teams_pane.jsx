@@ -41,9 +41,6 @@ export class TeamsPane extends DatasetView {
 
     render() {
         let columns = [{
-            id: "id",
-            title: "ID",
-        },{
             id: "name",
             title: "Name",
         },{
