@@ -22,94 +22,6 @@ import {SeasonsCardList, SeasonsCreate} from 'main/app/admin/components/seasons'
 import {AjaxUpdate} from 'main/app/admin/components/seasons';
 
 
-class TeamRow extends React.Component {
-    render() {
-        return (
-            <Row className="pl-1">
-                <Col>
-                    { this.props.team.name }
-                </Col>
-            </Row>
-        );
-    }
-}
-
-class SeasonRow extends React.Component {
-    render() {
-        let teams = this.props.season.teams.map((team, i)=>{
-            return ( <TeamRow key={i} team={team} /> );
-        });
-        return (
-            <Row className="pl-1">
-                <Col>
-                    <h4> { this.props.season.pretty_name } </h4>
-                    { teams }
-                </Col>
-            </Row>
-        );
-    }
-}
-
-class LeagueRow extends React.Component {
-    render() {
-        let league = this.props.league;
-
-        let seasons = league.seasons.map((season, i)=>{
-            return (
-                <SeasonRow key={i} season={season}/>
-            );
-        });
-
-        return (
-            <Row className="mb-3">
-                <Col>
-                    <h3> { league.name } </h3>
-                    { seasons }
-                </Col>
-            </Row>
-        );
-    }
-}
-
-
-class LeaguesList extends DatasetView {
-    get datasetStateAttr() {
-        return "leagues";
-    }
-
-    get datasetViewName() {
-        return "api-league-list";
-    }
-
-    get datasetViewKwargs() {
-        return {};
-    }
-
-    render() {
-        let isLoaded = this.getIsLoaded();
-
-        if (isLoaded == false) {
-            return (<Spinner spinnerName='three-bounce' />);
-        } else {
-            let leagueRows = this.state.leagues.map((league)=>{
-                return (
-                    <LeagueRow league={league} key={league.id} />
-                );
-            });
-            return (<div> {leagueRows} </div>);
-        }
-    }
-}
-
-class Leagues extends React.Component {
-    render() {
-        buildPageTitle("Leagues");
-        return (
-            <LeaguesList  />
-        );
-    };
-};
-
 class LeagueCreateForm extends FormBase {
     constructor(props) {
         super(props);
@@ -228,6 +140,5 @@ class LeagueDetail extends React.Component {
 
 module.exports = {
     LeagueDetail: LeagueDetail,
-    Leagues: Leagues,
     LeaguesCreate: LeaguesCreate
 };
