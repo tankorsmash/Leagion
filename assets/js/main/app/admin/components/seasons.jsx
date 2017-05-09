@@ -4,7 +4,8 @@ import {
     Row, Col, Card, CardImg, CardText, CardBlock,
     FormGroup, Form, Button, Label, Input,
     CardTitle, CardSubtitle, Container,
-    Modal, ModalHeader, ModalBody, ModalFooter
+    Modal, ModalHeader, ModalBody, ModalFooter,
+    UncontrolledTooltip
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
@@ -299,6 +300,16 @@ class SeasonDateEditor extends React.Component {
     }
 };
 
+class MatchDatetimeCell extends React.Component {
+    render() {
+        return (
+            <td>
+                <Moment fromNow format="YYYY-MM-DD @ HH:SS" date={this.props.data.match_datetime}/>
+            </td>
+        );
+    }
+}
+
 class SeasonDetail extends DatasetView {
     constructor(props){
         super(props);
@@ -336,7 +347,7 @@ class SeasonDetail extends DatasetView {
         },{
             id: "match_datetime",
             title: `When`,
-            component: props => <td> <Moment format="YYYY-MM-DD @ HH:SS" date={props.data.match_datetime}/> </td>
+            component: MatchDatetimeCell,
         }];
 
         const sortedMatches = season.matches.sort(
