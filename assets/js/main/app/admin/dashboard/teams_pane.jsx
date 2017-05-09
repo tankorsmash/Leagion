@@ -10,6 +10,21 @@ import {DatasetView} from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
 
 import adminUrls from 'main/app/admin/urls';
+import pathToRegex from 'path-to-regexp';
+
+class TeamsCell extends React.Component {
+    render() {
+        const team = this.props.data;
+        const teamUrlizer = pathToRegex.compile(adminUrls.teams.detail);
+        return (
+            <td>
+                <Link to={teamUrlizer({teamId: team.id})}>
+                    {team.name}
+                </Link>
+            </td>
+        );
+    }
+}
 
 class MatchesCell extends React.Component {
     render() {
@@ -43,6 +58,7 @@ export class TeamsPane extends DatasetView {
         let columns = [{
             id: "name",
             title: "Name",
+            component: TeamsCell,
         },{
             id: "matches",
             title: "Matches",
