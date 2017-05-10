@@ -10,14 +10,12 @@ import {Link, Redirect} from 'react-router-dom';
 import {GeneralTable} from 'main/app/admin/components/table'
 
 import {DatasetView} from 'components/dataset_view';
-import {FormBase} from 'components/forms';
-
-import ajax from 'common/ajax';
+import FormModal from 'components/form_modal';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
-class InnerForm extends React.Component {
+class TeamCreateForm extends React.Component {
     render() {
         let formData = this.props.formData;
         return (
@@ -33,71 +31,6 @@ class InnerForm extends React.Component {
                         placeholder="Sports Team Three"/>
                 </FormGroup>
             </Form>
-        );
-    }
-}
-
-class CreateTeamModal extends FormBase {
-    constructor(props) {
-        super(props);
-        this.state = {
-            'modal': false,
-
-            form: {
-                'name': '',
-            },
-        };
-
-        this.toggle = this.toggle.bind(this);
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-
-        ajax({
-            url:reverse('api-team-list'),
-            method: 'POST',
-            data: {
-                name: this.state.form.name,
-            }
-        }).then(data => {
-            this.setState({
-                'modal': false,
-            });
-
-            toastr.success("Team Created!");
-
-            if (this.props.triggerRefreshOnGrid !== undefined) {
-                this.props.triggerRefreshOnGrid();
-            };
-
-        }, error => {
-            //TODO error handling
-        });
-    }
-
-    toggle() {
-        this.setState({
-            modal: !this.state.modal
-        });
-    }
-
-    render() {
-        return (
-            <div>
-                <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Create Team</ModalHeader>
-                    <ModalBody>
-                        <InnerForm handleInputChange={this.handleInputChange} formData={this.state.form} handleSubmit={this.handleSubmit} />
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.handleSubmit}>Create!</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
         );
     }
 }
@@ -164,7 +97,12 @@ export class TeamsPane extends DatasetView {
             <div>
                 <h3> Teams </h3>
                 <Col className="ml-auto" md="2">
-                    <CreateTeamModal triggerRefreshOnGrid={this.updateDataset} buttonLabel="Create" />
+                    <FormModal
+                        formComponent={TeamCreateForm}
+                        formData={{"name": ""}}
+                        postUrl={reverse("api-team-list")}
+                        triggerRefreshOnGrid={this.updateDataset}
+                        buttonLabel="Create" />
                 </Col>
                 <GeneralTable columns={columns} rowData={this.state.teams} />
             </div>
