@@ -14,13 +14,14 @@ class ShallowLeagueSerializer(serializers.ModelSerializer):
         )
 
 class ShallowSeasonSerializer(serializers.ModelSerializer):
-    league = ShallowLeagueSerializer(read_only=True)
-
     class Meta:
         model = Season
         fields = (
             'id', 'pretty_date', 'league'
         )
+
+    league = ShallowLeagueSerializer(read_only=True)
+
 
 class ShallowMatchSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,15 +35,16 @@ class ShallowMatchSerializer(serializers.ModelSerializer):
         )
 
 class TeamSerializer(serializers.ModelSerializer):
-    matches = serializers.SerializerMethodField('get_ordered_matches')
-    players = UserSerializer(many=True)
-    season = ShallowSeasonSerializer(read_only=True)
-
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'players', 'season', 'matches'
+            'id', 'name', 'players', 'season_id', 'season', 'matches'
         )
+
+    matches = serializers.SerializerMethodField('get_ordered_matches')
+    players = UserSerializer(many=True, required=False)
+    season = ShallowSeasonSerializer(read_only=True)
+    season_id = serializers.IntegerField()
 
     def get_ordered_matches(self, team):
         matches = list(team.home_matches.all()) + list(team.away_matches.all())
