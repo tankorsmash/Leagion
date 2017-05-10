@@ -16,6 +16,7 @@ import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
 import {FormBase} from 'components/forms';
+import FormModal from 'components/form_modal';
 
 class SeasonCell extends React.Component {
     render() {
@@ -36,77 +37,26 @@ class LeagueNameCell extends React.Component {
     }
 }
 
-class CreateLeagueModal extends FormBase {
-    constructor(props) {
-        super(props);
-        this.state = {
-            'modal': false,
-            'created': false,
-            form: {
-                'name': '',
-            }
-        };
-
-        this.toggle = this.toggle.bind(this);
-    }
-
-    handleSubmit = (e) => {
-        e.preventDefault();
-
-        ajax({
-            url:reverse('api-league-list'),
-            method: 'POST',
-            data: {
-                name: this.state.form.name,
-            }
-        }).then(data => {
-            this.setState({
-                'created': true,
-                'modal': false,
-            });
-
-            toastr.success("League Created!");
-            //regenerate season grid in league detail
-            if (this.props.triggerRefreshOnGrid !== undefined) {
-                this.props.triggerRefreshOnGrid();
-            };
-
-        }, error => {
-            console.log("failed:", error);
-            this.setState({'created': false});
-        });
-    }
-
-    toggle() {
-        this.setState({
-            modal: !this.state.modal
-        });
-    }
-
+class LeagueCreateForm extends React.Component {
     render() {
+        let formData = this.props.formData;
         return (
-            <div>
-                <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
-
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Create League</ModalHeader>
-                    <ModalBody>
-                        <Form onSubmit={this.handleSubmit} >
-                            <FormGroup>
-                                <Label for="name">League name:</Label>
-                                <Input onChange={this.handleInputChange} value={this.state.form.name} type="text" name="name" id="name" placeholder="Peewee League"/>
-                            </FormGroup>
-                        </Form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button color="primary" onClick={this.handleSubmit}>Create!</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
+            <Form onSubmit={this.props.handleSubmit} >
+                <FormGroup>
+                    <Label for="name">League name:</Label>
+                    <Input
+                        onChange={this.props.handleInputChange}
+                        value={formData.name}
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="My New League"/>
+                </FormGroup>
+            </Form>
         );
     }
 }
+
 
 export class LeaguesPane extends DatasetView {
     get datasetStateAttr() {
@@ -133,7 +83,12 @@ export class LeaguesPane extends DatasetView {
                 <Row>
                     <Col md="6"> <h3> Leagues </h3> </Col>
                     <Col className="ml-auto" md="2">
-                        <CreateLeagueModal triggerRefreshOnGrid={this.updateDataset} buttonLabel="Create" />
+                        <FormModal
+                            formComponent={LeagueCreateForm}
+                            formData={{"name": ""}}
+                            postUrl={reverse("api-league-list")}
+                            triggerRefreshOnGrid={this.updateDataset}
+                            buttonLabel="Create" />
                     </Col>
                 </Row>
                 <GeneralTable columns={columns} rowData={this.state.leagues} />
