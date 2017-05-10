@@ -32,6 +32,7 @@ class MatchDetail extends DatasetView {
     }
     render() {
         buildPageTitle("Match Detail");
+
         if (this.getIsLoaded() == false) {
             return (<Container fluid>UNLOADED </Container>);
         };
