@@ -17,13 +17,30 @@ import ajax from 'common/ajax';
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
+class InnerForm extends React.Component {
+    render() {
+        let formData = this.props.formData;
+        return (
+            <Form onSubmit={this.props.handleSubmit} >
+                <FormGroup>
+                    <Label for="name">Team name:</Label>
+                    <Input onChange={this.props.handleInputChange} value={formData.name} type="text" name="name" id="name" placeholder="Sports Team Three"/>
+                </FormGroup>
+            </Form>
+        );
+    }
+}
+
 class CreateTeamModal extends FormBase {
     constructor(props) {
         super(props);
         this.state = {
             'modal': false,
-            'name': '',
             'created': false,
+
+            form: {
+                'name': '',
+            },
         };
 
         this.toggle = this.toggle.bind(this);
@@ -36,7 +53,7 @@ class CreateTeamModal extends FormBase {
             url:reverse('api-team-list'),
             method: 'POST',
             data: {
-                name: this.state.name,
+                name: this.state.form.name,
             }
         }).then(data => {
             let redirectUrl = this.props.redirectUrl;
@@ -72,12 +89,7 @@ class CreateTeamModal extends FormBase {
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Create Team</ModalHeader>
                     <ModalBody>
-                        <Form onSubmit={this.handleSubmit} >
-                            <FormGroup>
-                                <Label for="name">Team name:</Label>
-                                <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="Sports Team Three"/>
-                            </FormGroup>
-                        </Form>
+                        <InnerForm handleInputChange={this.handleInputChange} formData={this.state.form} handleSubmit={this.handleSubmit} />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.handleSubmit}>Create!</Button>{' '}

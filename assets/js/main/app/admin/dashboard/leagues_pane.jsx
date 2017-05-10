@@ -41,8 +41,10 @@ class CreateLeagueModal extends FormBase {
         super(props);
         this.state = {
             'modal': false,
-            'name': '',
             'created': false,
+            form: {
+                'name': '',
+            }
         };
 
         this.toggle = this.toggle.bind(this);
@@ -55,7 +57,7 @@ class CreateLeagueModal extends FormBase {
             url:reverse('api-league-list'),
             method: 'POST',
             data: {
-                name: this.state.name,
+                name: this.state.form.name,
             }
         }).then(data => {
             let redirectUrl = this.props.redirectUrl; //adminUrls.seasons.index+'/'+data.id;
@@ -94,7 +96,7 @@ class CreateLeagueModal extends FormBase {
                         <Form onSubmit={this.handleSubmit} >
                             <FormGroup>
                                 <Label for="name">League name:</Label>
-                                <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="Peewee League"/>
+                                <Input onChange={this.handleInputChange} value={this.state.form.name} type="text" name="name" id="name" placeholder="Peewee League"/>
                             </FormGroup>
                         </Form>
                     </ModalBody>

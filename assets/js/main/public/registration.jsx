@@ -14,7 +14,7 @@ class RegisterBase extends FormBase {
             url: reverse(this.url),
             requireLogin: false,
 			method: 'POST',
-            data: this.state,
+            data: this.state.form,
         }).then(data => {
             auth.login(data.key);
             this.forceUpdate();
@@ -41,9 +41,11 @@ class RegisterForm extends RegisterBase {
 
         super(props);
         this.state = {
-            'email': '',
-            'password1': '',
-            'password2': ''
+            form: {
+                'email': '',
+                'password1': '',
+                'password2': ''
+            }
         };
     }
 
@@ -53,15 +55,15 @@ class RegisterForm extends RegisterBase {
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label for="registerEmail">Email</Label>
-                    <Input type="email" name="email" id="registerEmail" value={this.state.email} onChange={this.handleInputChange}/>
+                    <Input type="email" name="email" id="registerEmail" value={this.state.form.email} onChange={this.handleInputChange}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="loginPassword">Password</Label>
-                    <Input type="password" name="password1" id="registerPassword1" value={this.state.password1} onChange={this.handleInputChange}/>
+                    <Input type="password" name="password1" id="registerPassword1" value={this.state.form.password1} onChange={this.handleInputChange}/>
                 </FormGroup>
                 <FormGroup>
                     <Label for="loginPassword2">Password Again</Label>
-                    <Input type="password" name="password2" id="registerPassword2" value={this.state.password2} onChange={this.handleInputChange}/>
+                    <Input type="password" name="password2" id="registerPassword2" value={this.state.form.password2} onChange={this.handleInputChange}/>
                 </FormGroup>
                 <Button type='submit' value='Submit'>Register</Button>
             </Form>
@@ -76,8 +78,10 @@ class LoginForm extends RegisterBase {
 
         super(props);
         this.state = {
-            'email': '',
-            'password': '',
+            form: {
+                'email': '',
+                'password': '',
+            }
         };
     }
 
@@ -86,11 +90,11 @@ class LoginForm extends RegisterBase {
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label for="loginEmail">Email</Label>
-                    <Input type="email" name="email" id="loginEmail" value={this.state.email} onChange={this.handleInputChange} />
+                    <Input type="email" name="email" id="loginEmail" value={this.state.form.email} onChange={this.handleInputChange} />
                 </FormGroup>
                 <FormGroup>
                     <Label for="loginPassword">Password</Label>
-                    <Input type="password" name="password" id="loginPassword" value={this.state.password} onChange={this.handleInputChange} />
+                    <Input type="password" name="password" id="loginPassword" value={this.state.form.password} onChange={this.handleInputChange} />
                 </FormGroup>
                 <Button type="submit">Log In</Button>
                 <Link to={publicUrls.register}>Register</Link>

@@ -11,7 +11,10 @@ class FormBase extends React.Component {
 		const name = target.name;
 
 		this.setState({
-			[name]: value
+            form: {
+                ...this.state.form,
+                [name]: value
+            }
 		});
 	}
 

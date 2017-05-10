@@ -26,8 +26,10 @@ class LeagueCreateForm extends FormBase {
     constructor(props) {
         super(props);
         this.state = {
-            'name': '',
             'created': false,
+            form: {
+                'name': '',
+            }
         };
     }
 
@@ -37,9 +39,7 @@ class LeagueCreateForm extends FormBase {
         ajax({
             url:reverse('api-league-list'),
             method: 'POST',
-            data: {
-                name: this.state.name,
-            }
+            data: this.state.form,
         }).then(data => {
             console.log("success: created League", data);
             toastr.success("League Created!");
@@ -60,7 +60,7 @@ class LeagueCreateForm extends FormBase {
             <Form onSubmit={this.handleSubmit} >
                 <FormGroup>
                     <Label for="name">League name:</Label>
-                    <Input onChange={this.handleInputChange} value={this.state.name} type="text" name="name" id="name" placeholder="Eastern Conference"/>
+                    <Input onChange={this.handleInputChange} value={this.state.form.name} type="text" name="name" id="name" placeholder="Eastern Conference"/>
                 </FormGroup>
                 <Button type="submit" >Create!</Button>
 

@@ -59,10 +59,13 @@ class CreateSeasonModal extends FormBase {
         super(props);
         this.state = {
             'modal': false,
-            'name': '',
-            'start_date': '',
-            'end_date': '',
             'created': false,
+            form: {
+                'name': '',
+                'start_date': '',
+                'end_date': '',
+                'league_id': this.props.leagueId,
+            }
         };
 
         this.toggle = this.toggle.bind(this);
@@ -71,17 +74,10 @@ class CreateSeasonModal extends FormBase {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        let formData = {
-            name: this.state.name,
-            start_date: this.state.start_date,
-            end_date: this.state.end_date,
-            league_id: this.props.leagueId,
-        }
-
         ajax({
             url:reverse('api-season-list'),
             method: 'POST',
-            data: formData,
+            data: this.state.form,
         }).then(data => {
             this.setState({
                 'created': true,
