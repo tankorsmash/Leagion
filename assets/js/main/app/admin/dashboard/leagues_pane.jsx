@@ -60,10 +60,8 @@ class CreateLeagueModal extends FormBase {
                 name: this.state.form.name,
             }
         }).then(data => {
-            let redirectUrl = this.props.redirectUrl; //adminUrls.seasons.index+'/'+data.id;
             this.setState({
                 'created': true,
-                'redirectUrl': redirectUrl,
                 'modal': false,
             });
 

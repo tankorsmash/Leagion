@@ -24,7 +24,13 @@ class InnerForm extends React.Component {
             <Form onSubmit={this.props.handleSubmit} >
                 <FormGroup>
                     <Label for="name">Team name:</Label>
-                    <Input onChange={this.props.handleInputChange} value={formData.name} type="text" name="name" id="name" placeholder="Sports Team Three"/>
+                    <Input
+                        onChange={this.props.handleInputChange}
+                        value={formData.name}
+                        type="text"
+                        name="name"
+                        id="name"
+                        placeholder="Sports Team Three"/>
                 </FormGroup>
             </Form>
         );
@@ -36,7 +42,6 @@ class CreateTeamModal extends FormBase {
         super(props);
         this.state = {
             'modal': false,
-            'created': false,
 
             form: {
                 'name': '',
@@ -56,22 +61,18 @@ class CreateTeamModal extends FormBase {
                 name: this.state.form.name,
             }
         }).then(data => {
-            let redirectUrl = this.props.redirectUrl;
             this.setState({
-                'created': true,
-                'redirectUrl': redirectUrl,
                 'modal': false,
             });
 
             toastr.success("Team Created!");
-            //regenerate season grid in league detail
+
             if (this.props.triggerRefreshOnGrid !== undefined) {
                 this.props.triggerRefreshOnGrid();
             };
 
         }, error => {
-            console.log("failed:", error);
-            this.setState({'created': false});
+            //TODO error handling
         });
     }
 
