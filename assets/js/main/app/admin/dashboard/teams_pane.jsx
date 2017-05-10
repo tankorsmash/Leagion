@@ -95,15 +95,17 @@ export class TeamsPane extends DatasetView {
 
         return (
             <div>
-                <h3> Teams </h3>
-                <Col className="ml-auto" md="2">
-                    <FormModal
-                        formComponent={TeamCreateForm}
-                        formData={{"name": ""}}
-                        postUrl={reverse("api-team-list")}
-                        triggerRefreshOnGrid={this.updateDataset}
-                        buttonLabel="Create" />
-                </Col>
+                <Row>
+                    <Col> <h3> Teams </h3> </Col>
+                    <Col className="" md="2">
+                        <FormModal
+                            formComponent={TeamCreateForm}
+                            formData={{"name": ""}}
+                            postUrl={reverse("api-team-list")}
+                            triggerRefreshOnGrid={this.updateDataset}
+                            buttonLabel="Create" />
+                    </Col>
+                </Row>
                 <GeneralTable columns={columns} rowData={this.state.teams} />
             </div>
         );
