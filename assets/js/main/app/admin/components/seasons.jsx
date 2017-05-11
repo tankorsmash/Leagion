@@ -175,32 +175,21 @@ class CreateSeasonPlaceholder extends React.Component {
 }
 
 
-class SeasonsCardList extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = { seasons: NOT_LOADED };
+class SeasonsCardList extends DatasetView {
+    get datasetStateAttr() {
+        return "seasons";
     }
 
-    componentDidMount() {
-        this.updateDataset();
+    get datasetViewName() {
+        return "api-league-season-list";
     }
 
-    updateDataset = () => {
-        let url = reverse('api-league-season-list', {"league_id": this.props.leagueId});
-
-        ajax({
-            url: url,
-        }).then(data => {
-            this.setState({seasons: data});
-        }, error => {
-            console.warn(error);
-        });
+    get datasetViewKwargs() {
+        return {"league_id": this.props.leagueId};
     }
 
     render() {
-        let isLoaded = this.state.seasons !== NOT_LOADED;
-
-        if (isLoaded == false) {
+        if (this.getIsLoaded() == false) {
             return <Spinner spinnerName='three-bounce' />;
         }
 
