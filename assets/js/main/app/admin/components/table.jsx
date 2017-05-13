@@ -51,9 +51,22 @@ class TableRow extends React.Component {
 }
 
 class TableBody extends React.Component {
+    static defaultProps = {
+        "rowData": [],
+        "columns": [],
+    }
+
     render() {
         const rowData = this.props.rowData;
         const columns = this.props.columns;
+
+        if (rowData.length == 0) {
+            return (
+                <tbody><tr><td>
+                            <span className="text-muted">No data</span>
+                </td></tr></tbody>
+            );
+        }
 
         return (
             <tbody>
