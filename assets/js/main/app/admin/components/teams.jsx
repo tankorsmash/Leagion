@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom';
 import ajax from 'common/ajax';
 var Spinner = require('react-spinkit');
 
+import FontAwesome from 'react-fontawesome';
+
 import {
     Container, Row, Col, ButtonDropdown, Button,
     DropdownToggle, DropdownMenu, DropdownItem,
@@ -99,9 +101,9 @@ class PlayerActionCell extends React.Component {
     render() {
         return (
             <td>
-                <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                    <DropdownToggle caret>
-                        Actions
+                <ButtonDropdown group={false} isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                    <DropdownToggle >
+                        <FontAwesome name="ellipsis-h"/>
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem>
