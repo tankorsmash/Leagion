@@ -38,11 +38,12 @@ class TableCell extends React.Component {
 
 class TableRow extends React.Component {
     render() {
+        const contextData = this.props.contextData;
         return (
             <tr>
                 {
                     this.props.columns.map((column, i) => {
-                        return (<TableCell key={i} column={column} rowData={this.props.rowData} />);
+                        return (<TableCell key={i} contextData={contextData} column={column} rowData={this.props.rowData} />);
                     })
                 }
             </tr>
@@ -59,6 +60,7 @@ class TableBody extends React.Component {
     render() {
         const rowData = this.props.rowData;
         const columns = this.props.columns;
+        const contextData = this.props.contextData;
 
         if (rowData.length == 0) {
             let emptyPlaceholder = [];
@@ -78,7 +80,7 @@ class TableBody extends React.Component {
                 {
                     rowData.map((row, i) => {
                         return (
-                            <TableRow key={i} columns={columns} rowData={row}/>
+                            <TableRow key={i} contextData={contextData} columns={columns} rowData={row}/>
                         );
                     })
                 }
@@ -91,11 +93,12 @@ export class GeneralTable extends React.Component {
     render() {
         const rowData = this.props.rowData;
         const columns = this.props.columns;
+        const contextData = this.props.contextData;
 
         return (
             <Table hover striped>
                 <TableHead columns={columns}/>
-                <TableBody columns={columns} rowData={rowData} />
+                <TableBody contextData={contextData} columns={columns} rowData={rowData} />
             </Table>
         );
     };
