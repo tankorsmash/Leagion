@@ -61,11 +61,16 @@ class TableBody extends React.Component {
         const columns = this.props.columns;
 
         if (rowData.length == 0) {
-            return (
-                <tbody><tr><td>
-                            <span className="text-muted">No data</span>
-                </td></tr></tbody>
-            );
+            let emptyPlaceholder = [];
+            for (let col of columns) {
+                emptyPlaceholder.push(
+                    <td key={col.id}>
+                        <span className="text-muted">&nbsp;</span>
+                    </td>
+                );
+            }
+
+            return <tbody><tr>{emptyPlaceholder}</tr></tbody>;
         }
 
         return (
