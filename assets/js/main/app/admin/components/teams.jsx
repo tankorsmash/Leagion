@@ -33,7 +33,7 @@ class TeamDetail extends DatasetView {
     render() {
         buildPageTitle("Team Detail");
         if (this.getIsLoaded() == false) {
-            return (<Row>UNLOADED </Row>);
+            return (<Container fluid>Loading... </Container>);
         };
 
         const team = this.state.team;
