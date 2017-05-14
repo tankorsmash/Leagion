@@ -27,7 +27,7 @@ import ajax from 'common/ajax';
 
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 
 class Season extends React.Component {
     render() {

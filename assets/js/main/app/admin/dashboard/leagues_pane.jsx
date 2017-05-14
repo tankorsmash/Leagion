@@ -7,7 +7,7 @@ import {
 } from 'reactstrap';
 
 import {Link, Redirect} from 'react-router-dom';
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
 
 import ajax from 'common/ajax';

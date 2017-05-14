@@ -3,7 +3,7 @@ import reverse from 'common/reverse';
 
 import {NOT_LOADED} from 'common/constants';
 
-export class DatasetView extends React.Component {
+export default class DatasetView extends React.Component {
     get datasetStateAttr() {
         return "dataset";
     }

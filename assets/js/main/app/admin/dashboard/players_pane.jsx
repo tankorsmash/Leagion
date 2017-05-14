@@ -1,4 +1,4 @@
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
 
 export class PlayersPane extends DatasetView {

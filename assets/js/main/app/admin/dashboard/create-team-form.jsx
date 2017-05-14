@@ -2,7 +2,7 @@ import {
     Form, FormGroup, Input, Dropdown, Label,
 } from 'reactstrap';
 
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 
 class LeagueSelectInput extends DatasetView {
     get datasetStateAttr() {

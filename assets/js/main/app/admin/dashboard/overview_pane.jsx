@@ -10,7 +10,7 @@ import {Line as LineChart, Bar as BarChart} from 'react-chartjs';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 
 import adminUrls from 'main/app/admin/urls';
 import {DATE_FORMAT} from 'main/app/admin/constants';

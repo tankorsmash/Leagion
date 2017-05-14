@@ -10,7 +10,7 @@ import {Link, Redirect} from 'react-router-dom';
 import {GeneralTable} from 'main/app/admin/components/table'
 import TeamCreateForm from 'main/app/admin/dashboard/create-team-form'
 
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 import FormModal from 'components/form_modal';
 
 import adminUrls from 'main/app/admin/urls';

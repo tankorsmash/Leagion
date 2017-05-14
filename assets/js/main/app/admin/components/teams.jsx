@@ -5,7 +5,7 @@ var Spinner = require('react-spinkit');
 
 import {Container, Row, Col} from 'reactstrap';
 
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 
 import {SimplePlayer} from 'main/app/admin/components/players';
 

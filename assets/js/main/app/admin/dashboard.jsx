@@ -9,7 +9,7 @@ import {Route} from 'components/router';
 
 import {buildPageTitle} from 'common/utils';
 
-import {DatasetView} from 'components/dataset_view';
+import DatasetView from 'components/dataset_view';
 
 import {OverviewPane} from 'main/app/admin/dashboard/overview_pane';
 import {LeaguesPane} from 'main/app/admin/dashboard/leagues_pane';
