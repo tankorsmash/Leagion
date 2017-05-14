@@ -114,7 +114,7 @@ class Season(models.Model):
     league = models.ForeignKey("League", related_name="seasons")
 
     def __str__(self):
-        return "Season: {}-{}".format(start_date, end_date)
+        return "Season: {}-{}".format(self.start_date, self.end_date)
 
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
