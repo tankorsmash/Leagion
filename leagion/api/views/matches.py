@@ -25,10 +25,10 @@ class MatchList(generics.ListCreateAPIView):
     ).prefetch_related(
         'postponed_to', 'postponed_from',
         'location',
-        'away_team', 'away_roster',
+        'away_team', 'away_roster', 'away_roster__team',
         'away_team__season',
 
-        'home_team', 'home_roster',
+        'home_team', 'home_roster','home_roster__team',
         'home_team__season',
     )
 
