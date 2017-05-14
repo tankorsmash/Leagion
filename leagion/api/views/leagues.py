@@ -24,8 +24,16 @@ class LeagueSeasonsList(generics.ListCreateAPIView):
     serializer_class = SeasonSerializer
 
     def get_queryset(self):
-        return Season.objects.filter(league_id=self.kwargs['league_id'])
+        league_id = self.kwargs['league_id']
+        return Season.objects.filter(league_id=league_id).select_related(
+            "league",
+        ).prefetch_related(
+            "teams", "matches",
 
+            "matches__home_team",
+            "matches__location",
+            "matches__away_team",
+        )
 
 @reverse_js
 class LeagueDetail(generics.RetrieveUpdateAPIView):

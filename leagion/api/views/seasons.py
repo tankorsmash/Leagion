@@ -28,7 +28,7 @@ class SeasonList(generics.ListCreateAPIView):
 class SeasonDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "season_id"
 
-    queryset = Season.objects.all()
+    queryset = SeasonList.queryset
     serializer_class = SeasonSerializer
 
 @reverse_js
