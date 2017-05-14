@@ -48,24 +48,40 @@ class SeasonSelectInput extends DatasetView {
 
     render() {
         let options = [];
-        if (this.getIsLoaded() == false) {
-            options.push(<option key={0}> Loading Seasons</option>);
-        } else {
-            options.push(<option value="-1" key="-1">Select a season</option>);
 
-            this.state.seasons.map((season) => {
-                if (season.league_id == this.props.leagueId) {
-                    options.push(<option value={season.id} key={season.id}> {season.pretty_name}</option>);
-                };
+        //if initial state of modal
+        if (this.props.leagueId == "-1") {
+            options.push(<option key={0}>Select a league</option>);
+        //else if waiting for api
+        } else if (this.getIsLoaded() == false) {
+            options.push(<option key={0}> Loading Seasons</option>);
+        // otherwise ready to go, select a season
+        } else {
+            const filteredSeasons = this.state.seasons.filter((season) => {
+                return season.league_id == this.props.leagueId
             });
+
+            if (filteredSeasons.length == 0) {
+                options.push(<option value="-1" key="-1">Must first create a season in league</option>);
+            } else {
+                options.push(<option value="-1" key="-1">Select a season</option>);
+
+                filteredSeasons.map((season) => {
+                    if (season.league_id == this.props.leagueId) {
+                        options.push(<option value={season.id} key={season.id}> {season.pretty_name}</option>);
+                    };
+                });
+            };
+
         }
+
         return (
             <Input
                 type="select"
                 onChange={this.props.handleInputChange}
-                value={this.props.seasonId}
-                name="seasonId"
-                id="seasonId" >
+                value={this.props.season_id}
+                name="season_id"
+                id="season_id" >
                 { options }
             </Input>
         );
@@ -100,7 +116,7 @@ export default class TeamCreateForm extends React.Component {
                     <SeasonSelectInput
                         handleInputChange={this.props.handleInputChange}
                         leagueId={formData.leagueId}
-                        value={formData.seasonId}
+                        value={formData.season_id}
                     />
                 </FormGroup>
             </Form>

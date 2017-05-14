@@ -80,7 +80,7 @@ export class TeamsPane extends DatasetView {
                     <Col className="" md="2">
                         <FormModal
                             formComponent={TeamCreateForm}
-                            formData={{"name": "", "seasonId": -1, "leagueId": -1}}
+                            formData={{"name": "", "season_id": -1, "leagueId": -1}}
                             postUrl={reverse("api-team-list")}
                             triggerRefreshOnGrid={this.updateDataset}
                             buttonLabel="Create" />
