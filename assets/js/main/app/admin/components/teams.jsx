@@ -39,7 +39,6 @@ class RemoveUserFromTeamModal extends React.Component {
     removeFromTeam = (e) => {
         //get list of current team members
         let playerIds = this.props.team.player_ids;
-        //remove user
         playerIds = playerIds.filter((playerId) => {
             return playerId != this.props.user.id;
         });

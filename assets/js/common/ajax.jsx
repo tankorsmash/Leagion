@@ -1,13 +1,17 @@
-// {
-//     data: {},
-//     method: 'GET',
-//     url: ''
-//
-// }
 import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
-let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
+function validateStatusCode(statusCode) {
+    const validStatusCodes = [200, 201];
+    return validStatusCodes.includes(statusCode) == false;
+};
+
+export default function ajax({
+    data=null,
+    method='GET',
+    url=null,
+    requireLogin=true
+}) {
     if (!url) {
         throw('you need a url to make an ajax call');
     }
@@ -16,15 +20,9 @@ let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
         console.warn(`'undefined' found in URL, potential for unset variables upstream in '${url}'`)
     }
 
-    let body = null;
-
-    if (data) {
-        body = JSON.stringify(data);
-    }
-
     let info = {
         method: method,
-        body: body,
+        body: data ? JSON.stringify(data) : null,
         credentials: "same-origin",
         headers: {
             "Accept": "application/json",
@@ -37,31 +35,21 @@ let ajax = function({data=null, method='GET', url=null, requireLogin=true}) {
     }
 
     return new Promise(
-        // The resolver function is called with the ability to resolve or
-        // reject the promise
-        (resolve, reject) => {
-            let error = false;
+        (resolveHandler, rejectHandler) => {
+            let isValidStatusCode = false;
 
             fetch(url, info)
-                .then(r => {
-                    const good_statuses = [200, 201];
-                    if (good_statuses.includes(r.status) == false) {
-                        error = true;
-                    }
-
-                    return r.json()
+                .then(response => {
+                    isValidStatusCode = validateStatusCode(response.status);
+                    return response.json()
                 })
                 .then(data => {
-                    if (error) {
-                        reject(data);
+                    if (isValidStatusCode) {
+                        rejectHandler(data);
                     } else {
-                        resolve(data);
-
+                        resolveHandler(data);
                     }
                 });
         }
     );
-
 }
-
-module.exports = ajax;
