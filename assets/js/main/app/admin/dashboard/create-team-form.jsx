@@ -18,6 +18,8 @@ class LeagueSelectInput extends DatasetView {
         if (this.getIsLoaded() == false) {
             options.push(<option key={0}> Loading Leagues</option>);
         } else {
+            options.push(<option value="-1" key="-1">Select a league</option>);
+
             this.state.leagues.map((league) => {
                 options.push(<option value={league.id} key={league.id}> {league.name}</option>);
             });
@@ -29,6 +31,39 @@ class LeagueSelectInput extends DatasetView {
                 value={this.props.leagueId}
                 name="leagueId"
                 id="leagueId" >
+                { options }
+            </Input>
+        );
+    }
+}
+
+class SeasonSelectInput extends DatasetView {
+    get datasetStateAttr() {
+        return "seasons";
+    }
+
+    get datasetViewName() {
+        return "api-season-list";
+    }
+
+    render() {
+        let options = [];
+        if (this.getIsLoaded() == false) {
+            options.push(<option key={0}> Loading Seasons</option>);
+        } else {
+            options.push(<option value="-1" key="-1">Select a season</option>);
+
+            this.state.seasons.map((season) => {
+                options.push(<option value={season.id} key={season.id}> {season.pretty_name}</option>);
+            });
+        }
+        return (
+            <Input
+                type="select"
+                onChange={this.props.handleInputChange}
+                value={this.props.seasonId}
+                name="seasonId"
+                id="seasonId" >
                 { options }
             </Input>
         );
@@ -60,14 +95,10 @@ export default class TeamCreateForm extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <Label for="name">Season:</Label>
-                    <Input
-                        type="select"
-                        onChange={this.props.handleInputChange}
+                    <SeasonSelectInput
+                        handleInputChange={this.props.handleInputChange}
                         value={formData.seasonId}
-                        name="seasonId"
-                        id="seasonId" >
-                        <option> PLACEHOLDER SEASON </option>
-                    </Input>
+                    />
                 </FormGroup>
             </Form>
         );
