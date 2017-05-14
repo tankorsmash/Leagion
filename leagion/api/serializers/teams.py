@@ -1,7 +1,7 @@
 from django.db.models import Q
 
 from rest_framework import serializers
-from leagion.models import Team, Match, League, Season
+from leagion.models import Team, Match, League, Season, User
 from leagion.api.serializers.users import UserSerializer
 from leagion.api.serializers.matches import MatchSerializer
 
@@ -38,11 +38,12 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'players', 'season_id', 'season', 'matches'
+            'id', 'name', 'player_ids', 'players', 'season_id', 'season', 'matches'
         )
 
     matches = serializers.SerializerMethodField('get_ordered_matches')
-    players = UserSerializer(many=True, required=False)
+    players = UserSerializer(many=True, read_only=True, required=False)
+    player_ids = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source="players", many=True, read_only=False)
     season = ShallowSeasonSerializer(read_only=True)
     season_id = serializers.IntegerField()
 
