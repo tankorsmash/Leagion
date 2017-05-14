@@ -179,6 +179,10 @@ def generate_matches(season, match_count=10):
 
     matches = []
     for i in range(match_count):
+        if len(teams) < 2:
+            print("not enough teams for season %s" % season)
+            break
+
         print("generating match", i+1, "of", match_count)
         home_team, away_team = random.sample(teams, 2)
         location = random.choice(locations)
