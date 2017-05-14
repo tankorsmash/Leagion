@@ -3,7 +3,7 @@ import {
     Container, Row, Col, Jumbotron, Button,
     Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
     Nav, NavLink, NavItem, Table, Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle,
-    Form, FormGroup, Input, Label,
+    Form, FormGroup, Input, Dropdown, Label,
 } from 'reactstrap';
 
 import {Link, Redirect} from 'react-router-dom';
@@ -29,6 +29,28 @@ class TeamCreateForm extends React.Component {
                         name="name"
                         id="name"
                         placeholder="Sports Team Three"/>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="name">League:</Label>
+                    <Input
+                        type="select"
+                        onChange={this.props.handleInputChange}
+                        value={formData.leagueId}
+                        name="leagueId"
+                        id="leagueId" >
+                        <option> PLACEHOLDER LEAGUE </option>
+                    </Input>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="name">Season:</Label>
+                    <Input
+                        type="select"
+                        onChange={this.props.handleInputChange}
+                        value={formData.seasonId}
+                        name="seasonId"
+                        id="seasonId" >
+                        <option> PLACEHOLDER SEASON </option>
+                    </Input>
                 </FormGroup>
             </Form>
         );
@@ -100,7 +122,7 @@ export class TeamsPane extends DatasetView {
                     <Col className="" md="2">
                         <FormModal
                             formComponent={TeamCreateForm}
-                            formData={{"name": ""}}
+                            formData={{"name": "", "seasonId": -1, "leagueId": -1}}
                             postUrl={reverse("api-team-list")}
                             triggerRefreshOnGrid={this.updateDataset}
                             buttonLabel="Create" />
