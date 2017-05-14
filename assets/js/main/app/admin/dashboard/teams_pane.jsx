@@ -8,55 +8,13 @@ import {
 
 import {Link, Redirect} from 'react-router-dom';
 import {GeneralTable} from 'main/app/admin/components/table'
+import TeamCreateForm from 'main/app/admin/dashboard/create-team-form'
 
 import {DatasetView} from 'components/dataset_view';
 import FormModal from 'components/form_modal';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
-
-class TeamCreateForm extends React.Component {
-    render() {
-        let formData = this.props.formData;
-        return (
-            <Form onSubmit={this.props.handleSubmit} >
-                <FormGroup>
-                    <Label for="name">Team name:</Label>
-                    <Input
-                        onChange={this.props.handleInputChange}
-                        value={formData.name}
-                        type="text"
-                        name="name"
-                        id="name"
-                        placeholder="Sports Team Three"/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="name">League:</Label>
-                    <Input
-                        type="select"
-                        onChange={this.props.handleInputChange}
-                        value={formData.leagueId}
-                        name="leagueId"
-                        id="leagueId" >
-                        <option> PLACEHOLDER LEAGUE </option>
-                    </Input>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="name">Season:</Label>
-                    <Input
-                        type="select"
-                        onChange={this.props.handleInputChange}
-                        value={formData.seasonId}
-                        name="seasonId"
-                        id="seasonId" >
-                        <option> PLACEHOLDER SEASON </option>
-                    </Input>
-                </FormGroup>
-            </Form>
-        );
-    }
-}
-
 
 class TeamsCell extends React.Component {
     render() {
