@@ -54,7 +54,9 @@ class SeasonSelectInput extends DatasetView {
             options.push(<option value="-1" key="-1">Select a season</option>);
 
             this.state.seasons.map((season) => {
-                options.push(<option value={season.id} key={season.id}> {season.pretty_name}</option>);
+                if (season.league_id == this.props.leagueId) {
+                    options.push(<option value={season.id} key={season.id}> {season.pretty_name}</option>);
+                };
             });
         }
         return (
@@ -97,6 +99,7 @@ export default class TeamCreateForm extends React.Component {
                     <Label for="name">Season:</Label>
                     <SeasonSelectInput
                         handleInputChange={this.props.handleInputChange}
+                        leagueId={formData.leagueId}
                         value={formData.seasonId}
                     />
                 </FormGroup>
