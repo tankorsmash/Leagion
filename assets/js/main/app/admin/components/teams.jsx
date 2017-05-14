@@ -4,8 +4,9 @@ import ajax from 'common/ajax';
 var Spinner = require('react-spinkit');
 
 import {
-    Container, Row, Col, ButtonDropdown,
-    DropdownToggle, DropdownMenu, DropdownItem
+    Container, Row, Col, ButtonDropdown, Button,
+    DropdownToggle, DropdownMenu, DropdownItem,
+    Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
@@ -20,6 +21,67 @@ import pathToRegex from 'path-to-regexp';
 
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
+
+class RemoveUserFromTeamModal extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modalOpen: false
+        };
+    }
+
+    toggle = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        });
+    }
+
+    removeFromTeam = (e) => {
+        //get list of current team members
+        let playerIds = this.props.team.player_ids;
+        //remove user
+        playerIds = playerIds.filter((playerId) => {
+            return playerId != this.props.user.id;
+        });
+        //post list of team members minus user
+        const teamUrl = reverse("api-team-detail", {team_id: this.props.team.id});
+
+        ajax({
+            url: teamUrl,
+            method: 'PATCH',
+            data: {
+                player_ids: playerIds,
+            },
+        }).then( response => {
+            toastr.success("Removed user from team");
+            this.props.triggerRefreshOnGrid();
+        }, error => {
+            toastr.error("Failed to remove user from team");
+        });
+
+        //close modal
+        this.toggle();
+    }
+
+    render() {
+        return (
+            <div>
+                <div color="danger" onClick={this.toggle}>Remove from Team</div>
+
+                <Modal isOpen={this.state.modalOpen} toggle={this.toggle} className={this.props.className}>
+                    <ModalHeader toggle={this.toggle}>Remove user from team?</ModalHeader>
+                    <ModalBody>
+                        Removing user from team cannot be undone
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="danger" onClick={this.removeFromTeam}>Remove from team</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
+        );
+    };
+}
 
 class PlayerActionCell extends React.Component {
     constructor(props) {
@@ -43,7 +105,13 @@ class PlayerActionCell extends React.Component {
                         Actions
                     </DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem>Remove from team</DropdownItem>
+                        <DropdownItem>
+                            <RemoveUserFromTeamModal
+                                team={this.props.contextData.team}
+                                triggerRefreshOnGrid={this.props.contextData.triggerRefreshOnGrid}
+                                user={this.props.data}
+                            />
+                        </DropdownItem>
                     </DropdownMenu>
                 </ButtonDropdown>
             </td>
@@ -102,7 +170,7 @@ class TeamDetail extends DatasetView {
 
                 <div className="d-flex justify-content-around">
                     <div className="">
-                        <GeneralTable contextData={{team: team}} columns={playersColumns} rowData={team.players} />
+                        <GeneralTable contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
                     </div>
                     <div>
                         <GeneralTable columns={matchColumns} rowData={team.matches} />

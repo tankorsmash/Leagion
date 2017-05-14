@@ -20,12 +20,13 @@ class TableCell extends React.Component {
     render() {
         const column = this.props.column;
         const rowData = this.props.rowData;
+        const contextData = this.props.contextData;
 
         //if there's a component to render, use that, otherwise build a plain <td>
         if (column.component) {
             const CellComponent = column.component;
             return (
-                <CellComponent data={rowData} />
+                <CellComponent contextData={contextData} data={rowData} />
             );
         } else {
             return (
