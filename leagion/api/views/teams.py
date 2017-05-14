@@ -15,10 +15,12 @@ class TeamList(generics.ListCreateAPIView):
         "home_matches__home_team", "home_matches__home_roster",
         "home_matches__away_team", "home_matches__away_roster",
         "home_matches__location", "home_matches__season",
+        "home_matches__postponed_to", "home_matches__postponed_from",
 
         "away_matches__home_team", "away_matches__home_roster",
         "away_matches__away_team", "away_matches__away_roster",
         "away_matches__location", "away_matches__season",
+        "away_matches__postponed_to","away_matches__postponed_from",
 
         "players"
     ).select_related(
