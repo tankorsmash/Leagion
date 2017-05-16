@@ -83,7 +83,8 @@ export class TeamsPane extends DatasetView {
                             formData={{"name": "", "season_id": -1, "leagueId": -1}}
                             postUrl={reverse("api-team-list")}
                             triggerRefreshOnGrid={this.updateDataset}
-                            buttonLabel="Create" />
+                            buttonLabel="Create"
+                            modalHeaderLabel="Create Team"/>
                     </Col>
                 </Row>
                 <GeneralTable columns={columns} rowData={this.state.teams} />

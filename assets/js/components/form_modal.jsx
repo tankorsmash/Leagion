@@ -13,6 +13,9 @@ export default class FormModal extends FormBase {
     static defaultProps = {
         successMessage: "Success!",
         errorMessage: "Error!",
+
+        modalHeaderLabel: "Form",
+        buttonLabel: "Submit",
     };
 
     static propTypes = {
@@ -22,6 +25,8 @@ export default class FormModal extends FormBase {
 
         successMessage: PropTypes.string,
         errorMessage: PropTypes.string,
+        modalHeaderLabel: PropTypes.string,
+        buttonLabel: PropTypes.string,
     };
 
     constructor(props) {
@@ -72,7 +77,7 @@ export default class FormModal extends FormBase {
                 <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
 
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Create Team</ModalHeader>
+                    <ModalHeader toggle={this.toggle}>{this.props.modalHeaderLabel}</ModalHeader>
                     <ModalBody>
                         <FormComponent
                             handleInputChange={this.handleInputChange}
