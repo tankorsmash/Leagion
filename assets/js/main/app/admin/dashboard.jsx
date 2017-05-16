@@ -19,7 +19,7 @@ import {PlayersPane} from 'main/app/admin/dashboard/players_pane';
 import adminUrls from 'main/app/admin/urls';
 
 
-class Dashboard extends React.Component {
+export default class Dashboard extends React.Component {
     constructor(props) {
         super(props);
 
@@ -92,5 +92,3 @@ class Dashboard extends React.Component {
         );
     }
 }
-
-module.exports = Dashboard;
