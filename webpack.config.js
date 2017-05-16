@@ -90,4 +90,16 @@ module.exports = modulePaths => ({
         ],
         extensions: ['*', '.js', '.jsx', '.scss', '.css'],
     },
+
+    devServer: {
+        host: 'localhost',
+        port: 20034,
+
+        historyApiFallback: true,
+        // respond to 404s with index.html
+        headers: { 'Access-Control-Allow-Origin': '*'  },
+
+        hot: true,
+        // enable HMR on the server
+    },
 })
