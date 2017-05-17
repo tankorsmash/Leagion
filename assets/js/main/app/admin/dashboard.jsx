@@ -48,39 +48,31 @@ export default class Dashboard extends React.Component {
         return `${adminUrls.dashboard.index}/${id}`;
     }
 
-    _renderTabs(){
-        const navItems = this.tabs.map((tab)=>{
-            return (
-                <NavItem key={tab.id} >
-                    <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
-                        {tab.name}
-                    </RouterNavLink>
-                </NavItem>
-            );
-        });
-
-        return (
-            <Nav pills vertical>
-                { navItems }
-            </Nav>
-        );
-    }
-
     render() {
         buildPageTitle("Admin Dashboard");
         return (
             <Container fluid>
                 <Row>
                     <Col className="bg-faded" sm="2">
-                        { this._renderTabs() }
+                        <Nav pills vertical>
+                            { this.tabs.map((tab) => {
+                                return (
+                                    <NavItem key={tab.id} >
+                                        <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
+                                            {tab.name}
+                                        </RouterNavLink>
+                                    </NavItem>
+                                );
+                            })}
+                        </Nav>
                     </Col>
                     <Col sm="10">
                         <Switch>
-                            {
-                                this.tabs.map((tab) => {
-                                    return <Route key={tab.id} path={this.buildUrlFromId(tab.id)} component={tab.pane} />
-                                })
-                            }
+                            { this.tabs.map((tab) => {
+                                return (
+                                    <Route key={tab.id} path={this.buildUrlFromId(tab.id)} component={tab.pane} />
+                                );
+                            })}
 
                             {/* fallback to overview if provided garbage tab name */}
                             <Redirect from={adminUrls.dashboard.index} to={adminUrls.dashboard.overview} />
