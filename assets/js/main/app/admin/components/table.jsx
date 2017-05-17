@@ -132,16 +132,22 @@ export class GeneralTable extends React.Component {
 
         return (
             <div>
-                <Row> <Col>
+                <Row>
+                    <Col>
                         <Table hover striped>
                             <TableHead columns={columns}/>
                             <TableBody contextData={contextData} columns={columns} rowData={displayedRows} />
                         </Table>
-                </Col></Row>
+                    </Col>
+                </Row>
 
-                <Row> <Col>
-                        { currentPageIndex > 0 &&
-                                <Button color="primary" onClick={this.prevPage}> Prev </Button> }
+                <Row>
+                    <Col>
+                        <Button
+                            className={ currentPageIndex > 0 ? undefined :  "invisible" }
+                            color="primary" onClick={this.prevPage}>
+                            Prev
+                        </Button>
 
                         { range(0, totalPages+1).map((pageNum) => {
                             return (
@@ -154,9 +160,13 @@ export class GeneralTable extends React.Component {
                             );
                         })}
 
-                        { currentPageIndex+1 <= totalPages &&
-                                <Button color="primary" onClick={this.nextPage}> Next </Button> }
-                </Col></Row>
+                        <Button
+                            className={currentPageIndex+1 <= totalPages ? undefined : "invisible" }
+                            color="primary" onClick={this.nextPage}>
+                            Next
+                        </Button>
+                    </Col>
+                </Row>
             </div>
         );
     };
