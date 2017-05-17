@@ -1,4 +1,6 @@
-import { Table } from 'reactstrap';
+import { Table, Row, Col, Button } from 'reactstrap';
+
+const range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + start);
 
 class TableHead extends React.Component {
     render() {
@@ -91,16 +93,71 @@ class TableBody extends React.Component {
 }
 
 export class GeneralTable extends React.Component {
+    static defaultProps = {
+        perPage: 5,
+    }
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            curIndex: 0,
+        }
+    }
+
+    nextPage = (e) => {
+        this.setState({
+            curIndex: this.state.curIndex+this.props.perPage
+        });
+    }
+
+    prevPage = (e) => {
+        this.setState({
+            curIndex: this.state.curIndex-this.props.perPage
+        });
+    }
+
     render() {
         const rowData = this.props.rowData;
         const columns = this.props.columns;
         const contextData = this.props.contextData;
 
+        let displayedRows = rowData.slice(
+            this.state.curIndex,
+            this.state.curIndex+this.props.perPage,
+        );
+
+        const totalPages = rowData.length/this.props.perPage;
+        const currentPageIndex = this.state.curIndex / this.props.perPage;
+
         return (
-            <Table hover striped>
-                <TableHead columns={columns}/>
-                <TableBody contextData={contextData} columns={columns} rowData={rowData} />
-            </Table>
+            <div>
+                <Row> <Col>
+                        <Table hover striped>
+                            <TableHead columns={columns}/>
+                            <TableBody contextData={contextData} columns={columns} rowData={displayedRows} />
+                        </Table>
+                </Col></Row>
+
+                <Row> <Col>
+                        { currentPageIndex > 0 &&
+                                <Button color="primary" onClick={this.prevPage}> Prev </Button> }
+
+                        { range(0, totalPages+1).map((pageNum) => {
+                            return (
+                                <Button
+                                    key={pageNum}
+                                    color={ pageNum == currentPageIndex ? "active" : undefined}
+                                    onClick={ (e) => this.setState({curIndex: pageNum*this.props.perPage})} >
+                                    {pageNum+1}
+                                </Button>
+                            );
+                        })}
+
+                        { currentPageIndex+1 <= totalPages &&
+                                <Button color="primary" onClick={this.nextPage}> Next </Button> }
+                </Col></Row>
+            </div>
         );
     };
 };
