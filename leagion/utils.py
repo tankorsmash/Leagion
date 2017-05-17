@@ -3,8 +3,9 @@ import faker
 import random
 import datetime
 
-from django.contrib.auth import get_user_model
 from django.conf import settings
+from django.db.utils import IntegrityError
+from django.contrib.auth import get_user_model
 
 from leagion.models import (
     Team, League, Match, Roster,
@@ -217,6 +218,9 @@ def generate_superuser():
     except AttributeError as e:
         print(e)
         print("See note in settings.py about DEFAULT_ADMIN_DATA if you want to autogenerate a staff/superuser")
+
+    except IntegrityError as e:
+        print ("User sharing default superuser email found, skipping")
 
 
 def generate_all():
