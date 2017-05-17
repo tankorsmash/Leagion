@@ -94,7 +94,7 @@ class TableBody extends React.Component {
 
 export class GeneralTable extends React.Component {
     static defaultProps = {
-        perPage: 5,
+        perPage: 25,
     }
 
     constructor(props) {
@@ -145,9 +145,9 @@ export class GeneralTable extends React.Component {
                     <Col>
                         <Button
                             className={ currentPageIndex > 0 ? undefined :  "invisible" }
-                            color="primary" onClick={this.prevPage}>
-                            Prev
-                        </Button>
+                            color="primary"
+                            onClick={this.prevPage}
+                        > Prev </Button>
 
                         { range(0, totalPages+1).map((pageNum) => {
                             return (
@@ -161,10 +161,10 @@ export class GeneralTable extends React.Component {
                         })}
 
                         <Button
-                            className={currentPageIndex+1 <= totalPages ? undefined : "invisible" }
-                            color="primary" onClick={this.nextPage}>
-                            Next
-                        </Button>
+                            className={ currentPageIndex+1 <= totalPages ? undefined : "invisible" }
+                            color="primary"
+                            onClick={this.nextPage}
+                        > Next </Button>
                     </Col>
                 </Row>
             </div>
