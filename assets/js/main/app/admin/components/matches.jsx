@@ -18,6 +18,36 @@ import pathToRegex from 'path-to-regexp';
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
 
+class RosterTable extends DatasetView {
+    get datasetStateAttr() {
+        return "roster";
+    }
+
+    get datasetViewName() {
+        return "api-roster-detail";
+    }
+
+    get datasetViewKwargs() {
+        return {roster_id: this.props.rosterId};
+    }
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return (<div>TABLE LOADING</div>);
+        }
+
+        const playerColumns = [{
+            id: "full_name",
+            title: this.props.fullNameHeaderText,
+            component: (props) => <td>  {props.data.player.full_name} </td>
+        }];
+
+        return (
+            <GeneralTable columns={playerColumns} rowData={this.state.roster.players} />
+        );
+    }
+}
+
 class MatchDetail extends DatasetView {
     get datasetStateAttr() {
         return "match";
@@ -30,6 +60,7 @@ class MatchDetail extends DatasetView {
     get datasetViewKwargs() {
         return {match_id: this.props.match.params.matchId};
     }
+
     render() {
         buildPageTitle("Match Detail");
 
@@ -59,10 +90,10 @@ class MatchDetail extends DatasetView {
                 </h5>
 
                 <div>
-                    <GeneralTable columns={homePlayersColumns} rowData={match.home_roster.players} />
+                    <RosterTable rosterId={match.home_roster} fullNameHeaderText="Home Players" />
                 </div>
                 <div>
-                    <GeneralTable columns={awayPlayersColumns} rowData={match.away_roster.players} />
+                    <RosterTable rosterId={match.away_roster} fullNameHeaderText="Away Players" />
                 </div>
             </Container>
         );
