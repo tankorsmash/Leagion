@@ -131,7 +131,7 @@ export class GeneralTable extends React.Component {
             this.state.curIndex+this.props.perPage,
         );
 
-        const totalPages = rowData.length/this.props.perPage;
+        const totalPages = (rowData.length-1)/this.props.perPage;
         const currentPageIndex = this.state.curIndex / this.props.perPage;
 
         return (
@@ -146,7 +146,7 @@ export class GeneralTable extends React.Component {
                 </Row>
 
                 <Row>
-                    <Col>
+                    <Col className="d-flex justify-content-center">
                         <Button
                             className={ currentPageIndex > 0 ? undefined :  "invisible" }
                             color="primary"
@@ -165,7 +165,7 @@ export class GeneralTable extends React.Component {
                         })}
 
                         <Button
-                            className={ currentPageIndex+1 <= totalPages ? undefined : "invisible" }
+                            className={ currentPageIndex < totalPages-1 ? undefined : "invisible" }
                             color="primary"
                             onClick={this.nextPage}
                         > Next </Button>
