@@ -176,3 +176,9 @@ this is used in generate_all to save on having to recreate a superuser all the t
 """
 
 from .local import *
+
+if DEBUG:
+    #disable hardcore password hashing locally, makes generating users real slow
+    PASSWORD_HASHERS = (
+                'django.contrib.auth.hashers.MD5PasswordHasher',
+                )
