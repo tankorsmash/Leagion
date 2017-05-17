@@ -1,7 +1,6 @@
 import {Link} from 'react-router-dom';
 
 import ajax from 'common/ajax';
-var Spinner = require('react-spinkit');
 
 import FontAwesome from 'react-fontawesome';
 
@@ -174,7 +173,7 @@ class TeamDetail extends DatasetView {
                         <GeneralTable contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
                     </div>
                     <div>
-                        <GeneralTable columns={matchColumns} rowData={team.matches} />
+                        <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
                     </div>
                 </div>
             </Container>

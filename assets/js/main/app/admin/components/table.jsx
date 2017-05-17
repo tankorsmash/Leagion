@@ -1,4 +1,5 @@
 import { Table, Row, Col, Button } from 'reactstrap';
+import PropTypes from 'prop-types';
 
 const range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + start);
 
@@ -95,6 +96,9 @@ class TableBody extends React.Component {
 export class GeneralTable extends React.Component {
     static defaultProps = {
         perPage: 25,
+    }
+    static propTypes = {
+        perPage: PropTypes.number,
     }
 
     constructor(props) {
