@@ -16,26 +16,27 @@ User = get_user_model()
 
 viewnames_exposed_js = set()
 
+F = faker.Faker()
+
 def reverse_js(view):
     viewnames_exposed_js.add(view)
     return view
 
 def generate_users(count, team=None):
-    f = faker.Faker()
 
     existing_emails = list(User.objects.all().values_list("email", flat=True))
 
     new_users = []
     for i in range(count):
         #ensure unique email
-        email = f.email()
+        email = F.email()
         while email in existing_emails:
-            email = f.email()
+            email = F.email()
 
         user = User(
             email=email,
-            first_name=f.first_name(),
-            last_name=f.last_name(),
+            first_name=F.first_name(),
+            last_name=F.last_name(),
         )
         user.set_password('abc123')
         new_users.append(user)
@@ -53,8 +54,7 @@ def generate_users(count, team=None):
 def generate_league(name=None):
     print("generating league")
     if name is None:
-        f = faker.Faker()
-        name = f.company()+" League"
+        name = F.company()+" League"
     league = League.objects.create(name=name)
 
     print("generating season for league")
@@ -64,10 +64,9 @@ def generate_league(name=None):
 
 def generate_season(league, start_date=None, end_date=None, teams_count=5, players_in_team_count=15):
     print("generating season")
-    f = faker.Faker()
 
     if start_date is None:
-        start_date = f.date_object()
+        start_date = F.date_object()
     if end_date is None:
         end_date = start_date + datetime.timedelta(weeks=32)
 
@@ -79,23 +78,21 @@ def generate_season(league, start_date=None, end_date=None, teams_count=5, playe
     return season
 
 def generate_teams(season, team_count, players_count):
-    f = faker.Faker()
     for i in range(team_count):
         team = Team.objects.create(
-            name=f.street_name(),
+            name=F.street_name(),
             season=season
         )
         print("generating players for team", i + 1, "of", team_count)
         generate_users(players_count, team)
 
 def generate_locations(location_count=10):
-    f = faker.Faker()
 
     locations = []
     print("generating", location_count, "locations")
     for i in range(location_count):
         loc = Location.objects.create(
-            name=f.city()
+            name=F.city()
         )
         locations.append(loc)
 
@@ -112,14 +109,13 @@ def generate_batter(roster, player, index):
 
 def generate_roster(team):
     print("generating roster for team", str(team))
-    f = faker.Faker()
     roster = Roster.objects.create(
         team=team,
     )
 
     player_sample = random.sample(
         list(team.players.all()),
-        f.random_int(10, team.players.count())
+        F.random_int(10, team.players.count())
     )
 
     batters = []
@@ -130,14 +126,13 @@ def generate_roster(team):
     return roster
 
 def generate_match(season, home_team, away_team, location, postponed_match=None):
-    f = faker.Faker()
 
     #if not postponed:
     if postponed_match is None:
-        match_datetime = f.date_time_this_year(tzinfo=pytz.timezone("EST"))
-        home_points = f.random_number(1)
-        away_points = f.random_number(1)
-        duration_seconds = f.random_int(10, 60*60*4) #10s to 4hrs
+        match_datetime = F.date_time_this_year(tzinfo=pytz.timezone("EST"))
+        home_points = F.random_number(1)
+        away_points = F.random_number(1)
+        duration_seconds = F.random_int(10, 60*60*4) #10s to 4hrs
 
     #if the match is postponed
     else:
