@@ -3,6 +3,40 @@ import PropTypes from 'prop-types';
 
 const range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + start);
 
+class TableControls extends React.Component {
+    render() {
+        return (
+            <Row>
+                <Col className="d-flex justify-content-center">
+                    <Button
+                        className={ this.props.currentPageIndex > 0 ? undefined :  "invisible" }
+                        color="primary"
+                        onClick={this.props.prevPageHandler}
+                    > Prev </Button>
+
+                { range(0, this.props.totalPages+1).map((pageNum) => {
+                    return (
+                        <Button
+                            key={pageNum}
+                            color={ pageNum == this.props.currentPageIndex ? "active" : undefined}
+                            onClick={(e) => this.props.setCurrentOffsetHandler(pageNum*this.props.perPage)} >
+                            {pageNum+1}
+                        </Button>
+                    );
+                })}
+
+                <Button
+                    className={ this.props.currentPageIndex < this.props.totalPages-1 ? undefined : "invisible" }
+                    color="primary"
+                    onClick={this.props.nextPageHandler}
+                > Next </Button>
+            </Col>
+        </Row>
+        );
+    }
+
+}
+
 class TableHead extends React.Component {
     render() {
         return (
@@ -105,20 +139,23 @@ export class GeneralTable extends React.Component {
         super(props);
 
         this.state = {
-            curIndex: 0,
+            currentOffset: 0,
         }
     }
 
     nextPage = (e) => {
         this.setState({
-            curIndex: this.state.curIndex+this.props.perPage
+            currentOffset: this.state.currentOffset+this.props.perPage
         });
     }
 
     prevPage = (e) => {
         this.setState({
-            curIndex: this.state.curIndex-this.props.perPage
+            currentOffset: this.state.currentOffset-this.props.perPage
         });
+    }
+    setCurrentOffset = (newOffset) => {
+        this.setState({currentOffset: newOffset});
     }
 
     render() {
@@ -127,12 +164,12 @@ export class GeneralTable extends React.Component {
         const contextData = this.props.contextData;
 
         let displayedRows = rowData.slice(
-            this.state.curIndex,
-            this.state.curIndex+this.props.perPage,
+            this.state.currentOffset,
+            this.state.currentOffset+this.props.perPage,
         );
 
         const totalPages = (rowData.length-1)/this.props.perPage;
-        const currentPageIndex = this.state.curIndex / this.props.perPage;
+        const currentPageIndex = this.state.currentOffset / this.props.perPage;
 
         return (
             <div>
@@ -145,32 +182,15 @@ export class GeneralTable extends React.Component {
                     </Col>
                 </Row>
 
-                <Row>
-                    <Col className="d-flex justify-content-center">
-                        <Button
-                            className={ currentPageIndex > 0 ? undefined :  "invisible" }
-                            color="primary"
-                            onClick={this.prevPage}
-                        > Prev </Button>
+                <TableControls
+                    currentPageIndex={currentPageIndex}
+                    totalPages={totalPages}
+                    perPage={this.props.perPage}
+                    setCurrentOffsetHandler={this.setCurrentOffset}
+                    nextPageHandler={this.nextPage}
+                    prevPageHandler={this.prevPage}
+                />
 
-                        { range(0, totalPages+1).map((pageNum) => {
-                            return (
-                                <Button
-                                    key={pageNum}
-                                    color={ pageNum == currentPageIndex ? "active" : undefined}
-                                    onClick={ (e) => this.setState({curIndex: pageNum*this.props.perPage})} >
-                                    {pageNum+1}
-                                </Button>
-                            );
-                        })}
-
-                        <Button
-                            className={ currentPageIndex < totalPages-1 ? undefined : "invisible" }
-                            color="primary"
-                            onClick={this.nextPage}
-                        > Next </Button>
-                    </Col>
-                </Row>
             </div>
         );
     };
