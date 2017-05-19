@@ -144,16 +144,13 @@ export class GeneralTable extends React.Component {
     }
 
     nextPage = (e) => {
-        this.setState({
-            currentOffset: this.state.currentOffset+this.props.perPage
-        });
+        this.setCurrentOffset(this.state.currentOffset+this.props.perPage);
     }
 
     prevPage = (e) => {
-        this.setState({
-            currentOffset: this.state.currentOffset-this.props.perPage
-        });
+        this.setCurrentOffset(this.state.currentOffset-this.props.perPage);
     }
+
     setCurrentOffset = (newOffset) => {
         this.setState({currentOffset: newOffset});
     }
