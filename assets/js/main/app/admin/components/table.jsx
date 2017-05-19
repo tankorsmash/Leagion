@@ -182,6 +182,7 @@ export class GeneralTable extends React.Component {
                     </Col>
                 </Row>
 
+                { totalPages > 1 &&
                 <TableControls
                     currentPageIndex={currentPageIndex}
                     totalPages={totalPages}
@@ -189,7 +190,7 @@ export class GeneralTable extends React.Component {
                     setCurrentOffsetHandler={this.setCurrentOffset}
                     nextPageHandler={this.nextPage}
                     prevPageHandler={this.prevPage}
-                />
+                /> }
 
             </div>
         );
