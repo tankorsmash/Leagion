@@ -166,6 +166,7 @@ export class GeneralTable extends React.Component {
         this.state = {
             currentOffset: 0,
             sortKey: undefined,
+            sortReversed: false,
         }
     }
 
@@ -212,16 +213,21 @@ export class GeneralTable extends React.Component {
             }
         };
 
+        let finalCompareFunc = compareFunc; //have to make a new var, otherwise it recurses in this arrow func
+        if (this.state.sortReversed) {
+            finalCompareFunc = (left, right) => { return -1*compareFunc(left, right); };
+        };
+
         //return data sorted by...
         if (filterOnEntireRow == false) {
             //... comparing a column
             return rowData.sort((leftRow, rightRow) => {
-                return compareFunc(leftRow[sortKey], rightRow[sortKey]);
+                return finalCompareFunc(leftRow[sortKey], rightRow[sortKey]);
             });
         } else {
             //... comparing the entire row
             return rowData.sort((leftRow, rightRow) => {
-                return compareFunc(leftRow, rightRow);
+                return finalCompareFunc(leftRow, rightRow);
             });
         }
 
