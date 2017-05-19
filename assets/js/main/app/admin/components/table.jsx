@@ -3,6 +3,26 @@ import PropTypes from 'prop-types';
 
 const range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + start);
 
+function stringCompare(left, right) {
+    return left.localeCompare(right);
+};
+
+function numberCompare(left, right) {
+    return left - right;
+};
+
+function getCompareFunc(data) {
+    let compareFunc = null;
+
+    if (typeof(data) == "string") {
+        compareFunc = stringCompare;
+    } else if (typeof(data) == "number") {
+        compareFunc = numberCompare;
+    };
+
+    return compareFunc;
+};
+
 class TableControls extends React.Component {
     render() {
         return (
@@ -44,7 +64,11 @@ class TableHead extends React.Component {
                 <tr>
                     {
                         this.props.columns.map((column, i) => {
-                            return (<th key={i+1}> {column.title} </th>);
+                            return (
+                                <th
+                                    key={i+1}
+                                    onClick={ (e) => {this.props.setSortKey(column.id);} }
+                                > {column.title} </th>);
                         })
                     }
                 </tr>
@@ -140,6 +164,7 @@ export class GeneralTable extends React.Component {
 
         this.state = {
             currentOffset: 0,
+            sortKey: undefined,
         }
     }
 
@@ -155,9 +180,36 @@ export class GeneralTable extends React.Component {
         this.setState({currentOffset: newOffset});
     }
 
-    render() {
+    setSortKey = (newKey) => {
+        this.setState({sortKey: newKey});
+    }
+
+    getSortedRowData = () => {
+        const sortKey = this.state.sortKey;
         const rowData = this.props.rowData;
-        const columns = this.props.columns;
+
+        if (sortKey == undefined || this.props.rowData.length == 0) {
+            return rowData;
+        };
+
+
+        let compareFunc = getCompareFunc(rowData[0][sortKey]);
+        if (compareFunc == null) {
+            console.error("invalid sort type for sortKey: ", sortKey);
+            return rowData;
+        };
+
+        return this.props.rowData.sort((left, right) => {
+            const leftVal = left[sortKey];
+            const rightVal = right[sortKey];
+
+            return compareFunc(leftVal, rightVal);
+        });
+    }
+
+    render() {
+        const rowData = this.getSortedRowData();
+
         const contextData = this.props.contextData;
 
         let displayedRows = rowData.slice(
@@ -173,8 +225,8 @@ export class GeneralTable extends React.Component {
                 <Row>
                     <Col>
                         <Table hover striped>
-                            <TableHead columns={columns}/>
-                            <TableBody contextData={contextData} columns={columns} rowData={displayedRows} />
+                            <TableHead setSortKey={this.setSortKey} columns={this.props.columns}/>
+                            <TableBody contextData={contextData} columns={this.props.columns} rowData={displayedRows} />
                         </Table>
                     </Col>
                 </Row>
