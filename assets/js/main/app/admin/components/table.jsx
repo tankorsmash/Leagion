@@ -187,13 +187,14 @@ export class GeneralTable extends React.Component {
 
     getSortedRowData = () => {
         const sortKey = this.state.sortKey;
-        const rowData = this.props.rowData;
+        let rowData = this.props.rowData;
 
         //fallback to default order
         if (sortKey == undefined || this.props.rowData.length == 0) {
             return rowData;
         };
 
+        let filterOnEntireRow = false;
 
         //find the appropriate sort type, ie string or number compare, or use column.compareFunc
         const firstRow = rowData[0];
@@ -203,25 +204,27 @@ export class GeneralTable extends React.Component {
         if (compareFunc == null) {
             const column = this.props.columns.filter(col => col.id == sortKey)[0];
             if (column.compareFunc != undefined) {
-                //return sort by entire rows
-                const compareFunc = column.compareFunc;
-                return rowData.sort((leftRow, rightRow) => {
-                    return compareFunc(leftRow, rightRow);
-                });
-
+                compareFunc = column.compareFunc;
+                filterOnEntireRow = true;
             } else {
                 console.error(`invalid sort type for sortKey: ${sortKey} or missing column.compareFunc!`);
                 return rowData;
             }
         };
 
-        //return sorted data by specific column
-        return rowData.sort((leftRow, rightRow) => {
-            const leftVal = leftRow[sortKey];
-            const rightVal = rightRow[sortKey];
+        //return data sorted by...
+        if (filterOnEntireRow == false) {
+            //... comparing a column
+            return rowData.sort((leftRow, rightRow) => {
+                return compareFunc(leftRow[sortKey], rightRow[sortKey]);
+            });
+        } else {
+            //... comparing the entire row
+            return rowData.sort((leftRow, rightRow) => {
+                return compareFunc(leftRow, rightRow);
+            });
+        }
 
-            return compareFunc(leftVal, rightVal);
-        });
     }
 
     render() {
