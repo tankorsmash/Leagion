@@ -34,6 +34,21 @@ class ShallowMatchSerializer(serializers.ModelSerializer):
             'pretty_time', 'home_roster', 'away_roster'
         )
 
+class PureTeamSerializer(serializers.ModelSerializer):
+    """
+    name and ids only, no nested
+    """
+    class Meta:
+        model = Team
+        fields = (
+            'id', 'name', 'player_ids', 'season_id', 'home_match_ids', 'away_match_ids',
+        )
+
+    home_match_ids = serializers.PrimaryKeyRelatedField(queryset=Match.objects.all(), source="home_matches", many=True)
+    away_match_ids = serializers.PrimaryKeyRelatedField(queryset=Match.objects.all(), source="away_matches", many=True)
+    player_ids = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source="players", many=True, read_only=False)
+    season_id = serializers.IntegerField()
+
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team

@@ -32,26 +32,29 @@ class TeamsCell extends React.Component {
 
 class MatchesCell extends React.Component {
     static compareFunc = (left, right) => {
-        return left.matches.length - right.matches.length;
+        return (
+            (left.home_match_ids.length+left.away_match_ids.length) -
+            (right.home_match_ids.length+right.away_match_ids.length)
+        );
     }
 
     render() {
         const team = this.props.data;
         return (
-            <td> {team.matches.length}</td>
+            <td> {team.home_match_ids.length+team.away_match_ids.length}</td>
         );
     }
 }
 
 class PlayersCell extends React.Component {
     static compareFunc = (left, right) => {
-        return left.players.length - right.players.length;
+        return left.player_ids.length - right.player_ids.length;
     }
 
     render() {
         const team = this.props.data;
         return (
-            <td> {team.players.length}</td>
+            <td> {team.player_ids.length}</td>
         );
     }
 }

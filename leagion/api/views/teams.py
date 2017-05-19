@@ -1,16 +1,26 @@
-from rest_framework import generics
+from rest_framework import generics, serializers
 from django.contrib.auth import get_user_model
 
-from leagion.api.serializers.teams import TeamSerializer
-from leagion.models import Team
+from leagion.api.serializers.users import UserSerializer
+from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer
+from leagion.models import Team, User
 
 from leagion.utils import reverse_js
 
-User = get_user_model()
+@reverse_js
+class TeamList(generics.ListCreateAPIView):
+    queryset = Team.objects.all().prefetch_related(
+        "home_matches", "away_matches", "players"
+    ).select_related(
+        "season"
+    )
+    serializer_class = PureTeamSerializer
 
 
 @reverse_js
-class TeamList(generics.ListCreateAPIView):
+class TeamDetail(generics.RetrieveUpdateAPIView):
+    lookup_url_kwarg = "team_id"
+
     queryset = Team.objects.all().prefetch_related(
         "home_matches__home_team", "home_matches__home_roster",
         "home_matches__away_team", "home_matches__away_roster",
@@ -26,14 +36,6 @@ class TeamList(generics.ListCreateAPIView):
     ).select_related(
         "season", "season__league",
     )
-    serializer_class = TeamSerializer
-
-
-@reverse_js
-class TeamDetail(generics.RetrieveUpdateAPIView):
-    lookup_url_kwarg = "team_id"
-
-    queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
 
