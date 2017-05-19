@@ -68,7 +68,7 @@ class TableHead extends React.Component {
                             return (
                                 <th
                                     key={i+1}
-                                    onClick={ (e) => {this.props.setSortKey(column.id);} }
+                                    onClick={(e) => {this.props.onHeaderClick(e, column.id);}}
                                 > {column.title} </th>);
                         })
                     }
@@ -182,6 +182,20 @@ export class GeneralTable extends React.Component {
         this.setState({currentOffset: newOffset});
     }
 
+    onHeaderClick = (e, newKey) => {
+        //handle three states, unsorted -> sorted -> sort reversed -> unsorted
+        if (this.state.sortKey != newKey) {
+            this.setSortKey(newKey);
+            this.setState({sortReversed: false});
+        } else if (this.state.sortReversed == false) {
+            this.setState({sortReversed: true});
+        } else if (this.state.sortReversed == true) {
+            this.setSortKey(undefined);
+            this.setState({sortReversed: false});
+        }
+
+    };
+
     setSortKey = (newKey) => {
         this.setState({sortKey: newKey});
     }
@@ -251,7 +265,7 @@ export class GeneralTable extends React.Component {
                 <Row>
                     <Col>
                         <Table hover striped>
-                            <TableHead setSortKey={this.setSortKey} columns={this.props.columns}/>
+                            <TableHead onHeaderClick={this.onHeaderClick} columns={this.props.columns}/>
                             <TableBody contextData={contextData} columns={this.props.columns} rowData={displayedRows} />
                         </Table>
                     </Col>
