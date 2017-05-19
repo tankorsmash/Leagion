@@ -23,6 +23,7 @@ function getCompareFunc(data) {
     return compareFunc;
 };
 
+
 class TableControls extends React.Component {
     render() {
         return (
@@ -188,20 +189,36 @@ export class GeneralTable extends React.Component {
         const sortKey = this.state.sortKey;
         const rowData = this.props.rowData;
 
+        //fallback to default order
         if (sortKey == undefined || this.props.rowData.length == 0) {
             return rowData;
         };
 
 
-        let compareFunc = getCompareFunc(rowData[0][sortKey]);
+        //find the appropriate sort type, ie string or number compare, or use column.compareFunc
+        const firstRow = rowData[0];
+        let compareFunc = getCompareFunc(firstRow[sortKey]);
+
+        //if not found, look in column to see if compareFunc is defined
         if (compareFunc == null) {
-            console.error("invalid sort type for sortKey: ", sortKey);
-            return rowData;
+            const column = this.props.columns.filter(col => col.id == sortKey)[0];
+            if (column.compareFunc != undefined) {
+                //return sort by entire rows
+                const compareFunc = column.compareFunc;
+                return rowData.sort((leftRow, rightRow) => {
+                    return compareFunc(leftRow, rightRow);
+                });
+
+            } else {
+                console.error(`invalid sort type for sortKey: ${sortKey} or missing column.compareFunc!`);
+                return rowData;
+            }
         };
 
-        return this.props.rowData.sort((left, right) => {
-            const leftVal = left[sortKey];
-            const rightVal = right[sortKey];
+        //return sorted data by specific column
+        return rowData.sort((leftRow, rightRow) => {
+            const leftVal = leftRow[sortKey];
+            const rightVal = rightRow[sortKey];
 
             return compareFunc(leftVal, rightVal);
         });
