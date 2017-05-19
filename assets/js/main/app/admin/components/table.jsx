@@ -30,7 +30,7 @@ class TableControls extends React.Component {
     render() {
         return (
             <Row>
-                <Col className="d-flex justify-content-center">
+                <Col className="d-flex flex-wrap justify-content-center">
                     <Button
                         className={ this.props.currentPageIndex > 0 ? undefined :  "invisible" }
                         color="primary"
