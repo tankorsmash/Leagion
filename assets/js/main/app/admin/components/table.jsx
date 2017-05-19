@@ -250,11 +250,11 @@ export class GeneralTable extends React.Component {
         //if not found, look in column to see if compareFunc is defined
         if (compareFunc == null) {
             const column = this.props.columns.filter(col => col.id == sortKey)[0];
-            if (column.compareFunc != undefined) {
-                compareFunc = column.compareFunc;
+            if (column && column.component.compareFunc != undefined) {
+                compareFunc = column.component.compareFunc;
                 filterOnEntireRow = true;
             } else {
-                console.error(`invalid sort type for sortKey: ${sortKey} or missing column.compareFunc!`);
+                console.warn(`invalid sort type for sortKey: '${sortKey}' or missing column.component.compareFunc!`);
                 return rowData;
             }
         };

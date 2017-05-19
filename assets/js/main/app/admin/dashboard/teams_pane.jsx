@@ -31,6 +31,10 @@ class TeamsCell extends React.Component {
 }
 
 class MatchesCell extends React.Component {
+    static compareFunc = (left, right) => {
+        return left.matches.length - right.matches.length;
+    }
+
     render() {
         const team = this.props.data;
         return (
@@ -40,6 +44,10 @@ class MatchesCell extends React.Component {
 }
 
 class PlayersCell extends React.Component {
+    static compareFunc = (left, right) => {
+        return left.players.length - right.players.length;
+    }
+
     render() {
         const team = this.props.data;
         return (
@@ -67,16 +75,10 @@ export class TeamsPane extends DatasetView {
             id: "matches",
             title: "Matches",
             component: MatchesCell,
-            compareFunc: (left, right) => {
-                return left.matches.length - right.matches.length;
-            }
         },{
             id: "players",
             title: "Players",
             component: PlayersCell,
-            compareFunc: (left, right) => {
-                return left.players.length - right.players.length;
-            }
         }];
 
         return (

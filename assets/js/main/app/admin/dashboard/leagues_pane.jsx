@@ -19,6 +19,10 @@ import {FormBase} from 'components/forms';
 import FormModal from 'components/form_modal';
 
 class SeasonCell extends React.Component {
+    static compareFunc = (left, right) => {
+        return (left.seasons.length - right.seasons.length)
+    }
+
     render() {
         const league = this.props.data;
         return (
