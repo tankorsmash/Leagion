@@ -1,6 +1,8 @@
 import { Table, Row, Col, Button } from 'reactstrap';
 import PropTypes from 'prop-types';
 
+import FontAwesome from 'react-fontawesome';
+
 const range = (start, end) => Array.from({length: (end - start)}, (v, k) => k + start);
 
 function stringCompare(left, right) {
@@ -58,6 +60,29 @@ class TableControls extends React.Component {
 
 }
 
+class TableHeadSortIcon extends React.Component {
+    static propTypes = {
+        columnId: PropTypes.string,
+    }
+
+    static defaultProps = {
+        sortKey: undefined,
+        sortReversed: false,
+    }
+
+    render() {
+        if (this.props.sortKey != this.props.columnId) {
+            return <i/>;
+        }
+
+        if (this.props.sortReversed == false) {
+            return <FontAwesome name="sort-asc"/>;
+        } else {
+            return <FontAwesome name="sort-desc"/>;
+        }
+    };
+}
+
 class TableHead extends React.Component {
     render() {
         return (
@@ -68,8 +93,15 @@ class TableHead extends React.Component {
                             return (
                                 <th
                                     key={i+1}
-                                    onClick={(e) => {this.props.onHeaderClick(e, column.id);}}
-                                > {column.title} </th>);
+                                    onClick={(e) => {this.props.onHeaderClick(e, column.id);}}>
+                                    {column.title}
+                                    <TableHeadSortIcon
+                                        sortKey={this.props.sortKey}
+                                        sortReversed={this.props.sortReversed}
+                                        columnId={column.id}
+                                    />
+                                </th>
+                            );
                         })
                     }
                 </tr>
@@ -265,8 +297,17 @@ export class GeneralTable extends React.Component {
                 <Row>
                     <Col>
                         <Table hover striped>
-                            <TableHead onHeaderClick={this.onHeaderClick} columns={this.props.columns}/>
-                            <TableBody contextData={contextData} columns={this.props.columns} rowData={displayedRows} />
+                            <TableHead
+                                onHeaderClick={this.onHeaderClick}
+                                columns={this.props.columns}
+                                sortKey={this.state.sortKey}
+                                sortReversed={this.state.sortReversed}
+                            />
+
+                            <TableBody
+                                contextData={contextData}
+                                columns={this.props.columns}
+                                rowData={displayedRows} />
                         </Table>
                     </Col>
                 </Row>
