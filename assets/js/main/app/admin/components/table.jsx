@@ -94,13 +94,17 @@ class TableHead extends React.Component {
                                 <th
                                     key={i+1}
                                     onClick={(e) => {this.props.onHeaderClick(e, column.id);}}>
-                                    {column.title}
-                                    <TableHeadSortIcon
-                                        className="pl-1"
-                                        sortKey={this.props.sortKey}
-                                        sortReversed={this.props.sortReversed}
-                                        columnId={column.id}
-                                    />
+
+                                    <a style={{color: "inherit"}} href="#">
+                                        {column.title}
+
+                                        <TableHeadSortIcon
+                                            className="pl-1"
+                                            sortKey={this.props.sortKey}
+                                            sortReversed={this.props.sortReversed}
+                                            columnId={column.id}
+                                        />
+                                    </a>
                                 </th>
                             );
                         })
