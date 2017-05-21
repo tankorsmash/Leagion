@@ -239,7 +239,7 @@ export class GeneralTable extends React.Component {
 
     getSortedRowData = () => {
         const sortKey = this.state.sortKey;
-        let rowData = this.props.rowData;
+        let rowData = this.props.rowData.slice(); //slice so you copy and dont mutate props.rowData
 
         //fallback to default order
         if (sortKey == undefined || this.props.rowData.length == 0) {
