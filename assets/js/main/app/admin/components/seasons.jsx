@@ -40,10 +40,16 @@ class Season extends React.Component {
                     <CardTitle>
                         { season.start_date } to {season.end_date}
                     </CardTitle>
-                    <CardSubtitle>Notes</CardSubtitle>
+
+                    <CardSubtitle>At a glance:</CardSubtitle>
 
                     <CardText>
-                        Some quick example text to build on the card title and make up the bulk of the card's content.
+                        <div>
+                            <strong>Teams joined</strong> { season.teams.length }
+                        </div>
+                        <div>
+                            <strong>Matches played</strong> { season.matches.length }
+                        </div>
                     </CardText>
 
                     <Link to={url}>
