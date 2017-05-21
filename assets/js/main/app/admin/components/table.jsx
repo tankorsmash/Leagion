@@ -76,9 +76,9 @@ class TableHeadSortIcon extends React.Component {
         }
 
         if (this.props.sortReversed == false) {
-            return <FontAwesome name="sort-asc"/>;
+            return <FontAwesome className={this.props.className} name="sort-asc"/>;
         } else {
-            return <FontAwesome name="sort-desc"/>;
+            return <FontAwesome className={this.props.className} name="sort-desc"/>;
         }
     };
 }
@@ -96,6 +96,7 @@ class TableHead extends React.Component {
                                     onClick={(e) => {this.props.onHeaderClick(e, column.id);}}>
                                     {column.title}
                                     <TableHeadSortIcon
+                                        className="pl-1"
                                         sortKey={this.props.sortKey}
                                         sortReversed={this.props.sortReversed}
                                         columnId={column.id}
