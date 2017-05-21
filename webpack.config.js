@@ -9,17 +9,6 @@ module.exports = modulePaths => ({
     devtool: 'eval-source-map',
 
     entry: {
-        vendor: [
-            "expose-loader?React!react",
-            "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
-            "expose-loader?toastr!toastr",
-            'react-hot-loader/patch',
-            'webpack-dev-server/client?http://localhost:20034',
-            'webpack/hot/only-dev-server',
-            'babel-polyfill',
-            'whatwg-fetch',
-            './assets/js/vendor/index',
-        ],
         main: [
             './assets/js/main/index'
         ]
@@ -42,6 +31,10 @@ module.exports = modulePaths => ({
         }),
         new BundleTracker({filename: './webpack-stats.json'}),
         new ExtractTextPlugin('[name].css'),
+        new webpack.DllReferencePlugin({
+            context: '.',
+            manifest: require('./assets/dll/vendor-manifest.json')
+        }),
     ],
 
     module: {
