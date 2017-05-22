@@ -1,7 +1,10 @@
+import {Link} from 'react-router-dom';
 import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
+import adminUrls from 'main/app/admin/urls';
+import pathToRegex from 'path-to-regexp';
 
 class PlayerModalBody extends DatasetView {
     get datasetStateAttr() {
@@ -22,11 +25,22 @@ class PlayerModalBody extends DatasetView {
         };
 
         const player = this.state.player;
+
+        let teamsContent = player.teams.map(team => {
+            const teamUrlizer = pathToRegex.compile(adminUrls.teams.detail);
+            const detailUrl = teamUrlizer({teamId: team.id});
+            return (
+                <div key={team.id}>
+                    <Link to={detailUrl}> { team.name } </Link>
+                </div>
+            );
+        });
+
         return (
             <ModalBody>
                 <div>
                     Email:
-                    <span> { player.email } </span>
+                    <span> <a href={`mailto:${player.email}`}>{ player.email }</a></span>
                 </div>
                 <div>
                     Number:
@@ -35,6 +49,11 @@ class PlayerModalBody extends DatasetView {
                 <div>
                     Alternate Number:
                     <span> { player.alt_phonenumber }</span>
+                </div>
+                <br/>
+                <div>
+                    Teams:
+                    <span> { teamsContent}</span>
                 </div>
             </ModalBody>
         );

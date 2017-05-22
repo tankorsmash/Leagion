@@ -10,7 +10,9 @@ User = get_user_model()
 
 @reverse_js
 class UserList(generics.ListCreateAPIView):
-    queryset = User.objects.all()
+    queryset = User.objects.all().prefetch_related(
+        "teams"
+    )
     serializer_class = UserSerializer
 
 
@@ -18,7 +20,9 @@ class UserList(generics.ListCreateAPIView):
 class UserDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "player_id"
 
-    queryset = User.objects.all()
+    queryset = User.objects.all().prefetch_related(
+        "teams"
+    )
     serializer_class = UserSerializer
 
 
