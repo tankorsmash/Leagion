@@ -25,8 +25,16 @@ class PlayerModalBody extends DatasetView {
         return (
             <ModalBody>
                 <div>
-                    Email
-                    <small className="text-muted"> { player.email } </small>
+                    Email:
+                    <span> { player.email } </span>
+                </div>
+                <div>
+                    Number:
+                    <span> { player.default_phonenumber }</span>
+                </div>
+                <div>
+                    Alternate Number:
+                    <span> { player.alt_phonenumber }</span>
                 </div>
             </ModalBody>
         );
@@ -70,8 +78,7 @@ class PlayerNameCell extends React.Component {
                     <PlayerModalBody playerId={player.id} />
 
                     <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        <Button color="secondary" onClick={this.toggle}>Close</Button>
                     </ModalFooter>
                 </Modal>
             </td>
