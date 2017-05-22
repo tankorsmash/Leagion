@@ -53,7 +53,9 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     'rest_auth.registration',
-    'webpack_loader'
+    'webpack_loader',
+
+    'phonenumber_field',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -67,6 +69,9 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'leagion_server.urls'
+
+PHONENUMBER_DB_FORMAT='NATIONAL'
+PHONENUMBER_DEFAULT_REGION="CA"
 
 TEMPLATES = [
     {

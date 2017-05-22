@@ -17,7 +17,7 @@ User = get_user_model()
 
 viewnames_exposed_js = set()
 
-F = faker.Faker()
+F = faker.Faker("en_ca") #limit to canadian style
 
 def reverse_js(view):
     viewnames_exposed_js.add(view)
@@ -38,6 +38,8 @@ def generate_users(count, team=None):
             email=email,
             first_name=F.first_name(),
             last_name=F.last_name(),
+            default_phonenumber=F.phone_number(),
+            alt_phonenumber=F.phone_number(),
         )
         user.set_password('abc123')
         new_users.append(user)

@@ -3,6 +3,7 @@ import json
 import enum
 
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
@@ -49,6 +50,9 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True,)
     first_name = models.CharField(max_length=254, blank=True, null=True)
     last_name = models.CharField(max_length=254, blank=True, null=True)
+
+    default_phonenumber = PhoneNumberField(blank=True)
+    alt_phonenumber = PhoneNumberField(blank=True)
 
     is_active = models.BooleanField(default=True)
 
