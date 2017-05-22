@@ -1,4 +1,4 @@
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
@@ -24,7 +24,10 @@ class PlayerModalBody extends DatasetView {
         const player = this.state.player;
         return (
             <ModalBody>
-                { player.full_name }
+                <div>
+                    Email
+                    <small className="text-muted"> { player.email } </small>
+                </div>
             </ModalBody>
         );
     }
