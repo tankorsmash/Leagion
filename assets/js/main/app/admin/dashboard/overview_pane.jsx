@@ -16,6 +16,24 @@ import adminUrls from 'main/app/admin/urls';
 import {DATE_FORMAT} from 'main/app/admin/constants';
 
 class NotificationCard extends React.Component {
+    static defaultProps = {
+        count: 99,
+        headline: "New Notifications!",
+        actionLine: "View Details",
+        actionHref: "#",
+        iconName: "comments",
+        color: "primary",
+    }
+
+    static propTypes = {
+        count: PropTypes.number,
+        headline: PropTypes.string,
+        actionLine: PropTypes.string,
+        actionHref: PropTypes.string,
+        iconName: PropTypes.string,
+        color: PropTypes.string,
+    }
+
     render() {
         return (
             <Card inverse color={ this.props.color }>
@@ -42,24 +60,6 @@ class NotificationCard extends React.Component {
             </Card>
         );
     }
-};
-
-NotificationCard.defaultProps = {
-    count: 99,
-    headline: "New Notifications!",
-    actionLine: "View Details",
-    actionHref: "#",
-    iconName: "comments",
-    color: "primary",
-};
-
-NotificationCard.propTypes = {
-    count: PropTypes.number,
-    headline: PropTypes.string,
-    actionLine: PropTypes.string,
-    actionHref: PropTypes.string,
-    iconName: PropTypes.string,
-    color: PropTypes.string,
 };
 
 class NotificationCards extends DatasetView {
