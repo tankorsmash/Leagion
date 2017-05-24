@@ -39,11 +39,11 @@ class NotificationCard extends React.Component {
             <Card inverse color={ this.props.color }>
                 <CardHeader>
                     <Row>
-                        <Col xs="3">
+                        <Col>
                             <FontAwesome name={ this.props.iconName } size="5x"/>
                         </Col>
 
-                        <Col xs="9" className="text-right">
+                        <Col className="text-right">
                             <div className="display-4">{ this.props.count }</div>
                             <div>{ this.props.headline }</div>
                         </Col>
