@@ -36,4 +36,3 @@ class MatchSerializer(serializers.ModelSerializer):
     # and use a specific api-roster-detail. The non shallow serializer is too heavy
     # home_roster = RosterSerializer(read_only=True)
     # away_roster = RosterSerializer(read_only=True)
-

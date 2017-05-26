@@ -28,7 +28,6 @@ const TeamListLink = (props) => {
 const TeamCard = (props) => {
     let team = props.team;
     let matchComp = null;
-
     if (team.matches.length > 0) {
         let match = team.matches[0];
         

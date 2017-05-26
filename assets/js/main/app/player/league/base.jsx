@@ -39,10 +39,7 @@ class LeagueList extends React.Component {
                 <div>
                     <h2>My Teams</h2>
                     { this.state.leagues.map((league)=>{
-                        return <LeagueJumbo
-                            league={league}
-                            key={league.id}
-                        />
+                        return (<div key={league.id}>{league.name}</div>)
                     }) }
                 </div>
             </SpinLoader>

@@ -28,12 +28,9 @@ class MatchDetail extends React.Component {
     }
 
     render() {
-        let match = this.state.match;
-        let away_team = match.away_team || {};
-        let home_team = match.home_team || {};
-        let away_roster = match.away_roster || {};
-        let home_roster = match.home_roster || {};
-		console.log(this.state.match);
+        const match = this.state.match;
+        const {away_team, home_team, away_roster, home_roster} = match
+
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <div>
@@ -45,11 +42,11 @@ class MatchDetail extends React.Component {
                     <Row>
                         <Col md="6">
                             Home Roster
-                            <BattingOrderTable batters={home_roster.players}/>
+                            <BattingOrderTable rosterId={home_roster}/>
                         </Col>
                         <Col md="6">
                             Away Roster
-                            <BattingOrderTable batters={away_roster.players}/>
+                            <BattingOrderTable rosterId={away_roster}/>
                         </Col>
                     </Row>
                 </div>

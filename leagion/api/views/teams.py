@@ -40,7 +40,8 @@ class TeamDetail(generics.RetrieveUpdateAPIView):
 
 
 @reverse_js
-class MyTeamList(TeamList):
+class MyTeamList(generics.ListCreateAPIView):
+    serializer_class = TeamSerializer
 
     def get_queryset(self):
         user = self.request.user

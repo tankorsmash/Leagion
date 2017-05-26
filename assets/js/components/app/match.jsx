@@ -3,6 +3,7 @@ import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 import { Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
+import ajax from 'common/ajax';
 
 const MatchLink = (props) => {
 	return (
@@ -98,29 +99,49 @@ const MatchCard = (props) => {
     );
 };
 
-const BattingOrderTable = (props) => {
-    let players = props.batters;
+class BattingOrderTable extends React.Component {
+    constructor(props) {
+        super(props);
 
-    return (
-        <Table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.batters.map((batter, i) => {
-                    return (
-                        <tr key={i}>
-                            <th scope="row">{batter.index + 1}</th>
-                            <td>{batter.player.full_name}</td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </Table>
-    );
+        this.state = { 
+            players: [],
+            loaded: false
+        };
+    };
+
+    componentDidMount() {
+        ajax({
+            url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
+        }).then(data => {
+            this.setState({
+                players: data.players || {},
+                loaded: true
+            });
+        });
+    }
+
+    render() {
+        return (
+            <Table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {this.state.players.map((batter, i) => {
+                        return (
+                            <tr key={i}>
+                                <th scope="row">{batter.index + 1}</th>
+                                <td>{batter.player.full_name}</td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </Table>
+        );
+    }
 }
 
 module.exports = {
