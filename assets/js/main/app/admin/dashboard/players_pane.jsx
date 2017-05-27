@@ -51,11 +51,13 @@ class PlayerModalBody extends DatasetView {
     }
 
     render() {
+        let player = this.state.player;
+
+        //if not loaded, preload with placeholder
         if (this.getIsLoaded() == false) {
-            return (<ModalBody> Player Detail </ModalBody>);
+             player = { teams: [] };
         };
 
-        const player = this.state.player;
 
         return (
             <ModalBody>
