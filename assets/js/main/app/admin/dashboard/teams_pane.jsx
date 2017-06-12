@@ -84,6 +84,10 @@ export class TeamsPane extends DatasetView {
             component: PlayersCell,
         }];
 
+        let teams = this.state.teams;
+
+        const formDefaults = {"name": "", "season_id": -1, "leagueId": -1};
+
         return (
             <div>
                 <Row>
@@ -91,14 +95,14 @@ export class TeamsPane extends DatasetView {
                     <Col className="" md="2">
                         <FormModal
                             formComponent={TeamCreateForm}
-                            formData={{"name": "", "season_id": -1, "leagueId": -1}}
+                            formData={formDefaults}
                             postUrl={reverse("api-team-list")}
                             triggerRefreshOnGrid={this.updateDataset}
                             buttonLabel="Create"
                             modalHeaderLabel="Create Team"/>
                     </Col>
                 </Row>
-                <GeneralTable columns={columns} rowData={this.state.teams} />
+                <GeneralTable columns={columns} rowData={teams} />
             </div>
         );
     }
