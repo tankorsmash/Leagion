@@ -168,7 +168,7 @@ class TeamDetail extends DatasetView {
                         putKwarg="name" />
                 </h5>
 
-                <div className="d-flex justify-content-around">
+                <div className="d-sm-flex flex justify-content-around">
                     <GeneralTable className="pr-3" contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
                     <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
                 </div>
