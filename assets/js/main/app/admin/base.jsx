@@ -11,6 +11,7 @@ import {LeagueDetail, LeaguesCreate} from 'main/app/admin/components/leagues';
 import {SeasonDetail, SeasonsCreate} from 'main/app/admin/components/seasons';
 import {TeamDetail, TeamsCreate} from 'main/app/admin/components/teams';
 import {MatchDetail, MatchesCreate} from 'main/app/admin/components/matches';
+import PlayerDetail from 'main/app/admin/components/players';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -38,6 +39,8 @@ class Admin extends React.Component {
 
                     <Route exact path={adminUrls.matches.create}  component={MatchesCreate} />
                     <Route path={adminUrls.matches.detail}  component={MatchDetail} />
+
+                    <Route path={adminUrls.players.detail}  component={PlayerDetail} />
 
                     <Route component={FourOhFour} />
                 </Switch>
