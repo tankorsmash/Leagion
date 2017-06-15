@@ -298,7 +298,7 @@ export class GeneralTable extends React.Component {
         const currentPageIndex = this.state.currentOffset / this.props.perPage;
 
         return (
-            <div>
+            <div className={this.props.className}>
                 <Row>
                     <Col>
                         <Table hover striped>
