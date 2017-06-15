@@ -7,8 +7,6 @@ import {Container, Row, Col} from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
 
-import {SimplePlayer} from 'main/app/admin/components/players';
-
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
 
