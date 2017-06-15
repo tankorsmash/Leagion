@@ -169,12 +169,8 @@ class TeamDetail extends DatasetView {
                 </h5>
 
                 <div className="d-flex justify-content-around">
-                    <div className="">
-                        <GeneralTable contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
-                    </div>
-                    <div>
-                        <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
-                    </div>
+                    <GeneralTable className="pr-3" contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
+                    <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
                 </div>
             </Container>
         );
