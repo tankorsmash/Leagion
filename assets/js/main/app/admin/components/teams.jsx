@@ -104,7 +104,7 @@ class PlayerActionCell extends React.Component {
                     <DropdownToggle >
                         <FontAwesome name="ellipsis-h"/>
                     </DropdownToggle>
-                    <DropdownMenu>
+                    <DropdownMenu right>
                         <DropdownItem>
                             <RemoveUserFromTeamModal
                                 team={this.props.contextData.team}
