@@ -92,6 +92,7 @@ class TableHead extends React.Component {
                         this.props.columns.map((column, i) => {
                             return (
                                 <th
+                                    className="text-nowrap"
                                     key={i+1}
                                     onClick={(e) => {this.props.onHeaderClick(e, column.id);}}>
 
