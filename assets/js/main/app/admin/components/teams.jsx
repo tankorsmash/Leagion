@@ -7,13 +7,15 @@ import FontAwesome from 'react-fontawesome';
 import {
     Container, Row, Col, ButtonDropdown, Button,
     DropdownToggle, DropdownMenu, DropdownItem,
-    Modal, ModalHeader, ModalBody, ModalFooter
+    Modal, ModalHeader, ModalBody, ModalFooter,
+    CardDeck, CardColumns
 } from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
 
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
+import {PlayerCard} from 'main/app/admin/components/players'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -98,6 +100,7 @@ class PlayerActionCell extends React.Component {
     render() {
         return (
             <td>
+                <PlayerCard player={this.props.data} />
                 <ButtonDropdown group={false} isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle >
                         <FontAwesome name="ellipsis-h"/>
@@ -166,8 +169,14 @@ class TeamDetail extends DatasetView {
                         putKwarg="name" />
                 </h5>
 
-                <div className="d-sm-flex flex justify-content-around">
-                    <GeneralTable className="pr-3" contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
+                <div className="d-lg-flex">
+                    <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
+                        { team.players.map((el, i) => {
+                            return (
+                                <PlayerCard player={el} key={i} />
+                        );
+                        }) }
+                    </CardDeck>
                     <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
                 </div>
             </Container>
