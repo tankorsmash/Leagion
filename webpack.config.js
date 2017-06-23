@@ -46,7 +46,7 @@ module.exports = modulePaths => ({
 
     module: {
         loaders: [{
-            test: /\.jsx?$/,
+            test: /\.js?$/,
             exclude: /node_modules/,
             loader: 'babel-loader',
             query: {
@@ -88,7 +88,7 @@ module.exports = modulePaths => ({
             path.resolve(__dirname, 'assets/js/'),
             path.resolve(__dirname, 'assets/style/'),
         ],
-        extensions: ['*', '.js', '.jsx', '.scss', '.css'],
+        extensions: ['*', '.js', '.js', '.scss', '.css'],
     },
 
     devServer: {
