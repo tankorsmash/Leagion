@@ -92,6 +92,7 @@ class TableHead extends React.Component {
                         this.props.columns.map((column, i) => {
                             return (
                                 <th
+                                    className="text-nowrap"
                                     key={i+1}
                                     onClick={(e) => {this.props.onHeaderClick(e, column.id);}}>
 
@@ -298,7 +299,7 @@ export class GeneralTable extends React.Component {
         const currentPageIndex = this.state.currentOffset / this.props.perPage;
 
         return (
-            <div>
+            <div className={this.props.className}>
                 <Row>
                     <Col>
                         <Table hover striped>

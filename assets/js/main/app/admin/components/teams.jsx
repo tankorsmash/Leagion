@@ -7,15 +7,15 @@ import FontAwesome from 'react-fontawesome';
 import {
     Container, Row, Col, ButtonDropdown, Button,
     DropdownToggle, DropdownMenu, DropdownItem,
-    Modal, ModalHeader, ModalBody, ModalFooter
+    Modal, ModalHeader, ModalBody, ModalFooter,
+    CardDeck, CardColumns
 } from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
 
-import {SimplePlayer} from 'main/app/admin/components/players';
-
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
+import {PlayerCard} from 'main/app/admin/components/players'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -100,11 +100,12 @@ class PlayerActionCell extends React.Component {
     render() {
         return (
             <td>
+                <PlayerCard player={this.props.data} />
                 <ButtonDropdown group={false} isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                     <DropdownToggle >
                         <FontAwesome name="ellipsis-h"/>
                     </DropdownToggle>
-                    <DropdownMenu>
+                    <DropdownMenu right>
                         <DropdownItem>
                             <RemoveUserFromTeamModal
                                 team={this.props.contextData.team}
@@ -168,13 +169,15 @@ class TeamDetail extends DatasetView {
                         putKwarg="name" />
                 </h5>
 
-                <div className="d-flex justify-content-around">
-                    <div className="">
-                        <GeneralTable contextData={{team: team, triggerRefreshOnGrid: this.updateDataset}} columns={playersColumns} rowData={team.players} />
-                    </div>
-                    <div>
-                        <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
-                    </div>
+                <div className="d-lg-flex">
+                    <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
+                        { team.players.map((el, i) => {
+                            return (
+                                <PlayerCard player={el} key={i} />
+                        );
+                        }) }
+                    </CardDeck>
+                    <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
                 </div>
             </Container>
         );

@@ -6,6 +6,37 @@ import {GeneralTable} from 'main/app/admin/components/table'
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
+class TeamContent extends React.Component {
+    render() {
+        let teams = this.props.teams;
+        let content = "Not a team member";
+
+        if (teams.length) {
+            let teamContent = teams.map(team => {
+                const teamUrlizer = pathToRegex.compile(adminUrls.teams.detail);
+                const detailUrl = teamUrlizer({teamId: team.id});
+                return (
+                    <div key={team.id}>
+                        <Link to={detailUrl}> { team.name } </Link>
+                    </div>
+                );
+            });
+            content = (
+                <div>
+                    <strong> Teams: </strong>
+                    { teamContent}
+                </div>
+            );
+        };
+
+        return (
+            <div>
+                {content}
+            </div>
+        );
+    }
+}
+
 class PlayerModalBody extends DatasetView {
     get datasetStateAttr() {
         return "player";
@@ -20,21 +51,13 @@ class PlayerModalBody extends DatasetView {
     }
 
     render() {
+        let player = this.state.player;
+
+        //if not loaded, preload with placeholder
         if (this.getIsLoaded() == false) {
-            return (<ModalBody> Player Detail </ModalBody>);
+             player = { teams: [] };
         };
 
-        const player = this.state.player;
-
-        let teamsContent = player.teams.map(team => {
-            const teamUrlizer = pathToRegex.compile(adminUrls.teams.detail);
-            const detailUrl = teamUrlizer({teamId: team.id});
-            return (
-                <div key={team.id}>
-                    <Link to={detailUrl}> { team.name } </Link>
-                </div>
-            );
-        });
 
         return (
             <ModalBody>
@@ -52,8 +75,7 @@ class PlayerModalBody extends DatasetView {
                 </div>
                 <br/>
                 <div>
-                    Teams:
-                    <span> { teamsContent}</span>
+                    <TeamContent teams={player.teams} />
                 </div>
             </ModalBody>
         );
