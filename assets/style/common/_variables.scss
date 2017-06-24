@@ -1,26 +1,28 @@
 // Start with assigning color names to specific hex values.
 $white:  #fff;
-$black:  #000;
-$red:    #d9534f;
-$orange: #f0ad4e;
+$black:  #44574C;
+$red:    #A92603;
+$orange: #F49C37;
+$green:  #27AE60;
+$blue:   #28759A;
+
+// not used yet
 $yellow: #ffd500;
-$green:  #5cb85c;
-$blue:   #0275d8;
 $teal:   #5bc0de;
 $pink:   #ff5b77;
 $purple: #613d7c;
 
 // Create grayscale
-$gray-dark:                 #292b2c;
-$gray:                      #464a4c;
-$gray-light:                #636c72;
-$gray-lighter:              #eceeef;
-$gray-lightest:             #f7f7f9;
+$gray-dark:                 #505954;
+$gray:                      #739280;
+$gray-light:                #94B09F;
+$gray-lighter:              #C5DCCF;
+$gray-lightest:             #F5FAF7;
 
 // Reassign color vars to semantic color scheme
-$brand-primary:             $blue;
+$brand-primary:             $green;
 $brand-success:             $green;
-$brand-info:                $teal;
+$brand-info:                $blue;
 $brand-warning:             $orange;
 $brand-danger:              $red;
 $brand-inverse:             $gray-dark;
@@ -88,7 +90,7 @@ $sizes: (
 //
 // Settings for the `<body>` element.
 
-$body-bg:       $white;
+$body-bg:       $gray-lightest;
 $body-color:    $gray-dark;
 $inverse-bg:    $gray-dark;
 $inverse-color: $gray-lighter;
@@ -98,7 +100,7 @@ $inverse-color: $gray-lighter;
 //
 // Style anchor elements.
 
-$link-color:            $brand-primary;
+$link-color:            $brand-info;
 $link-decoration:       none;
 $link-hover-color:      darken($link-color, 15%);
 $link-hover-decoration: underline;
