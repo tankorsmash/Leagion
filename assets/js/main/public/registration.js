@@ -28,7 +28,13 @@ class RegisterBase extends FormBase {
 		if (auth.loggedIn()) {
 			return (<Redirect to={appUrls.index} />)
         } else {
-            return this.getForm();
+            return (
+                <div className="full-screen d-flex registration-wrapper">
+                    <div className="registration-box">
+                        {this.getForm()}
+                    </div>
+                </div>
+            );
         }
     }
 
@@ -96,8 +102,14 @@ class LoginForm extends RegisterBase {
                     <Label for="loginPassword">Password</Label>
                     <Input type="password" name="password" id="loginPassword" value={this.state.form.password} onChange={this.handleInputChange} />
                 </FormGroup>
-                <Button type="submit">Log In</Button>
-                <Link to={publicUrls.register}>Register</Link>
+                <FormGroup check className="d-flex justify-content-between">
+                    <Label check>
+                        <Input type="checkbox" />
+                        Remember me
+                    </Label>
+                    <Link to={publicUrls.passwordReset}>Forgot Password?</Link>
+                </FormGroup>
+                <Button color="primary" block type="submit">Log In</Button>
             </Form>
         );
     }

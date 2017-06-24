@@ -19,20 +19,14 @@ class Public extends React.Component {
     render() {
         return (
             <div>
-                <Container>
-                    <Row>
-                        <Col>
-                            <main>
-                                <Switch>
-                                    {/* <Route exact path='/' component={Index} /> */}
-                                    <Route path={publicUrls.login} component={LoginForm} />
-                                    <Route path={publicUrls.register} component={RegisterForm} />
-                                    <Redirect to={publicUrls.login} />
-                                </Switch>
-                            </main>
-                        </Col>
-                    </Row>
-                </Container>
+                <main>
+                    <Switch>
+                        {/* <Route exact path='/' component={Index} /> */}
+                        <Route path={publicUrls.login} component={LoginForm} />
+                        <Route path={publicUrls.register} component={RegisterForm} />
+                        <Redirect to={publicUrls.login} />
+                    </Switch>
+                </main>
             </div>
         );
     }

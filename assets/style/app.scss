@@ -20,3 +20,21 @@ nav {
     background-color: $gray;
     box-shadow: 0 2px 5px rgba(0,0,0,.26);
 }
+
+.full-screen {
+    width: 100vw;
+    height: 100vh;
+}
+
+.registration-wrapper {
+    padding-bottom: 25%;
+}
+
+.registration-box {
+    border: 1px solid $black;
+    background-color: $white;
+    max-width: 500px;
+    width: 100%;
+    padding: 25px 60px;
+    margin: auto;
+}
