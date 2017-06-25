@@ -94,13 +94,19 @@ class LoginForm extends RegisterBase {
     getForm() {
         return (
             <Form onSubmit={this.handleSubmit}>
+                <h5 className="text-center">Sign in and get going!</h5>
+                <br />
                 <FormGroup>
-                    <Label for="loginEmail">Email</Label>
-                    <Input type="email" name="email" id="loginEmail" value={this.state.form.email} onChange={this.handleInputChange} />
+                    <div className="inner-addon left-addon">
+                        <i className="fa fa-user" aria-hidden="true"></i>
+                        <Input placeholder="john.doe@example.com" type="email" name="email" id="loginEmail" value={this.state.form.email} onChange={this.handleInputChange} />
+                    </div>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="loginPassword">Password</Label>
-                    <Input type="password" name="password" id="loginPassword" value={this.state.form.password} onChange={this.handleInputChange} />
+                    <div className="inner-addon left-addon">
+                        <i className="fa fa-lock" aria-hidden="true"></i>
+                        <Input type="password" name="password" id="loginPassword" value={this.state.form.password} onChange={this.handleInputChange} />
+                    </div>
                 </FormGroup>
                 <FormGroup check className="d-flex justify-content-between">
                     <Label check>
