@@ -30,7 +30,7 @@ class Appbar extends React.Component {
     render() {
         return (
             <div>
-                <Navbar className="mb-3" light toggleable>
+                <Navbar className="mb-3" inverse toggleable>
                     <NavbarBrand href='/'>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>

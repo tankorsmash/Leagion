@@ -34,7 +34,7 @@ class AdminNavItems extends React.Component {
 
     render() {
         return (
-            <Nav navbar>
+            <Nav dark navbar>
                 <Link className="nav-link" to={adminUrls.dashboard.index}> Dashboard </Link>
             </Nav>
         );

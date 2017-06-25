@@ -2,7 +2,7 @@
 @import 'form';
 
 .container {
-    background-color: white;
+    background-color: $white;
 
     padding: 15px;
 
@@ -13,13 +13,13 @@ body {
     background-color: $white
 
     #leagion-admin {
-        background-color: #FFF;
+        background-color: $white;
     }
 }
 
 nav {
-    background-color: $gray;
-    box-shadow: 0 2px 5px rgba(0,0,0,.26);
+    background-color: $brand-primary;
+    color: $white
 }
 
 .full-screen {
