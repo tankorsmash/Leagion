@@ -17,9 +17,14 @@ body {
     }
 }
 
-nav {
+.appbar {
     background-color: $brand-primary;
-    color: $white
+}
+
+.titlebar {
+    background-color: $black;
+    color: $white;
+    text-align: center;
 }
 
 .full-screen {

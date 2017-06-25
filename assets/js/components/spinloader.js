@@ -6,7 +6,7 @@ class SpinLoader extends React.Component {
         super(props);
 
         this.state = {loaded: false};
-    };
+    }
 
     loaded() {
         this.setState({loaded: true});
@@ -22,11 +22,14 @@ class SpinLoader extends React.Component {
 
     render() {
 
-        let content;
         if (this.state.loaded == false) {
             return <Spinner spinnerName='three-bounce' />;
         } else {
-            return React.Children.only(this.props.children);
+            return (
+                <div>
+                    {this.props.children};
+                </div>
+            );
         }
     }
 }

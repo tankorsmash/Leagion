@@ -23,22 +23,14 @@ class Player extends React.Component {
         return (
             <div>
                 <PlayerNavbar {...this.props}/>
-                <Container>
-                    <Row>
-                        <Col>
-                            <main>
-                                <Switch>
-                                    <Route exact path={playerUrls.index} component={Dashboard} />
-                                    <Route path={leagueUrls.index} component={League} />
-                                    <Route path={teamUrls.index} component={Team} />
-                                    <Route path={seasonUrls.index} component={Season} />
-                                    <Route path={matchUrls.index} component={Match} />
-                                    <Route component={FourOhFour} />
-                                </Switch>
-                            </main>
-                        </Col>
-                    </Row>
-                </Container>
+                <Switch>
+                    <Route exact path={playerUrls.index} component={Dashboard} />
+                    <Route path={leagueUrls.index} component={League} />
+                    <Route path={teamUrls.index} component={Team} />
+                    <Route path={seasonUrls.index} component={Season} />
+                    <Route path={matchUrls.index} component={Match} />
+                    <Route component={FourOhFour} />
+                </Switch>
             </div>
         );
     }

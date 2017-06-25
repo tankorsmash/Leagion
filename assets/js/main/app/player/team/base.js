@@ -10,6 +10,7 @@ import {TeamCard} from 'components/app/team';
 import {MatchTable} from 'components/app/match';
 import {TeamPlayerTable} from 'components/app/player';
 import {SeasonLink} from 'components/app/season';
+import Titlebar from 'components/app/titlebar';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -80,31 +81,18 @@ class TeamList extends React.Component {
     render() {
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    <h2>My Teams</h2>
-                    {this.state.teams.map((team, i) => {
-                        return (
-                            <Col md="6" key={i}>
-                                <TeamCard team={team} />
-                            </Col>
-                        );
-                    })}
-                </div>
+                <Titlebar title="My Teams" />
+                {this.state.teams.map((team, i) => {
+                    return (
+                        <Col md="6" key={i}>
+                            <TeamCard team={team} />
+                        </Col>
+                    );
+                })}
             </SpinLoader>
         );
     }
 }
-const LeagueJumbo = (props) => {
-	let league = props.league;
-
-	return (
-		<Jumbotron>
-			<h2>
-				<Link to={`${leagueUrls.index}/${league.id}`}>{league.name}</Link>
-			</h2>
-		</Jumbotron>
-	);
-};
 
 class Team extends React.Component {
 
