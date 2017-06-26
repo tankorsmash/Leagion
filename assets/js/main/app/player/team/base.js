@@ -82,13 +82,13 @@ class TeamList extends React.Component {
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Titlebar title="My Teams" />
-                {this.state.teams.map((team, i) => {
-                    return (
-                        <Col md="6" key={i}>
-                            <TeamCard team={team} />
-                        </Col>
-                    );
-                })}
+                <div className="content team-listing">
+                    {this.state.teams.map((team, i) => {
+                        return (
+                            <TeamCard key={i} team={team} />
+                        );
+                    })}
+                </div>
             </SpinLoader>
         );
     }

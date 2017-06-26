@@ -69,13 +69,4 @@ export const TeamCard = (props) => {
             </div>
         </div>
     );
-    /*
-            
-            {team.sport}
-                League: 
-                <br/>
-                Season : 
-                <br/>
-                Upcoming Match: 
-    */
 };
