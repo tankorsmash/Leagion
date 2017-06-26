@@ -4,6 +4,7 @@ $black:  #44574C;
 $red:    #A92603;
 $orange: #F49C37;
 $green:  #27AE60;
+$darkgreen: #196E3D;
 $blue:   #28759A;
 
 // not used yet
@@ -21,6 +22,7 @@ $gray-lightest:             #F5FAF7;
 
 // Reassign color vars to semantic color scheme
 $brand-primary:             $green;
+$brand-secondary:           $darkgreen;
 $brand-success:             $green;
 $brand-info:                $blue;
 $brand-warning:             $orange;

@@ -1,14 +1,12 @@
 import {Link} from 'react-router-dom';
-import { Jumbotron, Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
-import seasonUrls from 'main/app/player/season/urls';
+import {Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import teamUrls from 'main/app/player/team/urls';
-import leagueUrls from 'main/app/player/league/urls';
 import matchUrls from 'main/app/player/match/urls';
 
 import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
 
-const TeamLink = (props) => {
+export const TeamLink = (props) => {
 	return (
 		<Link to={`${teamUrls.index}/${props.id}`}>
 			{props.text}
@@ -16,7 +14,7 @@ const TeamLink = (props) => {
 	);
 };
 
-const TeamListLink = (props) => {
+export const TeamListLink = (props) => {
 	return (
 		<Link to={`${teamUrls.index}`}>
 			{props.text}
@@ -25,7 +23,7 @@ const TeamListLink = (props) => {
 };
 
 
-const TeamCard = (props) => {
+export const TeamCard = (props) => {
     let team = props.team;
     let matchComp = null;
     if (team.matches.length > 0) {
@@ -50,28 +48,34 @@ const TeamCard = (props) => {
     }
 
     return (
-        <div>
-            <Card>
-                <CardBlock>
-                    <CardTitle>
-                        <TeamLink id={team.id} text={team.name}/>
-                    </CardTitle>
-                    <CardSubtitle>{team.sport}</CardSubtitle>
-                    <CardText>
-                        League: <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
-                        <br/>
-                        Season {team.season.pretty_date}: <SeasonLink id={team.season.id} text="View Schedule"/>
-                        <br/>
-                        Upcoming Match: {matchComp}
-                    </CardText>
-                </CardBlock>
-            </Card>
+        <div className="team-card">
+            <div className="team-card-top">
+                <div>
+                <div className="team-logo is-small"> </div>
+                </div>
+                <div className="h4 team-title">
+                    <TeamLink id={team.id} text="Stephen Valleys Apron Joint"/>
+                </div>
+            </div>
+            <div className="team-card-bottom">
+                <div className="h5">
+                    <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
+                </div>
+                <div className="h5">
+                    <SeasonLink id={team.season.id} text={team.season.pretty_date}/>
+                </div>
+                <div className="p pt-2">upcoming match:</div>
+                <div className="small">{matchComp}</div>
+            </div>
         </div>
     );
+    /*
+            
+            {team.sport}
+                League: 
+                <br/>
+                Season : 
+                <br/>
+                Upcoming Match: 
+    */
 };
-
-module.exports = {
-	TeamCard: TeamCard,
-	TeamLink: TeamLink,
-	TeamListLink: TeamListLink,
-}

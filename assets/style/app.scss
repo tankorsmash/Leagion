@@ -1,5 +1,7 @@
 @import 'common/variables';
 @import 'form';
+@import 'players';
+@import 'text';
 
 .container {
     background-color: $white;
@@ -10,8 +12,6 @@
 }
 
 body {
-    background-color: $white
-
     #leagion-admin {
         background-color: $white;
     }

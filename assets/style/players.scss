@@ -1,0 +1,39 @@
+.team-card {
+	width: 300px;
+	border: 1px solid $black;
+	background-color: $white;
+	text-align: center;
+
+	.team-card-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-around;
+		padding: 25px 15px 0px 15px;
+
+		a {
+			color: $black;
+		}
+
+		.h4 {
+			flex: 0 0 66%;
+		}
+	}
+
+	.team-card-bottom {
+		background-color: $brand-secondary;
+		clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+		color: $white;
+		padding-top: 75px;
+		padding-bottom: 25px;
+
+		a {
+			color: $white;
+		}
+	}
+}
+
+.team-logo {
+	width: 60px;
+	height: 60px;
+	border: 1px solid;
+}

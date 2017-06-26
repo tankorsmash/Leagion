@@ -37,8 +37,8 @@ class TeamDetail extends React.Component {
     }
 
     render() {
-        let season = this.state.team.season || {}
-        let league = season.league || {}
+        let season = this.state.team.season || {};
+        let league = season.league || {};
 
         return (
             <SpinLoader loaded={this.state.loaded}>
@@ -65,7 +65,7 @@ class TeamList extends React.Component {
             teams: [],
             loaded: false
         };
-    };
+    }
 
     componentDidMount() {
         ajax({
