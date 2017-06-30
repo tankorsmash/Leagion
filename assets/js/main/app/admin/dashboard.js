@@ -53,7 +53,7 @@ export default class Dashboard extends React.Component {
         return (
             <Container fluid>
                 <Row>
-                    <Col className="bg-faded" sm="2">
+                    <Col className="bg-faded pt-3" sm="2">
                         <Nav pills vertical>
                             { this.tabs.map((tab) => {
                                 return (
@@ -66,7 +66,7 @@ export default class Dashboard extends React.Component {
                             })}
                         </Nav>
                     </Col>
-                    <Col sm="10">
+                    <Col className="pt-3" sm="10">
                         <Switch>
                             { this.tabs.map((tab) => {
                                 return (
