@@ -24,7 +24,7 @@ export const TeamListLink = (props) => {
 
 
 export const TeamCard = (props) => {
-    let team = props.team;
+    const team = props.team;
     let matchComp = null;
     if (team.matches.length > 0) {
         let match = team.matches[0];
@@ -66,6 +66,31 @@ export const TeamCard = (props) => {
                 </div>
                 <div className="p pt-2">upcoming match:</div>
                 <div className="small">{matchComp}</div>
+            </div>
+        </div>
+    );
+};
+
+export const TeamTitle = (props) => {
+    const team = props.team;
+
+    return (
+        <div className="team-box-wrapper">
+            <div className="team-box">
+                <div className="team-box-main">
+                    <div className="team-logo is-medium"> </div>
+                    <div className="h3 team-title">
+                        {team.name}
+                    </div>
+                </div>
+            </div>
+            <div className="two-sided-ribbon">
+                <div className="p ribbon-left">
+                    <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
+                </div>
+                <div className="p ribbon-right">
+                    <SeasonLink id={team.season.id} text={team.season.pretty_date}/>
+                </div>
             </div>
         </div>
     );

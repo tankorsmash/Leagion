@@ -6,7 +6,7 @@ import {Row, Col} from 'reactstrap';
 import seasonUrls from 'main/app/player/season/urls';
 import teamUrls from 'main/app/player/team/urls';
 
-import {TeamCard} from 'components/app/team';
+import {TeamCard, TeamTitle} from 'components/app/team';
 import {MatchTable} from 'components/app/match';
 import {TeamPlayerTable} from 'components/app/player';
 import {SeasonLink} from 'components/app/season';
@@ -23,7 +23,8 @@ class TeamDetail extends React.Component {
         this.state = { 
             team: {},
             loaded: false
-        }; };
+        };
+    }
 
     componentDidMount() {
         ajax({
@@ -42,15 +43,20 @@ class TeamDetail extends React.Component {
 
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    <h2>{this.state.team.name}</h2>
-                    <h5>{league.name}</h5>
-                    <h5>{season.pretty_date}: <SeasonLink id={season.id} text="View Season Schedule"/></h5>
-                    <h5>Matches</h5>
-                    <MatchTable matches={this.state.team.matches} />
-                    <h5>Players</h5>
-                    <TeamPlayerTable players={this.state.team.players} />
+                <Titlebar title="My Team" />
+                <div className="team-detail-header">
+                    <TeamTitle team={this.state.team} />
                 </div>
+                {/*
+                <h2>{this.state.team.name}</h2>
+                <h5>{league.name}</h5>
+                <h5>{season.pretty_date}: <SeasonLink id={season.id} text="View Season Schedule"/></h5>
+                <h5>Matches</h5>
+                <MatchTable matches={this.state.team.matches} />
+                <h5>Players</h5>
+                <TeamPlayerTable players={this.state.team.players} />
+                
+                    */}
             </SpinLoader>
         );
     }
