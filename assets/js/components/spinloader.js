@@ -23,11 +23,11 @@ class SpinLoader extends React.Component {
     render() {
 
         if (this.state.loaded == false) {
-            return <Spinner spinnerName='three-bounce' />;
+            return (<Spinner spinnerName='three-bounce' />);
         } else {
             return (
                 <div>
-                    {this.props.children};
+                    {this.props.children}
                 </div>
             );
         }

@@ -1,15 +1,12 @@
-import {Switch, Link} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
-import {Row, Col} from 'reactstrap';
 
-import seasonUrls from 'main/app/player/season/urls';
+import Tabs from 'components/tabs'
+
 import teamUrls from 'main/app/player/team/urls';
 
 import {TeamCard, TeamTitle} from 'components/app/team';
-import {MatchTable} from 'components/app/match';
-import {TeamPlayerTable} from 'components/app/player';
-import {SeasonLink} from 'components/app/season';
 import Titlebar from 'components/app/titlebar';
 
 import {FourOhFour} from 'components/error-pages';
@@ -47,22 +44,21 @@ class TeamDetail extends React.Component {
                 <div className="team-detail-header">
                     <TeamTitle team={this.state.team} />
                 </div>
-                {/*
-                <h2>{this.state.team.name}</h2>
-                <h5>{league.name}</h5>
-                <h5>{season.pretty_date}: <SeasonLink id={season.id} text="View Season Schedule"/></h5>
-                <h5>Matches</h5>
-                <MatchTable matches={this.state.team.matches} />
-                <h5>Players</h5>
-                <TeamPlayerTable players={this.state.team.players} />
-                
-                    */}
+                <Tabs
+                    tabs={[{
+                        label: 'Tab1',
+                        content: (<div> hello tab 1</div>)
+                    }, {
+                        label: 'Tab2',
+                        content: (<div> hello tab 2</div>)
+                    }]}
+                />
             </SpinLoader>
         );
     }
 }
 
-class TeamList extends React.Component {
+export class TeamList extends React.Component {
     
     constructor(props) {
         super(props);
@@ -100,7 +96,7 @@ class TeamList extends React.Component {
     }
 }
 
-class Team extends React.Component {
+export class Team extends React.Component {
 
     render() {
         return (
@@ -112,9 +108,3 @@ class Team extends React.Component {
         );
     }
 }
-
-module.exports = {
-    Team: Team,
-    TeamList: TeamList,
-};
-

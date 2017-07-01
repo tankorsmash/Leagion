@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
+import {Ribbon} from 'components/misc';
 
 import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
@@ -84,14 +85,10 @@ export const TeamTitle = (props) => {
                     </div>
                 </div>
             </div>
-            <div className="two-sided-ribbon">
-                <div className="p ribbon-left">
-                    <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
-                </div>
-                <div className="p ribbon-right">
-                    <SeasonLink id={team.season.id} text={team.season.pretty_date}/>
-                </div>
-            </div>
+            <Ribbon
+                leftEl={<LeagueLink id={team.season.league.id} text={team.season.league.name}/>}
+                rightEl={<SeasonLink id={team.season.id} text={team.season.pretty_date}/>}
+            />
         </div>
     );
 };
