@@ -28,7 +28,7 @@ export default class Tabs extends React.Component {
 
 	render() {
 		return (
-			<div className="tab-wrapper">
+			<div className={this.props.className + ' tab-wrapper'}>
 				<Nav tabs>
 					{this.props.tabs.map((tab, i) => {
 						return (

@@ -15,7 +15,7 @@ const MatchLink = (props) => {
 
 const MatchTable = (props) => {
     return (
-        <Table>
+        <Table responsive>
             <thead>
                 <tr>
                     <th>Date</th>

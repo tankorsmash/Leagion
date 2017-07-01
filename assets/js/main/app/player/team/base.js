@@ -6,6 +6,9 @@ import Tabs from 'components/tabs';
 
 import teamUrls from 'main/app/player/team/urls';
 
+import {MatchTable} from 'components/app/match';
+import {TeamPlayerTable} from 'components/app/player';
+import {SeasonLink} from 'components/app/season';
 import {TeamCard, TeamTitle} from 'components/app/team';
 import Titlebar from 'components/app/titlebar';
 
@@ -35,9 +38,6 @@ class TeamDetail extends React.Component {
     }
 
     render() {
-        let season = this.state.team.season || {};
-        let league = season.league || {};
-
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Titlebar title="My Team" />
@@ -45,11 +45,12 @@ class TeamDetail extends React.Component {
                     <TeamTitle team={this.state.team} />
                 </div>
                 <Tabs
+                    className="team-match-table"
                     tabs={[{
-                        label: 'Tab1',
-                        content: (<div> hello tab 1</div>)
+                        label: 'Matches',
+                        content: (<MatchTable matches={this.state.team.matches} />)
                     }, {
-                        label: 'Tab2',
+                        label: 'Team Members',
                         content: (<div> hello tab 2</div>)
                     }]}
                 />

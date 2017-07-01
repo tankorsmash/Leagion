@@ -45,11 +45,13 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-top: 20px;
+	margin-bottom: 15px;
 }
 
 .team-box-wrapper {
 	display: flex;
     flex-direction: column;
+	padding: 10px;
 
 	.team-box {
 		border: 1px solid $black;
@@ -76,4 +78,10 @@
 		margin-top: -8%;
 		align-self: center;
 	}
+}
+
+.team-match-table {
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px;
 }
