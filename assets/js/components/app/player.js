@@ -1,7 +1,6 @@
-import React from 'react';
 import { Table } from 'reactstrap';
 
-const TeamPlayerTable = (props) => {
+export const TeamPlayerTable = (props) => {
     return (
         <Table striped>
             <thead>
@@ -17,15 +16,33 @@ const TeamPlayerTable = (props) => {
                             <td>{player.full_name}</td>
                             <td>{player.email}</td>
                         </tr>
-                    )
+                    );
                 })}
             </tbody>
         </Table>
     );
-}
+};
 
-module.exports = {
-    TeamPlayerTable: TeamPlayerTable,
-}
+export const PlayerAvatar = (props) => {
+    return (
+        <div className="player-avatar">
+            <div className="player-avatar-pic">
+            </div>
+            <div className="player-avatar-name">
+                {props.full_name}
+            </div>
+        </div>
+    );
+};
+
+export const PlayerAvatarList = (props) => {
+    return (
+        <div className="player-avatar-list">
+            {props.players.map((player, i) => {
+                return <PlayerAvatar key={i} player={player} />;
+            })}
+        </div>
+    );
+};
 
 

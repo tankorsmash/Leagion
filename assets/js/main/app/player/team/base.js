@@ -7,7 +7,7 @@ import Tabs from 'components/tabs';
 import teamUrls from 'main/app/player/team/urls';
 
 import {MatchTable} from 'components/app/match';
-import {TeamPlayerTable} from 'components/app/player';
+import {PlayerAvatarList} from 'components/app/player';
 import {SeasonLink} from 'components/app/season';
 import {TeamCard, TeamTitle} from 'components/app/team';
 import Titlebar from 'components/app/titlebar';
@@ -51,7 +51,7 @@ class TeamDetail extends React.Component {
                         content: (<MatchTable matches={this.state.team.matches} />)
                     }, {
                         label: 'Team Members',
-                        content: (<div> hello tab 2</div>)
+                        content: (<PlayerAvatarList players={this.state.team.players}/>)
                     }]}
                 />
             </SpinLoader>
