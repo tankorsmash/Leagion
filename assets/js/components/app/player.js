@@ -29,7 +29,7 @@ export const PlayerAvatar = (props) => {
             <div className="player-avatar-pic">
             </div>
             <div className="player-avatar-name">
-                {props.full_name}
+                {props.name}
             </div>
         </div>
     );
@@ -39,7 +39,7 @@ export const PlayerAvatarList = (props) => {
     return (
         <div className="player-avatar-list">
             {props.players.map((player, i) => {
-                return <PlayerAvatar key={i} player={player} />;
+                return <PlayerAvatar key={i} name={player.full_name} />;
             })}
         </div>
     );
