@@ -1,0 +1,21 @@
+.nav-tabs {
+	display: flex;
+	justify-content: center;
+	border: none;
+
+	.nav-link {
+		border: none;
+
+		&.active {
+			color: $component-active-bg;
+			border-bottom: 3px solid $component-active-bg;
+			&:hover {
+				color: $component-active-bg;
+			}
+		}
+	}
+}
+
+.tab-content {
+	border: 1px solid $black;
+}

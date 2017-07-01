@@ -77,37 +77,3 @@
 		align-self: center;
 	}
 }
-
-.two-sided-ribbon {
-	text-align: center;
-	border: 1px solid $black;
-	display: flex;
-	background-color: $white;
-
-	.ribbon-left, .ribbon-right {
-		display: flex;
-		align-items: center;
-	}
-
-	.ribbon-left {
-		padding: 5px;
-		flex-basis: 45%;
-
-		a {
-			color: $black;
-		}
-	}
-
-	.ribbon-right {
-		background-color: $brand-secondary;
-		clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
-		color: $white;
-		padding: 5px 5px 5px 30px;
-		flex-basis: 55%;
-
-		a {
-			color: $white;
-		}
-	}
-
-}

@@ -3,6 +3,9 @@
 @import 'players';
 @import 'text';
 
+@import 'components/misc';
+@import 'components/tabs';
+
 .container {
     background-color: $white;
 
@@ -15,6 +18,10 @@ body {
     #leagion-admin {
         background-color: $white;
     }
+}
+
+a {
+    cursor: pointer;
 }
 
 .appbar {
