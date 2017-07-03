@@ -1,4 +1,4 @@
-import {Route} from 'react-router-dom';
+import {Route as RouterRoute} from 'react-router-dom';
 
 //https://github.com/ReactTraining/react-router/issues/4105
 const renderMergedProps = (component, ...rest) => {
@@ -6,16 +6,12 @@ const renderMergedProps = (component, ...rest) => {
     return (
         React.createElement(component, finalProps)
     );
-}
+};
 
-const PropsRoute = ({ component, ...rest  }) => {
+export const Route = ({ component, ...rest  }) => {
     return (
-        <Route {...rest} render={routeProps => {
+        <RouterRoute {...rest} render={routeProps => {
             return renderMergedProps(component, routeProps, rest);
         }}/>
     );
-}
-
-module.exports = {
-	Route: PropsRoute
 };

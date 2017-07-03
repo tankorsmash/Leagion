@@ -1,8 +1,6 @@
 import ajax from 'common/ajax';
 import reverse from 'common/reverse';
 
-import {NOT_LOADED} from 'common/constants';
-
 export default class DatasetView extends React.Component {
     get datasetStateAttr() {
         return "dataset";
@@ -47,5 +45,5 @@ export default class DatasetView extends React.Component {
         }, error => {
             console.warn(error);
         });
-    }
-};
+    };
+}

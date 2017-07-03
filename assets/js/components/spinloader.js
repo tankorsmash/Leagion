@@ -1,6 +1,6 @@
 import Spinner from 'react-spinkit';
 
-class SpinLoader extends React.Component {
+export default class SpinLoader extends React.Component {
     
     constructor(props) {
         super(props);
@@ -33,5 +33,3 @@ class SpinLoader extends React.Component {
         }
     }
 }
-
-module.exports = SpinLoader;

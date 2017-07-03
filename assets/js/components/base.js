@@ -1,7 +1,7 @@
 import Spinner from 'react-spinkit';
 import ajax from 'common/ajax';
 
-class AsyncBase extends React.Component {
+export class AsyncBase extends React.Component {
     url = null;
     state = {};
     
@@ -10,7 +10,7 @@ class AsyncBase extends React.Component {
 
         let state = { isLoaded: false };
         Object.assign(this.state, state);
-    };
+    }
 
     loaded() {
         this.setState({isLoaded: true});
@@ -30,7 +30,6 @@ class AsyncBase extends React.Component {
 
     render() {
 
-        let content;
         if (this.state.isLoaded == false) {
             return <Spinner spinnerName='three-bounce' />;
         } else {
@@ -38,8 +37,3 @@ class AsyncBase extends React.Component {
         }
     }
 }
-
-module.exports = {
-    AsyncBase: AsyncBase,
-};
-

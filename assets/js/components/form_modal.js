@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import {
     Button,
-    Modal, ModalBody, ModalFooter, ModalHeader, ModalTitle,
-    Form, FormGroup, Input, Label,
+    Modal, ModalBody, ModalFooter, ModalHeader
 } from 'reactstrap';
 
 import {FormBase} from 'components/forms';
@@ -62,7 +61,7 @@ export default class FormModal extends FormBase {
             toastr.error(this.props.errorMessage);
             //TODO error handling
         });
-    }
+    };
 
     toggle() {
         this.setState({

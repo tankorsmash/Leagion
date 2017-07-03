@@ -1,4 +1,4 @@
-class FormBase extends React.Component {
+export class FormBase extends React.Component {
     constructor(props) {
         super(props);
 		this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,8 +21,4 @@ class FormBase extends React.Component {
 	handleSubmit(event) {
 		throw 'you must override handleSubmit method when making a form';
 	}
-}
-
-module.exports = {
-    FormBase: FormBase
 }

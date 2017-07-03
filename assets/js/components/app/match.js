@@ -5,7 +5,7 @@ import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
 import ajax from 'common/ajax';
 
-const MatchLink = (props) => {
+export const MatchLink = (props) => {
 	return (
 		<Link to={`${matchUrls.index}/${props.id}`}>
 			{props.text}
@@ -13,7 +13,7 @@ const MatchLink = (props) => {
 	);
 };
 
-const MatchTable = (props) => {
+export const MatchTable = (props) => {
     return (
         <Table responsive>
             <thead>
@@ -39,14 +39,14 @@ const MatchTable = (props) => {
                             <td>{match.location.name}</td>
                             <td>{match.home_points} - {match.away_points}</td>
                         </tr>
-                    )
+                    );
                 })}
             </tbody>
         </Table>
     );
-}
+};
 
-const MatchList = (props) => {
+export const MatchList = (props) => {
 	return (
 		<ListGroup>
 			{props.matches.map((match, i) => {
@@ -56,13 +56,13 @@ const MatchList = (props) => {
 							{match.pretty_name}
 						</Link>
 					</ListGroupItem>
-				)
+				);
 			})}
 		</ListGroup>
 	);
 };
 
-const MatchCard = (props) => {
+export const MatchCard = (props) => {
     let match = props.match;
 
     return (
@@ -99,7 +99,7 @@ const MatchCard = (props) => {
     );
 };
 
-class BattingOrderTable extends React.Component {
+export class BattingOrderTable extends React.Component {
     constructor(props) {
         super(props);
 
@@ -107,7 +107,7 @@ class BattingOrderTable extends React.Component {
             players: [],
             loaded: false
         };
-    };
+    }
 
     componentDidMount() {
         ajax({
@@ -136,19 +136,10 @@ class BattingOrderTable extends React.Component {
                                 <th scope="row">{batter.index + 1}</th>
                                 <td>{batter.player.full_name}</td>
                             </tr>
-                        )
+                        );
                     })}
                 </tbody>
             </Table>
         );
     }
 }
-
-module.exports = {
-	MatchList: MatchList,
-	MatchTable: MatchTable,
-	MatchLink: MatchLink,
-	MatchCard: MatchCard,
-	BattingOrderTable: BattingOrderTable,
-}
-

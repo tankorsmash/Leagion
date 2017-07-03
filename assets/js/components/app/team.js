@@ -1,5 +1,4 @@
 import {Link} from 'react-router-dom';
-import {Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 import {Ribbon} from 'components/misc';
