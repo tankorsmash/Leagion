@@ -1,18 +1,14 @@
-import {Switch, Link} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 
-import { Card, CardImg, CardText, CardBlock,
-    CardTitle, CardSubtitle, Button, Jumbotron } from 'reactstrap';
-
-import {LeagueJumbo} from 'components/app/league'
 import leagueUrls from 'main/app/player/league/urls';
 
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class LeagueList extends React.Component {
+export class LeagueList extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,7 +16,7 @@ class LeagueList extends React.Component {
             leagues: [],
             loaded: false
         };
-    };
+    }
 
     componentDidMount() {
         ajax({
@@ -39,7 +35,7 @@ class LeagueList extends React.Component {
                 <div>
                     <h2>My Teams</h2>
                     { this.state.leagues.map((league)=>{
-                        return (<div key={league.id}>{league.name}</div>)
+                        return (<div key={league.id}>{league.name}</div>);
                     }) }
                 </div>
             </SpinLoader>
@@ -47,7 +43,7 @@ class LeagueList extends React.Component {
     }
 }
 
-class League extends React.Component {
+export class League extends React.Component {
 
     render() {
         return (
@@ -58,8 +54,3 @@ class League extends React.Component {
         );
     }
 }
-
-module.exports = {
-    League: League,
-    LeagueList: LeagueList,
-};

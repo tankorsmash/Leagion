@@ -1,4 +1,4 @@
-import {Switch, Link} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
@@ -14,7 +14,8 @@ class MatchDetail extends React.Component {
         super(props);
 
         this.state = { 
-            match: {}, loaded: false }; };
+            match: {}, loaded: false };
+    }
 
     componentDidMount() {
         ajax({
@@ -29,7 +30,7 @@ class MatchDetail extends React.Component {
 
     render() {
         const match = this.state.match;
-        const {away_team, home_team, away_roster, home_roster} = match
+        const {away_roster, home_roster} = match;
 
         return (
             <SpinLoader loaded={this.state.loaded}>
@@ -55,7 +56,7 @@ class MatchDetail extends React.Component {
     }
 }
 
-class Match extends React.Component {
+export class Match extends React.Component {
 	//<Route exact path={teamUrls.index} component={TeamList} />
 
     render() {
@@ -67,9 +68,3 @@ class Match extends React.Component {
         );
     }
 }
-
-module.exports = {
-    Match: Match,
-};
-
-

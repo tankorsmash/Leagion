@@ -1,10 +1,7 @@
-import {Switch, Link} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
-import {AsyncBase} from 'components/base';
 import SpinLoader from 'components/spinloader';
 import {MatchTable} from 'components/app/match';
-
-import {Row, Col} from 'reactstrap';
 
 import seasonUrls from 'main/app/player/season/urls';
 
@@ -20,7 +17,7 @@ class SeasonSchedule extends React.Component {
             season: {},
             loaded: false
         };
-    };
+    }
 
     componentDidMount() {
         ajax({
@@ -47,7 +44,7 @@ class SeasonSchedule extends React.Component {
 }
 
 
-class Season extends React.Component {
+export class Season extends React.Component {
 
     render() {
         return (
@@ -58,8 +55,3 @@ class Season extends React.Component {
         );
     }
 }
-
-module.exports = {
-    Season: Season,
-};
-

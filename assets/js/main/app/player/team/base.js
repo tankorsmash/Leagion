@@ -8,7 +8,6 @@ import teamUrls from 'main/app/player/team/urls';
 
 import {MatchTable} from 'components/app/match';
 import {PlayerAvatarList} from 'components/app/player';
-import {SeasonLink} from 'components/app/season';
 import {TeamCard, TeamTitle} from 'components/app/team';
 import Titlebar from 'components/app/titlebar';
 

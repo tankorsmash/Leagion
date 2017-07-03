@@ -1,8 +1,6 @@
 import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 
-import {Container, Row, Col} from 'reactstrap';
-
 import PlayerNavbar from 'main/app/player/nav';
 import playerUrls from 'main/app/player/urls';
 import leagueUrls from 'main/app/player/league/urls';
@@ -17,7 +15,7 @@ import {Team} from 'main/app/player/team/base';
 import {Match} from 'main/app/player/match/base';
 import {FourOhFour} from 'components/error-pages';
 
-class Player extends React.Component {
+export default class Player extends React.Component {
 
     render() {
         return (
@@ -35,5 +33,3 @@ class Player extends React.Component {
         );
     }
 }
-
-module.exports = Player;
