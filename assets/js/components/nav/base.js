@@ -1,19 +1,6 @@
-import ajax from 'common/ajax';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand } from 'reactstrap';
 
-import {Link} from 'react-router-dom';
-
-import { Collapse, Navbar, NavbarToggler,
-    NavbarBrand, NavDropdown, DropdownToggle, DropdownMenu,
-    DropdownItem, Nav, NavItem, NavLink
-} from 'reactstrap';
-
-import urls from 'common/urls';
-import {LogoutButton, LoginButton} from 'components/buttons';
-import auth from 'main/auth';
-
-import {NOT_LOADED, DO_NOTHING, STOP_PROPAGATION} from 'common/constants';
-
-class Appbar extends React.Component {
+export class Appbar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -41,8 +28,4 @@ class Appbar extends React.Component {
             </div>
         );
     }
-}
-
-module.exports = {
-    Appbar: Appbar
 }
