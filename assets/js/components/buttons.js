@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import publicUrls from 'main/public/urls';
 import adminUrls from 'main/app/admin/urls';
+import accountUrls from 'main/app/player/account/urls';
 import auth from 'main/auth';
 
 export const LogoutButton = ({...rest}) => {
@@ -20,5 +21,11 @@ export const LoginButton = ({...rest}) => {
 export const AdminButton = ({...rest}) => {
 	return (
 		<Link {...rest} to={adminUrls.index}>Admin</Link>
+	);
+};
+
+export const AccountSettingsButton = ({...rest}) => {
+	return (
+		<Link {...rest} to={accountUrls.index}>Profile</Link>
 	);
 };
