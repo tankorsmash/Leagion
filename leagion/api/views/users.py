@@ -27,7 +27,7 @@ class UserDetail(generics.RetrieveUpdateAPIView):
 
 
 @reverse_js
-class UserDetailsView(generics.RetrieveUpdateAPIView):
+class MyUserDetailsView(generics.RetrieveUpdateAPIView):
     """ GET, PUT, and PATCH current users details """
     serializer_class = UserSerializer
 

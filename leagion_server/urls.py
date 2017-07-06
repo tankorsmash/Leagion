@@ -42,8 +42,6 @@ urlpatterns = [
     url(r'rgstr/', reg_views.RegisterView.as_view(), name='rest_register'),
     url(r'vrfyeml/', reg_views.VerifyEmailView.as_view(), name='rest_verify_email'),
 
-    url(r'usrdtls/', users_views.UserDetailsView.as_view(), name='rest_user_details'),
-
     #django-allauth
     url(r'^accounts/', include('allauth.urls')),
 

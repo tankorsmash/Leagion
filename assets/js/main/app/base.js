@@ -21,7 +21,7 @@ class App extends React.Component {
     }
     componentDidMount() {
         ajax({
-            url: reverse('rest_user_details'),
+            url: reverse('api-my-details'),
         }).then(data => {
             this.setState({user: data});
         });

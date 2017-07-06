@@ -8,6 +8,7 @@ var viewnames = {
     "api-league-season-list": "/api/league/<league_id>/seasons/",
     "api-match-detail": "/api/match/<match_id>/",
     "api-match-list": "/api/match/",
+    "api-my-details": "/api/me/",
     "api-my-league-detail": "/api/me/league/<league_id>/",
     "api-my-league-list": "/api/me/league/",
     "api-my-season-detail": "/api/me/season/<season_id>/",
@@ -28,7 +29,6 @@ var viewnames = {
     "rest_password_reset": "/pswdrst/",
     "rest_password_reset_confirm": "/pswdrstcfm/",
     "rest_register": "/rgstr/",
-    "rest_user_details": "/usrdtls/",
     "rest_verify_email": "/vrfyeml/"
 };
 

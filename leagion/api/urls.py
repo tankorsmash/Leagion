@@ -16,6 +16,8 @@ from leagion.api.views import (
 urlpatterns = [
     url(r'^stats/$', stats_views.StatsIndex.as_view(), name='api-stats-index'),
 
+    url(r'me/$', users_views.MyUserDetailsView.as_view(), name='api-my-details'),
+
     url(r'^player/$', users_views.UserList.as_view(), name='api-player-list'),
     url(r'^player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
 
