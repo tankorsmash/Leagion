@@ -3,6 +3,7 @@ import SpinLoader from 'components/spinloader';
 import Titlebar from 'components/app/titlebar';
 import Tabs from 'components/tabs';
 import ProfileForm from 'main/app/player/account/profile';
+import ChangePasswordForm from 'main/app/player/account/password';
 
 import ajax from 'common/ajax';
 
@@ -10,6 +11,7 @@ export class Account extends React.Component {
 
 	static propTypes = {
 		user: PropTypes.object.isRequired,
+		setUserState: PropTypes.func.isRequired,
 	};
 
     constructor(props) {
@@ -27,10 +29,10 @@ export class Account extends React.Component {
 				<Tabs
 					tabs={[{
 						label: 'Profile',
-						content: (<ProfileForm user={this.props.user} />)
+						content: (<ProfileForm {...this.props} />)
 					}, {
 						label: 'Password',
-						content: (<div>Password Settings</div>)
+						content: (<ChangePasswordForm {...this.props} />)
 					}]}
 				/>
 			</div>
