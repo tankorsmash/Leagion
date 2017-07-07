@@ -58,7 +58,9 @@ export default class ChangePasswordForm extends FormBase {
                     <Label for="new_password2">Confirm New Password</Label>
                     <Input type="password" name="new_password2" id="new_password2" value={this.state.form.new_password2} onChange={this.handleInputChange}/>
                 </FormGroup>
-                <Button type='submit' value='Submit'>Save</Button>
+                <div className="text-center">
+                    <Button type='submit' value='Submit'>Change Password</Button>
+                </div>
             </Form>
 		);
     }

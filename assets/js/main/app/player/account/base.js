@@ -27,11 +27,12 @@ export class Account extends React.Component {
 			<div>
 				<Titlebar title="Account Settings" />
 				<Tabs
+					className="account-settings-wrapper"
 					tabs={[{
 						label: 'Profile',
 						content: (<ProfileForm {...this.props} />)
 					}, {
-						label: 'Password',
+						label: 'Change Password',
 						content: (<ChangePasswordForm {...this.props} />)
 					}]}
 				/>

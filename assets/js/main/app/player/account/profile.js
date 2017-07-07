@@ -63,7 +63,9 @@ export default class ProfileForm extends FormBase {
                     <Label for="alt_phonenumber">Alternate Phone Number</Label>
                     <Input type="text" name="alt_phonenumber" id="alt_phonenumber" value={this.state.form.alt_phonenumber} onChange={this.handleInputChange}/>
                 </FormGroup>
-                <Button type='submit' value='Submit'>Save</Button>
+                <div className="text-center">
+					<Button type='submit' value='Submit'>Save</Button>
+				</div>
             </Form>
 		);
     }

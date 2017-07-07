@@ -106,3 +106,14 @@
 		height: 100px;
 	}
 }
+
+.account-settings-wrapper {
+	padding: 10px 15px;
+    max-width: 500px;
+	margin: auto;
+
+	.tab-pane {
+		padding: 30px;
+		background-color: $white;
+	}
+}
