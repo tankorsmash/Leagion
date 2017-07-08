@@ -19,7 +19,7 @@ class RegisterBase extends FormBase {
             auth.login(data.key);
             this.forceUpdate();
         }).catch(data => {
-            toastr.error(data.non_field_errors);
+            toastr.error("Email and Password do not match. Please try again.");
         });
 
     }
