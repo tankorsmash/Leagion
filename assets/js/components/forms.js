@@ -1,3 +1,6 @@
+import {FormGroup as BootstrapFormGroup, Label, Input, FormFeedback} from 'reactstrap';
+import update from 'immutability-helper';
+
 export class FormBase extends React.Component {
     constructor(props) {
         super(props);
@@ -11,14 +14,36 @@ export class FormBase extends React.Component {
 		const name = target.name;
 
 		this.setState({
-            form: {
-                ...this.state.form,
-                [name]: value
-            }
+			form: update(this.state.form, {[name]: {value: { $set: value }}}),
+		});
+	}
+
+	handleErrors(response) {
+		this.setState({
+			errors: response,
 		});
 	}
 
 	handleSubmit(event) {
 		throw 'you must override handleSubmit method when making a form';
+	}
+}
+
+export class FormGroup extends React.Component {
+	render() {
+		return (
+			<BootstrapFormGroup color={this.props.error ? 'danger' : ''}>
+				<Label for={this.props.id}>{this.props.label}</Label>
+				<Input
+					type={this.props.type}
+					name={this.props.id}
+					id={this.props.id}
+					value={this.props.value}
+					onChange={this.props.onChange}
+					state={this.props.error ? 'danger' : ''}
+				/>
+				<FormFeedback>{this.props.error || ''}</FormFeedback>
+			</BootstrapFormGroup>
+		);
 	}
 }
