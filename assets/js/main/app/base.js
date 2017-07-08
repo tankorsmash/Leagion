@@ -11,6 +11,7 @@ import playerUrls from 'main/app/player/urls';
 import Admin from 'main/app/admin/base';
 import Player from 'main/app/player/base';
 import {FourOhFour} from 'components/error-pages';
+import SpinLoader from 'components/spinloader';
 
 
 class App extends React.Component {
@@ -18,7 +19,8 @@ class App extends React.Component {
         super(props);
 
         this.state = { 
-            user: {}
+            user: {},
+            loaded: false,
         };
 
         this.setUserState = this.setUserState.bind(this);
@@ -28,7 +30,10 @@ class App extends React.Component {
         ajax({
             url: reverse('api-my-details'),
         }).then(data => {
-            this.setState({user: data});
+            this.setState({
+                user: data,
+                loaded: true,
+            });
         });
     }
 
@@ -40,12 +45,14 @@ class App extends React.Component {
 
     render() {
         return (
-            <Switch>
-                <Route exact path={appUrls.index} {...this.state} component={Player} />
-                <Route path={adminUrls.index} {...this.state} component={Admin} />
-                <Route path={playerUrls.index} setUserState={this.setUserState} {...this.state} component={Player} />
-                <Route component={FourOhFour} />
-            </Switch>
+            <SpinLoader loaded={this.state.loaded}>
+                <Switch>
+                    <Route exact path={appUrls.index} {...this.state} component={Player} />
+                    <Route path={adminUrls.index} {...this.state} component={Admin} />
+                    <Route path={playerUrls.index} setUserState={this.setUserState} {...this.state} component={Player} />
+                    <Route component={FourOhFour} />
+                </Switch>
+            </SpinLoader>
         );
     }
 }

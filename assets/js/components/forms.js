@@ -14,7 +14,10 @@ export class FormBase extends React.Component {
 		const name = target.name;
 
 		this.setState({
-			form: update(this.state.form, {[name]: {value: { $set: value }}}),
+            form: {
+                ...this.state.form,
+                [name]: value
+            }
 		});
 	}
 

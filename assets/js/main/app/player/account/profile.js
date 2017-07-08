@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
-import {FormBase} from 'components/forms';
+import {Button, Form, Label, Input} from 'reactstrap';
+import {FormBase, FormGroup} from 'components/forms';
 import ajax from 'common/ajax';
 
 export default class ProfileForm extends FormBase {
@@ -14,22 +14,13 @@ export default class ProfileForm extends FormBase {
         super(props);
         this.state = {
             form: {
-                'email': '',
-                'default_phonenumber': '',
-                'alt_phonenumber': '',
-            }
-        };
-    }
-
-	componentWillMount() {
-		this.setState({
-            form: {
                 'email': this.props.user.email,
                 'default_phonenumber': this.props.user.default_phonenumber,
                 'alt_phonenumber': this.props.user.alt_phonenumber,
-            }
-		});
-	}
+            },
+            errors: {},
+        };
+    }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -43,7 +34,7 @@ export default class ProfileForm extends FormBase {
             toastr.success('Profile information successfully changed!');
 			this.props.setUserState(data);
         }).catch(data => {
-            toastr.error(data.non_field_errors);
+            this.handleErrors(data);
         });
 
     }
@@ -51,18 +42,30 @@ export default class ProfileForm extends FormBase {
     render() {
 		return (
             <Form onSubmit={this.handleSubmit}>
-                <FormGroup>
-                    <Label for="email">Email</Label>
-                    <Input type="email" name="email" id="email" value={this.state.form.email} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="default_phonenumber">Phone Number</Label>
-                    <Input type="text" name="default_phonenumber" id="default_phonenumber" value={this.state.form.default_phonenumber} onChange={this.handleInputChange}/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="alt_phonenumber">Alternate Phone Number</Label>
-                    <Input type="text" name="alt_phonenumber" id="alt_phonenumber" value={this.state.form.alt_phonenumber} onChange={this.handleInputChange}/>
-                </FormGroup>
+                <FormGroup
+                    label="Email"
+                    type="email"
+                    id="email"
+                    value={this.state.form.email}
+                    onChange={this.handleInputChange}
+                    error={this.state.errors.email}
+                />
+                <FormGroup
+                    label="Phone Number"
+                    type="text"
+                    id="default_phonenumber"
+                    value={this.state.form.default_phonenumber}
+                    onChange={this.handleInputChange}
+                    error={this.state.errors.default_phonenumber}
+                />
+                <FormGroup
+                    label="Alternate Phone Number"
+                    type="text"
+                    id="alt_phonenumber"
+                    value={this.state.form.alt_phonenumber}
+                    onChange={this.handleInputChange}
+                    error={this.state.errors.alt_phonenumber}
+                />
                 <div className="text-center">
 					<Button type='submit' value='Submit'>Save</Button>
 				</div>

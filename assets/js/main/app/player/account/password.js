@@ -6,25 +6,17 @@ import ajax from 'common/ajax';
 export default class ChangePasswordForm extends FormBase {
     url = 'rest_password_change';
 
-    form = {
-        'old_password': '',
-        'new_password1': '',
-        'new_password2': '',
-    };
-
     constructor(props) {
         super(props);
         this.state = {
-            form: this.form,
+            form: {
+                'old_password': '',
+                'new_password1': '',
+                'new_password2': '',
+            },
             errors: {},
         };
     }
-
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-            form: this.form,
-		});
-	}
 
     handleSubmit(event) {
         event.preventDefault();
