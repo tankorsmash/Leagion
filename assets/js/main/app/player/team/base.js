@@ -50,7 +50,7 @@ class TeamDetail extends React.Component {
                         content: (<MatchTable matches={this.state.team.matches} />)
                     }, {
                         label: 'Team Members',
-                        content: (<PlayerAvatarList players={this.state.team.players}/>)
+                        content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
                     }]}
                 />
             </SpinLoader>

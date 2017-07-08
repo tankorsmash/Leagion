@@ -1,4 +1,5 @@
 import { Table } from 'reactstrap';
+import Gravatar from 'react-gravatar';
 
 export const TeamPlayerTable = (props) => {
     return (
@@ -26,8 +27,7 @@ export const TeamPlayerTable = (props) => {
 export const PlayerAvatar = (props) => {
     return (
         <div className="player-avatar">
-            <div className="player-avatar-pic">
-            </div>
+            <Gravatar className="player-avatar-pic" size={props.size} email={props.email} default="mm" />
             <div className="player-avatar-name">
                 {props.name}
             </div>
@@ -39,7 +39,14 @@ export const PlayerAvatarList = (props) => {
     return (
         <div className="player-avatar-list">
             {props.players.map((player, i) => {
-                return <PlayerAvatar key={i} name={player.full_name} />;
+                return (
+                    <PlayerAvatar
+                        key={i}
+                        size={props.size}
+                        name={player.full_name}
+                        email={player.email}
+                    />
+                );
             })}
         </div>
     );
