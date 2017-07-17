@@ -3,6 +3,7 @@ import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 import { Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
+import SpinLoader from 'components/spinloader';
 import ajax from 'common/ajax';
 
 export const MatchLink = (props) => {
@@ -99,12 +100,13 @@ export const MatchCard = (props) => {
     );
 };
 
-export class BattingOrderTable extends React.Component {
+export class FullRosterTable extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = { 
             players: [],
+            notPlaying: [],
             loaded: false
         };
     }
@@ -113,33 +115,66 @@ export class BattingOrderTable extends React.Component {
         ajax({
             url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
         }).then(data => {
+
+            const playingPlayerIds = data.batters.map((batter) => batter.player.id);
+
             this.setState({
-                players: data.players || {},
-                loaded: true
+                players: data.batters || {},
+                notPlaying: data.not_playing_players,
+                loaded: true,
             });
         });
     }
 
     render() {
+        console.log(this.state.notPlaying);
         return (
-            <Table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {this.state.players.map((batter, i) => {
-                        return (
-                            <tr key={i}>
-                                <th scope="row">{batter.index + 1}</th>
-                                <td>{batter.player.full_name}</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </Table>
+            <SpinLoader loaded={this.state.loaded}>
+                <div className="fullroster-table">
+                    <div className="roster-table">
+                        <h4>Playing</h4>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.players.map((player, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <th scope="row">{player.index + 1}</th>
+                                            <td>{player.player.full_name}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </Table>
+                    </div>
+                    <div className="not-playing-table">
+                        <h4>Not playing</h4>
+                        <Table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.notPlaying.map((player, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <th scope="row">{i + 1}</th>
+                                            <td>{player.full_name}</td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </Table>
+                    </div>
+                </div>
+            </SpinLoader>
         );
     }
 }

@@ -4,7 +4,7 @@ import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 
 import matchUrls from 'main/app/player/match/urls';
-import {MatchCard, BattingOrderTable} from 'components/app/match';
+import {MatchCard, FullRosterTable} from 'components/app/match';
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
@@ -43,11 +43,11 @@ class MatchDetail extends React.Component {
                     <Row>
                         <Col md="6">
                             Home Roster
-                            <BattingOrderTable rosterId={home_roster}/>
+                            <FullRosterTable rosterId={home_roster}/>
                         </Col>
                         <Col md="6">
                             Away Roster
-                            <BattingOrderTable rosterId={away_roster}/>
+                            <FullRosterTable rosterId={away_roster}/>
                         </Col>
                     </Row>
                 </div>

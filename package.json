@@ -28,6 +28,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "chart.js": "^1.1.1",
     "css-loader": "^0.27.3",
+    "dragula": "^3.7.2",
     "exports-loader": "^0.6.4",
     "expose-loader": "^0.7.3",
     "extract-text-webpack-plugin": "^2.1.0",
