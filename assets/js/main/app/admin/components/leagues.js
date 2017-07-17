@@ -1,5 +1,4 @@
 import {Link, Redirect} from 'react-router-dom';
-import {browserHistory} from 'react-router';
 import {
     DropdownItem, DropdownMenu, NavLink,
     Row, Col, FormGroup, Form, Button, Label, Input,
