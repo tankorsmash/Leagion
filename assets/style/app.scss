@@ -55,3 +55,18 @@ a {
     padding: 25px 60px;
     margin: auto;
 }
+
+.roster-draggable {
+    cursor: move;
+
+    &.gu-mirror {
+        border: 2px solid $gray-lighter;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .index {
+            display: none;
+        }
+    }
+}

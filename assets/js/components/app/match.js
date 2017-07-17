@@ -5,6 +5,7 @@ import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
 import SpinLoader from 'components/spinloader';
 import ajax from 'common/ajax';
+import Dragula from 'react-dragula';
 
 export const MatchLink = (props) => {
 	return (
@@ -109,15 +110,16 @@ export class FullRosterTable extends React.Component {
             notPlaying: [],
             loaded: false
         };
+
+        this.drake = Dragula({
+            //direction: 'vertical',             // Y axis is considered when determining where an element would be dropped
+        });
     }
 
     componentDidMount() {
         ajax({
             url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
         }).then(data => {
-
-            const playingPlayerIds = data.batters.map((batter) => batter.player.id);
-
             this.setState({
                 players: data.batters || {},
                 notPlaying: data.not_playing_players,
@@ -127,7 +129,6 @@ export class FullRosterTable extends React.Component {
     }
 
     render() {
-        console.log(this.state.notPlaying);
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <div className="fullroster-table">
@@ -140,11 +141,11 @@ export class FullRosterTable extends React.Component {
                                     <th>Name</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody ref={(el) => {this.drake.containers.push(el);}}>
                                 {this.state.players.map((player, i) => {
                                     return (
-                                        <tr key={i}>
-                                            <th scope="row">{player.index + 1}</th>
+                                        <tr key={i} className="roster-draggable">
+                                            <th className="index" scope="row">{player.index + 1}</th>
                                             <td>{player.player.full_name}</td>
                                         </tr>
                                     );
@@ -161,11 +162,11 @@ export class FullRosterTable extends React.Component {
                                     <th>Name</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody ref={(el) => {this.drake.containers.push(el);}}>
                                 {this.state.notPlaying.map((player, i) => {
                                     return (
-                                        <tr key={i}>
-                                            <th scope="row">{i + 1}</th>
+                                        <tr key={i} className="roster-draggable">
+                                            <th className="index" scope="row">{i + 1}</th>
                                             <td>{player.full_name}</td>
                                         </tr>
                                     );

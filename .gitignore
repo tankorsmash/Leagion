@@ -54,6 +54,3 @@ Doxy*
 assets/bundles/
 node_modules/
 webpack-stats.json
-
-package-lock.json
-
