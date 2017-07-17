@@ -51,6 +51,7 @@ def generate_users(count, team=None):
 
     if team:
         team.players.add(*created_users)
+        team.captains.add(random.choice(created_users))
 
     return created_users
 

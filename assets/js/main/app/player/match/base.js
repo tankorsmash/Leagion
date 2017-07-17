@@ -43,11 +43,17 @@ class MatchDetail extends React.Component {
                     <Row>
                         <Col md="6">
                             Home Roster
-                            <FullRosterTable rosterId={home_roster}/>
+                            <FullRosterTable
+                                user={this.props.user}
+                                rosterId={home_roster}
+                            />
                         </Col>
                         <Col md="6">
                             Away Roster
-                            <FullRosterTable rosterId={away_roster}/>
+                            <FullRosterTable
+                                user={this.props.user}
+                                rosterId={away_roster}
+                            />
                         </Col>
                     </Row>
                 </div>
@@ -62,7 +68,7 @@ export class Match extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path={matchUrls.detail} component={MatchDetail} />
+                <Route exact path={matchUrls.detail} user={this.props.user} component={MatchDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );
