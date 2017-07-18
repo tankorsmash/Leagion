@@ -10,13 +10,13 @@ module.exports = modulePaths => ({
 
     entry: {
         vendor: [
+            'babel-polyfill',
+            'react-hot-loader/patch',
             "expose-loader?React!react",
             "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
-            'react-hot-loader/patch',
             'webpack-dev-server/client?http://localhost:20034',
             'webpack/hot/only-dev-server',
-            'babel-polyfill',
             'whatwg-fetch',
             './assets/js/vendor/index',
         ],
