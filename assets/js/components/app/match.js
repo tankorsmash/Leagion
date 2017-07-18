@@ -16,36 +16,36 @@ export const MatchLink = (props) => {
 };
 
 export const MatchTable = (props) => {
-    return (
-        <Table responsive>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Home Team</th>
-                    <th></th>
-                    <th>Away Team</th>
-                    <th>Location</th>
-                    <th>Results</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.matches.map((match, i) => {
-                    return (
-                        <tr key={i}>
-                            <td><MatchLink id={match.id} text={match.pretty_date}/></td>
-                            <td>{match.pretty_time}</td>
+	return (
+		<Table responsive>
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Time</th>
+					<th>Home Team</th>
+					<th></th>
+					<th>Away Team</th>
+					<th>Location</th>
+					<th>Results</th>
+				</tr>
+			</thead>
+			<tbody>
+				{props.matches.map((match, i) => {
+					return (
+						<tr key={i}>
+							<td><MatchLink id={match.id} text={match.pretty_date}/></td>
+							<td>{match.pretty_time}</td>
 							<td><TeamLink id={match.home_team.id} text={match.home_team.name}/></td>
-                            <td>vs.</td>
+							<td>vs.</td>
 							<td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
-                            <td>{match.location.name}</td>
-                            <td>{match.home_points} - {match.away_points}</td>
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </Table>
-    );
+							<td>{match.location.name}</td>
+							<td>{match.home_points} - {match.away_points}</td>
+						</tr>
+					);
+				})}
+			</tbody>
+		</Table>
+	);
 };
 
 export const MatchList = (props) => {
@@ -65,129 +65,152 @@ export const MatchList = (props) => {
 };
 
 export const MatchCard = (props) => {
-    let match = props.match;
+	let match = props.match;
 
-    return (
-        <div>
-            <Card>
-                <CardBlock>
-                    <CardTitle className="text-center">
-                        <Table> 
-                            <thead>
-                                <tr>
-                                    <th className="text-center"><TeamLink id={match.home_team.id} text={match.home_team.name}/></th>
-                                    <th className="text-center">vs.</th>
-                                    <th className="text-center"><TeamLink id={match.away_team.id} text={match.away_team.name}/></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{match.home_points}</td>
-                                    <td></td>
-                                    <td>{match.away_points}</td>
-                                </tr>
-                            </tbody>
-                        </Table>
-                        {match.pretty_date}
-                        <br/>
-                        {match.pretty_time}
-                    </CardTitle>
-                    <CardSubtitle></CardSubtitle>
-                    <CardText>
-                    </CardText>
-                </CardBlock>
-            </Card>
-        </div>
-    );
+	return (
+		<div>
+			<Card>
+				<CardBlock>
+					<CardTitle className="text-center">
+						<Table> 
+							<thead>
+								<tr>
+									<th className="text-center"><TeamLink id={match.home_team.id} text={match.home_team.name}/></th>
+									<th className="text-center">vs.</th>
+									<th className="text-center"><TeamLink id={match.away_team.id} text={match.away_team.name}/></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>{match.home_points}</td>
+									<td></td>
+									<td>{match.away_points}</td>
+								</tr>
+							</tbody>
+						</Table>
+						{match.pretty_date}
+						<br/>
+						{match.pretty_time}
+					</CardTitle>
+					<CardSubtitle></CardSubtitle>
+					<CardText>
+					</CardText>
+				</CardBlock>
+			</Card>
+		</div>
+	);
 };
 
 export class FullRosterTable extends React.Component {
-    constructor(props) {
-        super(props);
+	constructor(props) {
+		super(props);
 
-        this.state = { 
-            team: {},
-            players: [],
-            notPlaying: [],
-            loaded: false
-        };
+		this.state = { 
+			team: {},
+			players: [],
+			notPlaying: [],
+			loaded: false
+		};
 
-        this.drake = Dragula();
-    }
+		this.drake = Dragula().on('drop', this.setNewRoster);
+	}
 
-    componentDidMount() {
-        ajax({
-            url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
-        }).then(data => {
-            this.setState({
-                team: data.team,
-                players: data.batters,
-                notPlaying: data.not_playing_players,
-                loaded: true,
-            });
-        });
-    }
+	componentDidMount() {
+		ajax({
+			url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
+		}).then(data => {
+			this.setState({
+				team: data.team,
+				players: data.batters,
+				notPlaying: data.not_playing_players,
+				loaded: true,
+			});
+		});
+	}
 
-    userIsTeamCaptain() {
-        return this.props.user.captain_of_teams.includes(this.state.team.id);
-    }
+	setNewRoster = () => {
+		const data = [...this.playingEl.childNodes].map((playerNode, i) => {
+			return {
+				player_id: playerNode.dataset.playerId,
+				roster: this.props.rosterId,
+				index: i,
+			};
+		});
 
-    addContainerToDrake = (el) => {
-        if (this.userIsTeamCaptain()) {
-            this.drake.containers.push(el);
-        }
-    };
+		ajax({
+			data: {batters: data},
+			method: 'PUT',
+			url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
+		}).then(data => {
+			console.log(data);
+		});
 
-    render() {
-        const isTeamCaptain = this.userIsTeamCaptain();
+	};
 
-        return (
-            <SpinLoader loaded={this.state.loaded}>
-                <div className="fullroster-table">
-                    <div className="roster-table">
-                        <h4>Playing</h4>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody ref={this.addContainerToDrake}>
-                                {this.state.players.map((player, i) => {
-                                    return (
-                                        <tr key={i} className={isTeamCaptain ? "roster-draggable" : ""}>
-                                            <th className="index" scope="row">{player.index + 1}</th>
-                                            <td>{player.player.full_name}</td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </Table>
-                    </div>
-                    <div className="not-playing-table">
-                        <h4>Not playing</h4>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                </tr>
-                            </thead>
-                            <tbody ref={this.addContainerToDrake}>
-                                {this.state.notPlaying.map((player, i) => {
-                                    return (
-                                        <tr key={i} className={isTeamCaptain ? "roster-draggable" : ""}>
-                                            <th className="index" scope="row">{i + 1}</th>
-                                            <td>{player.full_name}</td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </Table>
-                    </div>
-                </div>
-            </SpinLoader>
-        );
-    }
+	userIsTeamCaptain() {
+		return this.props.user.captain_of_teams.includes(this.state.team.id);
+	}
+
+	addContainerToDrake = (el) => {
+		if (this.userIsTeamCaptain()) {
+			this.drake.containers.push(el);
+		}
+	};
+
+	render() {
+		const isTeamCaptain = this.userIsTeamCaptain();
+
+		return (
+			<SpinLoader loaded={this.state.loaded}>
+				<div className="fullroster-table">
+					<div className="roster-table">
+						<h4>Playing</h4>
+						<Table>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Name</th>
+								</tr>
+							</thead>
+							<tbody ref={(el) => {this.playingEl = el; this.addContainerToDrake(el);}}>
+								{this.state.players.map((batter, i) => {
+									return (
+										<tr
+											key={i}
+											className={isTeamCaptain ? "roster-draggable" : ""}
+											data-player-id={batter.player.id}
+										>
+											<th className="index" scope="row">{batter.index + 1}</th>
+											<td>{batter.player.full_name}</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</Table>
+					</div>
+					<div className="not-playing-table">
+						<h4>Not playing</h4>
+						<Table>
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Name</th>
+								</tr>
+							</thead>
+							<tbody ref={(el) => {this.notPlayingEl = el; this.addContainerToDrake(el);}}>
+								{this.state.notPlaying.map((player, i) => {
+									return (
+										<tr key={i} className={isTeamCaptain ? "roster-draggable" : ""}>
+											<th className="index" scope="row">{i + 1}</th>
+											<td>{player.full_name}</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</Table>
+					</div>
+				</div>
+			</SpinLoader>
+		);
+	}
 }

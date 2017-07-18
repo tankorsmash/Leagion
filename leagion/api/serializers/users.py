@@ -37,3 +37,13 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+class PublicUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'email', 'first_name', 'last_name', 'full_name',
+                'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',)
+
+        read_only_fields = ('id', 'email', 'first_name', 'last_name', 'full_name',
+                'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',)
