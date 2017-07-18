@@ -16,5 +16,5 @@ const render = Component => {
 render(Base);
 
 if (module.hot) {
-    module.hot.accept('main/base', () => { render(Base); });
+    module.hot.accept();
 }
