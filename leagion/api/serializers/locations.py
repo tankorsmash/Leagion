@@ -4,8 +4,6 @@ from rest_framework import serializers
 
 from leagion.models import Location
 
-Location = get_user_model()
-
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location

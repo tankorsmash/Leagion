@@ -3,10 +3,9 @@ from django.contrib.auth import get_user_model
 
 from leagion.api.serializers.locations import LocationSerializer
 
+from leagion.models import Location
+
 from leagion.utils import reverse_js
-
-Location = get_user_model()
-
 
 @reverse_js
 class LocationList(generics.ListCreateAPIView):

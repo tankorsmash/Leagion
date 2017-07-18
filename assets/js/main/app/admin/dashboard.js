@@ -15,6 +15,7 @@ import {OverviewPane} from 'main/app/admin/dashboard/overview_pane';
 import {LeaguesPane} from 'main/app/admin/dashboard/leagues_pane';
 import {TeamsPane} from 'main/app/admin/dashboard/teams_pane';
 import {PlayersPane} from 'main/app/admin/dashboard/players_pane';
+import {LocationsPane} from 'main/app/admin/dashboard/locations_pane';
 
 import adminUrls from 'main/app/admin/urls';
 
@@ -39,6 +40,10 @@ export default class Dashboard extends React.Component {
             'id': 'players',
             'name': 'Players',
             'pane': PlayersPane,
+        },{
+            'id': 'locations',
+            'name': 'Locations',
+            'pane': LocationsPane,
         },];
 
     };
