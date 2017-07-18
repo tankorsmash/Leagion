@@ -110,6 +110,7 @@ class PlayerNameCell extends React.Component {
                 <Modal
                     backdropTransitionTimeout={25}
                     modalTransitionTimeout={50}
+                    fade={false}
                     isOpen={this.state.isOpen}
                     toggle={this.toggle}
                     className={this.props.className}>
