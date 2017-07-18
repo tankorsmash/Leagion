@@ -111,24 +111,31 @@ export class FullRosterTable extends React.Component {
 			notPlaying: [],
 			loaded: false
 		};
-
-		this.drake = Dragula().on('drop', this.setNewRoster);
 	}
 
 	componentDidMount() {
 		ajax({
 			url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
 		}).then(data => {
-			this.setState({
-				team: data.team,
-				players: data.batters,
-				notPlaying: data.not_playing_players,
-				loaded: true,
-			});
+			this.setStateFromRosterData(data);
 		});
 	}
 
-	setNewRoster = () => {
+	setUpDragging = (el) => {
+		this.drake = Dragula([this.playingEl, this.notPlayingEl]).on('drop', this.setNewRoster);
+	};
+
+	setStateFromRosterData(data) {
+		this.setState({
+			team: data.team,
+			players: data.batters,
+			notPlaying: data.not_playing_players,
+			loaded: true,
+		});
+	}
+
+	setNewRoster = (el, source, target, siblings) => {
+
 		const data = [...this.playingEl.childNodes].map((playerNode, i) => {
 			return {
 				player_id: playerNode.dataset.playerId,
@@ -137,12 +144,14 @@ export class FullRosterTable extends React.Component {
 			};
 		});
 
+		this.drake.cancel(true);
+
 		ajax({
 			data: {batters: data},
 			method: 'PUT',
 			url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
 		}).then(data => {
-			console.log(data);
+			this.setStateFromRosterData(data);
 		});
 
 	};
@@ -151,18 +160,15 @@ export class FullRosterTable extends React.Component {
 		return this.props.user.captain_of_teams.includes(this.state.team.id);
 	}
 
-	addContainerToDrake = (el) => {
-		if (this.userIsTeamCaptain()) {
-			this.drake.containers.push(el);
-		}
-	};
-
 	render() {
 		const isTeamCaptain = this.userIsTeamCaptain();
 
 		return (
 			<SpinLoader loaded={this.state.loaded}>
-				<div className="fullroster-table">
+				<div
+					ref={this.setUpDragging}
+					className="fullroster-table"
+				>
 					<div className="roster-table">
 						<h4>Playing</h4>
 						<Table>
@@ -172,7 +178,9 @@ export class FullRosterTable extends React.Component {
 									<th>Name</th>
 								</tr>
 							</thead>
-							<tbody ref={(el) => {this.playingEl = el; this.addContainerToDrake(el);}}>
+							<tbody
+								ref={(el) => {this.playingEl = el;}}
+								className="fullroster-table-container">
 								{this.state.players.map((batter, i) => {
 									return (
 										<tr
@@ -197,7 +205,10 @@ export class FullRosterTable extends React.Component {
 									<th>Name</th>
 								</tr>
 							</thead>
-							<tbody ref={(el) => {this.notPlayingEl = el; this.addContainerToDrake(el);}}>
+							<tbody
+								ref={(el) => {this.notPlayingEl = el;}}
+								className="fullroster-table-container"
+							>
 								{this.state.notPlaying.map((player, i) => {
 									return (
 										<tr key={i} className={isTeamCaptain ? "roster-draggable" : ""}>
