@@ -24,7 +24,7 @@ class LocationCreateForm extends React.Component {
                         type="text"
                         name="name"
                         id="name"
-                        placeholder="Sports Team Three"/>
+                        placeholder="Winchester Parks"/>
                 </FormGroup>
             </Form>
         );
