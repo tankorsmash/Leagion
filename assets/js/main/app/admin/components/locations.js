@@ -56,12 +56,18 @@ class LocationDetail extends DatasetView {
         const url = reverse("api-location-detail", {location_id: location.id});
 
         return (
-            <Container fluid>
-                <h4 className="pr-1">
-                    { location.name }
-                </h4>
-                <div>
-                    CONTENT TBA
+            <Container fluid >
+                <div className="text-center">
+                    <Row>
+                        <Col className="h4">
+                                { location.name }
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="">
+                            { location.address }
+                        </Col>
+                    </Row>
                 </div>
             </Container>
         );
