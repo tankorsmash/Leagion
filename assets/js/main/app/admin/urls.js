@@ -4,6 +4,7 @@ let dashboardUrl = `${adminUrl}/dashboard`;
 
 let leaguesUrl = `${adminUrl}/leagues`;
 let seasonsUrl = `${adminUrl}/seasons`;
+let locationsUrl = `${adminUrl}/locations`;
 let teamsUrl = `${adminUrl}/teams`;
 let matchesUrl = `${adminUrl}/matches`;
 let playersUrl = `${adminUrl}/players`;
@@ -26,6 +27,11 @@ module.exports = {
 		index: seasonsUrl,
 		create: `${seasonsUrl}/create`,
 		detail: `${seasonsUrl}/:seasonId`,
+	},
+	locations: {
+		index: locationsUrl,
+		create: `${locationsUrl}/create`,
+		detail: `${locationsUrl}/:locationId`,
 	},
 	teams: {
 		index: teamsUrl,
