@@ -75,7 +75,7 @@ export default class FormModal extends FormBase {
             <div>
                 <Button color="primary" onClick={this.toggle}>{this.props.buttonLabel}</Button>
 
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal fade={false} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>{this.props.modalHeaderLabel}</ModalHeader>
                     <ModalBody>
                         <FormComponent

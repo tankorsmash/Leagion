@@ -99,6 +99,7 @@ module.exports = modulePaths => ({
         // respond to 404s with index.html
         headers: { 'Access-Control-Allow-Origin': '*'  },
 
+        inline: true,
         hot: true,
         // enable HMR on the server
     },

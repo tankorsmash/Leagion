@@ -38,6 +38,8 @@ export default class DatasetView extends React.Component {
         ajax({
             url: url,
         }).then(data => {
+            //this throws a react error if the component unmounts
+            //before this promise is completed. I think it's harmless
             this.setState({
                 [this.datasetStateAttr]: data,
                 isLoaded: true,
