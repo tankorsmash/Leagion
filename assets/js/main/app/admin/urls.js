@@ -9,8 +9,16 @@ let teamsUrl = `${adminUrl}/teams`;
 let matchesUrl = `${adminUrl}/matches`;
 let playersUrl = `${adminUrl}/players`;
 
+function buildSimpleUrls(root, kwargName) {
+    return {
+        index: root,
+        detail: `${root}/:${kwargName}`,
+        create: `${root}/create`
+    }
+};
+
 module.exports = {
-	index: adminUrl,
+    index: adminUrl,
     dashboard: {
         index: dashboardUrl,
         overview: `${dashboardUrl}/overview`,
@@ -18,34 +26,11 @@ module.exports = {
         teams: `${dashboardUrl}/teams`,
         players: `${dashboardUrl}/players`,
     },
-	leagues: {
-		index: leaguesUrl,
-		create: `${leaguesUrl}/create`,
-		detail: `${leaguesUrl}/:leagueId`,
-	},
-	seasons: {
-		index: seasonsUrl,
-		create: `${seasonsUrl}/create`,
-		detail: `${seasonsUrl}/:seasonId`,
-	},
-	locations: {
-		index: locationsUrl,
-		create: `${locationsUrl}/create`,
-		detail: `${locationsUrl}/:locationId`,
-	},
-	teams: {
-		index: teamsUrl,
-		create: `${teamsUrl}/create`,
-		detail: `${teamsUrl}/:teamId?`,
-	},
-	matches: {
-		index: matchesUrl,
-		create: `${matchesUrl}/create`,
-		detail: `${matchesUrl}/:matchId`,
-	},
-	players: {
-		index: playersUrl,
-		create: `${playersUrl}/create`,
-		detail: `${playersUrl}/:playerId`,
-	},
+
+    leagues: buildSimpleUrls(leaguesUrl, "leagueId"),
+    seasons: buildSimpleUrls(seasonsUrl, "seasonId"),
+    locations: buildSimpleUrls(locationsUrl, "locationId"),
+    teams: buildSimpleUrls(teamsUrl, "teamId"),
+    matches: buildSimpleUrls(matchesUrl, "matchId"),
+    players: buildSimpleUrls(playersUrl, "playerId"),
 }
