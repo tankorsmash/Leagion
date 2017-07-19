@@ -41,9 +41,20 @@ export class LocationsPane extends DatasetView {
     }
 
     render() {
+        const locationUrlizer = pathToRegex.compile(adminUrls.locations.detail);
+
         let columns = [{
             id: "name",
             title: "Name",
+            component: (ctx) => {
+                return (
+                    <td>
+                        <Link to={locationUrlizer({locationId: ctx.data.id})}>
+                            {ctx.data.name}
+                        </Link>
+                    </td>
+                );
+            }
         },];
 
         const formDefaults = {"name": ""};
