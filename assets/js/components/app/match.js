@@ -101,6 +101,53 @@ export const MatchCard = (props) => {
 	);
 };
 
+class DroppableRosterTable extends React.Component {
+
+	render() {
+
+		let {players, isTeamCaptain, id, setRef} = this.props;
+
+		if (players.length) {
+			return (
+				<Table>
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+						</tr>
+					</thead>
+					<tbody
+						ref={(el) => {setRef(el, id);}}
+						className="fullroster-table-container">
+						{players.map((player, i) => {
+							return (
+								<tr
+									key={i}
+									className={isTeamCaptain ? "roster-draggable" : ""}
+									data-player-id={player.id}
+								>
+									<th className="index" scope="row">{player.index + 1}</th>
+									<td>{player.full_name}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</Table>
+			);
+		} else {
+			return (
+				<div
+					ref={(el) => {setRef(el, id);}}
+					className="empty-roster-table"
+				>
+				</div>
+			);
+
+		}
+	}
+
+}
+
 export class FullRosterTable extends React.Component {
 	constructor(props) {
 		super(props);
@@ -122,27 +169,51 @@ export class FullRosterTable extends React.Component {
 	}
 
 	setUpDragging = (el) => {
-		this.drake = Dragula([this.playingEl, this.notPlayingEl]).on('drop', this.setNewRoster);
+		if (this.userIsTeamCaptain()) {
+			this.drake = Dragula([this.playingEl, this.notPlayingEl]).on('drop', this.setNewRoster);
+		}
 	};
 
 	setStateFromRosterData(data) {
 		this.setState({
 			team: data.team,
-			players: data.batters,
-			notPlaying: data.not_playing_players,
+			players: data.batters.map((batter) => {
+				return {
+					id: batter.player.id,
+					index: batter.index,
+					full_name: batter.player.full_name,
+				};
+			}),
+			notPlaying: data.not_playing_players.map((player, i) => {
+				return {
+					id: player.id,
+					index: i,
+					full_name: player.full_name,
+				};
+			}),
 			loaded: true,
 		});
 	}
 
 	setNewRoster = (el, source, target, siblings) => {
+		let data;
 
-		const data = [...this.playingEl.childNodes].map((playerNode, i) => {
-			return {
-				player_id: playerNode.dataset.playerId,
+		if (target == this.playingEl && !this.state.players.length) {
+			data = [{
+				player_id: el.dataset.playerId,
 				roster: this.props.rosterId,
-				index: i,
-			};
-		});
+				index: 0,
+			}];
+
+		} else {
+			data = [...this.playingEl.childNodes].map((playerNode, i) => {
+				return {
+					player_id: playerNode.dataset.playerId,
+					roster: this.props.rosterId,
+					index: i,
+				};
+			});
+		}
 
 		this.drake.cancel(true);
 
@@ -154,6 +225,10 @@ export class FullRosterTable extends React.Component {
 			this.setStateFromRosterData(data);
 		});
 
+	};
+
+	setRef = (el, id) => {
+		this[id] = el;
 	};
 
 	userIsTeamCaptain() {
@@ -171,54 +246,21 @@ export class FullRosterTable extends React.Component {
 				>
 					<div className="roster-table">
 						<h4>Playing</h4>
-						<Table>
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Name</th>
-								</tr>
-							</thead>
-							<tbody
-								ref={(el) => {this.playingEl = el;}}
-								className="fullroster-table-container">
-								{this.state.players.map((batter, i) => {
-									return (
-										<tr
-											key={i}
-											className={isTeamCaptain ? "roster-draggable" : ""}
-											data-player-id={batter.player.id}
-										>
-											<th className="index" scope="row">{batter.index + 1}</th>
-											<td>{batter.player.full_name}</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</Table>
+						<DroppableRosterTable
+							isTeamCaptain={isTeamCaptain}
+							players={this.state.players}
+							id="playingEl"
+							setRef={this.setRef}
+						/>
 					</div>
 					<div className="not-playing-table">
 						<h4>Not playing</h4>
-						<Table>
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Name</th>
-								</tr>
-							</thead>
-							<tbody
-								ref={(el) => {this.notPlayingEl = el;}}
-								className="fullroster-table-container"
-							>
-								{this.state.notPlaying.map((player, i) => {
-									return (
-										<tr key={i} className={isTeamCaptain ? "roster-draggable" : ""}>
-											<th className="index" scope="row">{i + 1}</th>
-											<td>{player.full_name}</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</Table>
+						<DroppableRosterTable
+							isTeamCaptain={isTeamCaptain}
+							players={this.state.notPlaying}
+							id="notPlayingEl"
+							setRef={this.setRef}
+						/>
 					</div>
 				</div>
 			</SpinLoader>
