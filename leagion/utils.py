@@ -117,13 +117,10 @@ def generate_roster(team):
         team=team,
     )
 
-    player_sample = random.sample(
-        list(team.players.all()),
-        F.random_int(10, team.players.count())
-    )
+    players = list(team.players.all())
 
     batters = []
-    for i, player in enumerate(player_sample):
+    for i, player in enumerate(player):
         batters.append(generate_batter(roster, player, i))
     Batter.objects.bulk_create(batters)
 

@@ -57,8 +57,6 @@ a {
 }
 
 .roster-draggable {
-    cursor: move;
-
     &.gu-mirror {
         border: 2px solid $gray-lighter;
         display: flex;
@@ -69,4 +67,9 @@ a {
             display: none;
         }
     }
+
+    [data-draggable-handle] {
+        cursor: move;
+    }
+        
 }

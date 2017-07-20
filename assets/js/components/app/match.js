@@ -114,6 +114,7 @@ class DroppableRosterTable extends React.Component {
 						<tr>
 							<th>#</th>
 							<th>Name</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody
@@ -128,6 +129,16 @@ class DroppableRosterTable extends React.Component {
 								>
 									<th className="index" scope="row">{player.index + 1}</th>
 									<td>{player.full_name}</td>
+									<td>
+										{isTeamCaptain &&
+											<i
+												data-draggable-handle={true}
+												className="fa fa-arrows"
+												aria-hidden="true"
+											>
+											</i>
+										}
+									</td>
 								</tr>
 							);
 						})}
@@ -155,7 +166,6 @@ export class FullRosterTable extends React.Component {
 		this.state = { 
 			team: {},
 			players: [],
-			notPlaying: [],
 			loaded: false
 		};
 	}
@@ -170,7 +180,11 @@ export class FullRosterTable extends React.Component {
 
 	setUpDragging = (el) => {
 		if (this.userIsTeamCaptain()) {
-			this.drake = Dragula([this.playingEl, this.notPlayingEl]).on('drop', this.setNewRoster);
+			this.drake = Dragula([this.playingEl], {
+				moves: function (el, source, handle, sibling) {
+					return handle.dataset.draggableHandle; // elements are always draggable by default
+				},
+			}).on('drop', this.setNewRoster);
 		}
 	};
 
@@ -184,36 +198,18 @@ export class FullRosterTable extends React.Component {
 					full_name: batter.player.full_name,
 				};
 			}),
-			notPlaying: data.not_playing_players.map((player, i) => {
-				return {
-					id: player.id,
-					index: i,
-					full_name: player.full_name,
-				};
-			}),
 			loaded: true,
 		});
 	}
 
 	setNewRoster = (el, source, target, siblings) => {
-		let data;
-
-		if (target == this.playingEl && !this.state.players.length) {
-			data = [{
-				player_id: el.dataset.playerId,
+		let data = [...this.playingEl.childNodes].map((playerNode, i) => {
+			return {
+				player_id: playerNode.dataset.playerId,
 				roster: this.props.rosterId,
-				index: 0,
-			}];
-
-		} else {
-			data = [...this.playingEl.childNodes].map((playerNode, i) => {
-				return {
-					player_id: playerNode.dataset.playerId,
-					roster: this.props.rosterId,
-					index: i,
-				};
-			});
-		}
+				index: i,
+			};
+		});
 
 		this.drake.cancel(true);
 
@@ -245,20 +241,11 @@ export class FullRosterTable extends React.Component {
 					className="fullroster-table"
 				>
 					<div className="roster-table">
-						<h4>Playing</h4>
+						<h4>Roster</h4>
 						<DroppableRosterTable
 							isTeamCaptain={isTeamCaptain}
 							players={this.state.players}
 							id="playingEl"
-							setRef={this.setRef}
-						/>
-					</div>
-					<div className="not-playing-table">
-						<h4>Not playing</h4>
-						<DroppableRosterTable
-							isTeamCaptain={isTeamCaptain}
-							players={this.state.notPlaying}
-							id="notPlayingEl"
 							setRef={this.setRef}
 						/>
 					</div>
