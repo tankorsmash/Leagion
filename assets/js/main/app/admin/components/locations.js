@@ -11,10 +11,6 @@ import {
 import Spinner from 'react-spinkit';
 import Datetime from 'react-datetime';
 
-import Moment from 'react-moment';
-import moment from 'moment';
-import uuid from 'uuid';
-
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
@@ -60,7 +56,7 @@ class LocationDetail extends DatasetView {
                 <div className="text-center">
                     <Row>
                         <Col className="h4">
-                                { location.name }
+                            { location.name }
                         </Col>
                     </Row>
                     <Row>
