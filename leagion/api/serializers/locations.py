@@ -7,11 +7,13 @@ from leagion.models import Location
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
-        fields = ('name',)
+        fields = ('id', 'name', 'address',)
         extra_kwargs = {
             'password': {'write_only': True},
             'id': {'read_only': True}
         }
+
+    address = serializers.CharField()
 
 
     def create(self, validated_data):

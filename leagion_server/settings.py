@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'webpack_loader',
 
     'phonenumber_field',
+    'address',
 ]
 
 MIDDLEWARE_CLASSES = [
