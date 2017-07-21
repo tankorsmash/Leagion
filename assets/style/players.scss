@@ -116,3 +116,39 @@
 		background-color: $white;
 	}
 }
+
+.team-match-card {
+	text-align: center;
+	border: 1px solid $black;
+	background-color: $white;
+	width: 450px;
+	padding: 20px;
+	margin-top: 40px;
+
+	.team-logo {
+		margin: 20px auto 10px auto;
+	}
+
+}
+
+.team-match-vs {
+	text-align: center;
+	margin-top: 20vh;
+}
+
+.leagion-table {
+	th {
+		background-color: $gray-lighter;
+		text-align: left;
+	}
+
+	td {
+		text-align: left;
+	}
+}
+
+.fullroster-table {
+	td, th {
+		text-align: right;
+	}
+}

@@ -23,7 +23,19 @@ class ShallowSeasonSerializer(serializers.ModelSerializer):
     league = ShallowLeagueSerializer(read_only=True)
 
 
+class ShallowTeamSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Team
+
+        fields = (
+            'id', 'name'
+        )
+
 class ShallowMatchSerializer(serializers.ModelSerializer):
+    home_team = ShallowTeamSerializer()
+    away_team = ShallowTeamSerializer()
+
     class Meta:
         model = Match
 

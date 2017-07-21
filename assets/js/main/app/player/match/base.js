@@ -4,7 +4,7 @@ import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 
 import matchUrls from 'main/app/player/match/urls';
-import {MatchCard, FullRosterTable} from 'components/app/match';
+import {TeamMatchCard} from 'components/app/team';
 import {FourOhFour} from 'components/error-pages';
 
 import Titlebar from 'components/app/titlebar';
@@ -45,16 +45,17 @@ class MatchDetail extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col md="6">
-                                Home Roster
-                                <FullRosterTable
+                            <Col md="5" className="d-flex justify-content-end">
+                                <TeamMatchCard
                                     user={this.props.user}
                                     rosterId={home_roster}
                                 />
                             </Col>
-                            <Col md="6">
-                                Away Roster
-                                <FullRosterTable
+                            <Col md="2" className="team-match-vs">
+                                <h2>Vs.</h2>
+                            </Col>
+                            <Col md="5" className="team-match-column">
+                                <TeamMatchCard
                                     user={this.props.user}
                                     rosterId={away_roster}
                                 />

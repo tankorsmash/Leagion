@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 import {Ribbon} from 'components/misc';
+import {FullRosterTable} from 'components/app/roster';
 
 import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
@@ -67,6 +68,25 @@ export const TeamCard = (props) => {
                 <div className="p pt-2">upcoming match:</div>
                 <div className="small">{matchComp}</div>
             </div>
+        </div>
+    );
+};
+
+export const TeamMatchCard = (props) => {
+	const {title, user, rosterId, teamLogo, teamName, score} = props;
+
+    return (
+        <div className="team-match-card">
+            <h3 className="team-match-card-title font-weight-bold">
+                Home Team
+            </h3>
+            <div className="team-logo is-medium"> </div>
+            <h3>Astronauts</h3>
+            <h2>6</h2>
+            <FullRosterTable
+                user={user}
+                rosterId={rosterId}
+            />
         </div>
     );
 };
