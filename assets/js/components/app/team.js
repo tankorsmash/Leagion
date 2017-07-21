@@ -78,11 +78,11 @@ export const TeamMatchCard = (props) => {
     return (
         <div className="team-match-card">
             <h3 className="team-match-card-title font-weight-bold">
-                Home Team
+                {title}
             </h3>
             <div className="team-logo is-medium"> </div>
-            <h3>Astronauts</h3>
-            <h2>6</h2>
+            <h3>{teamName}</h3>
+            <h2>{score}</h2>
             <FullRosterTable
                 user={user}
                 rosterId={rosterId}

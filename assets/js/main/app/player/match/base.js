@@ -30,39 +30,50 @@ class MatchDetail extends React.Component {
     }
 
     render() {
-        const match = this.state.match;
-        const {away_roster, home_roster} = match;
+        const {
+            away_roster, home_roster, home_team, away_team,
+            home_points, away_points, pretty_date, pretty_time
+        } = this.state.match;
+        console.log(this.state);
 
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    <Titlebar title="Match" />
+                {this.state.loaded &&
                     <div>
-                        <Row>
-                            <Col className="text-center mt-3" md={{size:6, offset:3}}>
-                                <h3> {match.pretty_date} </h3>
-                                <h3> {'@ ' + match.pretty_time} </h3>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md="5" className="d-flex justify-content-end">
-                                <TeamMatchCard
-                                    user={this.props.user}
-                                    rosterId={home_roster}
-                                />
-                            </Col>
-                            <Col md="2" className="team-match-vs">
-                                <h2>Vs.</h2>
-                            </Col>
-                            <Col md="5" className="team-match-column">
-                                <TeamMatchCard
-                                    user={this.props.user}
-                                    rosterId={away_roster}
-                                />
-                            </Col>
-                        </Row>
+                        <Titlebar title="Match" />
+                        <div>
+                            <Row>
+                                <Col className="text-center mt-3" md={{size:6, offset:3}}>
+                                    <h3> {pretty_date} </h3>
+                                    <h3> {'@ ' + pretty_time} </h3>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="5" className="d-flex justify-content-end">
+                                    <TeamMatchCard
+                                        title="Home Team"
+                                        teamName={home_team.name}
+                                        score={home_points}
+                                        user={this.props.user}
+                                        rosterId={home_roster}
+                                    />
+                                </Col>
+                                <Col md="2" className="team-match-vs">
+                                    <h2>Vs.</h2>
+                                </Col>
+                                <Col md="5" className="team-match-column">
+                                    <TeamMatchCard
+                                        title="Away Team"
+                                        teamName={away_team.name}
+                                        score={away_points}
+                                        user={this.props.user}
+                                        rosterId={away_roster}
+                                    />
+                                </Col>
+                            </Row>
+                        </div>
                     </div>
-                </div>
+                }
             </SpinLoader>
         );
     }
