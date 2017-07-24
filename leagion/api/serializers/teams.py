@@ -43,7 +43,7 @@ class ShallowMatchSerializer(serializers.ModelSerializer):
             'id', 'match_datetime', 'location', 'season', 'duration_seconds',
             'home_team', 'home_points', 'away_team', 'away_points', 'status',
             'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
-            'pretty_time', 'home_roster', 'away_roster'
+            'pretty_time', 'home_roster', 'away_roster', 'completed'
         )
 
 class PureTeamSerializer(serializers.ModelSerializer):

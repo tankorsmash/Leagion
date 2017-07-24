@@ -7,20 +7,24 @@ import {FullRosterTable} from 'components/app/roster';
 import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
 
+import {MatchScoreSetter} from 'components/app/match';
+
+import {Button} from 'reactstrap';
+
 export const TeamLink = (props) => {
-	return (
-		<Link to={`${teamUrls.index}/${props.id}`}>
-			{props.text}
-		</Link>
-	);
+    return (
+        <Link to={`${teamUrls.index}/${props.id}`}>
+            {props.text}
+        </Link>
+    );
 };
 
 export const TeamListLink = (props) => {
-	return (
-		<Link to={`${teamUrls.index}`}>
-			{props.text}
-		</Link>
-	);
+    return (
+        <Link to={`${teamUrls.index}`}>
+            {props.text}
+        </Link>
+    );
 };
 
 
@@ -29,7 +33,7 @@ export const TeamCard = (props) => {
     let matchComp = null;
     if (team.matches.length > 0) {
         let match = team.matches[0];
-        
+
         matchComp = (
             <span>
                 {
@@ -52,7 +56,7 @@ export const TeamCard = (props) => {
         <div className="team-card">
             <div className="team-card-top">
                 <div>
-                <div className="team-logo is-small"> </div>
+                    <div className="team-logo is-small"> </div>
                 </div>
                 <div className="h4 team-title">
                     <TeamLink id={team.id} text="Stephen Valleys Apron Joint"/>
@@ -73,7 +77,28 @@ export const TeamCard = (props) => {
 };
 
 export const TeamMatchCard = (props) => {
-	const {title, user, rosterId, teamLogo, teamName, score} = props;
+    const {
+        title, user, rosterId, teamLogo, teamName, score,
+        completed, teamId, home_team, away_team
+    } = props;
+
+    let scoreEl;
+
+    if (completed) {
+        scoreEl = <h2>{score}</h2>;
+    } else {
+        scoreEl = (
+            <span>
+                <h2>N/A</h2>
+                {user.captain_of_teams.includes(teamId) &&
+                    <MatchScoreSetter
+                        home_team={home_team}
+                        away_team={away_team}
+                    />
+                }
+            </span>
+        );
+    }
 
     return (
         <div className="team-match-card">
@@ -82,7 +107,7 @@ export const TeamMatchCard = (props) => {
             </h3>
             <div className="team-logo is-medium"> </div>
             <h3>{teamName}</h3>
-            <h2>{score}</h2>
+            {scoreEl}
             <FullRosterTable
                 user={user}
                 rosterId={rosterId}

@@ -32,9 +32,9 @@ class MatchDetail extends React.Component {
     render() {
         const {
             away_roster, home_roster, home_team, away_team,
-            home_points, away_points, pretty_date, pretty_time
+            home_points, away_points, pretty_date, pretty_time,
+            completed
         } = this.state.match;
-        console.log(this.state);
 
         return (
             <SpinLoader loaded={this.state.loaded}>
@@ -53,9 +53,13 @@ class MatchDetail extends React.Component {
                                     <TeamMatchCard
                                         title="Home Team"
                                         teamName={home_team.name}
+                                        teamId={home_team.id}
                                         score={home_points}
                                         user={this.props.user}
                                         rosterId={home_roster}
+                                        completed={completed}
+                                        home_team={home_team}
+                                        away_team={away_team}
                                     />
                                 </Col>
                                 <Col md="2" className="team-match-vs">
@@ -65,9 +69,13 @@ class MatchDetail extends React.Component {
                                     <TeamMatchCard
                                         title="Away Team"
                                         teamName={away_team.name}
+                                        teamId={away_team.id}
                                         score={away_points}
                                         user={this.props.user}
                                         rosterId={away_roster}
+                                        completed={completed}
+                                        home_team={home_team}
+                                        away_team={away_team}
                                     />
                                 </Col>
                             </Row>

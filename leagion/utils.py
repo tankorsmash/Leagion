@@ -130,9 +130,9 @@ def generate_match(season, home_team, away_team, location, postponed_match=None)
 
     #if not postponed:
     if postponed_match is None:
-        match_datetime = F.date_time_this_year(tzinfo=pytz.timezone("EST"))
-        home_points = F.random_number(1)
-        away_points = F.random_number(1)
+        match_datetime = F.date_time_this_year(after_now=True, tzinfo=pytz.timezone("EST"))
+        home_points = None if match_datetime > datetime.datetime.now(tz=pytz.timezone("EST")) else F.random_number(1)
+        away_points = None if match_datetime > datetime.datetime.now(tz=pytz.timezone("EST")) else F.random_number(1)
         duration_seconds = F.random_int(10, 60*60*4) #10s to 4hrs
 
     #if the match is postponed
