@@ -79,7 +79,7 @@ export const TeamCard = (props) => {
 export const TeamMatchCard = (props) => {
     const {
         title, user, rosterId, teamLogo, teamName, score,
-        completed, teamId, home_team, away_team
+        completed, teamId, home_team, away_team, matchId, updateScore
     } = props;
 
     let scoreEl;
@@ -94,6 +94,8 @@ export const TeamMatchCard = (props) => {
                     <MatchScoreSetter
                         home_team={home_team}
                         away_team={away_team}
+                        matchId={matchId}
+                        updateScore={updateScore}
                     />
                 }
             </span>

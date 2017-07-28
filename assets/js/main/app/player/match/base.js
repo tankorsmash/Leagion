@@ -9,6 +9,7 @@ import {FourOhFour} from 'components/error-pages';
 
 import Titlebar from 'components/app/titlebar';
 import ajax from 'common/ajax';
+import update from 'immutability-helper';
 
 class MatchDetail extends React.Component {
     constructor(props) {
@@ -28,6 +29,18 @@ class MatchDetail extends React.Component {
             });
         });
     }
+
+    updateScore = (newScores) => {
+        const match = update(this.state.match, {
+            home_points: {$set: newScores.home_points},
+            away_points: {$set: newScores.away_points},
+            completed: {$set: true},
+        });
+
+        this.setState({
+            match: match,
+        });
+    };
 
     render() {
         const {
@@ -60,6 +73,8 @@ class MatchDetail extends React.Component {
                                         completed={completed}
                                         home_team={home_team}
                                         away_team={away_team}
+                                        matchId={this.state.match.id}
+                                        updateScore={this.updateScore}
                                     />
                                 </Col>
                                 <Col md="2" className="team-match-vs">
@@ -76,6 +91,8 @@ class MatchDetail extends React.Component {
                                         completed={completed}
                                         home_team={home_team}
                                         away_team={away_team}
+                                        matchId={this.state.match.id}
+                                        updateScore={this.updateScore}
                                     />
                                 </Col>
                             </Row>

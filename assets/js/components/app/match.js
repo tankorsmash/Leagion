@@ -72,17 +72,21 @@ export const MatchList = (props) => {
 };
 
 export class MatchScoreSetter extends FormBase {
-    url = 'set-score';
+    url = 'api-set-match-score';
+
+	get form() {
+		return {
+			'home_score': '',
+			'away_score': '',
+		};
+	}
 
     constructor(props) {
         super(props);
 
         this.state = {
             isOpen: false,
-            form: {
-                'home_score': '',
-                'away_score': '',
-            },
+            form: this.form,
             errors: {},
         };
     }
@@ -96,17 +100,26 @@ export class MatchScoreSetter extends FormBase {
     };
 
 	handleSubmit = (event) => {
-		console.log('handled');
         event.preventDefault();
 
         ajax({
-            url: reverse(this.url),
-			method: 'POST',
-            data: this.state.form,
+            url: reverse(this.url, {match_id: this.props.matchId}),
+			method: 'PUT',
+			data: {
+				home_points: this.state.form.home_score,
+				away_points: this.state.form.away_score,
+			}
         }).then(data => {
-			console.log(data);
+			this.props.updateScore(data);
+			this.setState({
+				isOpen: false,
+				form: this.form,
+			});
+            toastr.success("Score Set!");
         }).catch(data => {
-			console.log(data);
+			this.setState({
+				errors: data,
+			});
         });
 
     };
