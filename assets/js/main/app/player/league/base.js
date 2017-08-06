@@ -5,6 +5,7 @@ import SpinLoader from 'components/spinloader';
 import leagueUrls from 'main/app/player/league/urls';
 import {SeasonLink} from 'components/app/season';
 
+import Titlebar from 'components/app/titlebar';
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
@@ -32,17 +33,19 @@ export class LeagueDetail extends React.Component {
 
     render() {
         return (
-            <SpinLoader loaded={this.state.loaded}>
-                {this.state.loaded &&
-                    <div className="text-center">
-                        <h2>{this.state.league.name}</h2>
-                        {this.state.league.my_seasons.map((season, i) => {
-                            return <SeasonLink key={i} id={season.id} text={<h4>{season.pretty_date}</h4>}/>
-                        })}
-
-                    </div>
-                }
-            </SpinLoader>
+            <div>
+                <Titlebar title="League" />
+                <SpinLoader loaded={this.state.loaded}>
+                    {this.state.loaded &&
+                        <div className="text-center">
+                            <h3>{this.state.league.name}</h3>
+                            {this.state.league.my_seasons.map((season, i) => {
+                                return <SeasonLink key={i} id={season.id} text={<h4>{season.pretty_date}</h4>}/>;
+                            })}
+                        </div>
+                    }
+                </SpinLoader>
+            </div>
         );
     }
 }

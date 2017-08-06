@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 import {Ribbon} from 'components/misc';
@@ -137,4 +138,39 @@ export const TeamTitle = (props) => {
             />
         </div>
     );
+};
+
+export const TeamRankTable = (props) => {
+    const teams = props.teams.sort((teamA, teamB) => {
+        return teamA.win_draw_loss_points.points < teamB.win_draw_loss_points.points;
+    });
+
+	return (
+		<Table responsive className="leagion-table">
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Team Name</th>
+					<th>Wins</th>
+					<th>Ties</th>
+					<th>Losses</th>
+					<th>Points</th>
+				</tr>
+			</thead>
+			<tbody>
+				{teams.map((team, i) => {
+					return (
+						<tr key={i}>
+							<td>#{i + 1}</td>
+							<td><TeamLink id={team.id} text={team.name}/></td>
+							<td>{team.win_draw_loss_points.wins}</td>
+							<td>{team.win_draw_loss_points.draws}</td>
+							<td>{team.win_draw_loss_points.losses}</td>
+							<td>{team.win_draw_loss_points.points}</td>
+						</tr>
+					);
+				})}
+			</tbody>
+		</Table>
+	);
 };
