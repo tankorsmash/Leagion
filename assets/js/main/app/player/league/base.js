@@ -3,12 +3,13 @@ import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 
 import leagueUrls from 'main/app/player/league/urls';
+import {SeasonLink} from 'components/app/season';
 
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-export class LeagueList extends React.Component {
+export class LeagueDetail extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,10 +21,10 @@ export class LeagueList extends React.Component {
 
     componentDidMount() {
         ajax({
-            url: reverse('api-my-league-list'),
+            url: reverse('api-my-league-detail', {league_id: this.props.match.params.leagueId}),
         }).then(data => {
             this.setState({
-                leagues: data,
+                league: data,
                 loaded: true
             });
         });
@@ -32,12 +33,15 @@ export class LeagueList extends React.Component {
     render() {
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    <h2>My Teams</h2>
-                    { this.state.leagues.map((league)=>{
-                        return (<div key={league.id}>{league.name}</div>);
-                    }) }
-                </div>
+                {this.state.loaded &&
+                    <div className="text-center">
+                        <h2>{this.state.league.name}</h2>
+                        {this.state.league.my_seasons.map((season, i) => {
+                            return <SeasonLink key={i} id={season.id} text={<h4>{season.pretty_date}</h4>}/>
+                        })}
+
+                    </div>
+                }
             </SpinLoader>
         );
     }
@@ -48,7 +52,7 @@ export class League extends React.Component {
     render() {
         return (
             <Switch>
-                <Route path={leagueUrls.index} component={LeagueList} />
+                <Route exact path={leagueUrls.detail} component={LeagueDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );
