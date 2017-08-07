@@ -1,5 +1,15 @@
+import {Link} from 'react-router-dom';
 import { Table } from 'reactstrap';
 import Gravatar from 'react-gravatar';
+import profileUrls from 'main/app/player/profile/urls';
+
+export const PublicProfileLink = (props) => {
+	return (
+		<Link to={`${profileUrls.index}/${props.id}`}>
+			{props.text}
+		</Link>
+	);
+};
 
 export const TeamPlayerTable = (props) => {
     return (
@@ -29,7 +39,7 @@ export const PlayerAvatar = (props) => {
         <div className="player-avatar">
             <Gravatar className="player-avatar-pic" size={props.size} email={props.email} default="mm" />
             <div className="player-avatar-name">
-                {props.name}
+                <PublicProfileLink id={props.id} text={props.name}/>
             </div>
         </div>
     );
@@ -45,6 +55,7 @@ export const PlayerAvatarList = (props) => {
                         size={props.size}
                         name={player.full_name}
                         email={player.email}
+                        id={player.id}
                     />
                 );
             })}

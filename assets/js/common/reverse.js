@@ -13,6 +13,7 @@ var viewnames = {
     "api-my-details": "/api/me/",
     "api-my-league-detail": "/api/me/league/<league_id>/",
     "api-my-league-list": "/api/me/league/",
+    "api-my-public-player-detail": "/api/public-player/<player_id>/",
     "api-my-season-detail": "/api/me/season/<season_id>/",
     "api-my-season-list": "/api/me/season/",
     "api-my-team-list": "/api/me/team/",

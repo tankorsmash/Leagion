@@ -21,6 +21,7 @@ urlpatterns = [
 
     url(r'^player/$', users_views.UserList.as_view(), name='api-player-list'),
     url(r'^player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
+    url(r'^public-player/(?P<player_id>\d+)/$', users_views.PublicPlayerView.as_view(), name='api-my-public-player-detail'),
 
     url(r'^match/$', matches_views.MatchList.as_view(), name='api-match-list'),
     url(r'^match/(?P<match_id>\d+)/$', matches_views.MatchDetail.as_view(), name='api-match-detail'),
