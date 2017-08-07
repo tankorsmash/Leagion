@@ -28,8 +28,8 @@ export default class Player extends React.Component {
                     <Route path={leagueUrls.index} component={League} />
                     <Route path={teamUrls.index} component={Team} />
                     <Route path={seasonUrls.index} component={Season} />
-                    <Route path={matchUrls.index} {...this.props} component={Match} />
-                    <Route path={accountUrls.index} {...this.props} component={Account} />
+                    <Route {...this.props} path={matchUrls.index} component={Match} />
+                    <Route {...this.props} path={accountUrls.index} component={Account} />
                     <Route component={FourOhFour} />
                 </Switch>
             </div>

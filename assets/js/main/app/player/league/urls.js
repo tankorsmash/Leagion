@@ -4,5 +4,4 @@ let index = `${playerUrls.index}/league`;
 module.exports = {
 	index: index,
 	detail: `${index}/:leagueId?`,
-}
-
+};

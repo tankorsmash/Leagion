@@ -41,8 +41,7 @@ class SeasonSchedule extends React.Component {
                     {this.state.loaded &&
                         <div>
                             <div className="text-center">
-                                <h3>{this.state.season.league.name}</h3>
-                                <h4>{this.state.season.pretty_name}</h4>
+                                <h3>{this.state.season.pretty_name}</h3>
                             </div>
                             <Tabs
                                 className="team-match-table"

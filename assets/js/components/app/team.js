@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import { ListGroup, ListGroupItem, Table } from 'reactstrap';
+import {Table} from 'reactstrap';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 import {Ribbon} from 'components/misc';
@@ -9,8 +9,6 @@ import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
 
 import {MatchScoreSetter} from 'components/app/match';
-
-import {Button} from 'reactstrap';
 
 export const TeamLink = (props) => {
     return (

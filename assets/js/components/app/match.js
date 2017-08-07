@@ -3,9 +3,7 @@ import { ListGroup, ListGroupItem, Table } from 'reactstrap';
 import { Button, Input, Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
-import SpinLoader from 'components/spinloader';
 import ajax from 'common/ajax';
-import Dragula from 'react-dragula';
 import {Modal} from 'components/modals';
 import {FormBase, FormGroup} from 'components/forms';
 
