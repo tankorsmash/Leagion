@@ -38,8 +38,11 @@ export const PlayerAvatar = (props) => {
     return (
         <div className="player-avatar">
             <Gravatar className="player-avatar-pic" size={props.size} email={props.email} default="mm" />
-            <div className="player-avatar-name">
-                <PublicProfileLink id={props.id} text={props.name}/>
+            <div
+                className="player-avatar-name"
+                style={{width: props.size + 'px'}}
+            >
+                {props.children}
             </div>
         </div>
     );
@@ -53,10 +56,10 @@ export const PlayerAvatarList = (props) => {
                     <PlayerAvatar
                         key={i}
                         size={props.size}
-                        name={player.full_name}
                         email={player.email}
-                        id={player.id}
-                    />
+                    >
+                        <PublicProfileLink id={player.id} text={player.full_name}/>
+                    </PlayerAvatar>
                 );
             })}
         </div>
