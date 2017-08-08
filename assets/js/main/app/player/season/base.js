@@ -39,7 +39,7 @@ class SeasonSchedule extends React.Component {
                 <Titlebar title="Season" />
                 <SpinLoader loaded={this.state.loaded}>
                     {this.state.loaded &&
-                        <div>
+                        <div className="content">
                             <div className="text-center">
                                 <h3>{this.state.season.pretty_name}</h3>
                             </div>

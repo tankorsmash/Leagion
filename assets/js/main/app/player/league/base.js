@@ -37,7 +37,7 @@ export class LeagueDetail extends React.Component {
                 <Titlebar title="League" />
                 <SpinLoader loaded={this.state.loaded}>
                     {this.state.loaded &&
-                        <div className="text-center">
+                        <div className="text-center content">
                             <h3>{this.state.league.name}</h3>
                             {this.state.league.my_seasons.map((season, i) => {
                                 return <SeasonLink key={i} id={season.id} text={<h4>{season.pretty_date}</h4>}/>;
