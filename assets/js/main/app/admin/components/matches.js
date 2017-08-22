@@ -41,7 +41,7 @@ class RosterTable extends DatasetView {
         }];
 
         return (
-            <GeneralTable columns={playerColumns} rowData={this.state.roster.players} />
+            <GeneralTable columns={playerColumns} rowData={this.state.roster.batters} />
         );
     }
 }
