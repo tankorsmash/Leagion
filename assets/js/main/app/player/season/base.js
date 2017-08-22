@@ -2,10 +2,13 @@ import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 import {MatchTable} from 'components/app/match';
+import {TeamRankTable} from 'components/app/team';
 
 import seasonUrls from 'main/app/player/season/urls';
+import Titlebar from 'components/app/titlebar';
 
 import {FourOhFour} from 'components/error-pages';
+import Tabs from 'components/tabs';
 
 import ajax from 'common/ajax';
 
@@ -32,13 +35,28 @@ class SeasonSchedule extends React.Component {
 
     render() {
         return (
-            <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    <h4>{this.state.season.pretty_name}</h4>
-                    <h5>Season Schedule</h5>
-                    <MatchTable matches={this.state.season.matches}/>
-                </div>
-            </SpinLoader>
+            <div>
+                <Titlebar title="Season" />
+                <SpinLoader loaded={this.state.loaded}>
+                    {this.state.loaded &&
+                        <div className="content">
+                            <div className="text-center">
+                                <h3>{this.state.season.pretty_name}</h3>
+                            </div>
+                            <Tabs
+                                className="team-match-table"
+                                tabs={[{
+                                    label: 'Schedule',
+                                    content: (<MatchTable matches={this.state.season.matches} />)
+                                }, {
+                                    label: 'Rankings',
+                                    content: (<TeamRankTable teams={this.state.season.teams} />)
+                                }]}
+                            />
+                        </div>
+                    }
+                </SpinLoader>
+            </div>
         );
     }
 }

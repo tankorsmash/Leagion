@@ -35,19 +35,10 @@ class BatterSerializer(serializers.ModelSerializer):
 class RosterSerializer(serializers.ModelSerializer):
     team = ShallowTeamSerializer(read_only=True)
     batters = BatterSerializer(many=True)
-    not_playing_players = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Roster
-        fields = ('id', 'team', 'batters', 'not_playing_players')
-
-    def get_not_playing_players(self, obj):
-
-        player_ids = obj.players.values_list('id', flat=True)
-        players = obj.team.players.exclude(id__in=player_ids)
-
-        serializer = PublicUserSerializer(players, many=True)
-        return serializer.data
+        fields = ('id', 'team', 'batters')
 
     def update(self, instance, validated_data):
         instance.batters.all().delete()

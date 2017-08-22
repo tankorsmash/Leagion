@@ -55,6 +55,7 @@
 
 	.team-box {
 		border: 1px solid $black;
+		background-color: $white;
 
 		.team-logo {
 			margin-top: 15px;
@@ -98,7 +99,6 @@
 	align-items: center;
 	text-align: center;
 	padding: 10px;
-	width: 120px;
 
 	.player-avatar-pic {
 		border-radius: 50%;
@@ -113,5 +113,54 @@
 	.tab-pane {
 		padding: 30px;
 		background-color: $white;
+	}
+}
+
+.team-match-card {
+	text-align: center;
+	border: 1px solid $black;
+	background-color: $white;
+	width: 450px;
+	padding: 20px;
+	margin-top: 30px;
+
+	.team-logo {
+		margin: 20px auto 10px auto;
+	}
+
+}
+
+.team-match-vs {
+	text-align: center;
+	margin-top: 20vh;
+}
+
+.leagion-table {
+	th {
+		background-color: $gray-lighter;
+		text-align: left;
+	}
+
+	td {
+		text-align: left;
+	}
+}
+
+.fullroster-table {
+	td, th {
+		text-align: right;
+	}
+}
+
+.public-profile {
+	border: 1px solid $black;
+	background-color: $white;
+	min-width: 300px;
+	max-width: 500px;
+	padding: 20px;
+	
+	.public-profile-info {
+		display: flex;
+		justify-content: flex-around;
 	}
 }

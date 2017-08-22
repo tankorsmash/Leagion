@@ -25,7 +25,14 @@ class MatchSerializer(serializers.ModelSerializer):
             'id', 'match_datetime', 'location', 'season', 'duration_seconds',
             'home_team', 'home_points', 'away_team', 'away_points', 'status',
             'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
-            'pretty_time', 'home_roster', 'away_roster'
+            'pretty_time', 'home_roster', 'away_roster', 'completed'
+        )
+
+        read_only_fields = (
+            'id', 'match_datetime', 'location', 'season', 'duration_seconds',
+            'home_team', 'home_points', 'away_team', 'away_points', 'status',
+            'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
+            'pretty_time', 'home_roster', 'away_roster', 'completed'
         )
 
     home_team = ShallowTeamSerializer(read_only=True)
@@ -36,3 +43,11 @@ class MatchSerializer(serializers.ModelSerializer):
     # and use a specific api-roster-detail. The non shallow serializer is too heavy
     # home_roster = RosterSerializer(read_only=True)
     # away_roster = RosterSerializer(read_only=True)
+
+class SetMatchSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Match
+
+        fields = (
+            'home_points', 'away_points',
+        )

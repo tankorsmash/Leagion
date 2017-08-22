@@ -4,10 +4,12 @@ import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 
 import matchUrls from 'main/app/player/match/urls';
-import {MatchCard, FullRosterTable} from 'components/app/match';
+import {TeamMatchCard} from 'components/app/team';
 import {FourOhFour} from 'components/error-pages';
 
+import Titlebar from 'components/app/titlebar';
 import ajax from 'common/ajax';
+import update from 'immutability-helper';
 
 class MatchDetail extends React.Component {
     constructor(props) {
@@ -28,35 +30,75 @@ class MatchDetail extends React.Component {
         });
     }
 
+    updateScore = (newScores) => {
+        const match = update(this.state.match, {
+            home_points: {$set: newScores.home_points},
+            away_points: {$set: newScores.away_points},
+            completed: {$set: true},
+        });
+
+        this.setState({
+            match: match,
+        });
+    };
+
     render() {
-        const match = this.state.match;
-        const {away_roster, home_roster} = match;
+        const {
+            away_roster, home_roster, home_team, away_team,
+            home_points, away_points, pretty_date, pretty_time,
+            completed
+        } = this.state.match;
 
         return (
             <SpinLoader loaded={this.state.loaded}>
-                <div>
-                    <Row>
-                        <Col md={{size:6, offset:3}}>
-                            <MatchCard match={match}/>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md="6">
-                            Home Roster
-                            <FullRosterTable
-                                user={this.props.user}
-                                rosterId={home_roster}
-                            />
-                        </Col>
-                        <Col md="6">
-                            Away Roster
-                            <FullRosterTable
-                                user={this.props.user}
-                                rosterId={away_roster}
-                            />
-                        </Col>
-                    </Row>
-                </div>
+                {this.state.loaded &&
+                    <div>
+                        <Titlebar title="Match" />
+                        <div>
+                            <Row>
+                                <Col className="text-center mt-3" md={{size:6, offset:3}}>
+                                    <h3> {pretty_date} </h3>
+                                    <h3> {'@ ' + pretty_time} </h3>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="5" className="d-flex justify-content-end">
+                                    <TeamMatchCard
+                                        title="Home Team"
+                                        teamName={home_team.name}
+                                        teamId={home_team.id}
+                                        score={home_points}
+                                        user={this.props.user}
+                                        rosterId={home_roster}
+                                        completed={completed}
+                                        home_team={home_team}
+                                        away_team={away_team}
+                                        matchId={this.state.match.id}
+                                        updateScore={this.updateScore}
+                                    />
+                                </Col>
+                                <Col md="2" className="team-match-vs">
+                                    <h2>Vs.</h2>
+                                </Col>
+                                <Col md="5" className="team-match-column">
+                                    <TeamMatchCard
+                                        title="Away Team"
+                                        teamName={away_team.name}
+                                        teamId={away_team.id}
+                                        score={away_points}
+                                        user={this.props.user}
+                                        rosterId={away_roster}
+                                        completed={completed}
+                                        home_team={home_team}
+                                        away_team={away_team}
+                                        matchId={this.state.match.id}
+                                        updateScore={this.updateScore}
+                                    />
+                                </Col>
+                            </Row>
+                        </div>
+                    </div>
+                }
             </SpinLoader>
         );
     }

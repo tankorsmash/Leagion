@@ -1,11 +1,11 @@
 import {Link} from 'react-router-dom';
 import { ListGroup, ListGroupItem, Table } from 'reactstrap';
-import { Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
+import { Button, Input, Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
-import SpinLoader from 'components/spinloader';
 import ajax from 'common/ajax';
-import Dragula from 'react-dragula';
+import {Modal} from 'components/modals';
+import {FormBase, FormGroup} from 'components/forms';
 
 export const MatchLink = (props) => {
 	return (
@@ -17,7 +17,7 @@ export const MatchLink = (props) => {
 
 export const MatchTable = (props) => {
 	return (
-		<Table responsive>
+		<Table responsive className="leagion-table">
 			<thead>
 				<tr>
 					<th>Date</th>
@@ -39,7 +39,12 @@ export const MatchTable = (props) => {
 							<td>vs.</td>
 							<td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
 							<td>{match.location.name}</td>
-							<td>{match.home_points} - {match.away_points}</td>
+							<td>
+								{ match.completed ?
+									<span>{match.home_points} - {match.away_points}</span> :
+									<span>N/A </span>
+								}
+							</td>
 						</tr>
 					);
 				})}
@@ -64,206 +69,97 @@ export const MatchList = (props) => {
 	);
 };
 
-export const MatchCard = (props) => {
-	let match = props.match;
+export class MatchScoreSetter extends FormBase {
+    url = 'api-set-match-score';
 
-	return (
-		<div>
-			<Card>
-				<CardBlock>
-					<CardTitle className="text-center">
-						<Table> 
-							<thead>
-								<tr>
-									<th className="text-center"><TeamLink id={match.home_team.id} text={match.home_team.name}/></th>
-									<th className="text-center">vs.</th>
-									<th className="text-center"><TeamLink id={match.away_team.id} text={match.away_team.name}/></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>{match.home_points}</td>
-									<td></td>
-									<td>{match.away_points}</td>
-								</tr>
-							</tbody>
-						</Table>
-						{match.pretty_date}
-						<br/>
-						{match.pretty_time}
-					</CardTitle>
-					<CardSubtitle></CardSubtitle>
-					<CardText>
-					</CardText>
-				</CardBlock>
-			</Card>
-		</div>
-	);
-};
-
-class DroppableRosterTable extends React.Component {
-
-	render() {
-
-		let {players, isTeamCaptain, id, setRef} = this.props;
-
-		if (players.length) {
-			return (
-				<Table>
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Name</th>
-						</tr>
-					</thead>
-					<tbody
-						ref={(el) => {setRef(el, id);}}
-						className="fullroster-table-container">
-						{players.map((player, i) => {
-							return (
-								<tr
-									key={i}
-									className={isTeamCaptain ? "roster-draggable" : ""}
-									data-player-id={player.id}
-								>
-									<th className="index" scope="row">{player.index + 1}</th>
-									<td>{player.full_name}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</Table>
-			);
-		} else {
-			return (
-				<div
-					ref={(el) => {setRef(el, id);}}
-					className="empty-roster-table"
-				>
-				</div>
-			);
-
-		}
-	}
-
-}
-
-export class FullRosterTable extends React.Component {
-	constructor(props) {
-		super(props);
-
-		this.state = { 
-			team: {},
-			players: [],
-			notPlaying: [],
-			loaded: false
+	get form() {
+		return {
+			'home_score': '',
+			'away_score': '',
 		};
 	}
 
-	componentDidMount() {
-		ajax({
-			url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
-		}).then(data => {
-			this.setStateFromRosterData(data);
-		});
-	}
+    constructor(props) {
+        super(props);
 
-	setUpDragging = (el) => {
-		if (this.userIsTeamCaptain()) {
-			this.drake = Dragula([this.playingEl, this.notPlayingEl]).on('drop', this.setNewRoster);
-		}
-	};
+        this.state = {
+            isOpen: false,
+            form: this.form,
+            errors: {},
+        };
+    }
 
-	setStateFromRosterData(data) {
-		this.setState({
-			team: data.team,
-			players: data.batters.map((batter) => {
-				return {
-					id: batter.player.id,
-					index: batter.index,
-					full_name: batter.player.full_name,
-				};
-			}),
-			notPlaying: data.not_playing_players.map((player, i) => {
-				return {
-					id: player.id,
-					index: i,
-					full_name: player.full_name,
-				};
-			}),
-			loaded: true,
-		});
-	}
+    toggle = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
 
-	setNewRoster = (el, source, target, siblings) => {
-		let data;
+        return false;
+    };
 
-		if (target == this.playingEl && !this.state.players.length) {
-			data = [{
-				player_id: el.dataset.playerId,
-				roster: this.props.rosterId,
-				index: 0,
-			}];
+	handleSubmit = (event) => {
+        event.preventDefault();
 
-		} else {
-			data = [...this.playingEl.childNodes].map((playerNode, i) => {
-				return {
-					player_id: playerNode.dataset.playerId,
-					roster: this.props.rosterId,
-					index: i,
-				};
-			});
-		}
-
-		this.drake.cancel(true);
-
-		ajax({
-			data: {batters: data},
+        ajax({
+            url: reverse(this.url, {match_id: this.props.matchId}),
 			method: 'PUT',
-			url: reverse('api-roster-detail', {roster_id: this.props.rosterId}),
-		}).then(data => {
-			this.setStateFromRosterData(data);
-		});
+			data: {
+				home_points: this.state.form.home_score,
+				away_points: this.state.form.away_score,
+			}
+        }).then(data => {
+			this.props.updateScore(data);
+			this.setState({
+				isOpen: false,
+				form: this.form,
+			});
+            toastr.success("Score Set!");
+        }).catch(data => {
+			this.setState({
+				errors: data,
+			});
+        });
 
-	};
+    };
 
-	setRef = (el, id) => {
-		this[id] = el;
-	};
+    render() {
+        return (
+            <div>
+                <a href="#" onClick={this.toggle}>Completed this match?</a>
 
-	userIsTeamCaptain() {
-		return this.props.user.captain_of_teams.includes(this.state.team.id);
-	}
-
-	render() {
-		const isTeamCaptain = this.userIsTeamCaptain();
-
-		return (
-			<SpinLoader loaded={this.state.loaded}>
-				<div
-					ref={this.setUpDragging}
-					className="fullroster-table"
-				>
-					<div className="roster-table">
-						<h4>Playing</h4>
-						<DroppableRosterTable
-							isTeamCaptain={isTeamCaptain}
-							players={this.state.players}
-							id="playingEl"
-							setRef={this.setRef}
-						/>
-					</div>
-					<div className="not-playing-table">
-						<h4>Not playing</h4>
-						<DroppableRosterTable
-							isTeamCaptain={isTeamCaptain}
-							players={this.state.notPlaying}
-							id="notPlayingEl"
-							setRef={this.setRef}
-						/>
-					</div>
-				</div>
-			</SpinLoader>
-		);
-	}
+                <Modal
+                    toggle={this.toggle}
+                    isOpen={this.state.isOpen}
+                    title="Set the score for the match."
+                    footer={
+                        <div>
+                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                            {' '}
+                            <Button color="primary" onClick={this.handleSubmit}>Submit</Button>
+                        </div>
+                    }
+                    body={
+						<div>
+							<FormGroup
+								label={this.props.home_team.name}
+								type="number"
+								id="home_score"
+								value={this.state.form.home_score}
+								onChange={this.handleInputChange}
+								error={this.state.errors.home_score}
+							/>
+							<FormGroup
+								label={this.props.away_team.name}
+								type="number"
+								id="away_score"
+								value={this.state.form.away_score}
+								onChange={this.handleInputChange}
+								error={this.state.errors.away_score}
+							/>
+						</div>
+                    }
+                />
+            </div>
+        );
+    }
 }

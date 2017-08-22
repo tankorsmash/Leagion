@@ -73,6 +73,10 @@ class Match(models.Model):
     def is_draw(self):
         return self.home_points == self.away_points
 
+    @property
+    def completed(self):
+        return self.home_points is not None and self.away_points is not None
+
     def get_winning_team(self):
         winning_team = None
 

@@ -1,7 +1,8 @@
 import playerUrls from 'main/app/player/urls';
-let index = `${playerUrls.index}/league`;
+let index = `${playerUrls.index}/profile`;
 
 module.exports = {
 	index: index,
-	detail: `${index}/:leagueId?`,
+	detail: `${index}/:playerId?`,
 };
+

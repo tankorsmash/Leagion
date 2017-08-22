@@ -21,9 +21,11 @@ urlpatterns = [
 
     url(r'^player/$', users_views.UserList.as_view(), name='api-player-list'),
     url(r'^player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
+    url(r'^public-player/(?P<player_id>\d+)/$', users_views.PublicPlayerView.as_view(), name='api-my-public-player-detail'),
 
     url(r'^match/$', matches_views.MatchList.as_view(), name='api-match-list'),
     url(r'^match/(?P<match_id>\d+)/$', matches_views.MatchDetail.as_view(), name='api-match-detail'),
+    url(r'^set-match-score/(?P<match_id>\d+)/$', matches_views.SetMatchScore.as_view(), name='api-set-match-score'),
 
     url(r'^roster/$', rosters_views.RosterList.as_view(), name='api-roster-list'),
     url(r'^roster/(?P<roster_id>\d+)/$', rosters_views.RosterDetail.as_view(), name='api-roster-detail'),

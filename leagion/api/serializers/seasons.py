@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from leagion.models import Season, Match, Team, League
-from leagion.api.serializers.teams import TeamSerializer
+from leagion.api.serializers.teams import TeamSerializer, ShallowMatchSerializer
 from leagion.api.serializers.matches import MatchSerializer
 
 
@@ -15,16 +15,8 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name'
+            'id', 'name', 'win_draw_loss_points'
         )
-
-class ShallowMatchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Match
-        fields = (
-            'id', 'pretty_name', 'match_datetime'
-        )
-
 
 class SeasonSerializer(serializers.ModelSerializer):
     class Meta:

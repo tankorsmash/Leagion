@@ -1,25 +1,29 @@
 import {Link} from 'react-router-dom';
+import {Table} from 'reactstrap';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 import {Ribbon} from 'components/misc';
+import {FullRosterTable} from 'components/app/roster';
 
 import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
 
+import {MatchScoreSetter} from 'components/app/match';
+
 export const TeamLink = (props) => {
-	return (
-		<Link to={`${teamUrls.index}/${props.id}`}>
-			{props.text}
-		</Link>
-	);
+    return (
+        <Link to={`${teamUrls.index}/${props.id}`}>
+            {props.text}
+        </Link>
+    );
 };
 
 export const TeamListLink = (props) => {
-	return (
-		<Link to={`${teamUrls.index}`}>
-			{props.text}
-		</Link>
-	);
+    return (
+        <Link to={`${teamUrls.index}`}>
+            {props.text}
+        </Link>
+    );
 };
 
 
@@ -28,7 +32,7 @@ export const TeamCard = (props) => {
     let matchComp = null;
     if (team.matches.length > 0) {
         let match = team.matches[0];
-        
+
         matchComp = (
             <span>
                 {
@@ -51,7 +55,7 @@ export const TeamCard = (props) => {
         <div className="team-card">
             <div className="team-card-top">
                 <div>
-                <div className="team-logo is-small"> </div>
+                    <div className="team-logo is-small"> </div>
                 </div>
                 <div className="h4 team-title">
                     <TeamLink id={team.id} text="Stephen Valleys Apron Joint"/>
@@ -67,6 +71,48 @@ export const TeamCard = (props) => {
                 <div className="p pt-2">upcoming match:</div>
                 <div className="small">{matchComp}</div>
             </div>
+        </div>
+    );
+};
+
+export const TeamMatchCard = (props) => {
+    const {
+        title, user, rosterId, teamLogo, teamName, score,
+        completed, teamId, home_team, away_team, matchId, updateScore
+    } = props;
+
+    let scoreEl;
+
+    if (completed) {
+        scoreEl = <h2>{score}</h2>;
+    } else {
+        scoreEl = (
+            <span>
+                <h2>N/A</h2>
+                {user.captain_of_teams.includes(teamId) &&
+                    <MatchScoreSetter
+                        home_team={home_team}
+                        away_team={away_team}
+                        matchId={matchId}
+                        updateScore={updateScore}
+                    />
+                }
+            </span>
+        );
+    }
+
+    return (
+        <div className="team-match-card">
+            <h3 className="team-match-card-title font-weight-bold">
+                {title}
+            </h3>
+            <div className="team-logo is-medium"> </div>
+            <h3>{teamName}</h3>
+            {scoreEl}
+            <FullRosterTable
+                user={user}
+                rosterId={rosterId}
+            />
         </div>
     );
 };
@@ -90,4 +136,39 @@ export const TeamTitle = (props) => {
             />
         </div>
     );
+};
+
+export const TeamRankTable = (props) => {
+    const teams = props.teams.sort((teamA, teamB) => {
+        return teamA.win_draw_loss_points.points < teamB.win_draw_loss_points.points;
+    });
+
+	return (
+		<Table responsive className="leagion-table">
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Team Name</th>
+					<th>Wins</th>
+					<th>Ties</th>
+					<th>Losses</th>
+					<th>Points</th>
+				</tr>
+			</thead>
+			<tbody>
+				{teams.map((team, i) => {
+					return (
+						<tr key={i}>
+							<td>#{i + 1}</td>
+							<td><TeamLink id={team.id} text={team.name}/></td>
+							<td>{team.win_draw_loss_points.wins}</td>
+							<td>{team.win_draw_loss_points.draws}</td>
+							<td>{team.win_draw_loss_points.losses}</td>
+							<td>{team.win_draw_loss_points.points}</td>
+						</tr>
+					);
+				})}
+			</tbody>
+		</Table>
+	);
 };
