@@ -82,7 +82,7 @@ class MatchDetail extends DatasetView {
         }];
 
         return (
-            <Container fluid>
+            <Container fluid className="pt-3">
                 <h5>
                     { this.state.match.pretty_name }
                 </h5>
