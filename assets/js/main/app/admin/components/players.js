@@ -1,3 +1,6 @@
+import ajax from 'common/ajax';
+import Moment from 'react-moment';
+
 import {Container, Row, Col, ButtonGroup, Button, Media,
     UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
     Card, CardImg, CardBlock, CardText, CardTitle} from 'reactstrap';
@@ -15,12 +18,31 @@ export class PlayerCard extends React.Component {
         })
     }
 
+    constructor(props){
+        super(props);
+        this.state = {
+            "placeholder_player": [],
+        }
+        ajax({
+            url: "https://randomuser.me/api/?gender=male",
+        }).then(data => {
+            //this throws a react error if the component unmounts
+            //before this promise is completed. I think it's harmless
+            this.setState({
+                placeholder_player: data.results[0],
+            });
+        }, error => {
+            console.warn(error);
+        });
+
+    }
+
     render() {
         const player = this.props.player;
 
         return (
             <Card>
-                <CardImg top className="w-100" src="http://placehold.it/300x200&text==D"/>
+                <CardImg top className="w-100" src={`https://randomuser.me/api/portraits/men/${player.id}.jpg`}/>
                 <CardBlock>
                     <CardTitle>{ player.full_name }</CardTitle>
                     <CardText>
@@ -34,7 +56,7 @@ export class PlayerCard extends React.Component {
                             <br />
                             <FontAwesome name="globe"/><a href="http://www.jquery2dotnet.com"> www.jquery2dotnet.com</a>
                             <br />
-                            <FontAwesome name="gift"/> June 02, 1988
+                            <FontAwesome name="gift"/> <Moment>{ this.state.placeholder_player.dob }</Moment>
                         </CardText>
                         <UncontrolledDropdown>
                             <DropdownToggle caret>
