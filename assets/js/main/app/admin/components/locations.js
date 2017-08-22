@@ -51,6 +51,8 @@ class LocationDetail extends DatasetView {
         let location = this.state.location;
         const url = reverse("api-location-detail", {location_id: location.id});
 
+        const TO_REPLACE = "AIzaSyDN4sIpEIF9D_eZYc601-MPXmgHQjYl4Zc";
+
         return (
             <Container fluid >
                 <div className="text-center">
@@ -64,6 +66,13 @@ class LocationDetail extends DatasetView {
                             { location.address }
                         </Col>
                     </Row>
+                    <br></br>
+                    <iframe
+                        width="600"
+                        height="450"
+                        frameBorder="0" style={{border:0}}
+                        src={ `https://www.google.com/maps/embed/v1/place?key=${TO_REPLACE}&q=${encodeURIComponent(location.address)},Seattle+WA` } allowFullScreen>
+                    </iframe>
                 </div>
             </Container>
         );
