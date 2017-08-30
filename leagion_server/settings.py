@@ -26,9 +26,9 @@ SECRET_KEY = ')3-^3j&1(0e35&ld30u&x-hw6rf*5^u2)y26&o*9u^m-o-dt09'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = [] #we need to update this with whatever host we get on, otherwise django wont run
+ALLOWED_HOSTS = ['138.197.169.179'] #we need to update this with whatever host we get on, otherwise django wont run
 
-ADMINS = [('TankorSmash', 'tankorsmash@gmail.com'), ]
+ADMINS = [('TankorSmash', 'tankorsmash@gmail.com'), ('Calvin', 'calvinkcollins@gmail.com')]
 
 USER_DETAILS_SERIALIZER = 'leagion.api.serializers.UserSerializer'
 
