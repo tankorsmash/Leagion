@@ -6,11 +6,11 @@ var yargs = require('yargs');
 
 if (yargs.argv.debug) {
 	var devVendor = ['webpack-dev-server/client?http://localhost:20034'];
-	var publicPath = 'http://localhost:20055/media/c/bundles/';
+	var publicPath = 'http://localhost:20055/assets/bundles/';
 }
 else {
 	var devVendor = [];
-	var publicPath = '/media/c/bundles/';
+    var publicPath = 'assets/bundles';
 }
 
 module.exports = modulePaths => ({
