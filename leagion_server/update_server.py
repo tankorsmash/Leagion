@@ -17,6 +17,7 @@ def update(branch=None):
 		run('find . -name "*.pyc" -delete')
 
 		run('npm install')
+		run('webpack -p')
 
 		sudo('service nginx restart')
 		sudo('service gunicorn restart')

@@ -10,7 +10,7 @@ if (yargs.argv.debug) {
 }
 else {
 	var devVendor = [];
-    var publicPath = 'assets/bundles/';
+    var publicPath = 'static/';
 }
 
 module.exports = modulePaths => ({
@@ -35,7 +35,7 @@ module.exports = modulePaths => ({
     },
     output: {
         publicPath: publicPath,
-        path: path.resolve('./assets/bundles/'),
+        path: path.resolve('./static/'),
         filename: "[name].js",
         devtoolModuleFilenameTemplate: '/[absolute-resource-path]', //for redbox stack trace
     },
