@@ -16,6 +16,8 @@ def update(branch=None):
 		run('pip install -r requirements.txt')
 		run('find . -name "*.pyc" -delete')
 
+		run('npm install')
+
 		sudo('service nginx restart')
 		sudo('service gunicorn restart')
 
