@@ -4,7 +4,7 @@ from fabric.api import run, cd, sudo, hosts, prefix
 def update(branch=None):
 	base = '~/Leagion'
 
-	with cd(base):
+	with cd(base), prefix('workon leagion'):
 
 		run('git fetch')
 
@@ -13,7 +13,7 @@ def update(branch=None):
 
 		run('git pull')
 
-		run('workon leagion && pip install -r requirements.txt')
+		run('pip install -r requirements.txt')
 		run('find . -name "*.pyc" -delete')
 
 		run('npm install')
