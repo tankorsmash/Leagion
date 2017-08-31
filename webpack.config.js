@@ -2,6 +2,16 @@ var path = require("path");
 var webpack = require('webpack');
 var BundleTracker = require('webpack-bundle-tracker');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var yargs = require('yargs');
+
+if (yargs.argv.debug) {
+	var devVendor = ['webpack-dev-server/client?http://localhost:20034'];
+	var publicPath = 'http://localhost:20055/media/c/bundles/';
+}
+else {
+	var devVendor = [];
+	var publicPath = '/media/c/bundles/';
+}
 
 module.exports = modulePaths => ({
     context: __dirname,
@@ -9,24 +19,22 @@ module.exports = modulePaths => ({
     devtool: 'eval-source-map',
 
     entry: {
-        vendor: [
+        vendor: devVendor.concat([
             'babel-polyfill',
             'react-hot-loader/patch',
             "expose-loader?React!react",
             "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
-            'webpack-dev-server/client?http://localhost:20034',
             'webpack/hot/only-dev-server',
             'whatwg-fetch',
             './assets/js/vendor/index',
-        ],
+        ]),
         main: [
             './assets/js/main/index'
         ]
     },
-
     output: {
-        publicPath: 'http://localhost:20034/assets/bundles/',
+        publicPath: publicPath,
         path: path.resolve('./assets/bundles/'),
         filename: "[name].js",
         devtoolModuleFilenameTemplate: '/[absolute-resource-path]', //for redbox stack trace
