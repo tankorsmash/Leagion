@@ -13,7 +13,7 @@ else {
     var publicPath = 'static/';
 }
 
-module.exports = modulePaths => ({
+module.exports = {
     context: __dirname,
 
     devtool: 'eval-source-map',
@@ -67,25 +67,18 @@ module.exports = modulePaths => ({
                 fallback: 'style-loader',
                 use: [{
                     loader: 'css-loader',
-                    options: {
-                        sourceMap: true,
-                    }
                 } ,{
                     loader: 'sass-loader',
-                    options: {
-                        sourceMap: true,
-                        includePaths: modulePaths
-                    }
                 }]
             }),
         },{
             test: /\.css$/,
             loader: ExtractTextPlugin.extract('css-loader')
         },
-            {
-                test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
-                loader: 'file-loader?name=fonts/[name].[ext]'
-            }
+        {
+            test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
+            loader: 'file-loader?name=fonts/[name].[ext]'
+        }
         ],
     },
 
@@ -111,4 +104,4 @@ module.exports = modulePaths => ({
         hot: true,
         // enable HMR on the server
     },
-})
+};
