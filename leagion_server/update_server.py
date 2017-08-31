@@ -19,6 +19,6 @@ def update(branch=None):
 		run('npm install')
 		run('webpack -p')
 
-		sudo('service nginx restart')
-		sudo('service gunicorn restart')
+		sudo('systemctl restart nginx')
+		sudo('systemctl restart gunicorn')
 
