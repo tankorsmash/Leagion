@@ -5,7 +5,10 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var yargs = require('yargs');
 
 if (yargs.argv.debug) {
-	var devVendor = ['webpack-dev-server/client?http://localhost:20034'];
+    var devVendor = [
+        'webpack-dev-server/client?http://localhost:20034',
+        'webpack/hot/only-dev-server',
+    ];
 	var publicPath = 'http://localhost:20055/assets/bundles/';
 }
 else {
@@ -25,7 +28,6 @@ module.exports = {
             "expose-loader?React!react",
             "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
-            'webpack/hot/only-dev-server',
             'whatwg-fetch',
             './assets/js/vendor/index',
         ]),

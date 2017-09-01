@@ -6,7 +6,7 @@ def update(branch=None):
 
 	with cd(base), prefix('workon leagion'):
 
-		sudo('') #do this to get the sudo password out of the way up front
+		sudo('pwd') #do this to get the sudo password out of the way up front
 		run('git fetch')
 
 		if branch:
@@ -18,7 +18,7 @@ def update(branch=None):
 		run('find . -name "*.pyc" -delete')
 
 		run('npm install')
-		run('npm run-script build')
+		run('npm run build')
 
 		sudo('systemctl restart nginx')
 		sudo('systemctl restart gunicorn')
