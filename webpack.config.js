@@ -14,7 +14,7 @@ if (yargs.argv.debug) {
 }
 else {
 	var devVendor = [];
-    var publicPath = 'static/';
+    var publicPath = '/static/';
 }
 
 module.exports = {
