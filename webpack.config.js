@@ -37,7 +37,7 @@ module.exports = {
     },
     output: {
         publicPath: publicPath,
-        path: path.resolve('./static/'),
+        path: path.resolve('./assets/bundles/'),
         filename: "[name].js",
         devtoolModuleFilenameTemplate: '/[absolute-resource-path]', //for redbox stack trace
     },
