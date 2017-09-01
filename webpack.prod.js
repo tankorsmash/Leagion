@@ -6,6 +6,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const config = require('./webpack.config.js');
 
 config.devtool = undefined;
+config.output.filename = "[name]-[hash].js";
 
 config.plugins = [
     new UglifyJSPlugin(),
@@ -18,7 +19,7 @@ config.plugins = [
     new webpack.ProvidePlugin({
         'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
     }),
-    new ExtractTextPlugin('[name].css')
+    new ExtractTextPlugin('[name]-[hash].css')
 ];
 
 module.exports = config;

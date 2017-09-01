@@ -14,11 +14,12 @@ def update(branch=None):
 
 		run('git pull')
 
-		run('pip install -r requirements.txt')
-		run('find . -name "*.pyc" -delete')
-
 		run('npm install')
 		run('npm run build')
+
+		run('pip install -r requirements.txt')
+		run('find . -name "*.pyc" -delete')
+		run('./manage.py collectstatic')
 
 		sudo('systemctl restart nginx')
 		sudo('systemctl restart gunicorn')
