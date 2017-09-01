@@ -1,10 +1,10 @@
-from fabric.api import run, cd, sudo, hosts, prefix
+from fabric.api import run, cd, sudo, hosts, prefix, settings
 
 @hosts('leagion@138.197.169.179')
 def update(branch=None):
 	base = '~/Leagion'
 
-	with cd(base), prefix('workon leagion'):
+	with cd(base), prefix('workon leagion'), settings(prompts={"Type 'yes' to continue, or 'no' to cancel: ": "yes"}):
 
 		sudo('pwd') #do this to get the sudo password out of the way up front
 		run('git fetch')
