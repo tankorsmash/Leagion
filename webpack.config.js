@@ -7,6 +7,7 @@ var yargs = require('yargs');
 if (yargs.argv.debug) {
     var devVendor = [
         'webpack-dev-server/client?http://localhost:20034',
+        'react-hot-loader/patch',
         'webpack/hot/only-dev-server',
     ];
 	var publicPath = 'http://localhost:20055/assets/bundles/';
@@ -24,7 +25,6 @@ module.exports = {
     entry: {
         vendor: devVendor.concat([
             'babel-polyfill',
-            'react-hot-loader/patch',
             "expose-loader?React!react",
             "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
