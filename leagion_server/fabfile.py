@@ -6,6 +6,7 @@ def update(branch=None):
 
 	with cd(base), prefix('workon leagion'):
 
+		sudo('') #do this to get the sudo password out of the way up front
 		run('git fetch')
 
 		if branch:

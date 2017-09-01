@@ -1,4 +1,3 @@
-const path = require("path");
 const webpack = require('webpack');
 const BundleTracker = require('webpack-bundle-tracker');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -6,9 +5,6 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = require('./webpack.config.js');
 
-config.output.filename = "[name]-[hash].js";
-config.output.path = path.resolve(__dirname, './static');
-config.output.publicPath = undefined;
 config.devtool = undefined;
 
 config.plugins = [
@@ -22,7 +18,7 @@ config.plugins = [
     new webpack.ProvidePlugin({
         'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
     }),
-    new ExtractTextPlugin('[name]-[hash].css')
+    new ExtractTextPlugin('[name].css')
 ];
 
 module.exports = config;
