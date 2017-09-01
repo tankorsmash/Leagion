@@ -7,7 +7,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const config = require('./webpack.config.js');
 
 config.output.filename = "[name]-[hash].js";
-config.output.path = path.resolve(__dirname, '../../www/media/c/bundles/');
+config.output.path = path.resolve(__dirname, '../static');
 config.output.publicPath = undefined;
 config.devtool = undefined;
 
