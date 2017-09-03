@@ -149,25 +149,15 @@ class TeamDetail extends DatasetView {
         }];
 
         // TODO: make a players admin view so you can link to it
-        // const playersUrlizer = pathToRegex.compile(adminUrls.players.detail);
-        const playersColumns = [{
-            id: "full_name",
-            title: `Players (total: ${team.players.length})`,
-            // component: props => <td> <Link to={playersUrlizer({playerId: props.data.id})}> {props.data.name} </Link> </td>
-        },{
-            id: "actions",
-            title: `Actions`,
-            component: PlayerActionCell,
-        }];
 
         return (
-            <Container fluid>
-                <h5>
+            <Container fluid className="pt-1">
+                <h1>
                     <AjaxTextInputUpdate
-                        data={ this.state.team.name }
+                        data={this.state.team.name}
                         putUrl={putUrl}
                         putKwarg="name" />
-                </h5>
+                </h1>
 
                 <div className="d-lg-flex">
                     <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">

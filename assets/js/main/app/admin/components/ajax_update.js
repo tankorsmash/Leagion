@@ -68,7 +68,9 @@ class AjaxTextInputUpdate extends React.Component {
     render() {
         if (this.state.expanded == false) {
             return  (
-                <div onClick={this.setExpanded}>
+                <div
+                    className={this.props.className}
+                    onClick={this.setExpanded}>
                     { this.state.data }
                 </div>
             );
