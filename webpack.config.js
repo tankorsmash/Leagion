@@ -4,6 +4,7 @@ var BundleTracker = require('webpack-bundle-tracker');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var yargs = require('yargs');
 
+//ie `npm start -- --debug`
 if (yargs.argv.debug) {
     var devVendor = [
         'webpack-dev-server/client?http://localhost:20034',
@@ -12,6 +13,7 @@ if (yargs.argv.debug) {
     ];
 	var publicPath = 'http://localhost:20055/assets/bundles/';
 }
+//ie `npm start` or production env
 else {
 	var devVendor = [];
     var publicPath = '/static/';
