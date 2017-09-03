@@ -11,7 +11,7 @@ if (yargs.argv.debug) {
         'react-hot-loader/patch',
         'webpack/hot/only-dev-server',
     ];
-	var publicPath = 'http://localhost:20055/assets/bundles/';
+	var publicPath = 'http://localhost:20034/assets/bundles/';
 }
 //ie `npm start` or production env
 else {
