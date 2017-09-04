@@ -46,18 +46,20 @@ export class PlayerCard extends React.Component {
                 <CardBlock>
                     <CardTitle>{ player.full_name }</CardTitle>
                     <CardText>
+
                         <small>
                             <cite title="Ottawa, Canada">
                                 Ottawa, Canada <FontAwesome name="map-marker"/>
                             </cite>
                         </small>
-                        <CardText>
-                            <FontAwesome name="envelope"/> { player.email }
-                            <br />
-                            <FontAwesome name="globe"/><a href="http://www.jquery2dotnet.com"> www.jquery2dotnet.com</a>
-                            <br />
-                            <FontAwesome name="gift"/> <Moment>{ this.state.placeholder_player.dob }</Moment>
-                        </CardText>
+
+                        <FontAwesome name="envelope"/> { player.email }
+                        <br />
+                        <FontAwesome name="globe"/><a href="http://www.jquery2dotnet.com"> www.jquery2dotnet.com</a>
+                        <br />
+                        <FontAwesome name="gift"/> <Moment>{ this.state.placeholder_player.dob }</Moment>
+
+                    </CardText>
                         <UncontrolledDropdown>
                             <DropdownToggle caret>
                                 Social
@@ -69,7 +71,6 @@ export class PlayerCard extends React.Component {
                                 <DropdownItem>Other</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
-                    </CardText>
                 </CardBlock>
             </Card>
         );
