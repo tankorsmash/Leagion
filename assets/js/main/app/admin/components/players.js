@@ -10,6 +10,32 @@ import PropTypes from 'prop-types';
 import DatasetView from 'components/dataset_view';
 
 
+export class CreatePlayerCard extends React.Component {
+    static propTypes = {
+        player: PropTypes.shape({
+            full_name: PropTypes.string.isRequired,
+            email: PropTypes.string,
+        })
+    }
+
+    constructor(props){
+        super(props);
+    }
+
+    render() {
+        return (
+            <Card>
+                <CardImg top className="w-100" src={`https://placeholdit.imgix.net/~text?txtsize=64&txt=Add%20Player&w=318&h=240`}/>
+                <CardBlock className="d-flex">
+                    <Button block color="link" className="">
+                        <FontAwesome size="4x" name="plus"/>
+                    </Button>
+                </CardBlock>
+            </Card>
+        );
+    }
+}
+
 export class PlayerCard extends React.Component {
     static propTypes = {
         player: PropTypes.shape({
@@ -23,6 +49,8 @@ export class PlayerCard extends React.Component {
         this.state = {
             "placeholder_player": [],
         }
+        //return early to disable the api 504 warnings
+        return;
         ajax({
             url: "https://randomuser.me/api/?gender=male",
         }).then(data => {

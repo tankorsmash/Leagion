@@ -15,7 +15,7 @@ import DatasetView from 'components/dataset_view';
 
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
-import {PlayerCard} from 'main/app/admin/components/players'
+import {PlayerCard, CreatePlayerCard} from 'main/app/admin/components/players'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -161,6 +161,7 @@ class TeamDetail extends DatasetView {
 
                 <div className="d-lg-flex">
                     <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
+                        <CreatePlayerCard key={-1} />
                         { team.players.map((el, i) => {
                             return (
                                 <PlayerCard player={el} key={i} />
