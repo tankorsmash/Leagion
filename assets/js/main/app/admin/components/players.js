@@ -51,7 +51,7 @@ export class PlayerCard extends React.Component {
 
                         <small>
                             <cite title="Ottawa, Canada">
-                                Ottawa, Canada <FontAwesome name="map-marker"/>
+                                Ottawa, Canada <FontAwesome name="map-marker"/>&nbsp;
                             </cite>
                         </small>
 
