@@ -44,12 +44,9 @@ class Season extends React.Component {
                     <CardSubtitle>At a glance:</CardSubtitle>
 
                     <CardText>
-                        <div>
-                            <strong>Teams joined</strong> { season.teams.length }
-                        </div>
-                        <div>
-                            <strong>Matches played</strong> { season.matches.length }
-                        </div>
+                        <strong>Teams joined</strong> { season.teams.length }
+                        <br/>
+                        <strong>Matches played</strong> { season.matches.length }
                     </CardText>
 
                     <Link to={url}>
