@@ -81,3 +81,13 @@ class TeamSerializer(serializers.ModelSerializer):
 
         serializer = ShallowMatchSerializer(matches, many=True)
         return serializer.data
+
+
+class CreateTeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = (
+            'id', 'name', 'season_id'
+        )
+
+    season_id = serializers.IntegerField()

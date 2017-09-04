@@ -2,7 +2,7 @@ from rest_framework import generics, serializers
 from django.contrib.auth import get_user_model
 
 from leagion.api.serializers.users import UserSerializer
-from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer
+from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer, CreateTeamSerializer
 from leagion.models import Team, User
 
 from leagion.utils import reverse_js
@@ -15,6 +15,17 @@ class TeamList(generics.ListCreateAPIView):
         "season"
     )
     serializer_class = PureTeamSerializer
+
+    def get_serializer_class(self):
+        """
+        returns a simple create team serializer since it starts
+        off without players or captains or even matches
+        """
+
+        if self.request.method == "POST":
+            return CreateTeamSerializer
+
+        return super().get_serializer_class()
 
 
 @reverse_js
