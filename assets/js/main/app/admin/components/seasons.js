@@ -143,7 +143,7 @@ class CreateSeasonModal extends FormBase {
         return (
             <div>
                 <Button onClick={this.toggle}>{this.props.buttonLabel}</Button>
-                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
+                <Modal fade={false} isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Add a season</ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.handleSubmit} >
