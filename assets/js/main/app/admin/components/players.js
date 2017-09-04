@@ -40,9 +40,11 @@ export class PlayerCard extends React.Component {
     render() {
         const player = this.props.player;
 
+        //randomuser.me has only 200 male faces so we make sure to stay within that
+        const limited_player_id = player.id % 200;
         return (
             <Card>
-                <CardImg top className="w-100" src={`https://randomuser.me/api/portraits/men/${player.id}.jpg`}/>
+                <CardImg top className="w-100" src={`https://randomuser.me/api/portraits/men/${limited_player_id}.jpg`}/>
                 <CardBlock>
                     <CardTitle>{ player.full_name }</CardTitle>
                     <CardText>
