@@ -13,7 +13,7 @@ class LocationSerializer(serializers.ModelSerializer):
             'id': {'read_only': True}
         }
 
-    address = serializers.CharField()
+    address = serializers.CharField(required=False)
 
 
     def create(self, validated_data):
