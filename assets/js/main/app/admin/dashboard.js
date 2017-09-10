@@ -56,7 +56,7 @@ export default class Dashboard extends React.Component {
     render() {
         buildPageTitle("Admin Dashboard");
         return (
-            <Container fluid>
+            <Container fluid className="pt-0">
                 <Row>
                     <Col className="bg-faded pt-3" sm="2">
                         <Nav pills vertical>

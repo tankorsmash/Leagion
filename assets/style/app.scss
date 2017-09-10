@@ -17,6 +17,10 @@
 body {
     #leagion-admin {
         background-color: $white;
+
+        > .container-fluid, .container {
+            padding-top: 10px;
+        }
     }
 }
 
