@@ -61,9 +61,8 @@ export class LocationsPane extends DatasetView {
 
         return (
             <div>
-                <h3> Locations </h3>
                 <Row>
-                    <Col> <h3> Teams </h3> </Col>
+                    <Col> <h3> Locations  </h3> </Col>
                     <Col className="" md="2">
                         <FormModal
                             formComponent={LocationCreateForm}
