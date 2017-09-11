@@ -1,4 +1,3 @@
-import Spinner from 'react-spinkit';
 import {
     Container, Row, Col, Jumbotron, Button,
     Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,

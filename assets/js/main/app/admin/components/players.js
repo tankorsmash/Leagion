@@ -13,6 +13,7 @@ import FontAwesome from 'react-fontawesome';
 import PropTypes from 'prop-types';
 
 import FuzzySearch from 'react-fuzzy';
+import SpinLoader from 'components/spinloader.js';
 
 
 import DatasetView from 'components/dataset_view';
@@ -30,6 +31,46 @@ const list = [{
     title: 'Angels & Demons',
     author: 'Dan Brown'
 }];
+
+//edited to use full name and email from react-fuzzy
+function search_player_template(props, state, styles, clickHandler) {
+  return state.results.map((player, i) => {
+    const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
+    return (
+      <div key={i} style={style} onClick={() => clickHandler(i)}>
+        {player.full_name}
+        <span style={{ float: 'right', opacity: 0.5 }}>{player.email}</span>
+      </div>
+    );
+  });
+}
+
+class AddPlayerBySearch extends DatasetView {
+    get datasetStateAttr() {
+        return "players";
+    }
+
+    get datasetViewName() {
+        return "api-player-list";
+    }
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return (<div>loading </div>);
+        }
+
+        let action = (mode) => { console.log(mode); };
+        return (
+            <FuzzySearch
+                list={this.state.players}
+                keys={['full_name', 'email']}
+                width={430}
+                onSelect={action}
+                resultsTemplate={search_player_template}
+            />
+        );
+    }
+};
 
 export class CreatePlayerCard extends React.Component {
     static propTypes = {
@@ -79,7 +120,6 @@ export class CreatePlayerCard extends React.Component {
     }
 
     render() {
-        let action = (mode) => { console.log(mode); };
         return (
             <div>
                 <Card>
@@ -94,12 +134,7 @@ export class CreatePlayerCard extends React.Component {
                 <Modal fade={false} isOpen={this.state.modalOpen} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Add existing player to team</ModalHeader>
                     <ModalBody>
-                        <FuzzySearch
-                            list={list}
-                            keys={['author', 'title']}
-                            width={430}
-                            onSelect={action}
-                        />
+                        <AddPlayerBySearch />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.removeFromTeam}>Add</Button>{' '}
