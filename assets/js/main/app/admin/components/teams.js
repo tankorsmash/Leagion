@@ -159,6 +159,7 @@ class TeamDetail extends DatasetView {
                         putKwarg="name" />
                 </h1>
 
+
                 <div className="d-lg-flex">
                     <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
                         <CreatePlayerCard key={-1} />

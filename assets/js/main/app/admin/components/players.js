@@ -3,12 +3,33 @@ import Moment from 'react-moment';
 
 import {Container, Row, Col, ButtonGroup, Button, Media,
     UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-    Card, CardImg, CardBlock, CardText, CardTitle} from 'reactstrap';
+    Card, CardImg, CardBlock, CardText, CardTitle,
+
+    Modal, ModalHeader, ModalBody, ModalFooter
+
+} from 'reactstrap';
+
 import FontAwesome from 'react-fontawesome';
 import PropTypes from 'prop-types';
 
+import FuzzySearch from 'react-fuzzy';
+
+
 import DatasetView from 'components/dataset_view';
 
+const list = [{
+    id: 1,
+    title: 'The Great Gatsby',
+    author: 'F. Scott Fitzgerald'
+}, {
+    id: 2,
+    title: 'The DaVinci Code',
+    author: 'Dan Brown'
+}, {
+    id: 3,
+    title: 'Angels & Demons',
+    author: 'Dan Brown'
+}];
 
 export class CreatePlayerCard extends React.Component {
     static propTypes = {
@@ -18,23 +39,78 @@ export class CreatePlayerCard extends React.Component {
         })
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.state = {
+            modalOpen: false
+        };
+    }
+
+    toggle = () => {
+        this.setState({
+            modalOpen: !this.state.modalOpen
+        });
+    }
+
+    addToTeam = (e) => {
+        // //get list of current team members
+        // let playerIds = this.props.team.player_ids;
+        // playerIds = playerIds.filter((playerId) => {
+        //     return playerId != this.props.user.id;
+        // });
+        // //post list of team members minus user
+        // const teamUrl = reverse("api-team-detail", {team_id: this.props.team.id});
+        //
+        // ajax({
+        //     url: teamUrl,
+        //     method: 'PATCH',
+        //     data: {
+        //         player_ids: playerIds,
+        //     },
+        // }).then( response => {
+        //     toastr.success("Removed user from team");
+        //     this.props.triggerRefreshOnGrid();
+        // }, error => {
+        //     toastr.error("Failed to remove user from team");
+        // });
+
+        //close modal
+        this.toggle();
     }
 
     render() {
+        let action = (mode) => { console.log(mode); };
         return (
-            <Card>
-                <CardImg top className="w-100" src={`https://placeholdit.imgix.net/~text?txtsize=64&txt=Add%20Player&w=318&h=240`}/>
-                <CardBlock className="d-flex">
-                    <Button block color="link" className="">
-                        <FontAwesome size="4x" name="plus"/>
-                    </Button>
-                </CardBlock>
-            </Card>
+            <div>
+                <Card>
+                    <CardImg top className="w-100" src={`https://placeholdit.imgix.net/~text?txtsize=64&txt=Add%20Player&w=318&h=240`}/>
+                    <CardBlock className="d-flex">
+                        <Button block color="link" onClick={this.toggle} className="">
+                            <FontAwesome size="4x" name="plus"/>
+                        </Button>
+                    </CardBlock>
+                </Card>
+
+                <Modal fade={false} isOpen={this.state.modalOpen} toggle={this.toggle} className={this.props.className}>
+                    <ModalHeader toggle={this.toggle}>Add existing player to team</ModalHeader>
+                    <ModalBody>
+                        <FuzzySearch
+                            list={list}
+                            keys={['author', 'title']}
+                            width={430}
+                            onSelect={action}
+                        />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.removeFromTeam}>Add</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
+            </div>
         );
-    }
-}
+    };
+};
+
 
 export class PlayerCard extends React.Component {
     static propTypes = {
