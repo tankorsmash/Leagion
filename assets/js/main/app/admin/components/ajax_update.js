@@ -8,14 +8,20 @@ class AjaxTextInputUpdate extends React.Component {
         putKwarg: PropTypes.string.isRequired,
 
         successMessage: PropTypes.string,
+        onSuccessCallback: PropTypes.func,
+
         errorMessage: PropTypes.string,
+        onErrorCallback: PropTypes.func,
 
         default: PropTypes.string,
     }
 
     static defaultProps = {
         successMessage: "Updated successfully!",
+        onSuccessCallback: () => {},
         errorMessage: "Update failed, please try again.",
+        onErrorCallback: () => {},
+
         default: "Enter here",
     }
 
@@ -52,9 +58,11 @@ class AjaxTextInputUpdate extends React.Component {
         }).then(data => {
             console.log("success: updated", data);
             toastr.success(this.props.successMessage);
+            this.props.onSuccessCallback(data);
         }, error => {
             console.log("failed:", error);
             toastr.error(this.props.errorMessage);
+            this.props.onErrorCallback(data);
         });
 
     };
@@ -69,12 +77,14 @@ class AjaxTextInputUpdate extends React.Component {
 
 
     render() {
+        let content = this.state.data || this.props.default;
+
         if (this.state.expanded == false) {
             return  (
                 <div
                     className={this.props.className}
                     onClick={this.setExpanded}>
-                    { this.state.data || this.props.default }
+                    { content }
                 </div>
             );
         } else {
@@ -82,7 +92,7 @@ class AjaxTextInputUpdate extends React.Component {
                 <input
                     autoFocus
                     onBlur={this.handleDataChanged}
-                    defaultValue={ this.state.data || this.props.default }/>
+                    defaultValue={ content }/>
             );
         }
     }

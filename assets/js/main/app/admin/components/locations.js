@@ -29,6 +29,9 @@ import DatasetView from 'components/dataset_view';
 class LocationDetail extends DatasetView {
     constructor(props){
         super(props);
+
+        //DatasetView sets props, and I wouldn't want to override it
+        this.state['mapQueryUrl'] = this.buildMapQueryUrl("Ottawa, Ontario");
     }
 
     get datasetStateAttr() {
@@ -43,6 +46,18 @@ class LocationDetail extends DatasetView {
         return { location_id: this.props.match.params.locationId };
     }
 
+    buildMapQueryUrl = (address) => {
+        const TO_REPLACE = "AIzaSyDN4sIpEIF9D_eZYc601-MPXmgHQjYl4Zc";
+
+        return `https://www.google.com/maps/embed/v1/place?key=${TO_REPLACE}&q=${encodeURIComponent(address)}`;
+    }
+
+    updateMapQueryUrl = () => {
+        this.setState({
+            mapQueryUrl: this.buildMapQueryUrl(this.state.location.address),
+        });
+    }
+
     render() {
         buildPageTitle("Locations Detail");
         if (this.getIsLoaded() == false) {
@@ -51,8 +66,6 @@ class LocationDetail extends DatasetView {
 
         let location = this.state.location;
         const url = reverse("api-location-detail", {location_id: location.id});
-
-        const TO_REPLACE = "AIzaSyDN4sIpEIF9D_eZYc601-MPXmgHQjYl4Zc";
 
         const putUrl = reverse("api-location-detail", {location_id: this.state.location.id});
         return (
@@ -70,6 +83,7 @@ class LocationDetail extends DatasetView {
                                 data={ location.address }
                                 putUrl={ putUrl }
                                 putKwarg="address"
+                                onSuccessCallback={ (data)=> { this.state.location.address = data.address; this.updateMapQueryUrl();}}
                             />
                         </Col>
                     </Row>
@@ -78,7 +92,7 @@ class LocationDetail extends DatasetView {
                         width="600"
                         height="450"
                         frameBorder="0" style={{border:0}}
-                        src={ `https://www.google.com/maps/embed/v1/place?key=${TO_REPLACE}&q=${encodeURIComponent(location.address)},Seattle+WA` } allowFullScreen>
+                        src={ this.buildMapQueryUrl(this.state.location.address) } allowFullScreen>
                     </iframe>
                 </div>
             </Container>
