@@ -3,17 +3,20 @@ import ajax from 'common/ajax';
 
 class AjaxTextInputUpdate extends React.Component {
     static propTypes = {
-        data: PropTypes.string.isRequired,
+        data: PropTypes.string,
         putUrl: PropTypes.string.isRequired,
         putKwarg: PropTypes.string.isRequired,
 
         successMessage: PropTypes.string,
         errorMessage: PropTypes.string,
+
+        default: PropTypes.string,
     }
 
     static defaultProps = {
         successMessage: "Updated successfully!",
         errorMessage: "Update failed, please try again.",
+        default: "Enter here",
     }
 
     constructor(props){
@@ -71,7 +74,7 @@ class AjaxTextInputUpdate extends React.Component {
                 <div
                     className={this.props.className}
                     onClick={this.setExpanded}>
-                    { this.state.data }
+                    { this.state.data || this.props.default }
                 </div>
             );
         } else {
@@ -79,7 +82,7 @@ class AjaxTextInputUpdate extends React.Component {
                 <input
                     autoFocus
                     onBlur={this.handleDataChanged}
-                    defaultValue={ this.state.data }/>
+                    defaultValue={ this.state.data || this.props.default }/>
             );
         }
     }

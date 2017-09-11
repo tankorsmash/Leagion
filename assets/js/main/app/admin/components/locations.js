@@ -20,6 +20,7 @@ import {GeneralTable} from 'main/app/admin/components/table'
 import {FormBase} from 'components/forms';
 
 import ajax from 'common/ajax';
+import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 import {NOT_LOADED} from 'common/constants';
 import {buildPageTitle} from 'common/utils';
@@ -53,6 +54,7 @@ class LocationDetail extends DatasetView {
 
         const TO_REPLACE = "AIzaSyDN4sIpEIF9D_eZYc601-MPXmgHQjYl4Zc";
 
+        const putUrl = reverse("api-location-detail", {location_id: this.state.location.id});
         return (
             <Container fluid >
                 <div className="text-center">
@@ -63,7 +65,12 @@ class LocationDetail extends DatasetView {
                     </Row>
                     <Row>
                         <Col className="">
-                            { location.address }
+                            <AjaxTextInputUpdate
+                                default="Enter address here"
+                                data={ location.address }
+                                putUrl={ putUrl }
+                                putKwarg="address"
+                            />
                         </Col>
                     </Row>
                     <br></br>
