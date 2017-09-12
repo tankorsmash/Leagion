@@ -48,8 +48,20 @@ function search_player_template(props, state, styles, clickHandler) {
 class QueuedPlayer extends React.Component {
     render() {
         const player = this.props.player;
+
+        const style = {
+            backgroundColor: '#fff',
+            position: 'relative',
+            padding: '12px',
+            borderTop: '1px solid #eee',
+            color: '#666',
+            fontSize: 14,
+            cursor: 'pointer',
+
+        }
+
         return (
-            <li>
+            <li style={style} onClick={(e)=>{ this.props.onRemove(player.id); }}>
                 <span>
                     { player.full_name }
                     <small> {player.email} </small>
@@ -62,10 +74,13 @@ class QueuedPlayer extends React.Component {
 
 class QueuedPlayersList extends React.Component {
     render() {
+        const style = {
+            listStyleType: "none"
+        };
         return (
-            <ul>
+            <ul style={style}>
                 { this.props.queuedPlayers.map((player, i) => {
-                    return <QueuedPlayer key={i} player={player} />;
+                    return <QueuedPlayer onRemove={this.props.onRemove} key={i} player={player} />;
                 }) }
             </ul>
         );
@@ -93,18 +108,22 @@ class AddPlayerBySearch extends DatasetView {
         });
     }
 
+    removePlayerIdFromQueue = (playerId) => {
+        let prunedArray = this.state.queuedPlayers.filter(plr => plr.id !== playerId);
+        this.setState({
+            queuedPlayers: prunedArray,
+        });
+    }
+
     render() {
         if (this.getIsLoaded() == false) {
             return (<div>loading </div>);
         }
 
-        //TODO show list of selected new team members
-        //     deselect new team members
-        //     add to team
-
+        //TODO add to team
         return (
             <div>
-                <QueuedPlayersList queuedPlayers={this.state.queuedPlayers} />
+                <QueuedPlayersList onRemove={this.removePlayerIdFromQueue} queuedPlayers={this.state.queuedPlayers} />
                 <FuzzySearch
                     list={this.state.players}
                     keys={['full_name', 'email']}
