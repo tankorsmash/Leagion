@@ -103,6 +103,12 @@ class AddPlayerBySearch extends DatasetView {
     };
 
     queuePlayers = (player) => {
+        let matches = this.state.queuedPlayers.filter(plr => plr.id === player.id);
+        if (matches.length > 0) {
+            toastr.error("Player already added!");
+            return;
+        }
+
         this.setState({
             queuedPlayers: this.state.queuedPlayers.concat([player])
         });
@@ -130,6 +136,7 @@ class AddPlayerBySearch extends DatasetView {
                     width={430}
                     onSelect={this.queuePlayers}
                     resultsTemplate={search_player_template}
+                    placeholder={"Add player by name or email"}
                 />
             </div>
         );
