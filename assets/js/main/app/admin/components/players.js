@@ -45,6 +45,33 @@ function search_player_template(props, state, styles, clickHandler) {
   });
 }
 
+class QueuedPlayer extends React.Component {
+    render() {
+        const player = this.props.player;
+        return (
+            <li>
+                <span>
+                    { player.full_name }
+                    <small> {player.email} </small>
+                </span>
+            </li>
+        );
+    };
+};
+
+
+class QueuedPlayersList extends React.Component {
+    render() {
+        return (
+            <ul>
+                { this.props.queuedPlayers.map((player, i) => {
+                    return <QueuedPlayer key={i} player={player} />;
+                }) }
+            </ul>
+        );
+    };
+};
+
 class AddPlayerBySearch extends DatasetView {
     get datasetStateAttr() {
         return "players";
@@ -54,20 +81,38 @@ class AddPlayerBySearch extends DatasetView {
         return "api-player-list";
     }
 
+    constructor(props) {
+        super(props);
+
+        this.state['queuedPlayers'] = [];
+    };
+
+    queuePlayers = (player) => {
+        this.setState({
+            queuedPlayers: this.state.queuedPlayers.concat([player])
+        });
+    }
+
     render() {
         if (this.getIsLoaded() == false) {
             return (<div>loading </div>);
         }
 
-        let action = (mode) => { console.log(mode); };
+        //TODO show list of selected new team members
+        //     deselect new team members
+        //     add to team
+
         return (
-            <FuzzySearch
-                list={this.state.players}
-                keys={['full_name', 'email']}
-                width={430}
-                onSelect={action}
-                resultsTemplate={search_player_template}
-            />
+            <div>
+                <QueuedPlayersList queuedPlayers={this.state.queuedPlayers} />
+                <FuzzySearch
+                    list={this.state.players}
+                    keys={['full_name', 'email']}
+                    width={430}
+                    onSelect={this.queuePlayers}
+                    resultsTemplate={search_player_template}
+                />
+            </div>
         );
     }
 };
