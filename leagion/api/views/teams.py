@@ -77,7 +77,32 @@ class AddPlayersToTeam(drf_views.APIView):
         team.players.add(*player_ids)
         new_count = team.players.count()
 
-        print ("PATCH data:", request.data)
+        return Response("Success! Added {} new players".format(new_count-old_count))
+
+
+@reverse_js
+class RemovePlayersFromTeam(drf_views.APIView):
+    lookup_url_kwarg = "team_id"
+
+    queryset = Team.objects.all()
+
+    def patch(self, request, team_id=None):
+        team = get_object_or_404(self.queryset, id=team_id)
+
+        #validate player ids
+        player_ids = request.data.get('player_ids')
+        if not player_ids:
+            raise Http404("Missing player ids")
+
+        try:
+            player_ids = list(map(lambda pid: int(pid), player_ids))
+        except ValueError:
+            raise Http404("Invalid player ids. Numbers only")
+
+        old_count = team.players.count()
+        team.players.remove(*player_ids)
+        new_count = team.players.count()
+
         return Response("Success! Added {} new players".format(new_count-old_count))
 
 

@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^team/$', teams_views.TeamList.as_view(), name='api-team-list'),
     url(r'^team/(?P<team_id>\d+)/$', teams_views.TeamDetail.as_view(), name='api-team-detail'),
     url(r'^team/(?P<team_id>\d+)/add-players/$', teams_views.AddPlayersToTeam.as_view(), name='api-team-players-add'),
+    url(r'^team/(?P<team_id>\d+)/remove-players/$', teams_views.RemovePlayersFromTeam.as_view(), name='api-team-players-remove'),
     url(r'^me/team/$', teams_views.MyTeamList.as_view(), name='api-my-team-list'),
 
     url(r'^league/$', leagues_views.LeagueList.as_view(), name='api-league-list'),

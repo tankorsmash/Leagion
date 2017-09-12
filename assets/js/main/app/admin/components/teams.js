@@ -165,7 +165,7 @@ class TeamDetail extends DatasetView {
                         <CreatePlayerCard team={team} key={-1} />
                         { team.players.map((el, i) => {
                             return (
-                                <PlayerCard player={el} key={i} />
+                                <PlayerCard team={team} player={el} key={i} />
                         );
                         }) }
                     </CardDeck>

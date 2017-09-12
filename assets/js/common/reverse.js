@@ -28,6 +28,7 @@ var viewnames = {
     "api-team-detail": "/api/team/<team_id>/",
     "api-team-list": "/api/team/",
     "api-team-players-add": "/api/team/<team_id>/add-players/",
+    "api-team-players-remove": "/api/team/<team_id>/remove-players/",
     "rest_login": "/lin/",
     "rest_logout": "/lout/",
     "rest_password_change": "/pswdchg/",
