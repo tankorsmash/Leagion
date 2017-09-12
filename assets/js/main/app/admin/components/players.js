@@ -98,28 +98,7 @@ class AddPlayerBySearch extends DatasetView {
 
     constructor(props) {
         super(props);
-
-        this.state['queuedPlayers'] = [];
     };
-
-    queuePlayers = (player) => {
-        let matches = this.state.queuedPlayers.filter(plr => plr.id === player.id);
-        if (matches.length > 0) {
-            toastr.error("Player already added!");
-            return;
-        }
-
-        this.setState({
-            queuedPlayers: this.state.queuedPlayers.concat([player])
-        });
-    }
-
-    removePlayerIdFromQueue = (playerId) => {
-        let prunedArray = this.state.queuedPlayers.filter(plr => plr.id !== playerId);
-        this.setState({
-            queuedPlayers: prunedArray,
-        });
-    }
 
     render() {
         if (this.getIsLoaded() == false) {
@@ -129,12 +108,14 @@ class AddPlayerBySearch extends DatasetView {
         //TODO add to team
         return (
             <div>
-                <QueuedPlayersList onRemove={this.removePlayerIdFromQueue} queuedPlayers={this.state.queuedPlayers} />
+                <QueuedPlayersList
+                    onRemove={this.props.removePlayerIdFromQueue}
+                    queuedPlayers={this.props.queuedPlayers} />
                 <FuzzySearch
                     list={this.state.players}
                     keys={['full_name', 'email']}
                     width={430}
-                    onSelect={this.queuePlayers}
+                    onSelect={this.props.queuePlayers}
                     resultsTemplate={search_player_template}
                     placeholder={"Add player by name or email"}
                 />
@@ -160,13 +141,16 @@ export class CreatePlayerCard extends React.Component {
 
     toggle = () => {
         this.setState({
-            modalOpen: !this.state.modalOpen
+            modalOpen: !this.state.modalOpen,
+            queuedPlayers: [],
         });
     }
 
     addToTeam = (e) => {
         //get list of current team members
-        let playerIds = this.props.team.player_ids;
+        let playerIds = this.state.queuedPlayers.map((player, i) => {
+            return player.id;
+        });
         //post list of team members minus user
         const teamUrl = reverse("api-team-players-add", {team_id: this.props.team.id});
 
@@ -186,6 +170,26 @@ export class CreatePlayerCard extends React.Component {
         // this.toggle();
     }
 
+    queuePlayers = (player) => {
+        let matches = this.state.queuedPlayers.filter(plr => plr.id === player.id);
+        if (matches.length > 0) {
+            toastr.error("Player already added!");
+            return;
+        }
+
+        this.setState({
+            queuedPlayers: this.state.queuedPlayers.concat([player])
+        });
+    }
+
+    removePlayerIdFromQueue = (playerId) => {
+        let prunedArray = this.state.queuedPlayers.filter(plr => plr.id !== playerId);
+        this.setState({
+            queuedPlayers: prunedArray,
+        });
+    }
+
+
     render() {
         return (
             <div>
@@ -201,7 +205,11 @@ export class CreatePlayerCard extends React.Component {
                 <Modal fade={false} isOpen={this.state.modalOpen} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Add existing player to team</ModalHeader>
                     <ModalBody>
-                        <AddPlayerBySearch />
+                        <AddPlayerBySearch
+                            queuedPlayers={this.state.queuedPlayers}
+                            queuePlayers={this.queuePlayers}
+                            removePlayerIdFromQueue={this.removePlayerIdFromQueue}
+                        />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.addToTeam}>Add</Button>{' '}
