@@ -18,20 +18,6 @@ import SpinLoader from 'components/spinloader.js';
 
 import DatasetView from 'components/dataset_view';
 
-const list = [{
-    id: 1,
-    title: 'The Great Gatsby',
-    author: 'F. Scott Fitzgerald'
-}, {
-    id: 2,
-    title: 'The DaVinci Code',
-    author: 'Dan Brown'
-}, {
-    id: 3,
-    title: 'Angels & Demons',
-    author: 'Dan Brown'
-}];
-
 //edited to use full name and email from react-fuzzy
 function search_player_template(props, state, styles, clickHandler) {
   return state.results.map((player, i) => {
@@ -278,13 +264,10 @@ export class PlayerCard extends React.Component {
                     </CardText>
                         <UncontrolledDropdown>
                             <DropdownToggle caret>
-                                Social
+                                Actions
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem>Facebook</DropdownItem>
-                                <DropdownItem disabled>Twitter</DropdownItem>
-                                <DropdownItem divider></DropdownItem>
-                                <DropdownItem>Other</DropdownItem>
+                                <DropdownItem>Remove from team</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                 </CardBlock>
