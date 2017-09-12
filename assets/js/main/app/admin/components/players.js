@@ -166,12 +166,7 @@ export class CreatePlayerCard extends React.Component {
 
     addToTeam = (e) => {
         //get list of current team members
-        // let playerIds = this.props.team.player_ids;
-        // playerIds = playerIds.filter((playerId) => {
-        //     return playerId != this.props.user.id;
-        // });
-
-        let playerIds = [1, 2, 3];
+        let playerIds = this.props.team.player_ids;
         //post list of team members minus user
         const teamUrl = reverse("api-team-players-add", {team_id: this.props.team.id});
 
@@ -182,9 +177,9 @@ export class CreatePlayerCard extends React.Component {
                 player_ids: playerIds,
             },
         }).then( response => {
-            toastr.success("Removed user from team");
+            toastr.success("Added player(s) to team!");
         }, error => {
-            toastr.error("Failed to remove user from team");
+            toastr.error("Failed to add user(s) to team");
         });
 
         //close modal

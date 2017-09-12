@@ -1,5 +1,9 @@
-from rest_framework import generics, serializers, views as drf_views
+from django.http import Http404
+from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+
+from rest_framework.response import Response
+from rest_framework import generics, serializers, views as drf_views
 
 from leagion.api.serializers.users import UserSerializer
 from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer, CreateTeamSerializer
@@ -57,7 +61,24 @@ class AddPlayersToTeam(drf_views.APIView):
     queryset = Team.objects.all()
 
     def patch(self, request, team_id=None):
+        team = get_object_or_404(self.queryset, id=team_id)
+
+        #validate player ids
+        player_ids = request.data.get('player_ids')
+        if not player_ids:
+            raise Http404("Missing player ids")
+
+        try:
+            player_ids = list(map(lambda pid: int(pid), player_ids))
+        except ValueError:
+            raise Http404("Invalid player ids. Numbers only")
+
+        old_count = team.players.count()
+        team.players.add(*player_ids)
+        new_count = team.players.count()
+
         print ("PATCH data:", request.data)
+        return Response("Success! Added {} new players".format(new_count-old_count))
 
 
 @reverse_js
