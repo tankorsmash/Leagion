@@ -30,7 +30,10 @@ module.exports = {
     leagues: buildSimpleUrls(leaguesUrl, "leagueId"),
     seasons: buildSimpleUrls(seasonsUrl, "seasonId"),
     locations: buildSimpleUrls(locationsUrl, "locationId"),
-    teams: buildSimpleUrls(teamsUrl, "teamId"),
+    teams: {
+        addPlayerToTeam: `${teamsUrl}/add-players`,
+        ...buildSimpleUrls(teamsUrl, "teamId"),
+    },
     matches: buildSimpleUrls(matchesUrl, "matchId"),
     players: buildSimpleUrls(playersUrl, "playerId"),
 }

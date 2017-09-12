@@ -165,29 +165,30 @@ export class CreatePlayerCard extends React.Component {
     }
 
     addToTeam = (e) => {
-        // //get list of current team members
+        //get list of current team members
         // let playerIds = this.props.team.player_ids;
         // playerIds = playerIds.filter((playerId) => {
         //     return playerId != this.props.user.id;
         // });
-        // //post list of team members minus user
-        // const teamUrl = reverse("api-team-detail", {team_id: this.props.team.id});
-        //
-        // ajax({
-        //     url: teamUrl,
-        //     method: 'PATCH',
-        //     data: {
-        //         player_ids: playerIds,
-        //     },
-        // }).then( response => {
-        //     toastr.success("Removed user from team");
-        //     this.props.triggerRefreshOnGrid();
-        // }, error => {
-        //     toastr.error("Failed to remove user from team");
-        // });
+
+        let playerIds = [1, 2, 3];
+        //post list of team members minus user
+        const teamUrl = reverse("api-team-players-add", {team_id: this.props.team.id});
+
+        ajax({
+            url: teamUrl,
+            method: 'PATCH',
+            data: {
+                player_ids: playerIds,
+            },
+        }).then( response => {
+            toastr.success("Removed user from team");
+        }, error => {
+            toastr.error("Failed to remove user from team");
+        });
 
         //close modal
-        this.toggle();
+        // this.toggle();
     }
 
     render() {
@@ -208,7 +209,7 @@ export class CreatePlayerCard extends React.Component {
                         <AddPlayerBySearch />
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.removeFromTeam}>Add</Button>{' '}
+                        <Button color="primary" onClick={this.addToTeam}>Add</Button>{' '}
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                     </ModalFooter>
                 </Modal>

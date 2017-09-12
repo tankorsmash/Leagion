@@ -162,7 +162,7 @@ class TeamDetail extends DatasetView {
 
                 <div className="d-lg-flex">
                     <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
-                        <CreatePlayerCard key={-1} />
+                        <CreatePlayerCard team={team} key={-1} />
                         { team.players.map((el, i) => {
                             return (
                                 <PlayerCard player={el} key={i} />

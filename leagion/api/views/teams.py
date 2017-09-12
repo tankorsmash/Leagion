@@ -1,4 +1,4 @@
-from rest_framework import generics, serializers
+from rest_framework import generics, serializers, views as drf_views
 from django.contrib.auth import get_user_model
 
 from leagion.api.serializers.users import UserSerializer
@@ -48,6 +48,16 @@ class TeamDetail(generics.RetrieveUpdateAPIView):
         "season", "season__league",
     )
     serializer_class = TeamSerializer
+
+
+@reverse_js
+class AddPlayersToTeam(drf_views.APIView):
+    lookup_url_kwarg = "team_id"
+
+    queryset = Team.objects.all()
+
+    def patch(self, request, team_id=None):
+        print ("PATCH data:", request.data)
 
 
 @reverse_js
