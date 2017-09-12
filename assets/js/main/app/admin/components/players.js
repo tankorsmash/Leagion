@@ -237,23 +237,6 @@ export class PlayerCard extends React.Component {
 
     }
 
-    removePlayerFromTeam = () => {
-        //post list of team members minus user
-        const teamUrl = reverse("api-team-players-remove", {team_id: this.props.team.id});
-
-        ajax({
-            url: teamUrl,
-            method: 'PATCH',
-            data: {
-                player_ids: [this.props.player.id],
-            },
-        }).then( response => {
-            toastr.success("Removed Player from team");
-        }, error => {
-            toastr.error("Failed to remove player from team");
-        });
-    }
-
     render() {
         const player = this.props.player;
 
@@ -284,9 +267,13 @@ export class PlayerCard extends React.Component {
                                 Actions
                             </DropdownToggle>
                             <DropdownMenu>
-                                <DropdownItem onClick={this.removePlayerFromTeam}>
-                                    Remove from team
-                                </DropdownItem>
+                                { this.props.actions.map((actionData, i) => {
+                                    return (
+                                        <DropdownItem key={i} onClick={actionData.action}>
+                                            { actionData.text }
+                                        </DropdownItem>
+                                    );
+                                })}
                             </DropdownMenu>
                         </UncontrolledDropdown>
                 </CardBlock>

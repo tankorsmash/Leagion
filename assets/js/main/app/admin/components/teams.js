@@ -132,6 +132,25 @@ class TeamDetail extends DatasetView {
     get datasetViewKwargs() {
         return {team_id: this.props.match.params.teamId};
     }
+
+    removePlayerFromTeam = (player) => {
+        //post list of team members minus user
+        const teamUrl = reverse("api-team-players-remove", {team_id: this.state.team.id});
+
+        ajax({
+            url: teamUrl,
+            method: 'PATCH',
+            data: {
+                player_ids: [player.id],
+            },
+        }).then( response => {
+            toastr.success("Removed Player from team");
+            this.updateDataset();
+        }, error => {
+            toastr.error("Failed to remove player from team");
+        });
+    }
+
     render() {
         buildPageTitle("Team Detail");
         if (this.getIsLoaded() == false) {
@@ -163,9 +182,12 @@ class TeamDetail extends DatasetView {
                 <div className="d-lg-flex">
                     <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
                         <CreatePlayerCard team={team} key={-1} />
-                        { team.players.map((el, i) => {
+                        { team.players.map((player, i) => {
                             return (
-                                <PlayerCard team={team} player={el} key={i} />
+                                <PlayerCard actions={[{
+                                    "text" : "Remove from team",
+                                    "action": () => { this.removePlayerFromTeam(player); }
+                                }]} team={team} player={player} key={i} />
                         );
                         }) }
                     </CardDeck>
