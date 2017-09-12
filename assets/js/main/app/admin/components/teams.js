@@ -181,14 +181,23 @@ class TeamDetail extends DatasetView {
 
                 <div className="d-lg-flex">
                     <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
-                        <CreatePlayerCard team={team} key={-1} />
+
+                        <CreatePlayerCard
+                            onCreateCallback={ this.updateDataset }
+                            team={team}
+                            key={-1} />
+
                         { team.players.map((player, i) => {
                             return (
-                                <PlayerCard actions={[{
-                                    "text" : "Remove from team",
-                                    "action": () => { this.removePlayerFromTeam(player); }
-                                }]} team={team} player={player} key={i} />
-                        );
+                                <PlayerCard
+                                    actions={[{
+                                        "text" : "Remove from team",
+                                        "action": () => { this.removePlayerFromTeam(player); }
+                                    }]}
+                                    team={team}
+                                    player={player}
+                                    key={i} />
+                            );
                         }) }
                     </CardDeck>
                     <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />

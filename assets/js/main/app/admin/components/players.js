@@ -152,6 +152,8 @@ export class CreatePlayerCard extends React.Component {
             toastr.error("Failed to add user(s) to team");
         });
 
+        this.props.onCreateCallback();
+
         //close modal
         this.toggle();
     }
