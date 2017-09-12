@@ -123,7 +123,7 @@ class AddPlayerBySearch extends DatasetView {
 
     render() {
         if (this.getIsLoaded() == false) {
-            return (<div>loading </div>);
+            return (<div> Gathering available players... </div>);
         }
 
         //TODO add to team
