@@ -167,7 +167,7 @@ export class CreatePlayerCard extends React.Component {
         });
 
         //close modal
-        // this.toggle();
+        this.toggle();
     }
 
     queuePlayers = (player) => {
