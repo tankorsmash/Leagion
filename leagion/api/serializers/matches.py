@@ -28,13 +28,6 @@ class MatchSerializer(serializers.ModelSerializer):
             'pretty_time', 'home_roster', 'away_roster', 'completed'
         )
 
-        read_only_fields = (
-            'id', 'match_datetime', 'location', 'season', 'duration_seconds',
-            'home_team', 'home_points', 'away_team', 'away_points', 'status',
-            'postponed_to', 'postponed_from', 'pretty_name', 'pretty_date',
-            'pretty_time', 'home_roster', 'away_roster', 'completed'
-        )
-
     home_team = ShallowTeamSerializer(read_only=True)
     away_team = ShallowTeamSerializer(read_only=True)
     location = ShallowLocationSerializer(read_only=True)
