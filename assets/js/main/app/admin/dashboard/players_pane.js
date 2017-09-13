@@ -171,7 +171,10 @@ export class PlayersPane extends DatasetView {
                             modalHeaderLabel="Add User"/>
                     </Col>
                 </Row>
-                <GeneralTable columns={columns} rowData={this.state.players} />
+
+                <GeneralTable
+                    columns={columns}
+                    rowData={this.state.players} />
             </div>
         );
     }

@@ -12,10 +12,13 @@ import {
 } from 'reactstrap';
 
 import DatasetView from 'components/dataset_view';
+import FormModal from 'components/form_modal';
 
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
 import {PlayerCard, CreatePlayerCard} from 'main/app/admin/components/players'
+
+import MatchCreateForm from 'main/app/admin/dashboard/create-match-form'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
@@ -169,6 +172,12 @@ class TeamDetail extends DatasetView {
 
         // TODO: make a players admin view so you can link to it
 
+        const initialFormData = {
+            "date": "2017/12/25",
+            "location": "Ottawa Ontario",
+            "other_team": "Orlando Tigers",
+        };
+
         return (
             <Container fluid className="pt-1">
                 <h1>
@@ -200,7 +209,19 @@ class TeamDetail extends DatasetView {
                             );
                         }) }
                     </CardDeck>
-                    <GeneralTable perPage={15} columns={matchColumns} rowData={team.matches} />
+
+                    <div>
+                        <FormModal
+                            formComponent={MatchCreateForm}
+                            formData={initialFormData}
+                            postUrl={reverse("api-match-list")}
+                            buttonLabel="Add"
+                            modalHeaderLabel="Add User"/>
+                        <GeneralTable
+                            perPage={15}
+                            columns={matchColumns}
+                            rowData={team.matches} />
+                    </div>
                 </div>
             </Container>
         );
