@@ -3,6 +3,9 @@ import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 're
 
 import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
+import FormModal from 'components/form_modal';
+import PlayerCreateForm from 'main/app/admin/dashboard/create-player-form'
+
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
@@ -147,9 +150,27 @@ export class PlayersPane extends DatasetView {
             title: "Email",
         }];
 
+        const initialFormData = {
+            "name": "Jonah Smitt",
+            "email": "example@mail.com",
+            "password": "",
+            "captain_of_teams": [],
+        };
+
         return (
             <div>
-                <h3> Players </h3>
+                <Row>
+                    <Col> <h3> Players </h3> </Col>
+                    <Col className="" md="2">
+                        <FormModal
+                            formComponent={PlayerCreateForm}
+                            formData={initialFormData}
+                            postUrl={reverse("api-player-list")}
+                            triggerRefreshOnGrid={this.updateDataset}
+                            buttonLabel="Add"
+                            modalHeaderLabel="Add User"/>
+                    </Col>
+                </Row>
                 <GeneralTable columns={columns} rowData={this.state.players} />
             </div>
         );
