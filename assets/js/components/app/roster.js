@@ -80,13 +80,22 @@ export class FullRosterTable extends React.Component {
 		});
 	}
 
+	// On mobile this prevents the default page scrolling while dragging an item.
+	stopScrolling(e) {
+		e.preventDefault();
+	}
+
 	setUpDragging = (el) => {
 		if (this.userIsTeamCaptain()) {
 			this.drake = Dragula([this.playingEl], {
 				moves: function (el, source, handle, sibling) {
 					return handle.dataset.draggableHandle; // elements are always draggable by default
 				},
-			}).on('drop', this.setNewRoster);
+			})
+			.on('drop', this.setNewRoster)
+			.on('drag', (el, source) => {
+				document.addEventListener('touchstart', this.stopScrolling);
+			});
 		}
 	};
 
@@ -105,6 +114,9 @@ export class FullRosterTable extends React.Component {
 	}
 
 	setNewRoster = (el, source, target, siblings) => {
+		// let the user scroll the page again
+		document.removeEventListener('touchstart', this.stopScrolling);
+
 		let data = [...this.playingEl.childNodes].map((playerNode, i) => {
 			return {
 				player_id: playerNode.dataset.playerId,
