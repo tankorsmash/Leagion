@@ -8,76 +8,76 @@ import {Modal} from 'components/modals';
 import {FormBase, FormGroup} from 'components/forms';
 
 export const MatchLink = (props) => {
-	return (
-		<Link to={`${matchUrls.index}/${props.id}`}>
-			{props.text}
-		</Link>
-	);
+    return (
+        <Link to={`${matchUrls.index}/${props.id}`}>
+            {props.text}
+        </Link>
+    );
 };
 
 export const MatchTable = (props) => {
-	return (
-		<Table responsive className="leagion-table">
-			<thead>
-				<tr>
-					<th>Date</th>
-					<th>Time</th>
-					<th>Home Team</th>
-					<th></th>
-					<th>Away Team</th>
-					<th>Location</th>
-					<th>Results</th>
-				</tr>
-			</thead>
-			<tbody>
-				{props.matches.map((match, i) => {
-					return (
-						<tr key={i}>
-							<td><MatchLink id={match.id} text={match.pretty_date}/></td>
-							<td>{match.pretty_time}</td>
-							<td><TeamLink id={match.home_team.id} text={match.home_team.name}/></td>
-							<td>vs.</td>
-							<td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
-							<td>{match.location.name}</td>
-							<td>
-								{ match.completed ?
-									<span>{match.home_points} - {match.away_points}</span> :
-									<span>N/A </span>
-								}
-							</td>
-						</tr>
-					);
-				})}
-			</tbody>
-		</Table>
-	);
+    return (
+        <Table responsive className="leagion-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Home Team</th>
+                    <th></th>
+                    <th>Away Team</th>
+                    <th>Location</th>
+                    <th>Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                {props.matches.map((match, i) => {
+                    return (
+                        <tr key={i}>
+                            <td><MatchLink id={match.id} text={match.pretty_date}/></td>
+                            <td>{match.pretty_time}</td>
+                            <td><TeamLink id={match.home_team.id} text={match.home_team.name}/></td>
+                            <td>vs.</td>
+                            <td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
+                            <td>{match.location.name}</td>
+                            <td>
+                                { match.completed ?
+                                        <span>{match.home_points} - {match.away_points}</span> :
+                                        <span>N/A </span>
+                                }
+                            </td>
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </Table>
+    );
 };
 
 export const MatchList = (props) => {
-	return (
-		<ListGroup>
-			{props.matches.map((match, i) => {
-				return (
-					<ListGroupItem key={i}>
-						<Link to={`${matchUrls.index}/${match.id}`}>
-							{match.pretty_name}
-						</Link>
-					</ListGroupItem>
-				);
-			})}
-		</ListGroup>
-	);
+    return (
+        <ListGroup>
+            {props.matches.map((match, i) => {
+                return (
+                    <ListGroupItem key={i}>
+                        <Link to={`${matchUrls.index}/${match.id}`}>
+                            {match.pretty_name}
+                        </Link>
+                    </ListGroupItem>
+                );
+            })}
+        </ListGroup>
+    );
 };
 
 export class MatchScoreSetter extends FormBase {
     url = 'api-set-match-score';
 
-	get form() {
-		return {
-			'home_score': '',
-			'away_score': '',
-		};
-	}
+    get form() {
+        return {
+            'home_score': '',
+            'away_score': '',
+        };
+    }
 
     constructor(props) {
         super(props);
@@ -97,27 +97,27 @@ export class MatchScoreSetter extends FormBase {
         return false;
     };
 
-	handleSubmit = (event) => {
+    handleSubmit = (event) => {
         event.preventDefault();
 
         ajax({
             url: reverse(this.url, {match_id: this.props.matchId}),
-			method: 'PUT',
-			data: {
-				home_points: this.state.form.home_score,
-				away_points: this.state.form.away_score,
-			}
+            method: 'PUT',
+            data: {
+                home_points: this.state.form.home_score,
+                away_points: this.state.form.away_score,
+            }
         }).then(data => {
-			this.props.updateScore(data);
-			this.setState({
-				isOpen: false,
-				form: this.form,
-			});
+            this.props.updateScore(data);
+            this.setState({
+                isOpen: false,
+                form: this.form,
+            });
             toastr.success("Score Set!");
         }).catch(data => {
-			this.setState({
-				errors: data,
-			});
+            this.setState({
+                errors: data,
+            });
         });
 
     };
@@ -139,24 +139,24 @@ export class MatchScoreSetter extends FormBase {
                         </div>
                     }
                     body={
-						<div>
-							<FormGroup
-								label={this.props.home_team.name}
-								type="number"
-								id="home_score"
-								value={this.state.form.home_score}
-								onChange={this.handleInputChange}
-								error={this.state.errors.home_score}
-							/>
-							<FormGroup
-								label={this.props.away_team.name}
-								type="number"
-								id="away_score"
-								value={this.state.form.away_score}
-								onChange={this.handleInputChange}
-								error={this.state.errors.away_score}
-							/>
-						</div>
+                        <div>
+                            <FormGroup
+                                label={this.props.home_team.name}
+                                type="number"
+                                id="home_score"
+                                value={this.state.form.home_score}
+                                onChange={this.handleInputChange}
+                                error={this.state.errors.home_score}
+                            />
+                            <FormGroup
+                                label={this.props.away_team.name}
+                                type="number"
+                                id="away_score"
+                                value={this.state.form.away_score}
+                                onChange={this.handleInputChange}
+                                error={this.state.errors.away_score}
+                            />
+                        </div>
                     }
                 />
             </div>

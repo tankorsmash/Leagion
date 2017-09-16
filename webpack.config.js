@@ -5,6 +5,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var yargs = require('yargs');
 
 //ie `npm start -- --debug`
+console.log(yargs.argv.debug);
 if (yargs.argv.debug) {
     var devVendor = [
         'webpack-dev-server/client?http://localhost:20034',

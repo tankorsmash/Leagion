@@ -4,12 +4,104 @@ import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 
 import matchUrls from 'main/app/player/match/urls';
-import {TeamMatchCard} from 'components/app/team';
+import {TeamMatchCard, TeamMatchCardMobile} from 'components/app/team';
 import {FourOhFour} from 'components/error-pages';
 
 import Titlebar from 'components/app/titlebar';
 import ajax from 'common/ajax';
 import update from 'immutability-helper';
+import MediaQuery from 'react-responsive';
+
+import {MediaBreakpoints} from 'common/responsive';
+
+const MatchDetailMobile = (props) => {
+    const {
+        away_roster, home_roster, home_team, away_team,
+        home_points, away_points, pretty_date, pretty_time,
+        completed
+    } = props.match;
+
+    console.log(home_team);
+    return (
+        <div className="content">
+            <TeamMatchCardMobile
+                team={home_team}
+                score={home_points}
+                user={props.user}
+                completed={completed}
+                home_team={home_team}
+                away_team={away_team}
+                matchId={props.match.id}
+                updateScore={props.updateScore}
+            />
+            <TeamMatchCardMobile
+                team={away_team}
+                score={away_points}
+                user={props.user}
+                completed={completed}
+                home_team={home_team}
+                away_team={away_team}
+                matchId={props.match.id}
+                updateScore={props.updateScore}
+                noTopBorder={true}
+            />
+        </div>
+    );
+};
+
+const MatchDetailDesktop = (props) => {
+    const {
+        away_roster, home_roster, home_team, away_team,
+        home_points, away_points, pretty_date, pretty_time,
+        completed
+    } = props.match;
+
+    return (
+        <div>
+            <Row>
+                <Col className="text-center mt-3" md={{size:6, offset:3}}>
+                    <h3> {pretty_date} </h3>
+                    <h3> {'@ ' + pretty_time} </h3>
+                </Col>
+            </Row>
+            <Row>
+                <Col md="5" className="d-flex justify-content-end">
+                    <TeamMatchCard
+                        title="Home Team"
+                        teamName={home_team.name}
+                        teamId={home_team.id}
+                        score={home_points}
+                        user={props.user}
+                        rosterId={home_roster}
+                        completed={completed}
+                        home_team={home_team}
+                        away_team={away_team}
+                        matchId={props.match.id}
+                        updateScore={props.updateScore}
+                    />
+                </Col>
+                <Col md="2" className="team-match-vs">
+                    <h2>Vs.</h2>
+                </Col>
+                <Col md="5" className="team-match-column">
+                    <TeamMatchCard
+                        title="Away Team"
+                        teamName={away_team.name}
+                        teamId={away_team.id}
+                        score={away_points}
+                        user={props.user}
+                        rosterId={away_roster}
+                        completed={completed}
+                        home_team={home_team}
+                        away_team={away_team}
+                        matchId={props.match.id}
+                        updateScore={props.updateScore}
+                    />
+                </Col>
+            </Row>
+        </div>
+    );
+};
 
 class MatchDetail extends React.Component {
     constructor(props) {
@@ -43,63 +135,30 @@ class MatchDetail extends React.Component {
     };
 
     render() {
-        const {
-            away_roster, home_roster, home_team, away_team,
-            home_points, away_points, pretty_date, pretty_time,
-            completed
-        } = this.state.match;
-
         return (
-            <SpinLoader loaded={this.state.loaded}>
-                {this.state.loaded &&
-                    <div>
-                        <Titlebar title="Match" />
+            <div>
+                <Titlebar title="Match" />
+                <SpinLoader loaded={this.state.loaded}>
+                    {this.state.loaded &&
                         <div>
-                            <Row>
-                                <Col className="text-center mt-3" md={{size:6, offset:3}}>
-                                    <h3> {pretty_date} </h3>
-                                    <h3> {'@ ' + pretty_time} </h3>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col md="5" className="d-flex justify-content-end">
-                                    <TeamMatchCard
-                                        title="Home Team"
-                                        teamName={home_team.name}
-                                        teamId={home_team.id}
-                                        score={home_points}
-                                        user={this.props.user}
-                                        rosterId={home_roster}
-                                        completed={completed}
-                                        home_team={home_team}
-                                        away_team={away_team}
-                                        matchId={this.state.match.id}
-                                        updateScore={this.updateScore}
-                                    />
-                                </Col>
-                                <Col md="2" className="team-match-vs">
-                                    <h2>Vs.</h2>
-                                </Col>
-                                <Col md="5" className="team-match-column">
-                                    <TeamMatchCard
-                                        title="Away Team"
-                                        teamName={away_team.name}
-                                        teamId={away_team.id}
-                                        score={away_points}
-                                        user={this.props.user}
-                                        rosterId={away_roster}
-                                        completed={completed}
-                                        home_team={home_team}
-                                        away_team={away_team}
-                                        matchId={this.state.match.id}
-                                        updateScore={this.updateScore}
-                                    />
-                                </Col>
-                            </Row>
+                            <MediaQuery maxWidth={MediaBreakpoints.L}>
+                                <MatchDetailMobile
+                                    match={this.state.match}
+                                    updateScore={this.updateScore}
+                                    user={this.props.user}
+                                />
+                            </MediaQuery>
+                            <MediaQuery minWidth={MediaBreakpoints.L}>
+                                <MatchDetailDesktop
+                                    match={this.state.match}
+                                    updateScore={this.updateScore}
+                                    user={this.props.user}
+                                />
+                            </MediaQuery>
                         </div>
-                    </div>
-                }
-            </SpinLoader>
+                    }
+                </SpinLoader>
+            </div>
         );
     }
 }

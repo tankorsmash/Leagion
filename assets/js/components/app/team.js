@@ -102,7 +102,7 @@ export const TeamMatchCard = (props) => {
     }
 
     return (
-        <div className="team-match-card">
+        <div className="team-match-card le-card">
             <h3 className="team-match-card-title font-weight-bold">
                 {title}
             </h3>
@@ -117,9 +117,39 @@ export const TeamMatchCard = (props) => {
     );
 };
 
+export const TeamMatchCardMobile = (props) => {
+    const {
+        user, teamLogo, score, team, completed,
+        home_team, away_team, matchId, updateScore,
+        noTopBorder
+    } = props;
+
+    let style = {};
+    if (noTopBorder) {
+        style.borderTop = 'none';
+    }
+
+    return (
+        <div className="team-match-card-mobile le-card" style={style}>
+            <div className="team-logo is-medium"> </div>
+            <span className="team-name">
+                <h4>{team.name}</h4>
+                {!completed && user.captain_of_teams.includes(team.id) &&
+                    <MatchScoreSetter
+                        home_team={home_team}
+                        away_team={away_team}
+                        matchId={matchId}
+                        updateScore={updateScore}
+                    />
+                }
+            </span>
+            <h2>{completed ? score : "N/A"}</h2>
+        </div>
+    );
+};
+
 export const TeamTitle = (props) => {
     const team = props.team;
-
     return (
         <div className="team-box-wrapper">
             <div className="team-box">
@@ -137,6 +167,7 @@ export const TeamTitle = (props) => {
         </div>
     );
 };
+
 
 export const TeamRankTable = (props) => {
     const teams = props.teams.sort((teamA, teamB) => {
