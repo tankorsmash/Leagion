@@ -21,7 +21,6 @@ const MatchDetailMobile = (props) => {
         completed
     } = props.match;
 
-    console.log(home_team);
     return (
         <div className="content">
             <TeamMatchCardMobile
