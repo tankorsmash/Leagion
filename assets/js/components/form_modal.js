@@ -33,7 +33,7 @@ export default class FormModal extends FormBase {
         this.state = {
             'modal': false,
 
-            form: this.props.formData,
+            formData: this.props.formData,
         };
 
         this.toggle = this.toggle.bind(this);
@@ -45,7 +45,7 @@ export default class FormModal extends FormBase {
         ajax({
             url: this.props.postUrl,
             method: 'POST',
-            data: this.state.form
+            data: this.state.formData
         }).then(data => {
             this.setState({
                 'modal': false,
@@ -80,7 +80,7 @@ export default class FormModal extends FormBase {
                     <ModalBody>
                         <FormComponent
                             handleInputChange={this.handleInputChange}
-                            formData={this.state.form}
+                            formData={this.state.formData}
                             handleSubmit={this.handleSubmit} />
                     </ModalBody>
                     <ModalFooter>
