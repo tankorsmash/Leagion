@@ -14,6 +14,7 @@ import update from 'immutability-helper';
 
 import {MediaBreakpoints} from 'common/responsive';
 import Tabs from 'components/tabs';
+import {FullRosterTable} from 'components/app/roster';
 
 const MatchDetailMobile = (props) => {
     const {
@@ -49,10 +50,14 @@ const MatchDetailMobile = (props) => {
                 className="team-match-roster-table-mobile"
                 tabs={[{
                     label: 'Home Roster',
-                    //content: (<MatchTable matches={this.state.team.matches} />)
+                    content: (
+                        <FullRosterTable user={props.user} rosterId={home_roster}/>
+                    )
                 }, {
                     label: 'Away Roster',
-                    //content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
+                    content: (
+                        <FullRosterTable user={props.user} rosterId={away_roster}/>
+                    )
                 }]}
             />
         </div>
@@ -68,12 +73,6 @@ const MatchDetailDesktop = (props) => {
 
     return (
         <div>
-            <Row>
-                <Col className="text-center mt-3" md={{size:6, offset:3}}>
-                    <h3> {pretty_date} </h3>
-                    <h3> {'@ ' + pretty_time} </h3>
-                </Col>
-            </Row>
             <Row>
                 <Col md="5" className="d-flex justify-content-end">
                     <TeamMatchCard
@@ -151,6 +150,12 @@ class MatchDetail extends React.Component {
                 <SpinLoader loaded={this.state.loaded}>
                     {this.state.loaded &&
                         <div>
+                            <Row>
+                                <Col className="text-center mt-3" md={{size:6, offset:3}}>
+                                    <h3> {this.state.match.pretty_date} </h3>
+                                    <h3> {'@ ' + this.state.match.pretty_time} </h3>
+                                </Col>
+                            </Row>
                             <MediaQuery maxWidth={MediaBreakpoints.L}>
                                 <MatchDetailMobile
                                     match={this.state.match}
