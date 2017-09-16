@@ -24,7 +24,7 @@ const MatchDetailMobile = (props) => {
     } = props.match;
 
     return (
-        <div className="content team-match-mobile">
+        <div className="team-match-mobile">
             <TeamMatchCardMobile
                 team={home_team}
                 score={home_points}
