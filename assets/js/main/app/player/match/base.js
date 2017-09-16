@@ -2,6 +2,7 @@ import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
+import MediaQuery from 'react-responsive';
 
 import matchUrls from 'main/app/player/match/urls';
 import {TeamMatchCard, TeamMatchCardMobile} from 'components/app/team';
@@ -10,9 +11,9 @@ import {FourOhFour} from 'components/error-pages';
 import Titlebar from 'components/app/titlebar';
 import ajax from 'common/ajax';
 import update from 'immutability-helper';
-import MediaQuery from 'react-responsive';
 
 import {MediaBreakpoints} from 'common/responsive';
+import Tabs from 'components/tabs';
 
 const MatchDetailMobile = (props) => {
     const {
@@ -22,7 +23,7 @@ const MatchDetailMobile = (props) => {
     } = props.match;
 
     return (
-        <div className="content">
+        <div className="content team-match-mobile">
             <TeamMatchCardMobile
                 team={home_team}
                 score={home_points}
@@ -43,6 +44,16 @@ const MatchDetailMobile = (props) => {
                 matchId={props.match.id}
                 updateScore={props.updateScore}
                 noTopBorder={true}
+            />
+            <Tabs
+                className="team-match-roster-table-mobile"
+                tabs={[{
+                    label: 'Home Roster',
+                    //content: (<MatchTable matches={this.state.team.matches} />)
+                }, {
+                    label: 'Away Roster',
+                    //content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
+                }]}
             />
         </div>
     );
