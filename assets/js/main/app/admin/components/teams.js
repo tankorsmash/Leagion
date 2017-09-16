@@ -176,6 +176,10 @@ class TeamDetail extends DatasetView {
             "date": "2017/12/25",
             "location": "Ottawa Ontario",
             "other_team": "Orlando Tigers",
+            "season": team.season_id,
+            "postponed_from": "",
+            "home_roster": "",
+            "away_roster": "",
         };
 
         return (
@@ -215,8 +219,8 @@ class TeamDetail extends DatasetView {
                             formComponent={MatchCreateForm}
                             formData={initialFormData}
                             postUrl={reverse("api-match-list")}
-                            buttonLabel="Add"
-                            modalHeaderLabel="Add User"/>
+                            buttonLabel="Create Match"
+                            modalHeaderLabel="Create Match"/>
                         <GeneralTable
                             perPage={15}
                             columns={matchColumns}

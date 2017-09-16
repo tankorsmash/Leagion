@@ -36,15 +36,6 @@ export default class PlayerCreateForm extends React.Component {
                         name="other_team"
                         id="other_team"
                         placeholder="New York Yankees"/>
-                    { /* Password */ }
-                    <Label for="password">Password</Label>
-                    <Input
-                        onChange={this.props.handleInputChange}
-                        value={formData.password}
-                        type="password"
-                        name="password"
-                        id="password"
-                        placeholder=""/>
                 </FormGroup>
             </Form>
         );
