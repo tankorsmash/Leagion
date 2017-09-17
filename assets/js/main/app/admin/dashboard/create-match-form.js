@@ -80,7 +80,7 @@ export default class MatchCreateForm extends React.Component {
         };
 
 		this.props.updateFormState({
-            "match_datetime": moment.format(DATE_FORMAT),
+            "match_datetime": moment.format("YYYY-MM-DDThh:mm"),
 		});
     };
 

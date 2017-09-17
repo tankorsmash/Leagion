@@ -182,7 +182,7 @@ class TeamDetail extends DatasetView {
             "home_roster": "",
             "away_roster": "",
             "my_team_id": team.id,
-            "postponed_from": "-1",
+            "postponed_from": null,
         };
 
         return (
