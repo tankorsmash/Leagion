@@ -56,8 +56,8 @@ export default class MatchCreateForm extends React.Component {
         //need to make sure we're sending the right stuff. other team can be
         //home or away team
 
-        console.log("WOOOOOOO updateHomeOrAwayData... before state update my team (%s) other (%s)", this.props.formData.my_team_id, this.props.formData.other_team_id);
         let formData = this.props.formData;
+        console.log("WOOOOOOO updateHomeOrAwayData... before state update my team (%s) other (%s)", formData.my_team_id, formData.other_team_id);
 
         let printData = ()=> {
             console.log("PRINT DATA after state update on parent:");
@@ -66,12 +66,16 @@ export default class MatchCreateForm extends React.Component {
         };
         if (formData.home_or_away == "home") {
             console.log("...home");
-            this.props.updateFormData("home_team_id", formData.my_team_id, printData);
-            this.props.updateFormData("away_team_id", formData.other_team_id, printData);
+            this.props.updateFormState({
+                "home_team_id": formData.my_team_id,
+                "away_team_id": formData.other_team_id
+            }, printData);
         } else {
             console.log("...away");
-            this.props.updateFormData("away_team_id", formData.my_team_id, printData);
-            this.props.updateFormData("home_team_id", formData.other_team_id, printData);
+            this.props.updateFormState({
+                "away_team_id": formData.my_team_id,
+                "home_team_id": formData.other_team_id
+            }, printData);
         };
 
     }
@@ -87,6 +91,8 @@ export default class MatchCreateForm extends React.Component {
     render() {
         let formData = this.props.formData;
         console.log("formData in render", formData);
+        console.log("render home_team_id", formData.home_team_id);
+        console.log("render away_team_id", formData.away_team_id);
         return (
             <Form onSubmit={this.props.handleSubmit} >
                 <FormGroup>
@@ -123,7 +129,10 @@ export default class MatchCreateForm extends React.Component {
                     <Label for="other_team_id">{formData.home_or_away == "away" ? "Home" : "Away" }  Team</Label>
                     <FuzzyTeamInput
                         onSelect={(team) => {
-                            this.props.updateFormData("other_team_id", team.id, this.updateHomeOrAwayData);
+                            this.props.updateFormState(
+                                {"other_team_id": team.id},
+                                this.updateHomeOrAwayData
+                            );
                         }}
                     />
                 </FormGroup>

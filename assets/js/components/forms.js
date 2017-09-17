@@ -13,16 +13,19 @@ export class FormBase extends React.Component {
 		const value = target.type === 'checkbox' ? target.checked : target.value;
 		const name = target.name;
 
-        this.updateFormData(name, value);
+        this.updateFormState({
+            [name]: value
+        });
 	}
 
     // lets us update form data without needing to go through an event, like 'change'
-    updateFormData = (name, value, onStateUpdated) => {
-        console.log("updateFormData", name, value);
-        this.setState({
-            form: {
-                ...this.state.form,
-                [name]: value
+    updateFormState = (newFormState, onStateUpdated) => {
+        this.setState((prevState, props) => {
+            return {
+                form: {
+                    ...prevState.form,
+                    ...newFormState
+                }
             }
         }, onStateUpdated);
     }
