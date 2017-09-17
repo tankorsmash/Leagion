@@ -52,6 +52,10 @@ class FuzzyTeamInput extends DatasetView {
 export default class MatchCreateForm extends React.Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+            other_team_name: ""
+        };
     };
 
     updateHomeOrAwayData = () => {
@@ -135,11 +139,18 @@ export default class MatchCreateForm extends React.Component {
                         placeholder="Ottawa"/>
 
                     { /* Other team */ }
-                    <Label for="other_team_id">Opposing team</Label>
+                    <Label for="other_team_id">
+                        Opposing team:
+                        <br/>
+                        <strong> { this.state.other_team_name } </strong>
+                    </Label>
                     <FuzzyTeamInput
                         onSelect={(team) => {
+                            this.setState({
+                                other_team_name: team.name,
+                            });
                             this.props.updateFormState(
-                                {"other_team_id": team.id},
+                                { "other_team_id": team.id },
                                 this.updateHomeOrAwayData
                             );
                         }}
