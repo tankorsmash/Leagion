@@ -173,7 +173,7 @@ class TeamDetail extends DatasetView {
         // TODO: make a players admin view so you can link to it
 
         const initialFormData = {
-            "date": "2017/12/25",
+            "match_datetime": "2017/12/25",
             "location": "Ottawa, Ontario",
             "home_or_away": "-1",
             "other_team_id": "",
@@ -182,6 +182,7 @@ class TeamDetail extends DatasetView {
             "home_roster": "",
             "away_roster": "",
             "my_team_id": team.id,
+            "postponed_from": "-1",
         };
 
         return (

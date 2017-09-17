@@ -9,7 +9,6 @@ import {
 } from 'reactstrap';
 
 import Spinner from 'react-spinkit';
-import Datetime from 'react-datetime';
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';

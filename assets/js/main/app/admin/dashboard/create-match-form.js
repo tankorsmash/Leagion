@@ -3,6 +3,9 @@ import {
 } from 'reactstrap';
 
 import FuzzySearch from 'react-fuzzy';
+import Datetime from 'react-datetime';
+
+import {DATE_FORMAT} from 'main/app/admin/constants';
 
 import DatasetView from 'components/dataset_view';
 
@@ -70,6 +73,18 @@ export default class MatchCreateForm extends React.Component {
 
     }
 
+    handleMatchDateChange = (moment) => {
+        if (!moment._isAMomentObject){
+            console.warn("invalid date format for start date");
+            return;
+        };
+
+		this.props.updateFormState({
+            "match_datetime": moment.format(DATE_FORMAT),
+		});
+    };
+
+
     componentWillReceiveProps(nextProps) {
         if(this.props != nextProps) {
             this.setState({
@@ -83,16 +98,20 @@ export default class MatchCreateForm extends React.Component {
         return (
             <Form onSubmit={this.props.handleSubmit} >
                 <FormGroup>
-                    { /* Name */ }
+                    { /* Match date */ }
                     <Label for="date">Date</Label>
-                    <Input
-                        onChange={this.props.handleInputChange}
-                        value={formData.date}
-                        type="text"
-                        name="date"
-                        id="date"
-                        placeholder="2017/12/25"/>
-                    <Label for="home_or_away">Home or Away?</Label>
+                    <Datetime
+                        dateFormat={DATE_FORMAT}
+                        timeFormat={false}
+                        onChange={this.handleMatchDateChange}
+                        value={formData.match_datetime}
+                        type="date"
+                        name="match_datetime"
+                        id="match_datetime"
+                        placeholder="2016/01/30"/>
+
+                    { /* Home */ }
+                    <Label for="home_or_away">Home or away game?</Label>
                     <Input
                         onChange={this.props.handleInputChange}
                         value={formData.home_or_away}
@@ -104,6 +123,8 @@ export default class MatchCreateForm extends React.Component {
                         <option value="home">Home</option>
                         <option value="away">Away</option>
                     </Input>
+
+                    { /* Location */ }
                     <Label for="location">Location</Label>
                     <Input
                         onChange={this.props.handleInputChange}
@@ -112,7 +133,8 @@ export default class MatchCreateForm extends React.Component {
                         name="location"
                         id="location"
                         placeholder="Ottawa"/>
-                    { /* Email */ }
+
+                    { /* Other team */ }
                     <Label for="other_team_id">{formData.home_or_away == "away" ? "Home" : "Away" }  Team</Label>
                     <FuzzyTeamInput
                         onSelect={(team) => {
