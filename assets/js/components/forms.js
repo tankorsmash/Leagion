@@ -17,13 +17,14 @@ export class FormBase extends React.Component {
 	}
 
     // lets us update form data without needing to go through an event, like 'change'
-    updateFormData = (name, value) => {
+    updateFormData = (name, value, onStateUpdated) => {
+        console.log("updateFormData", name, value);
         this.setState({
             form: {
                 ...this.state.form,
                 [name]: value
             }
-        });
+        }, onStateUpdated);
     }
 
 	handleErrors(response) {
@@ -68,6 +69,4 @@ export class StaticRow extends React.Component {
 			</div>
 		);
 	}
-	
-
 }

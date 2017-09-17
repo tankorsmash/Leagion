@@ -174,12 +174,14 @@ class TeamDetail extends DatasetView {
 
         const initialFormData = {
             "date": "2017/12/25",
-            "location": "Ottawa Ontario",
-            "other_team": "Orlando Tigers",
+            "location": "Ottawa, Ontario",
+            "home_or_away": "-1",
+            "other_team_id": "",
             "season": team.season_id,
             "postponed_from": "",
             "home_roster": "",
             "away_roster": "",
+            "my_team_id": team.id,
         };
 
         return (
