@@ -44,12 +44,13 @@ class MatchDetail(generics.RetrieveUpdateAPIView):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
 
+
 class SetMatchPermission(permissions.BasePermission):
     message = 'You do not have the authority to update the score of this match'
 
     def has_object_permission(self, request, view, match):
         teams = request.user.captain_of_teams.values_list('id', flat=True)
-        
+
         if match.home_team.id in teams or match.away_team.id in teams:
             return True
         else:

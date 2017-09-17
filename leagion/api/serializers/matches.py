@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from leagion.models import Match, Team, Location
+from leagion.models import Match, Team, Location, Roster, Batter
 from leagion.api.serializers.rosters import RosterSerializer
 
 
@@ -37,10 +37,50 @@ class MatchSerializer(serializers.ModelSerializer):
 
     postponed_to = serializers.IntegerField(required=False, allow_null=True, default=None)
     postponed_from = serializers.IntegerField(read_only=True)
-    #TODO fix app/match.jsx to either use this OR move BattingOrderTable to DatasetView
-    # and use a specific api-roster-detail. The non shallow serializer is too heavy
-    # home_roster = RosterSerializer(read_only=True)
-    # away_roster = RosterSerializer(read_only=True)
+
+    def validate_home_team_id(self, home_team_id):
+        if home_team_id is None and self.initial_data.get("home_roster") is None:
+            raise serializers.ValidationError("Need either a home_team_id or a home_roster")
+
+        return home_team_id
+
+    def validate_away_team_id(self, away_team_id):
+        if away_team_id is None and self.initial_data.get("away_roster") is None:
+            raise serializers.ValidationError("Need either a away_team_id or a away_roster")
+
+        return away_team_id
+
+    def create(self, validated_data):
+        created_match = super().create(validated_data)
+        created_match.save()
+
+        #create rosters if not passed in
+        # NOTE no way to pass in a roster yet
+        if created_match.home_roster == None:
+            home_team = Team.objects.get(id=validated_data.get("home_team_id"))
+            home_roster = Roster.objects.create(
+                team=home_team
+            )
+
+            def create_batter(player_id):
+                return Batter(player_id=player_id, roster_id=home_roster.id)
+            new_batters = list(map(create_batter, home_team.players.values_list("id", flat=True)))
+            Batter.objects.bulk_create(new_batters)
+
+        if created_match.away_roster == None:
+            away_team = Team.objects.get(id=validated_data.get("away_team_id"))
+            away_roster = Roster.objects.create(
+                team=away_team
+            )
+
+            def create_batter(player_id):
+                return Batter(player_id=player_id, roster_id=away_roster.id)
+
+            new_batters = list(map(create_batter, away_team.players.values_list("id", flat=True)))
+            Batter.objects.bulk_create(new_batters)
+
+        return created_match
+
 
 class SetMatchSerializer(serializers.ModelSerializer):
     class Meta:
