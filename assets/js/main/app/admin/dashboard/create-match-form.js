@@ -55,27 +55,17 @@ export default class MatchCreateForm extends React.Component {
         //since home and away teams are relevant to the serializer and model we
         //need to make sure we're sending the right stuff. other team can be
         //home or away team
-
-        let formData = this.props.formData;
-        console.log("WOOOOOOO updateHomeOrAwayData... before state update my team (%s) other (%s)", formData.my_team_id, formData.other_team_id);
-
-        let printData = ()=> {
-            console.log("PRINT DATA after state update on parent:");
-            console.log("home_team_id", formData.home_team_id);
-            console.log("away_team_id", formData.away_team_id);
-        };
+        const formData = this.props.formData;
         if (formData.home_or_away == "home") {
-            console.log("...home");
             this.props.updateFormState({
                 "home_team_id": formData.my_team_id,
                 "away_team_id": formData.other_team_id
-            }, printData);
+            });
         } else {
-            console.log("...away");
             this.props.updateFormState({
                 "away_team_id": formData.my_team_id,
                 "home_team_id": formData.other_team_id
-            }, printData);
+            });
         };
 
     }
@@ -90,9 +80,6 @@ export default class MatchCreateForm extends React.Component {
 
     render() {
         let formData = this.props.formData;
-        console.log("formData in render", formData);
-        console.log("render home_team_id", formData.home_team_id);
-        console.log("render away_team_id", formData.away_team_id);
         return (
             <Form onSubmit={this.props.handleSubmit} >
                 <FormGroup>

@@ -42,7 +42,6 @@ export default class FormModal extends FormBase {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("AJAX POSTing data:", this.state.form);
         ajax({
             url: this.props.postUrl,
             method: 'POST',
