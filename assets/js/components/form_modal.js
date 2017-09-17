@@ -80,6 +80,7 @@ export default class FormModal extends FormBase {
                     <ModalBody>
                         <FormComponent
                             handleInputChange={this.handleInputChange}
+                            updateFormData={this.updateFormData}
                             formData={this.state.form}
                             handleSubmit={this.handleSubmit} />
                     </ModalBody>
