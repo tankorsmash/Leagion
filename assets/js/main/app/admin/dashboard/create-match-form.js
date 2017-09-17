@@ -135,7 +135,7 @@ export default class MatchCreateForm extends React.Component {
                         placeholder="Ottawa"/>
 
                     { /* Other team */ }
-                    <Label for="other_team_id">{formData.home_or_away == "away" ? "Home" : "Away" }  Team</Label>
+                    <Label for="other_team_id">Opposing team</Label>
                     <FuzzyTeamInput
                         onSelect={(team) => {
                             this.props.updateFormState(
