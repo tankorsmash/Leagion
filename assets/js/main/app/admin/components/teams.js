@@ -18,7 +18,7 @@ import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
 import {PlayerCard, CreatePlayerCard} from 'main/app/admin/components/players'
 
-import MatchCreateForm from 'main/app/admin/dashboard/create-match-form'
+import MatchCreateForm from 'main/app/admin/components/forms/create-match-form'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';

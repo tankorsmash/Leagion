@@ -7,7 +7,7 @@ import {
 
 import {Link, Redirect} from 'react-router-dom';
 import {GeneralTable} from 'main/app/admin/components/table'
-import TeamCreateForm from 'main/app/admin/dashboard/create-team-form'
+import TeamCreateForm from 'main/app/admin/components/forms/create-team-form'
 
 import DatasetView from 'components/dataset_view';
 import FormModal from 'components/form_modal';

@@ -4,7 +4,7 @@ import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 're
 import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
 import FormModal from 'components/form_modal';
-import PlayerCreateForm from 'main/app/admin/dashboard/create-player-form'
+import PlayerCreateForm from 'main/app/admin/components/forms/create-player-form'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
