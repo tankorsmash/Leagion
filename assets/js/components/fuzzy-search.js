@@ -64,9 +64,7 @@ export default class FuzzySearch extends React.Component {
             selectedIndex: 0,
             selectedValue: {},
         };
-        this.handleChange = this.handleChange.bind(this);
-        this.handleKeyDown = this.handleKeyDown.bind(this);
-        this.handleMouseClick = this.handleMouseClick.bind(this);
+
         this.fuse = new Fuse(props.list, this.getOptions());
     }
 
@@ -108,13 +106,13 @@ export default class FuzzySearch extends React.Component {
         });
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({
             results: this.fuse.search(e.target.value).slice(0, this.props.maxResults - 1),
         });
     }
 
-    handleKeyDown(e) {
+    handleKeyDown = (e) => {
         const { results, selectedIndex } = this.state;
         if (e.keyCode === 40 && selectedIndex < results.length - 1) {
             this.setState({
@@ -138,7 +136,7 @@ export default class FuzzySearch extends React.Component {
         }
     }
 
-    handleMouseClick(clickedIndex) {
+    handleMouseClick = (clickedIndex) => {
         const { results } = this.state;
 
         if (results[clickedIndex]) {
