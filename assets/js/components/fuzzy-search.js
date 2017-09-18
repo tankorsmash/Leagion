@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Fuse from 'fuse.js';
 
+import { Input } from 'reactstrap';
+
 function defaultResultsTemplate(props, state, styl, clickHandler) {
   return state.results.map((val, i) => {
     return (
@@ -156,7 +158,7 @@ export default class FuzzySearch extends React.Component {
     return (
       <div className={mainClass} onKeyDown={this.handleKeyDown}>
         <div >
-          <input
+          <Input
             type="text"
             onChange={this.handleChange}
             placeholder={placeholder}
