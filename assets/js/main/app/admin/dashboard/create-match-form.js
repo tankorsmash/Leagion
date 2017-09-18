@@ -164,6 +164,7 @@ export default class MatchCreateForm extends React.Component {
                         name="home_or_away"
                         id="home_or_away"
                         placeholder="Ottawa">
+
                         <option value="-1">Select one</option>
                         <option value="home">Home</option>
                         <option value="away">Away</option>
