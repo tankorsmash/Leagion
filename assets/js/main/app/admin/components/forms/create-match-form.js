@@ -159,7 +159,7 @@ export default class MatchCreateForm extends React.Component {
                         placeholder="2016/01/30"/>
 
                     { /* Home */ }
-                    <Label for="home_or_away">Home or away game?</Label>
+                    <Label for="home_or_away">Home/Away</Label>
                     <Input
                         onChange={this.props.handleInputChange}
                         value={formData.home_or_away}
