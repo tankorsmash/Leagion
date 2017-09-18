@@ -346,7 +346,19 @@ class SeasonDetail extends DatasetView {
         const matchColumns = [{
             id: "pretty_name",
             title: `Match (total: ${season.matches.length})`,
-            component: props => <td> <Link to={matchUrlizer({matchId: props.data.id})}> {props.data.pretty_name} </Link> </td>
+            component: (props) => {
+                let match = props.data;
+                return (
+                    <td>
+                        <Link to={matchUrlizer({matchId: match.id})}>
+                            {match.pretty_name}
+                        </Link>
+                        &nbsp;
+                        <Moment format="LLLL">
+                            { match.match_datetime }
+                        </Moment>
+                    </td>
+                )}
         },{
             id: "match_datetime",
             title: `When`,
