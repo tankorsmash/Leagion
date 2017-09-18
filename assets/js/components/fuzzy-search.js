@@ -2,60 +2,10 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Fuse from 'fuse.js';
 
-const styles = {
-  searchBoxStyle: {
-    border: '1px solid #eee',
-    borderRadius: 2,
-    padding: '8px 10px',
-    lineHeight: '24px',
-    width: '100%',
-    outline: 'none',
-    fontSize: 16,
-    color: '#666',
-    boxSizing: 'border-box',
-    fontFamily: 'inherit',
-  },
-  searchBoxWrapper: {
-    padding: '4px',
-    boxShadow: '0 4px 15px 4px rgba(0,0,0,0.2)',
-    borderRadius: 2,
-    backgroundColor: '#fff',
-  },
-  resultsStyle: {
-    backgroundColor: '#fff',
-    position: 'relative',
-    padding: '12px',
-    borderTop: '1px solid #eee',
-    color: '#666',
-    fontSize: 14,
-    cursor: 'pointer',
-  },
-  selectedResultStyle: {
-    backgroundColor: '#f9f9f9',
-    position: 'relative',
-    padding: '12px',
-    borderTop: '1px solid #eee',
-    color: '#666',
-    fontSize: 14,
-    cursor: 'pointer',
-  },
-  resultsWrapperStyle: {
-    width: '100%',
-    boxShadow: '0px 12px 30px 2px rgba(0, 0, 0, 0.1)',
-    border: '1px solid #eee',
-    borderTop: 0,
-    boxSizing: 'border-box',
-    maxHeight: 400,
-    overflow: 'auto',
-    position: 'relative',
-  },
-};
-
 function defaultResultsTemplate(props, state, styl, clickHandler) {
   return state.results.map((val, i) => {
-    const style = state.selectedIndex === i ? styl.selectedResultStyle : styl.resultsStyle;
     return (
-      <div key={i} style={style} onClick={() => clickHandler(i)}>
+      <div key={i} onClick={() => clickHandler(i)}>
         {val.title}
       </div>
     );
@@ -152,10 +102,7 @@ export default class FuzzySearch extends React.Component {
 
   getResultsTemplate() {
     return this.state.results.map((val, i) => {
-      const style = this.state.selectedIndex === i
-        ? styles.selectedResultStyle
-        : styles.resultsStyle;
-      return <div key={i} style={style}>{val.title}</div>;
+        return <div key={i} >{val.title} Selected: { this.state.selectedIndex === i}</div>;
     });
   }
 
@@ -207,11 +154,10 @@ export default class FuzzySearch extends React.Component {
     const mainClass = classNames('react-fuzzy-search', className);
 
     return (
-      <div className={mainClass} style={{ width }} onKeyDown={this.handleKeyDown}>
-        <div style={styles.searchBoxWrapper}>
+      <div className={mainClass} onKeyDown={this.handleKeyDown}>
+        <div >
           <input
             type="text"
-            style={styles.searchBoxStyle}
             onChange={this.handleChange}
             placeholder={placeholder}
             autoFocus={autoFocus}
@@ -220,8 +166,8 @@ export default class FuzzySearch extends React.Component {
         </div>
         {this.state.results &&
           this.state.results.length > 0 &&
-          <div style={styles.resultsWrapperStyle}>
-            {resultsTemplate(this.props, this.state, styles, this.handleMouseClick)}
+          <div >
+            {resultsTemplate(this.props, this.state, {}, this.handleMouseClick)}
           </div>}
       </div>
     );
