@@ -188,14 +188,10 @@ class TeamDetail extends DatasetView {
 
         const initialFormData = {
             "match_datetime": "Match date",
-            "location": "Ottawa, Ontario",
-            "home_or_away": "-1",
-            "other_team_id": "",
             "season": team.season_id,
             "postponed_from": "",
             "home_roster": "",
             "away_roster": "",
-            "my_team_id": team.id,
             "postponed_from": null,
         };
 
