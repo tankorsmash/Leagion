@@ -16,7 +16,8 @@ import FormModal from 'components/form_modal';
 
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 import {GeneralTable} from 'main/app/admin/components/table'
-import {PlayerCard, CreatePlayerCard} from 'main/app/admin/components/players'
+
+import {PlayerCard, CreatePlayerCard} from 'main/app/admin/details/players'
 
 import MatchCreateForm from 'main/app/admin/components/forms/create-match-form'
 

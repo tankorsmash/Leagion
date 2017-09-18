@@ -17,7 +17,8 @@ import {buildPageTitle} from 'common/utils';
 import {FormBase} from 'components/forms';
 import DatasetView from 'components/dataset_view';
 
-import {SeasonsCardList, SeasonsCreate} from 'main/app/admin/components/seasons';
+import {SeasonsCardList, SeasonsCreate} from 'main/app/admin/details/seasons';
+
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 

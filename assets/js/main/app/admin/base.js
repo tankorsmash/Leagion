@@ -7,12 +7,12 @@ import adminUrls from 'main/app/admin/urls';
 
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
-import {LeagueDetail, LeaguesCreate} from 'main/app/admin/components/leagues';
-import {SeasonDetail, SeasonsCreate} from 'main/app/admin/components/seasons';
-import {LocationDetail} from 'main/app/admin/components/locations';
-import {TeamDetail, TeamsCreate} from 'main/app/admin/components/teams';
-import {MatchDetail, MatchesCreate} from 'main/app/admin/components/matches';
-import PlayerDetail from 'main/app/admin/components/players';
+import {LeagueDetail, LeaguesCreate} from 'main/app/admin/details/leagues';
+import {SeasonDetail, SeasonsCreate} from 'main/app/admin/details/seasons';
+import {LocationDetail} from 'main/app/admin/details/locations';
+import {TeamDetail, TeamsCreate} from 'main/app/admin/details/teams';
+import {MatchDetail, MatchesCreate} from 'main/app/admin/details/matches';
+import PlayerDetail from 'main/app/admin/details/players';
 
 import {FourOhFour} from 'components/error-pages';
 
