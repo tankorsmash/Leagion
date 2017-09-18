@@ -87,12 +87,18 @@ class MatchDetail extends DatasetView {
                     { this.state.match.pretty_name }
                 </h5>
 
-                <div>
-                    <RosterTable rosterId={match.home_roster} fullNameHeaderText="Home Players" />
-                </div>
-                <div>
-                    <RosterTable rosterId={match.away_roster} fullNameHeaderText="Away Players" />
-                </div>
+                <Row>
+                    <Col>
+                        <RosterTable
+                            rosterId={match.home_roster}
+                            fullNameHeaderText={"Home: "+match.home_team.name} />
+                    </Col>
+                    <Col>
+                        <RosterTable
+                            rosterId={match.away_roster}
+                            fullNameHeaderText={"Away: "+match.away_team.name} />
+                    </Col>
+                </Row>
             </Container>
         );
     };
