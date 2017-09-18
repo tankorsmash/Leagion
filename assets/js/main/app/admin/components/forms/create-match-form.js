@@ -70,6 +70,13 @@ class FuzzyTeamInput extends DatasetView {
         return "api-team-list";
     }
 
+    onSelect = (team) => {
+        this.setState({
+            "chosen_team_name": team.name
+        });
+        this.props.onSelect(team);
+    };
+
     render() {
         if (this.getIsLoaded() == false) {
             return (<div> Gathering available teams... </div>);
@@ -80,14 +87,17 @@ class FuzzyTeamInput extends DatasetView {
         });
 
         return (
-            <FuzzySearch
-                list={teamsToChoose}
-                keys={['name']}
-                width={430}
-                onSelect={this.props.onSelect}
-                resultsTemplate={search_team_template}
-                placeholder={"Add team"}
-            />
+            <div>
+                <strong> <em> { this.state.chosen_team_name } </em> </strong>
+                <FuzzySearch
+                    list={teamsToChoose}
+                    keys={['name']}
+                    width={430}
+                    onSelect={this.onSelect}
+                    resultsTemplate={search_team_template}
+                    placeholder={"Add team"}
+                />
+            </div>
         );
     }
 }
@@ -174,10 +184,7 @@ export default class MatchCreateForm extends React.Component {
                     />
 
                     { /* Home */ }
-                    <Label for="home_team_id">Home Team:
-                        <br/>
-                        <strong> Home TEAM NAME </strong>
-                    </Label>
+                    <Label for="home_team_id">Home Team: </Label>
                     <FuzzyTeamInput
                         teamIdToExclude={formData.away_team_id}
                         onSelect={(team) => {
@@ -190,8 +197,6 @@ export default class MatchCreateForm extends React.Component {
                     { /* Away team */ }
                     <Label for="away_team_id">
                         Away Team:
-                        <br/>
-                        <strong> AWAY TEAM NAME </strong>
                     </Label>
                     <FuzzyTeamInput
                         teamIdToExclude= {formData.home_team_id}
