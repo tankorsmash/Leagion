@@ -1,7 +1,6 @@
 import Spinner from 'react-spinkit';
 import {
     Container, Row, Col, Jumbotron, Button,
-    Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
     Nav, NavLink, NavItem
 } from 'reactstrap';
 import {Switch, Link, Redirect, NavLink as RouterNavLink} from 'react-router-dom';

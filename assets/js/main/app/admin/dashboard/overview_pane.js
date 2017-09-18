@@ -1,6 +1,6 @@
 import {
     Row, Col, CardHeader,
-    Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle,
+    Card, CardImg, CardText, CardBlock, CardTitle, CardSubtitle, CardDeck
 } from 'reactstrap';
 
 import {Link} from 'react-router-dom';
@@ -74,8 +74,7 @@ class NotificationCards extends DatasetView {
 
         const stats = this.state.dataset;
         return (
-            <Row className="d-flex justify-content-around align-items-stretch">
-                <Col md="3">
+            <CardDeck className="">
                     <NotificationCard
                         count={stats.player_count}
                         actionHref={adminUrls.dashboard.players}
@@ -83,32 +82,25 @@ class NotificationCards extends DatasetView {
                         actionLine="View Players"
                         iconName="users"
                         color="info"/>
-                </Col>
-                <Col md="3">
                     <NotificationCard
                         count={stats.league_count}
                         actionHref={adminUrls.dashboard.leagues}
                         actionLine="View Leagues"
                         headline="Leagues created"
                         iconName="users" color="warning"/>
-                </Col>
-                <Col md="3">
                     <NotificationCard
                         count={stats.match_count}
                         headline="Matches played"
                         actionLine="PLACEHOLDER"
                         iconName="star"
                         color="success" />
-                </Col>
-                <Col md="3">
                     <NotificationCard
                         count={stats.team_count}
                         actionLine="View Teams"
                         actionHref={adminUrls.dashboard.teams}
                         headline="Teams registered"
                         iconName="th-list" />
-                </Col>
-            </Row>
+            </CardDeck>
         );
     }
 };
