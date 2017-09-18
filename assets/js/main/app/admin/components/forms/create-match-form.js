@@ -75,10 +75,13 @@ class FuzzyTeamInput extends DatasetView {
             return (<div> Gathering available teams... </div>);
         }
 
-        let formData = this.props.formData;
+        let teamsToChoose = this.state.teams.filter((team) => {
+            return team.id != this.props.teamIdToExclude;
+        });
+
         return (
             <FuzzySearch
-                list={this.state.teams}
+                list={teamsToChoose}
                 keys={['name']}
                 width={430}
                 onSelect={this.props.onSelect}
@@ -193,6 +196,7 @@ export default class MatchCreateForm extends React.Component {
                         <strong> { this.state.other_team_name } </strong>
                     </Label>
                     <FuzzyTeamInput
+                        teamIdToExclude= {formData.my_team_id}
                         onSelect={(team) => {
                             this.setState({
                                 other_team_name: team.name,
