@@ -18,18 +18,23 @@ import SpinLoader from 'components/spinloader.js';
 
 import DatasetView from 'components/dataset_view';
 
-//edited to use full name and email from react-fuzzy
-function search_player_template(props, state, styles, clickHandler) {
-  return state.results.map((player, i) => {
-    const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
-    return (
-      <div key={i} style={style} onClick={() => clickHandler(i)}>
-        {player.full_name}
-        <span style={{ float: 'right', opacity: 0.5 }}>{player.email}</span>
-      </div>
-    );
-  });
-}
+class SearchPlayerTemplate extends React.Component {
+    render() {
+        return (
+            <div>
+                { this.props.state.results.map((player, i) => {
+                    return (
+                        <div key={i} onClick={() => this.props.onClick(i)}>
+                            {player.full_name}
+                            <span style={{ float: 'right', opacity: 0.5 }}>{player.email}</span>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+};
+
 
 class QueuedPlayer extends React.Component {
     render() {
@@ -102,7 +107,7 @@ class AddPlayerBySearch extends DatasetView {
                     keys={['full_name', 'email']}
                     width={430}
                     onSelect={this.props.queuePlayers}
-                    resultsTemplate={search_player_template}
+                    ResultsComponent={SearchPlayerTemplate}
                     placeholder={"Add player by name or email"}
                 />
             </div>
