@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/tankorsmash/Leagion#readme",
   "dependencies": {
+    "autoprefixer": "^7.1.4",
     "babel": "^6.23.0",
     "babel-core": "^6.24.0",
     "babel-loader": "^7.1.1",
@@ -42,6 +43,7 @@
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
     "node-sass": "^4.5.2",
+    "postcss-cli": "^4.1.1",
     "postcss-scss": "^1.0.2",
     "prop-types": "^15.5.8",
     "react": "^15.4.2",
