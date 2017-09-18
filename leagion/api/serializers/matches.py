@@ -58,6 +58,7 @@ class MatchSerializer(serializers.ModelSerializer):
         # NOTE no way to pass in a roster yet
         if created_match.home_roster == None:
             home_team = Team.objects.get(id=validated_data.get("home_team_id"))
+            created_match.home_team = home_team
             home_roster = Roster.objects.create(
                 team=home_team
             )
@@ -69,6 +70,7 @@ class MatchSerializer(serializers.ModelSerializer):
 
         if created_match.away_roster == None:
             away_team = Team.objects.get(id=validated_data.get("away_team_id"))
+            created_match.away_team = away_team
             away_roster = Roster.objects.create(
                 team=away_team
             )
@@ -79,6 +81,8 @@ class MatchSerializer(serializers.ModelSerializer):
             new_batters = list(map(create_batter, away_team.players.values_list("id", flat=True)))
             Batter.objects.bulk_create(new_batters)
 
+        #save a second time to account for new team
+        created_match.save()
         return created_match
 
 
