@@ -4,15 +4,32 @@ import Fuse from 'fuse.js';
 
 import { Input } from 'reactstrap';
 
-function defaultResultsTemplate(props, state, styl, clickHandler) {
-    return state.results.map((val, i) => {
+class DefaultResultsTemplate extends React.Component {
+    render() {
         return (
-            <div key={i} onClick={() => clickHandler(i)}>
-                {val.title}
+            <div>
+                { this.props.state.results.map((value, i) => {
+                    return (
+                        <div key={i} onClick={() => this.props.onClick(i)}>
+                            {value}
+                        </div>
+                    );
+                })}
             </div>
         );
-    });
-}
+    };
+};
+
+/* unused in the code below it seems like */
+class ResultItem extends React.Component {
+    render() {
+        return (
+            <div>
+                {val.title} Selected: { this.state.selectedIndex === i}
+            </div>
+        );
+    };
+};
 
 export default class FuzzySearch extends React.Component {
     static propTypes = {
@@ -28,7 +45,7 @@ export default class FuzzySearch extends React.Component {
         list: PropTypes.array.isRequired,
         location: PropTypes.number,
         placeholder: PropTypes.string,
-        resultsTemplate: PropTypes.func,
+        ResultsComponent: PropTypes.func,
         shouldSort: PropTypes.bool,
         sortFn: PropTypes.func,
         threshold: PropTypes.number,
@@ -45,7 +62,7 @@ export default class FuzzySearch extends React.Component {
         location: 0,
         width: 430,
         placeholder: 'Search',
-        resultsTemplate: defaultResultsTemplate,
+        ResultsComponent: DefaultResultsTemplate,
         shouldSort: true,
         sortFn(a, b) {
             return a.score - b.score;
@@ -102,7 +119,7 @@ export default class FuzzySearch extends React.Component {
 
     getResultsTemplate() {
         return this.state.results.map((val, i) => {
-            return <div key={i} >{val.title} Selected: { this.state.selectedIndex === i}</div>;
+            <ResultItem key={i} />
         });
     }
 
@@ -136,7 +153,7 @@ export default class FuzzySearch extends React.Component {
         }
     }
 
-    handleMouseClick = (clickedIndex) => {
+    onClick = (clickedIndex) => {
         const { results } = this.state;
 
         if (results[clickedIndex]) {
@@ -149,7 +166,9 @@ export default class FuzzySearch extends React.Component {
     }
 
     render() {
-        const { className, width, resultsTemplate, placeholder, autoFocus } = this.props;
+        const { className, width, placeholder, autoFocus } = this.props;
+
+        const ResultsComponent = this.props.ResultsComponent;
 
         const mainClass = classNames('react-fuzzy-search', className);
 
@@ -166,8 +185,13 @@ export default class FuzzySearch extends React.Component {
                 </div>
                 {this.state.results &&
                         this.state.results.length > 0 &&
-                        <div >
-                            {resultsTemplate(this.props, this.state, {}, this.handleMouseClick)}
+                        <div>
+                            <ResultsComponent
+                                props={this.props}
+                                state={this.state}
+                                styles={{}}
+                                onClick={this.onClick}
+                            />
                         </div>}
                     </div>
         );

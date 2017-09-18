@@ -9,16 +9,22 @@ import {DATE_FORMAT} from 'main/app/admin/constants';
 
 import DatasetView from 'components/dataset_view';
 
-function search_location_template(props, state, styles, clickHandler) {
-    return state.results.map((location, i) => {
-        const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
+class SearchLocationTemplate extends React.Component {
+    render() {
         return (
-            <div key={i} style={style} onClick={() => clickHandler(i)}>
-                {location.name}
+            <div>
+                { this.props.state.results.map((location, i) => {
+                    return (
+                        <div key={i} onClick={() => this.props.onClick(i)}>
+                            {location.name}
+                        </div>
+                    );
+                })}
             </div>
         );
-    });
-}
+    };
+};
+
 
 class FuzzyLocationInput extends DatasetView {
     get datasetStateAttr() {
@@ -41,7 +47,7 @@ class FuzzyLocationInput extends DatasetView {
                 keys={['name', 'address']}
                 width={430}
                 onSelect={this.props.onSelect}
-                resultsTemplate={search_location_template}
+                ResultsComponent={SearchLocationTemplate}
                 placeholder={"Add location"}
                 name="location_id"
             />
@@ -50,16 +56,22 @@ class FuzzyLocationInput extends DatasetView {
 }
 
 
-function search_team_template(props, state, styles, clickHandler) {
-    return state.results.map((team, i) => {
-        const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
+class SearchTeamTemplate extends React.Component {
+    render() {
         return (
-            <div key={i} style={style} onClick={() => clickHandler(i)}>
-                {team.name}
+            <div>
+                { this.props.state.results.map((team, i) => {
+                    return (
+                        <div key={i} onClick={() => this.props.onClick(i)}>
+                            {team.name}
+                        </div>
+                    );
+                })}
             </div>
         );
-    });
-}
+    };
+};
+
 
 class FuzzyTeamInput extends DatasetView {
     get datasetStateAttr() {
@@ -94,7 +106,7 @@ class FuzzyTeamInput extends DatasetView {
                     keys={['name']}
                     width={430}
                     onSelect={this.onSelect}
-                    resultsTemplate={search_team_template}
+                    ResultsComponent={SearchTeamTemplate}
                     placeholder={"Add team"}
                 />
             </div>
