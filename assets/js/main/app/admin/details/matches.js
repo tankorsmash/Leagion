@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import Moment from 'react-moment';
 
 import ajax from 'common/ajax';
 var Spinner = require('react-spinkit');
@@ -63,7 +64,7 @@ class MatchDetail extends DatasetView {
         buildPageTitle("Match Detail");
 
         if (this.getIsLoaded() == false) {
-            return (<Container fluid>UNLOADED </Container>);
+            return (<Container fluid>Loading Match Details...</Container>);
         };
 
         const match = this.state.match;
@@ -81,11 +82,20 @@ class MatchDetail extends DatasetView {
             component: props => <td>  {props.data.player.full_name} </td>
         }];
 
+        const locationUrlizer = pathToRegex.compile(adminUrls.locations.detail);
+
         return (
             <Container fluid className="pt-3">
-                <h5>
-                    { this.state.match.pretty_name }
-                </h5>
+                <h2 className="text-center">
+                    <Link to={locationUrlizer({locationId: match.location.id})}>
+                        { match.location.name }
+                    </Link>
+                    <br/>
+                    <Moment format="LLLL">{ this.state.match.match_datetime }</Moment>
+                </h2>
+                <h3 className="text-center">
+                    { match.home_points } to { match.away_points }
+                </h3>
 
                 <Row>
                     <Col>
