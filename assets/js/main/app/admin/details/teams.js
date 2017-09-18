@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import ajax from 'common/ajax';
 
 import FontAwesome from 'react-fontawesome';
+import Moment from 'react-moment';
 
 import {
     Container, Row, Col, ButtonDropdown, Button,
@@ -168,7 +169,19 @@ class TeamDetail extends DatasetView {
         const matchColumns = [{
             id: "pretty_name",
             title: `Matches (total: ${team.matches.length})`,
-            component: props => <td> <Link to={matchUrlizer({matchId: props.data.id})}> {props.data.pretty_name} </Link> </td>
+            component: (props) => {
+                let match = props.data;
+                return (
+                    <td>
+                        <Link to={matchUrlizer({matchId: match.id})}>
+                            {match.pretty_name}
+                        </Link>
+                        &nbsp;
+                        <Moment format="LLLL">
+                            { match.match_datetime }
+                        </Moment>
+                    </td>
+                )}
         }];
 
         // TODO: make a players admin view so you can link to it
