@@ -193,6 +193,19 @@ class TeamDetail extends DatasetView {
                         putUrl={putUrl}
                         putKwarg="name" />
                 </h1>
+                    <div>
+                        <FormModal
+                            formComponent={MatchCreateForm}
+                            formData={initialFormData}
+                            triggerRefreshOnGrid={this.updateDataset}
+                            postUrl={reverse("api-match-list")}
+                            buttonLabel="Create Match"
+                            modalHeaderLabel="Create Match"/>
+                        <GeneralTable
+                            perPage={15}
+                            columns={matchColumns}
+                            rowData={team.matches} />
+                    </div>
 
 
                 <div className="d-lg-flex">
@@ -217,19 +230,6 @@ class TeamDetail extends DatasetView {
                         }) }
                     </CardDeck>
 
-                    <div>
-                        <FormModal
-                            formComponent={MatchCreateForm}
-                            formData={initialFormData}
-                            triggerRefreshOnGrid={this.updateDataset}
-                            postUrl={reverse("api-match-list")}
-                            buttonLabel="Create Match"
-                            modalHeaderLabel="Create Match"/>
-                        <GeneralTable
-                            perPage={15}
-                            columns={matchColumns}
-                            rowData={team.matches} />
-                    </div>
                 </div>
             </Container>
         );

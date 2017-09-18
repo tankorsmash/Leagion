@@ -22,7 +22,7 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
 
         fields = (
-            'id', 'match_datetime', 'location', 'season', 'duration_seconds',
+            'id', 'match_datetime', 'location_id', 'location', 'season', 'duration_seconds',
             'home_team', 'home_team_id', 'home_points', 'home_roster',
             'away_team', 'away_team_id', 'away_points', 'away_roster',
             'status', 'completed', 'postponed_to', 'postponed_from',
@@ -32,8 +32,10 @@ class MatchSerializer(serializers.ModelSerializer):
     home_team = ShallowTeamSerializer(read_only=True)
     home_team_id = serializers.IntegerField(required=False)
     away_team = ShallowTeamSerializer(read_only=True)
-    location = ShallowLocationSerializer(read_only=True)
     away_team_id = serializers.IntegerField(required=False)
+
+    location = ShallowLocationSerializer(read_only=True)
+    location_id = serializers.IntegerField(required=True)
 
     postponed_to = serializers.IntegerField(required=False, allow_null=True, default=None)
     postponed_from = serializers.IntegerField(read_only=True)

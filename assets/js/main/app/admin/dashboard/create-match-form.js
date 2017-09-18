@@ -9,6 +9,47 @@ import {DATE_FORMAT} from 'main/app/admin/constants';
 
 import DatasetView from 'components/dataset_view';
 
+function search_location_template(props, state, styles, clickHandler) {
+    return state.results.map((location, i) => {
+        const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
+        return (
+            <div key={i} style={style} onClick={() => clickHandler(i)}>
+                {location.name}
+            </div>
+        );
+    });
+}
+
+class FuzzyLocationInput extends DatasetView {
+    get datasetStateAttr() {
+        return "locations";
+    }
+
+    get datasetViewName() {
+        return "api-location-list";
+    }
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return (<div> Gathering available locations... </div>);
+        }
+
+        let formData = this.props.formData;
+        return (
+            <FuzzySearch
+                list={this.state.locations}
+                keys={['name', 'address']}
+                width={430}
+                onSelect={this.props.onSelect}
+                resultsTemplate={search_location_template}
+                placeholder={"Add location"}
+                name="location_id"
+            />
+        );
+    }
+}
+
+
 function search_team_template(props, state, styles, clickHandler) {
     return state.results.map((team, i) => {
         const style = state.selectedIndex === i ? styles.selectedResultStyle : styles.resultsStyle;
@@ -129,14 +170,20 @@ export default class MatchCreateForm extends React.Component {
                     </Input>
 
                     { /* Location */ }
-                    <Label for="location">Location</Label>
-                    <Input
-                        onChange={this.props.handleInputChange}
-                        value={formData.location}
-                        type="text"
-                        name="location"
-                        id="location"
-                        placeholder="Ottawa"/>
+                    <Label for="location">Location:
+                        <br/>
+                        <strong> { this.state.location_name } </strong>
+                    </Label>
+                    <FuzzyLocationInput
+                        onSelect={(location) => {
+                            this.setState({
+                                location_name: location.name,
+                            });
+                            this.props.updateFormState(
+                                { "location_id": location.id },
+                            );
+                        }}
+                    />
 
                     { /* Other team */ }
                     <Label for="other_team_id">
