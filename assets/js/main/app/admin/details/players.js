@@ -12,7 +12,7 @@ import {Container, Row, Col, ButtonGroup, Button, Media,
 import FontAwesome from 'react-fontawesome';
 import PropTypes from 'prop-types';
 
-import FuzzySearch from 'react-fuzzy';
+import FuzzySearch from 'components/fuzzy-search';
 import SpinLoader from 'components/spinloader.js';
 
 

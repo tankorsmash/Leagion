@@ -2,7 +2,7 @@ import {
     Form, FormGroup, Input, Dropdown, Label
 } from 'reactstrap';
 
-import FuzzySearch from 'react-fuzzy';
+import FuzzySearch from 'components/fuzzy-search';
 import Datetime from 'react-datetime';
 
 import {DATE_FORMAT} from 'main/app/admin/constants';
