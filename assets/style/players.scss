@@ -1,166 +1,185 @@
 .team-card {
-	//min-width: 300px;
-	max-width: 400px;
-	border: 1px solid $black;
-	background-color: $white;
-	text-align: center;
-	margin: 0 25px 25px 25px;
+    //min-width: 300px;
+    max-width: 400px;
+    border: 1px solid $black;
+    background-color: $white;
+    text-align: center;
+    margin: 0 25px 25px 25px;
 
-	.team-card-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-around;
-		padding: 25px 15px 0px 15px;
+    .team-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding: 25px 15px 0px 15px;
 
-		a {
-			color: $black;
-		}
+        a {
+            color: $black;
+        }
 
-		.h4 {
-			flex: 0 0 66%;
-		}
-	}
+        .h4 {
+            flex: 0 0 66%;
+        }
+    }
 
-	.team-card-bottom {
-		background-color: $brand-secondary;
-		clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
-		color: $white;
-		padding-top: 75px;
-		padding-bottom: 25px;
+    .team-card-bottom {
+        background-color: $brand-secondary;
+        clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
+        color: $white;
+        padding-top: 75px;
+        padding-bottom: 25px;
 
-		a {
-			color: $white;
-		}
-	}
+        a {
+            color: $white;
+        }
+    }
 }
 
 .team-logo {
-	width: 60px;
-	height: 60px;
-	border: 1px solid;
+    width: 60px;
+    height: 60px;
+    border: 1px solid;
 }
 
 .team-listing, .team-detail-header {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	margin-top: 20px;
-	margin-bottom: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 .team-box-wrapper {
-	display: flex;
+    display: flex;
     flex-direction: column;
-	padding: 10px;
+    padding: 10px;
 
-	.team-box {
-		border: 1px solid $black;
-		background-color: $white;
+    .team-box {
+        border: 1px solid $black;
+        background-color: $white;
 
-		.team-logo {
-			margin-top: 15px;
-		}
+        .team-logo {
+            margin-top: 15px;
+        }
 
-		.team-title {
-			margin: 10px;
-		}
+        .team-title {
+            margin: 10px;
+        }
 
-		.team-box-main {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin-bottom: 8%
-		}
-	}
+        .team-box-main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 8%
+        }
+    }
 
-	.two-sided-ribbon {
-		margin: 0 15px;
-		margin-top: -8%;
-		align-self: center;
-	}
+    .two-sided-ribbon {
+        margin: 0 15px;
+        margin-top: -8%;
+        align-self: center;
+    }
 }
 
 .team-match-table {
-	max-width: 1000px;
-	margin: auto;
-	padding: 10px;
+    max-width: 1000px;
+    margin: auto;
+    padding: 10px;
+}
+
+.team-match-mobile {
+    margin: 0 auto;
+    max-width: 500px;
+    width: 90%;
 }
 
 .player-avatar-list {
     display: flex;
     flex-wrap: wrap;
-	padding: 15px;
-	justify-content: center;
+    padding: 15px;
+    justify-content: center;
 }
 
 .player-avatar {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
 
-	.player-avatar-pic {
-		border-radius: 50%;
-	}
+    .player-avatar-pic {
+        border-radius: 50%;
+    }
 }
 
 .account-settings-wrapper {
-	padding: 10px 15px;
+    padding: 10px 15px;
     max-width: 500px;
-	margin: auto;
+    margin: auto;
 
-	.tab-pane {
-		padding: 30px;
-		background-color: $white;
-	}
+    .tab-pane {
+        padding: 30px;
+        background-color: $white;
+    }
 }
 
 .team-match-card {
-	text-align: center;
-	border: 1px solid $black;
-	background-color: $white;
-	width: 450px;
-	padding: 20px;
-	margin-top: 30px;
+    text-align: center;
+    width: 450px;
+    padding: 20px;
+    margin-top: 30px;
 
-	.team-logo {
-		margin: 20px auto 10px auto;
-	}
+    .team-logo {
+        margin: 20px auto 10px auto;
+    }
 
+}
+
+.team-match-card-mobile {
+    display: flex;
+    padding: 10px 20px 10px 10px;
+    align-items: center;
+
+    .team-logo {
+        flex: 0 3 60px;
+    }
+
+    .team-name {
+        flex: 2 0;
+        margin: 0 10px;
+    }
 }
 
 .team-match-vs {
-	text-align: center;
-	margin-top: 20vh;
+    text-align: center;
+    margin-top: 20vh;
 }
 
 .leagion-table {
-	th {
-		background-color: $gray-lighter;
-		text-align: left;
-	}
+    th {
+        background-color: $gray-lighter;
+        text-align: left;
+    }
 
-	td {
-		text-align: left;
-	}
+    td {
+        text-align: left;
+    }
 }
 
 .fullroster-table {
-	td, th {
-		text-align: right;
-	}
+    td, th {
+        text-align: right;
+    }
 }
 
 .public-profile {
-	border: 1px solid $black;
-	background-color: $white;
-	min-width: 300px;
-	max-width: 500px;
-	padding: 20px;
-	
-	.public-profile-info {
-		display: flex;
-		justify-content: flex-around;
-	}
+    border: 1px solid $black;
+    background-color: $white;
+    min-width: 300px;
+    max-width: 500px;
+    padding: 20px;
+
+    .public-profile-info {
+        display: flex;
+        justify-content: flex-around;
+    }
 }
