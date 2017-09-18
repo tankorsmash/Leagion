@@ -1,5 +1,5 @@
 import {
-    Form, FormGroup, Input, Dropdown, Label
+    Form, FormGroup, Input, Dropdown, Label, DropdownItem
 } from 'reactstrap';
 
 import FuzzySearch from 'components/fuzzy-search';
@@ -15,9 +15,9 @@ class SearchLocationTemplate extends React.Component {
             <div>
                 { this.props.state.results.map((location, i) => {
                     return (
-                        <div key={i} onClick={() => this.props.onClick(i)}>
+                        <DropdownItem toggle={false} active={i === this.props.state.selectedIndex} key={i} onClick={() => this.props.onClick(i)}>
                             {location.name}
-                        </div>
+                        </DropdownItem>
                     );
                 })}
             </div>
@@ -47,6 +47,7 @@ class FuzzyLocationInput extends DatasetView {
                 keys={['name', 'address']}
                 width={430}
                 onSelect={this.props.onSelect}
+                ResultsComponent={SearchLocationTemplate}
                 placeholder={"Add location"}
                 name="location_id"
             />
@@ -61,9 +62,9 @@ class SearchTeamTemplate extends React.Component {
             <div>
                 { this.props.state.results.map((team, i) => {
                     return (
-                        <div key={i} onClick={() => this.props.onClick(i)}>
+                        <DropdownItem toggle={false} active={i === this.props.state.selectedIndex} key={i} onClick={() => this.props.onClick(i)}>
                             {team.name}
-                        </div>
+                        </DropdownItem>
                     );
                 })}
             </div>

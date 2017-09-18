@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Fuse from 'fuse.js';
 
+import { Dropdown, DropdownItem }  from 'reactstrap';
 import { Input } from 'reactstrap';
 
 //this should be overridden by whatever component that uses FuzzySearch
@@ -12,9 +13,9 @@ class DefaultResultsTemplate extends React.Component {
                 { this.props.state.results.map((value, i) => {
                     //TODO maybe use <ResultItem/> here?
                     return (
-                        <div key={i} onClick={() => this.props.onClick(i)}>
+                        <DropdownItem active={i === this.props.state.selectedIndex} key={i} onClick={() => this.props.onClick(i)}>
                             {value.name || value.text}
-                        </div>
+                        </DropdownItem>
                     );
                 })}
             </div>
