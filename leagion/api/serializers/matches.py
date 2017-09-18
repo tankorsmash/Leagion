@@ -44,11 +44,17 @@ class MatchSerializer(serializers.ModelSerializer):
         if home_team_id is None and self.initial_data.get("home_roster") is None:
             raise serializers.ValidationError("Need either a home_team_id or a home_roster")
 
+        if home_team_id == self.initial_data.get("away_team_id"):
+            raise serializers.ValidationError("Home and Away teams can't be the same")
+
         return home_team_id
 
     def validate_away_team_id(self, away_team_id):
         if away_team_id is None and self.initial_data.get("away_roster") is None:
             raise serializers.ValidationError("Need either a away_team_id or a away_roster")
+
+        if away_team_id == self.initial_data.get("home_team_id"):
+            raise serializers.ValidationError("Home and Away teams can't be the same")
 
         return away_team_id
 
