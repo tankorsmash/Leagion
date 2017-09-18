@@ -87,7 +87,6 @@ class FuzzyTeamInput extends DatasetView {
                 onSelect={this.props.onSelect}
                 resultsTemplate={search_team_template}
                 placeholder={"Add team"}
-                name="other_team_id"
             />
         );
     }
@@ -158,21 +157,6 @@ export default class MatchCreateForm extends React.Component {
                         id="match_datetime"
                         placeholder="2016/01/30"/>
 
-                    { /* Home */ }
-                    <Label for="home_or_away">Home/Away</Label>
-                    <Input
-                        onChange={this.props.handleInputChange}
-                        value={formData.home_or_away}
-                        type="select"
-                        name="home_or_away"
-                        id="home_or_away"
-                        placeholder="Ottawa">
-
-                        <option value="-1">Select one</option>
-                        <option value="home">Home</option>
-                        <option value="away">Away</option>
-                    </Input>
-
                     { /* Location */ }
                     <Label for="location">Location:
                         <br/>
@@ -189,21 +173,31 @@ export default class MatchCreateForm extends React.Component {
                         }}
                     />
 
-                    { /* Other team */ }
-                    <Label for="other_team_id">
-                        Opposing team:
+                    { /* Home */ }
+                    <Label for="home_team_id">Home Team:
                         <br/>
-                        <strong> { this.state.other_team_name } </strong>
+                        <strong> Home TEAM NAME </strong>
                     </Label>
                     <FuzzyTeamInput
-                        teamIdToExclude= {formData.my_team_id}
+                        teamIdToExclude={formData.away_team_id}
                         onSelect={(team) => {
-                            this.setState({
-                                other_team_name: team.name,
-                            });
                             this.props.updateFormState(
-                                { "other_team_id": team.id },
-                                this.updateHomeOrAwayData
+                                { "home_team_id": team.id },
+                            );
+                        }}
+                    />
+
+                    { /* Away team */ }
+                    <Label for="away_team_id">
+                        Away Team:
+                        <br/>
+                        <strong> AWAY TEAM NAME </strong>
+                    </Label>
+                    <FuzzyTeamInput
+                        teamIdToExclude= {formData.home_team_id}
+                        onSelect={(team) => {
+                            this.props.updateFormState(
+                                { "away_team_id": team.id },
                             );
                         }}
                     />
