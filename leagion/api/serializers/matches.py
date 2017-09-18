@@ -64,6 +64,7 @@ class MatchSerializer(serializers.ModelSerializer):
             home_roster = Roster.objects.create(
                 team=home_team
             )
+            home_roster.home_rosters.add(created_match)
 
             def create_batter(player_id):
                 return Batter(player_id=player_id, roster_id=home_roster.id)
@@ -76,6 +77,7 @@ class MatchSerializer(serializers.ModelSerializer):
             away_roster = Roster.objects.create(
                 team=away_team
             )
+            away_roster.away_rosters.add(created_match)
 
             def create_batter(player_id):
                 return Batter(player_id=player_id, roster_id=away_roster.id)
