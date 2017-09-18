@@ -186,7 +186,7 @@ class TeamDetail extends DatasetView {
 
         // TODO: make a players admin view so you can link to it
 
-        const initialFormData = {
+        const initialMatchFormData = {
             "match_datetime": "Match date",
             "season": team.season_id,
             "postponed_from": "",
@@ -206,7 +206,7 @@ class TeamDetail extends DatasetView {
                     <div>
                         <FormModal
                             formComponent={MatchCreateForm}
-                            formData={initialFormData}
+                            formData={initialMatchFormData}
                             triggerRefreshOnGrid={this.updateDataset}
                             postUrl={reverse("api-match-list")}
                             buttonLabel="Create Match"

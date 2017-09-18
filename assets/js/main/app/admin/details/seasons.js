@@ -21,7 +21,10 @@ import pathToRegex from 'path-to-regexp';
 import {DATE_FORMAT} from 'main/app/admin/constants';
 import {GeneralTable} from 'main/app/admin/components/table'
 
+import MatchCreateForm from 'main/app/admin/components/forms/create-match-form'
+
 import {FormBase} from 'components/forms';
+import FormModal from 'components/form_modal';
 
 import ajax from 'common/ajax';
 
@@ -378,6 +381,16 @@ class SeasonDetail extends DatasetView {
         }];
 
         const url = reverse("api-season-detail", {season_id: season.id});
+
+        const initialMatchFormData = {
+            "match_datetime": "Match date",
+            "season": season.id,
+            "postponed_from": "",
+            "home_roster": "",
+            "away_roster": "",
+            "postponed_from": null,
+        };
+
         return (
             <Container fluid>
                 <div className="d-flex justify-content-start">
@@ -394,6 +407,13 @@ class SeasonDetail extends DatasetView {
                     <GeneralTable columns={teamColumns} rowData={season.teams} />
                 </div>
                 <div>
+                    <FormModal
+                        formComponent={MatchCreateForm}
+                        formData={initialMatchFormData}
+                        triggerRefreshOnGrid={this.updateDataset}
+                        postUrl={reverse("api-match-list")}
+                        buttonLabel="Create Match"
+                        modalHeaderLabel="Create Match"/>
                     <GeneralTable columns={matchColumns} rowData={sortedMatches} />
                 </div>
             </Container>
