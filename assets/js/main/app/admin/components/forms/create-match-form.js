@@ -47,7 +47,6 @@ class FuzzyLocationInput extends DatasetView {
                 keys={['name', 'address']}
                 width={430}
                 onSelect={this.props.onSelect}
-                ResultsComponent={SearchLocationTemplate}
                 placeholder={"Add location"}
                 name="location_id"
             />

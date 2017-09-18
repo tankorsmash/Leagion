@@ -4,14 +4,16 @@ import Fuse from 'fuse.js';
 
 import { Input } from 'reactstrap';
 
+//this should be overridden by whatever component that uses FuzzySearch
 class DefaultResultsTemplate extends React.Component {
     render() {
         return (
             <div>
                 { this.props.state.results.map((value, i) => {
+                    //TODO maybe use <ResultItem/> here?
                     return (
                         <div key={i} onClick={() => this.props.onClick(i)}>
-                            {value}
+                            {value.name || value.text}
                         </div>
                     );
                 })}
