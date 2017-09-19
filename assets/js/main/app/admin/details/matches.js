@@ -86,16 +86,19 @@ class MatchDetail extends DatasetView {
 
         return (
             <Container fluid className="pt-3">
-                <h2 className="text-center">
-                    <Link to={locationUrlizer({locationId: match.location.id})}>
-                        { match.location.name }
-                    </Link>
-                    <br/>
-                    <Moment format="LLLL">{ this.state.match.match_datetime }</Moment>
-                </h2>
-                <h3 className="text-center">
-                    { match.home_points } to { match.away_points }
-                </h3>
+                <div className="text-center">
+                    <h2>
+                        <Moment format="LLLL">{ this.state.match.match_datetime }</Moment>
+                    </h2>
+                    <h2>
+                        { match.home_points } to { match.away_points }
+                    </h2>
+                    <h4>
+                        <Link to={locationUrlizer({locationId: match.location.id})}>
+                            { match.location.name }
+                        </Link>
+                    </h4>
+                </div>
 
                 <Row>
                     <Col>
