@@ -4,12 +4,22 @@ from django.test import TestCase, override_settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 
+from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
 
 from leagion.models import League, Season, Team
 User = get_user_model()
 
 from leagion.api import views as api_views
+
+class LeagueTests(APITestCase):
+    def test_basic(self):
+        """
+        Ensure we can create a new account object.
+        """
+        url = reverse('api-league-list')
+        response = self.client.get(url, format='json')
+
 
 @override_settings(ROOT_URLCONF="leagion_server.urls")
 class ApiTest(APITestCase):
