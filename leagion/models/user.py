@@ -58,7 +58,15 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 
     # Permissions
     is_staff = models.BooleanField(default=False)
+    #in control of everything
     is_admin = models.BooleanField(default=False)
+    #can do everything admins can do besides modify admins
+    is_moderator = models.BooleanField(default=False)
+    #leagues they've got full control of
+    leagues_commissioned = models.ManyToManyField("League", related_name="league_commissioners")
+    #teams they've got full control of
+    teams_captained = models.ManyToManyField("Team", related_name="team_captains")
+
 
     objects = UserManager()
 
