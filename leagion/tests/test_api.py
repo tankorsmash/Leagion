@@ -101,11 +101,13 @@ class ApiTest(BaseAPITestCase):
         season = self.create_season(league)
         team = self.create_team(season)
 
-        self.create_league()
-
         lc = self.create_player()
         lc.is_commissioner = True
         lc.save()
+
+        #create other league/team/season that isn't associated with the LC
+        self.create_team(self.create_season(self.create_league()))
+
 
         self.setup_client(lc)
 
