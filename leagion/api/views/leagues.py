@@ -11,9 +11,6 @@ from leagion.utils import reverse_js
 User = get_user_model()
 
 class LeagueFilterBackend(filters.BaseFilterBackend):
-    # class Meta:
-    #     model = League
-
     def filter_queryset(self, request, league_qs, view):
         user = request.user
         if user.is_staff or user.is_moderator:
