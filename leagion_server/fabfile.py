@@ -1,12 +1,15 @@
 from fabric.api import run, cd, sudo, hosts, prefix, settings
 
+
 @hosts('leagion@138.197.169.179')
 def update(branch=None):
 	base = '~/Leagion'
 
-	with cd(base), prefix('workon leagion'), settings(prompts={"Type 'yes' to continue, or 'no' to cancel: ": "yes"}):
+	with cd(base), prefix('workon leagion'), settings(
+		prompts={"Type 'yes' to continue, or 'no' to cancel: ": "yes"}
+	):
 
-		sudo('pwd') #do this to get the sudo password out of the way up front
+		sudo('pwd')  # do this to get the sudo password out of the way up front
 		run('git fetch')
 
 		if branch:
@@ -19,6 +22,7 @@ def update(branch=None):
 
 		run('pip install -r requirements.txt')
 		run('find . -name "*.pyc" -delete')
+		run('./manage.py migrate')
 		run('./manage.py collectstatic')
 
 		sudo('systemctl restart nginx')
