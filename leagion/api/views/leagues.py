@@ -1,5 +1,6 @@
-from rest_framework import generics
 from django.contrib.auth import get_user_model
+
+from rest_framework import generics, filters
 
 from leagion.api.serializers.leagues import LeagueSerializer, MyLeagueSerializer
 from leagion.api.serializers.seasons import SeasonSerializer
@@ -9,11 +10,22 @@ from leagion.utils import reverse_js
 
 User = get_user_model()
 
+class LeagueFilterBackend(filters.BaseFilterBackend):
+    # class Meta:
+    #     model = League
+
+    def filter_queryset(self, request, league_qs, view):
+        user = request.user
+        if user.is_staff or user.is_moderator:
+            return league_qs
+
+        return league_qs.filter(league_commissioners=user)
 
 @reverse_js
 class LeagueList(generics.ListCreateAPIView):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
+    filter_backends = (LeagueFilterBackend,)
 
 
 @reverse_js
@@ -41,6 +53,7 @@ class LeagueDetail(generics.RetrieveUpdateAPIView):
 
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
+    filter_backends = (LeagueFilterBackend,)
 
 
 @reverse_js

@@ -37,6 +37,14 @@ class BaseAPITestCase(APITestCase):
             season=season
         )
 
+    def setup_client(self, user):
+        self.client = APIClient()
+        self.client.login(email=user.email, password=user.password)
+        #dunno why this doesnt work
+        # token = Token.objects.get(user=user)
+        # client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.client.force_authenticate(user=user)
+
     def create_player(self):
         return User.objects.create(
             first_name="test",
@@ -44,8 +52,9 @@ class BaseAPITestCase(APITestCase):
             password="abcd1234"
         )
 
-    def get_url(self, url_name, data=None):
-        return self.client.get(reverse(url_name), data=data, format="json")
+    def get_url(self, url_name, url_args=None, url_kwargs=None, data=None):
+        url = reverse(url_name, args=url_args, kwargs=url_kwargs)
+        return self.client.get(url, data=data, format="json")
 
 
 
@@ -62,12 +71,7 @@ class ApiTest(BaseAPITestCase):
             password="abcd1234"
         )
 
-        self.client = APIClient()
-        self.client.login(email=self.superuser.email, password=self.superuser.password)
-        #dunno why this doesnt work
-        # token = Token.objects.get(user=self.superuser)
-        # client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        self.client.force_authenticate(user=self.superuser)
+        self.setup_client(self.superuser)
 
     def test_league_list(self):
         self.create_league()
@@ -84,16 +88,35 @@ class ApiTest(BaseAPITestCase):
         add a commissioner without leagues, make sure he can't see anything
         add a commissioner with league, make sure he can only see the league
         """
-        return
 
-        self.create_league()
+        league = self.create_league()
         self.create_league()
 
         lc = self.create_player()
         lc.is_commissioner = True
+        lc.save()
 
+        self.setup_client(lc)
+
+        #make sure no leagues
         response = self.get_url("api-league-list")
         self.assertEquals(len(response.json()), 0)
+        response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assertEquals(response.status_code, 404)
+
+        #make sure only the one league after adding
+        lc.leagues_commissioned.add(league)
+        response = self.get_url("api-league-list")
+        self.assertEquals(len(response.json()), 1)
+        response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assertEquals(response.status_code, 200)
+
+        #make sure no league after removing
+        lc.leagues_commissioned.remove(league)
+        response = self.get_url("api-league-list")
+        self.assertEquals(len(response.json()), 0)
+        response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assertEquals(response.status_code, 404)
 
 
     def test_stats(self):
