@@ -56,6 +56,18 @@ class BaseAPITestCase(APITestCase):
         url = reverse(url_name, args=url_args, kwargs=url_kwargs)
         return self.client.get(url, data=data, format="json")
 
+    def post_url(self, url_name, url_args=None, url_kwargs=None, data=None):
+        url = reverse(url_name, args=url_args, kwargs=url_kwargs)
+        return self.client.post(url, data=data, format="json")
+
+    def put_url(self, url_name, url_args=None, url_kwargs=None, data=None):
+        url = reverse(url_name, args=url_args, kwargs=url_kwargs)
+        return self.client.put(url, data=data, format="json")
+
+    def patch_url(self, url_name, url_args=None, url_kwargs=None, data=None):
+        url = reverse(url_name, args=url_args, kwargs=url_kwargs)
+        return self.client.patch(url, data=data, format="json")
+
 
 
 @override_settings(ROOT_URLCONF="leagion_server.urls")
@@ -137,6 +149,26 @@ class ApiTest(BaseAPITestCase):
         response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 404)
 
+    def test_update_user_commissioner_status(self):
+        lc = self.create_player()
+        lc.is_commissioner = False #redundant, but I want to be clear
+        lc.save()
+
+        self.setup_client(self.superuser)
+
+        self.assertTrue(lc.is_commissioner == False)
+        self.assertTrue(lc.leagues_commissioned.exists() == False)
+
+        data = {"is_commissioner": True}
+        response = self.patch_url(
+            "api-player-detail",
+            url_kwargs={"player_id":lc.id},
+            data=data
+        )
+
+        lc.refresh_from_db()
+        self.assertTrue(lc.is_commissioner == True)
+        self.assertTrue(lc.leagues_commissioned.exists() == False)
 
     def test_stats(self):
         league = self.create_league()
