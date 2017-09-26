@@ -12,15 +12,6 @@ User = get_user_model()
 
 from leagion.api import views as api_views
 
-class LeagueTests(APITestCase):
-    def test_basic(self):
-        """
-        Ensure we can create a new account object.
-        """
-        url = reverse('api-league-list')
-        response = self.client.get(url, format='json')
-
-
 @override_settings(ROOT_URLCONF="leagion_server.urls")
 class ApiTest(APITestCase):
     """
@@ -29,7 +20,7 @@ class ApiTest(APITestCase):
     """
 
     def setUp(self):
-        self.user = User.objects.create_superuser(
+        self.superuser = User.objects.create_superuser(
             email="super@user.com",
             password="abcd1234"
         )
@@ -38,11 +29,13 @@ class ApiTest(APITestCase):
         League.objects.create(
             name="Test League",
         )
+        # url = reverse('api-league-list')
+        # response = self.client.get(url, format='json')
 
         factory = APIRequestFactory()
         request = factory.get(reverse("api-league-list"), format="json")
 
-        force_authenticate(request, self.user)
+        force_authenticate(request, self.superuser)
 
         response = api_views.leagues.LeagueList.as_view()(request)
         self.assertEquals(response.data[0]['id'], 1)
@@ -68,12 +61,12 @@ class ApiTest(APITestCase):
             last_name="user2",
             password="abcd1234"
         )
-        team.players.add(player, self.user)
+        team.players.add(player, self.superuser)
 
         factory = APIRequestFactory()
         request = factory.get(reverse("api-stats-index"), format="json")
 
-        force_authenticate(request, self.user)
+        force_authenticate(request, self.superuser)
 
         response = api_views.stats.StatsIndex.as_view()(request)
         stats = response.data
