@@ -90,6 +90,9 @@ class ApiTest(BaseAPITestCase):
         """
 
         league = self.create_league()
+        season = self.create_season(league)
+        team = self.create_team(season)
+
         self.create_league()
 
         lc = self.create_player()
@@ -103,6 +106,10 @@ class ApiTest(BaseAPITestCase):
         self.assertEquals(len(response.json()), 0)
         response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 404)
+        response = self.get_url("api-team-list")
+        self.assertEquals(len(response.json()), 0)
+        response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
+        self.assertEquals(response.status_code, 404)
 
         #make sure only the one league after adding
         lc.leagues_commissioned.add(league)
@@ -110,12 +117,20 @@ class ApiTest(BaseAPITestCase):
         self.assertEquals(len(response.json()), 1)
         response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 200)
+        response = self.get_url("api-team-list")
+        self.assertEquals(len(response.json()), 1)
+        response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
+        self.assertEquals(response.status_code, 200)
 
         #make sure no league after removing
         lc.leagues_commissioned.remove(league)
         response = self.get_url("api-league-list")
         self.assertEquals(len(response.json()), 0)
         response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assertEquals(response.status_code, 404)
+        response = self.get_url("api-team-list")
+        self.assertEquals(len(response.json()), 0)
+        response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 404)
 
 

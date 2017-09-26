@@ -3,13 +3,21 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
 
 from rest_framework.response import Response
-from rest_framework import generics, serializers, views as drf_views
+from rest_framework import generics, serializers, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer
 from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer, CreateTeamSerializer
 from leagion.models import Team, User
 
 from leagion.utils import reverse_js
+
+class TeamFilterBackend(filters.BaseFilterBackend):
+    def filter_queryset(self, request, team_qs, view):
+        user = request.user
+        if user.is_staff or user.is_moderator:
+            return team_qs
+
+        return team_qs.filter(season__league__league_commissioners=user)
 
 @reverse_js
 class TeamList(generics.ListCreateAPIView):
@@ -19,6 +27,7 @@ class TeamList(generics.ListCreateAPIView):
         "season"
     )
     serializer_class = PureTeamSerializer
+    filter_backends = (TeamFilterBackend,)
 
     def get_serializer_class(self):
         """
@@ -52,6 +61,7 @@ class TeamDetail(generics.RetrieveUpdateAPIView):
         "season", "season__league",
     )
     serializer_class = TeamSerializer
+    filter_backends = (TeamFilterBackend,)
 
 
 @reverse_js
