@@ -73,6 +73,14 @@ class ApiTest(BaseAPITestCase):
 
         self.setup_client(self.superuser)
 
+    def assert_api_list(self, url, empty):
+        response = self.get_url(url)
+        if empty:
+            self.assertEquals(len(response.json()), 0)
+        else:
+            self.assertNotEquals(len(response.json()), 0)
+        return response
+
     def test_league_list(self):
         self.create_league()
 
@@ -102,34 +110,28 @@ class ApiTest(BaseAPITestCase):
         self.setup_client(lc)
 
         #make sure no leagues
-        response = self.get_url("api-league-list")
-        self.assertEquals(len(response.json()), 0)
+        self.assert_api_list("api-league-list", empty=True)
+        self.assert_api_list("api-team-list", empty=True)
         response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 404)
-        response = self.get_url("api-team-list")
-        self.assertEquals(len(response.json()), 0)
         response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 404)
 
         #make sure only the one league after adding
         lc.leagues_commissioned.add(league)
-        response = self.get_url("api-league-list")
-        self.assertEquals(len(response.json()), 1)
+        self.assert_api_list("api-league-list", empty=False)
+        self.assert_api_list("api-team-list", empty=False)
         response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 200)
-        response = self.get_url("api-team-list")
-        self.assertEquals(len(response.json()), 1)
         response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 200)
 
         #make sure no league after removing
         lc.leagues_commissioned.remove(league)
-        response = self.get_url("api-league-list")
-        self.assertEquals(len(response.json()), 0)
+        self.assert_api_list("api-league-list", empty=True)
+        self.assert_api_list("api-team-list", empty=True)
         response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 404)
-        response = self.get_url("api-team-list")
-        self.assertEquals(len(response.json()), 0)
         response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 404)
 
