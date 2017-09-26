@@ -1,3 +1,4 @@
+import time
 import datetime
 
 from django.test import TestCase, override_settings
@@ -12,8 +13,40 @@ User = get_user_model()
 
 from leagion.api import views as api_views
 
+class BaseAPITestCase(APITestCase):
+    def create_league(self, league_name=None):
+        if league_name is None:
+            #uses time to make sure the default name isnt repeated
+            league_name = "Test League " + time.ctime()
+
+        return League.objects.create(
+            name=league_name,
+        )
+
+    def create_season(self, league):
+        return Season.objects.create(
+            league=league,
+            start_date = datetime.datetime.now(),
+            end_date = datetime.datetime.now()+datetime.timedelta(hours=1),
+        )
+
+    def create_team(self, season):
+        return Team.objects.create(
+            name="Test Team" + time.ctime(),
+            season=season
+        )
+
+    def create_player(self):
+        return User.objects.create(
+            first_name="test",
+            last_name="user2",
+            password="abcd1234"
+        )
+
+
+
 @override_settings(ROOT_URLCONF="leagion_server.urls")
-class ApiTest(APITestCase):
+class ApiTest(BaseAPITestCase):
     """
     simple cases for now, but once we get permissions going, we'll use this
     to make sure a given user can't see too much from the api
@@ -26,11 +59,10 @@ class ApiTest(APITestCase):
         )
 
     def test_basic(self):
-        League.objects.create(
-            name="Test League",
-        )
         # url = reverse('api-league-list')
         # response = self.client.get(url, format='json')
+
+        self.create_league()
 
         factory = APIRequestFactory()
         request = factory.get(reverse("api-league-list"), format="json")
@@ -41,26 +73,12 @@ class ApiTest(APITestCase):
         self.assertEquals(response.data[0]['id'], 1)
 
     def test_stats(self):
-        league = League.objects.create(
-            name="Test League",
-        )
+        league = self.create_league()
 
-        season = Season.objects.create(
-            league=league,
-            start_date = datetime.datetime.now(),
-            end_date = datetime.datetime.now(),
-        )
+        season = self.create_season(league)
+        team = self.create_team(season)
 
-        team = Team.objects.create(
-            name="test team",
-            season=season
-        )
-
-        player = User.objects.create(
-            first_name="test",
-            last_name="user2",
-            password="abcd1234"
-        )
+        player = self.create_player()
         team.players.add(player, self.superuser)
 
         factory = APIRequestFactory()
