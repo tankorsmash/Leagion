@@ -6,7 +6,8 @@ from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
 
 from rest_framework import status
-from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate
+from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate, APIClient
+from rest_framework.authtoken.models import Token
 
 from leagion.models import League, Season, Team
 User = get_user_model()
@@ -58,19 +59,23 @@ class ApiTest(BaseAPITestCase):
             password="abcd1234"
         )
 
-    def test_basic(self):
-        # url = reverse('api-league-list')
-        # response = self.client.get(url, format='json')
+        self.client = APIClient()
+        self.client.login(email=self.superuser.email, password=self.superuser.password)
+        #dunno why this doesnt work
+        # token = Token.objects.get(user=self.superuser)
+        # client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.client.force_authenticate(user=self.superuser)
 
+    def test_league_list(self):
         self.create_league()
 
-        factory = APIRequestFactory()
-        request = factory.get(reverse("api-league-list"), format="json")
+        response = self.client.get(reverse("api-league-list"), format="json")
+        self.assertEquals(len(response.json()), 1)
 
-        force_authenticate(request, self.superuser)
+        self.create_league()
+        response = self.client.get(reverse("api-league-list"), format="json")
+        self.assertEquals(len(response.json()), 2)
 
-        response = api_views.leagues.LeagueList.as_view()(request)
-        self.assertEquals(response.data[0]['id'], 1)
 
     def test_stats(self):
         league = self.create_league()
