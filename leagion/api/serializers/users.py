@@ -17,8 +17,14 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'password', 'email', 'first_name', 'last_name', 'full_name',
-                'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',)
+        fields = (
+            'id', 'password', 'email',
+            'first_name', 'last_name',
+            'full_name', 'default_phonenumber',
+            'alt_phonenumber', 'teams',
+            'captain_of_teams', 'leagues_commissioned',
+            'is_commissioner',
+        )
         extra_kwargs = {
             'password': {'write_only': True},
             'id': {'read_only': True}
@@ -37,6 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
 
 class PublicUserSerializer(serializers.ModelSerializer):
 

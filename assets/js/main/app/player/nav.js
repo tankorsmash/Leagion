@@ -16,7 +16,15 @@ class PlayerItems extends React.Component {
 }
 
 class PlayerProfile extends BaseAppProfile {
-	items = [AdminButton, AccountSettingsButton, LogoutButton];
+    getItems = () => {
+        let items = [AccountSettingsButton, LogoutButton];
+
+        if (this.props.user.is_commissioner) {
+            items = [AdminButton].concat(items);
+        }
+
+        return items;
+    };
 }
 
 export default class PlayerNavbar extends Appbar {

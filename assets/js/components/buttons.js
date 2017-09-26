@@ -20,7 +20,7 @@ export const LoginButton = ({...rest}) => {
 
 export const AdminButton = ({...rest}) => {
 	return (
-		<Link {...rest} to={adminUrls.index}>Admin</Link>
+		<Link {...rest} to={adminUrls.index}>Manage League</Link>
 	);
 };
 

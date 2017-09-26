@@ -27,7 +27,7 @@ class BaseAppProfile extends React.Component {
 						{this.props.user.email}
 					</DropdownToggle>
 					<DropdownMenu right>
-						{this.items.map((item, i) => {
+						{this.getItems().map((item, i) => {
 							return (<DropdownItem tag={item} key={i}></DropdownItem>);
 						})}
 					</DropdownMenu>

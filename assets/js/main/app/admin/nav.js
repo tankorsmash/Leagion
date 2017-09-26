@@ -42,7 +42,9 @@ class AdminNavItems extends React.Component {
 }
 
 class AdminProfile extends BaseAppProfile {
-	items = [LogoutButton]
+    getItems = () => {
+        return [LogoutButton];
+    };
 }
 
 class AdminNavbar extends Appbar {

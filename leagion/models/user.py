@@ -35,19 +35,26 @@ class UserManager(BaseUserManager):
         """
         Creates and saves a superuser with the given email and password.
         """
-        user = self.create_user(email,
+        user = self.create_user(
+            email,
             password=password,
             first_name=first_name,
             last_name=last_name,
         )
-        user.is_admin = True
+        user.is_commissioner = True
+        user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
 
 class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 
-    email = models.EmailField(verbose_name='email address', max_length=255, unique=True,)
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True,
+    )
+
     first_name = models.CharField(max_length=254, blank=True, null=True)
     last_name = models.CharField(max_length=254, blank=True, null=True)
 
@@ -58,15 +65,16 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 
     # Permissions
     is_staff = models.BooleanField(default=False)
-    #in control of everything
-    is_admin = models.BooleanField(default=False)
-    #can do everything admins can do besides modify admins
+    # in control of everything
+    is_commissioner = models.BooleanField(default=False)
+    # can do everything admins can do besides modify admins
     is_moderator = models.BooleanField(default=False)
-    #leagues they've got full control of
-    leagues_commissioned = models.ManyToManyField("League", related_name="league_commissioners")
-    #teams they've got full control of
-    teams_captained = models.ManyToManyField("Team", related_name="team_captains")
 
+    # leagues they've got full control of
+    leagues_commissioned = models.ManyToManyField(
+        "League",
+        related_name="league_commissioners"
+    )
 
     objects = UserManager()
 
