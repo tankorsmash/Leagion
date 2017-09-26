@@ -21,6 +21,8 @@ urlpatterns = [
 
     url(r'^player/$', users_views.UserList.as_view(), name='api-player-list'),
     url(r'^player/(?P<player_id>\d+)/$', users_views.UserDetail.as_view(), name='api-player-detail'),
+    url(r'^player/(?P<player_id>\d+)/commissioner-add/$', users_views.AddLeaguesToCommission.as_view(), name='api-player-commissioner-add'),
+    url(r'^player/(?P<player_id>\d+)/commissioner-remove/$', users_views.RemoveLeaguesToCommission.as_view(), name='api-player-commissioner-remove'),
     url(r'^public-player/(?P<player_id>\d+)/$', users_views.PublicPlayerView.as_view(), name='api-my-public-player-detail'),
 
     url(r'^match/$', matches_views.MatchList.as_view(), name='api-match-list'),
