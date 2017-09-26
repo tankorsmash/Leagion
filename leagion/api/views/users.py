@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404
 
+from rest_framework.response import Response
 from rest_framework import generics, views as drf_views
 
 from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
@@ -51,6 +53,11 @@ class AddLeaguesToCommission(drf_views.APIView):
         player.leagues_commissioned.add(*league_ids)
         new_count = player.leagues_commissioned.count()
 
+        #commission someone if they're in control of a league
+        if new_count > 0:
+            player.is_commissioner = True
+            player.save()
+
         return Response("Success! Added {} new leagues_commissioned".format(new_count-old_count))
 
 
@@ -76,6 +83,11 @@ class RemoveLeaguesToCommission(drf_views.APIView):
         old_count = player.leagues_commissioned.count()
         player.leagues_commissioned.remove(*league_ids)
         new_count = player.leagues_commissioned.count()
+
+        #uncommission someone if they're out of leagues.
+        if new_count < 1:
+            player.is_commissioner = False
+            player.save()
 
         return Response("Success! Added {} new leagues_commissioned".format(new_count-old_count))
 

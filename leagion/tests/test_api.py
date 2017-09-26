@@ -170,6 +170,32 @@ class ApiTest(BaseAPITestCase):
         self.assertTrue(lc.is_commissioner == True)
         self.assertTrue(lc.leagues_commissioned.exists() == False)
 
+        league = self.create_league()
+
+        #add as commissioner
+        data = {"league_ids": [league.id]}
+        response = self.patch_url(
+            "api-player-commissioner-add",
+            url_kwargs={"player_id":lc.id},
+            data=data
+        )
+
+        lc.refresh_from_db()
+        self.assertTrue(lc.is_commissioner == True)
+        self.assertTrue(lc.leagues_commissioned.exists() == True)
+
+        #remove as commissioner
+        data = {"league_ids": [league.id]}
+        response = self.patch_url(
+            "api-player-commissioner-remove",
+            url_kwargs={"player_id":lc.id},
+            data=data
+        )
+
+        lc.refresh_from_db()
+        self.assertTrue(lc.is_commissioner == False)
+        self.assertTrue(lc.leagues_commissioned.exists() == False)
+
     def test_stats(self):
         league = self.create_league()
 
