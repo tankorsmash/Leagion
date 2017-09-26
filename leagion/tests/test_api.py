@@ -44,6 +44,9 @@ class BaseAPITestCase(APITestCase):
             password="abcd1234"
         )
 
+    def get_url(self, url_name, data=None):
+        return self.client.get(reverse(url_name), data=data, format="json")
+
 
 
 @override_settings(ROOT_URLCONF="leagion_server.urls")
@@ -69,12 +72,28 @@ class ApiTest(BaseAPITestCase):
     def test_league_list(self):
         self.create_league()
 
-        response = self.client.get(reverse("api-league-list"), format="json")
+        response = self.get_url("api-league-list")
         self.assertEquals(len(response.json()), 1)
 
         self.create_league()
-        response = self.client.get(reverse("api-league-list"), format="json")
+        response = self.get_url("api-league-list")
         self.assertEquals(len(response.json()), 2)
+
+    def test_commissioner_limits(self):
+        """
+        add a commissioner without leagues, make sure he can't see anything
+        add a commissioner with league, make sure he can only see the league
+        """
+        return
+
+        self.create_league()
+        self.create_league()
+
+        lc = self.create_player()
+        lc.is_commissioner = True
+
+        response = self.get_url("api-league-list")
+        self.assertEquals(len(response.json()), 0)
 
 
     def test_stats(self):
