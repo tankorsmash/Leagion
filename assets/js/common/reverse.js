@@ -17,6 +17,8 @@ var viewnames = {
     "api-my-season-detail": "/api/me/season/<season_id>/",
     "api-my-season-list": "/api/me/season/",
     "api-my-team-list": "/api/me/team/",
+    "api-player-commissioner-add": "/api/player/<player_id>/commissioner-add/",
+    "api-player-commissioner-remove": "/api/player/<player_id>/commissioner-remove/",
     "api-player-detail": "/api/player/<player_id>/",
     "api-player-list": "/api/player/",
     "api-roster-detail": "/api/roster/<roster_id>/",

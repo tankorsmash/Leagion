@@ -2,13 +2,14 @@ import {Link} from 'react-router-dom';
 import {
     Row, Col, Button,
     Modal, ModalHeader, ModalBody, ModalFooter,
-    DropdownItem,
+    DropdownItem, UncontrolledTooltip
 } from 'reactstrap';
 
 import FuzzySearch from 'components/fuzzy-search';
 import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
 import FormModal from 'components/form_modal';
+import ajax from 'common/ajax';
 
 import PlayerCreateForm from 'main/app/admin/components/forms/create-player-form'
 
@@ -20,8 +21,11 @@ class QueuedLeague extends React.Component {
         const league = this.props.league;
 
         return (
-            <DropdownItem toggle={false} onClick={(e)=>{ this.props.onRemove(league); }}>
+            <DropdownItem toggle={false} id={`remove-league-${league.id}`} onClick={(e)=>{ this.props.onRemove(league); }}>
                 { league.name }
+                <UncontrolledTooltip placement="right" target={`remove-league-${league.id}`}>
+                    Click to uncommission from league
+                </UncontrolledTooltip>
             </DropdownItem>
         );
     };
@@ -148,6 +152,20 @@ class LeagueCommissionerContent extends React.Component {
             toastr.error("League already added!");
             return;
         }
+
+        const url = reverse("api-player-commissioner-add", {player_id: this.props.player.id});
+        ajax({
+            url: url,
+            data: {
+                league_ids: [league.id],
+            },
+            method: "PATCH",
+        }).then(
+        data => {
+            toastr.success(`Player is now commissioner for ${league.name}!`);
+        }, error => {
+            toastr.error(`Failed to set player as league commissioner`);
+        });
 
         this.setState({
             queuedLeagues: this.state.queuedLeagues.concat([league])
