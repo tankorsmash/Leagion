@@ -21,7 +21,7 @@ class QueuedLeague extends React.Component {
 
         return (
             <DropdownItem toggle={false} onClick={(e)=>{ this.props.onRemove(league); }}>
-                League #{ league }
+                { league.name }
             </DropdownItem>
         );
     };
@@ -150,7 +150,7 @@ class LeagueCommissionerContent extends React.Component {
         }
 
         this.setState({
-            queuedLeagues: this.state.queuedLeagues.concat([league.id])
+            queuedLeagues: this.state.queuedLeagues.concat([league])
         });
     }
 

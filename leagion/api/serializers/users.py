@@ -2,8 +2,7 @@ from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 
-from leagion.models import Team
-
+from leagion.models import Team, League
 User = get_user_model()
 
 class ShallowTeamSerializer(serializers.ModelSerializer):
@@ -11,6 +10,14 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
         model = Team
         fields = (
             'id', 'name', 'season'
+        )
+
+
+class ShallowLeagueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = League
+        fields = (
+            'id', 'name',
         )
 
 
@@ -31,6 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     teams = ShallowTeamSerializer(many=True, read_only=True)
+    leagues_commissioned = ShallowLeagueSerializer(many=True, read_only=True)
 
     def create(self, validated_data):
         user = User.objects.create(
