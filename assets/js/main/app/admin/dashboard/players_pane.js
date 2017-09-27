@@ -139,15 +139,30 @@ class LeagueCommissionerContent extends React.Component {
         };
     }
 
-    removeLeagueIdFromQueue = (leagueId) => {
-        let prunedArray = this.state.queuedLeagues.filter(league => league !== leagueId);
+    removeLeagueIdFromQueue = (league) => {
+        let prunedArray = this.state.queuedLeagues.filter(lg => lg.id !== league.id);
+
+        const url = reverse("api-player-commissioner-remove", {player_id: this.props.player.id});
+        ajax({
+            url: url,
+            data: {
+                league_ids: [league.id],
+            },
+            method: "PATCH",
+        }).then(
+        data => {
+            toastr.success("Player has successfully been removed as league commissioner");
+        }, error => {
+            toastr.error(`Failed to remove player as league commissioner`);
+        });
+
         this.setState({
             queuedLeagues: prunedArray,
         });
     }
 
     queueLeague = (league) => {
-        let matches = this.state.queuedLeagues.filter(league => league.id === league.id);
+        let matches = this.state.queuedLeagues.filter(lg => lg.id === league.id);
         if (matches.length > 0) {
             toastr.error("League already added!");
             return;
