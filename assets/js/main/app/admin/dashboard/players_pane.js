@@ -58,7 +58,7 @@ class PlayerModalBody extends DatasetView {
 
         //if not loaded, preload with placeholder
         if (this.getIsLoaded() == false) {
-             player = { teams: [] };
+            return (<ModalBody/>);
         };
 
 
@@ -75,6 +75,10 @@ class PlayerModalBody extends DatasetView {
                 <div>
                     Alternate Number:
                     <span> { player.alt_phonenumber }</span>
+                </div>
+                <div>
+                    Comissions League:
+                    <span> { player.is_commissioner.toString() }</span>
                 </div>
                 <br/>
                 <div>
