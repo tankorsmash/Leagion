@@ -1,13 +1,80 @@
 import {Link} from 'react-router-dom';
-import { Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {
+    Row, Col, Button,
+    Modal, ModalHeader, ModalBody, ModalFooter,
+    DropdownItem,
+} from 'reactstrap';
 
+import FuzzySearch from 'components/fuzzy-search';
 import DatasetView from 'components/dataset_view';
 import {GeneralTable} from 'main/app/admin/components/table'
 import FormModal from 'components/form_modal';
+
 import PlayerCreateForm from 'main/app/admin/components/forms/create-player-form'
 
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
+
+class SearchLeagueTemplate extends React.Component {
+    render() {
+        return (
+            <div>
+                { this.props.state.results.map((league, i) => {
+                    return (
+                        <DropdownItem toggle={false} active={i === this.props.state.selectedIndex} key={i} onClick={() => this.props.onClick(i)}>
+                            {league.name}
+                        </DropdownItem>
+                    );
+                })}
+            </div>
+        );
+    };
+};
+
+
+class FuzzyLeagueInput extends DatasetView {
+    get datasetStateAttr() {
+        return "leagues";
+    }
+
+    get datasetViewName() {
+        return "api-league-list";
+    }
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return (<div> Gathering available leagues... </div>);
+        }
+
+        let formData = this.props.formData;
+        return (
+            <FuzzySearch
+                list={this.state.leagues}
+                keys={['name']}
+                width={430}
+                onSelect={this.props.onSelect}
+                ResultsComponent={SearchLeagueTemplate}
+                placeholder={"Add league to commission"}
+                name="league_id"
+            />
+        );
+    }
+}
+
+class LeagueCommissionerContent extends React.Component {
+    render() {
+        const player = this.props.player;
+        return (
+            <div>
+                <strong>Leagues Commissioned:</strong>
+                { player.leagues_commissioned.map((el,i) => {
+                    return (<span key={i}> #{el} </span>);
+                }) }
+                {/* <FuzzyLeagueInput onSelect={this.onNewLeagueCommission}/> */}
+            </div>
+        );
+    }
+}
 
 class TeamContent extends React.Component {
     render() {
@@ -53,6 +120,11 @@ class PlayerModalBody extends DatasetView {
         return {player_id: this.props.playerId};
     }
 
+    onNewLeagueCommission = (league) => {
+
+
+    }
+
     render() {
         let player = this.state.player;
 
@@ -65,22 +137,23 @@ class PlayerModalBody extends DatasetView {
         return (
             <ModalBody>
                 <div>
-                    Email:
-                    <span> <a href={`mailto:${player.email}`}>{ player.email }</a></span>
+                    <strong> Contact Info </strong>
+                    <div>
+                        Email:
+                        <span> <a href={`mailto:${player.email}`}>{ player.email }</a></span>
+                    </div>
+                    <div>
+                        Number:
+                        <span> { player.default_phonenumber }</span>
+                    </div>
+                    <div>
+                        Alternate Number:
+                        <span> { player.alt_phonenumber }</span>
+                    </div>
                 </div>
                 <div>
-                    Number:
-                    <span> { player.default_phonenumber }</span>
+                    <LeagueCommissionerContent player={player} />
                 </div>
-                <div>
-                    Alternate Number:
-                    <span> { player.alt_phonenumber }</span>
-                </div>
-                <div>
-                    Comissions League:
-                    <span> { player.is_commissioner.toString() }</span>
-                </div>
-                <br/>
                 <div>
                     <TeamContent teams={player.teams} />
                 </div>
