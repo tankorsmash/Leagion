@@ -147,7 +147,7 @@ class LeagueCommissionerContent extends React.Component {
     }
 
     queueLeague = (league) => {
-        let matches = this.state.queuedLeagues.filter(leagueId => leagueId === league.id);
+        let matches = this.state.queuedLeagues.filter(league => league.id === league.id);
         if (matches.length > 0) {
             toastr.error("League already added!");
             return;
