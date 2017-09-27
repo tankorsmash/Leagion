@@ -19,22 +19,10 @@ class QueuedLeague extends React.Component {
     render() {
         const league = this.props.league;
 
-        const style = {
-            backgroundColor: '#fff',
-            position: 'relative',
-            padding: '12px',
-            borderTop: '1px solid #eee',
-            color: '#666',
-            fontSize: 14,
-            cursor: 'pointer',
-        }
-
         return (
-            <li style={style} onClick={(e)=>{ this.props.onRemove(league.id); }}>
-                <span>
-                    LEAGUE: #{ league }
-                </span>
-            </li>
+            <DropdownItem toggle={false} onClick={(e)=>{ this.props.onRemove(league); }}>
+                League #{ league }
+            </DropdownItem>
         );
     };
 };
@@ -85,7 +73,7 @@ class AddLeagueBySearch extends DatasetView {
                     width={430}
                     onSelect={this.props.queueLeague}
                     ResultsComponent={SearchLeagueTemplate}
-                    placeholder={"Add player by name or email"}
+                    placeholder={"Add league"}
                 />
             </div>
         );
@@ -155,8 +143,6 @@ class LeagueCommissionerContent extends React.Component {
     }
 
     queueLeague = (league) => {
-        console.log("league is being queued:", league);
-        console.log("queed array", this.state.queuedLeagues);
         let matches = this.state.queuedLeagues.filter(leagueId => leagueId === league.id);
         if (matches.length > 0) {
             toastr.error("League already added!");
@@ -174,9 +160,6 @@ class LeagueCommissionerContent extends React.Component {
         return (
             <div>
                 <strong>Leagues Commissioned:</strong>
-                { player.leagues_commissioned.map((el,i) => {
-                    return (<span key={i}> #{el} </span>);
-                }) }
                 <AddLeagueBySearch
                     removeLeagueIdFromQueue={this.removeLeagueIdFromQueue}
                     queuedLeagues={this.state.queuedLeagues}
