@@ -15,6 +15,84 @@ import PlayerCreateForm from 'main/app/admin/components/forms/create-player-form
 import adminUrls from 'main/app/admin/urls';
 import pathToRegex from 'path-to-regexp';
 
+class QueuedLeague extends React.Component {
+    render() {
+        const league = this.props.league;
+
+        const style = {
+            backgroundColor: '#fff',
+            position: 'relative',
+            padding: '12px',
+            borderTop: '1px solid #eee',
+            color: '#666',
+            fontSize: 14,
+            cursor: 'pointer',
+        }
+
+        return (
+            <li style={style} onClick={(e)=>{ this.props.onRemove(league.id); }}>
+                <span>
+                    LEAGUE: #{ league }
+                </span>
+            </li>
+        );
+    };
+};
+
+
+class QueuedLeagueList extends React.Component {
+    render() {
+        const style = {
+            listStyleType: "none"
+        };
+        return (
+            <ul style={style}>
+                { this.props.queuedLeagues.map((league, i) => {
+                    return <QueuedLeague onRemove={this.props.onRemove} key={i} league={league} />;
+                }) }
+            </ul>
+        );
+    };
+};
+
+class AddLeagueBySearch extends DatasetView {
+    get datasetStateAttr() {
+        return "leagues";
+    }
+
+    get datasetViewName() {
+        return "api-league-list";
+    }
+
+    constructor(props) {
+        super(props);
+    };
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return (<div> Gathering available players... </div>);
+        }
+
+        //TODO add to team
+        return (
+            <div>
+                <QueuedLeagueList
+                    onRemove={this.props.removeLeagueIdFromQueue}
+                    queuedLeagues={this.props.queuedLeagues} />
+                <FuzzySearch
+                    list={this.state.leagues}
+                    keys={['name',]}
+                    width={430}
+                    onSelect={this.props.queueLeague}
+                    ResultsComponent={SearchLeagueTemplate}
+                    placeholder={"Add player by name or email"}
+                />
+            </div>
+        );
+    }
+};
+
+
 class SearchLeagueTemplate extends React.Component {
     render() {
         return (
@@ -62,6 +140,35 @@ class FuzzyLeagueInput extends DatasetView {
 }
 
 class LeagueCommissionerContent extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            queuedLeagues: this.props.player.leagues_commissioned,
+        };
+    }
+
+    removeLeagueIdFromQueue = (leagueId) => {
+        let prunedArray = this.state.queuedLeagues.filter(league => league !== leagueId);
+        this.setState({
+            queuedLeagues: prunedArray,
+        });
+    }
+
+    queueLeague = (league) => {
+        console.log("league is being queued:", league);
+        console.log("queed array", this.state.queuedLeagues);
+        let matches = this.state.queuedLeagues.filter(leagueId => leagueId === league.id);
+        if (matches.length > 0) {
+            toastr.error("League already added!");
+            return;
+        }
+
+        this.setState({
+            queuedLeagues: this.state.queuedLeagues.concat([league.id])
+        });
+    }
+
+
     render() {
         const player = this.props.player;
         return (
@@ -70,7 +177,11 @@ class LeagueCommissionerContent extends React.Component {
                 { player.leagues_commissioned.map((el,i) => {
                     return (<span key={i}> #{el} </span>);
                 }) }
-                {/* <FuzzyLeagueInput onSelect={this.onNewLeagueCommission}/> */}
+                <AddLeagueBySearch
+                    removeLeagueIdFromQueue={this.removeLeagueIdFromQueue}
+                    queuedLeagues={this.state.queuedLeagues}
+                    queueLeague={this.queueLeague}
+                />
             </div>
         );
     }
