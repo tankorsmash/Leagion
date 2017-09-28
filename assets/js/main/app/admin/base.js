@@ -5,6 +5,8 @@ import {Row, Col} from 'reactstrap';
 
 import adminUrls from 'main/app/admin/urls';
 
+import auth from 'main/auth';
+
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
 import {LeagueDetail, LeaguesCreate} from 'main/app/admin/details/leagues';
@@ -16,11 +18,30 @@ import PlayerDetail from 'main/app/admin/details/players';
 
 import {FourOhFour} from 'components/error-pages';
 
+import DatasetView from 'components/dataset_view';
+
 import style from 'app.scss';
 
 
-export default class Admin extends React.Component {
+export default class Admin extends DatasetView {
+    get datasetStateAttr() {
+        return "user";
+    }
+
+    get datasetViewName() {
+        return "api-my-details";
+    }
+
     render() {
+        if (this.getIsLoaded() == false) {
+            return <div>logging you in as admin</div>;
+        };
+
+        const user = this.state.user
+        if (!(auth.commissionerOrBetter(user))) {
+            return ( <Redirect exact to={"/"} /> );
+        };
+
         return (
             <div id="leagion-admin" >
                 <AdminNavbar {...this.props} />
