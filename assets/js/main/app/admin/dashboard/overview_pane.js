@@ -5,7 +5,7 @@ import {
 
 import {Link} from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
-import {Line as LineChart, Bar as BarChart} from 'react-chartjs';
+import {Bar as BarChart} from 'react-chartjs-2';
 
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -175,11 +175,13 @@ class MatchesPlayedChart extends DatasetView {
         };
 
         let chartOptions = {
-            responsive: true,
+            // responsive: true,
             maintainAspectRatio: false,
         };
 
-        return <BarChart data={chartData} options={chartOptions} />
+        return (<div>
+            <BarChart data={chartData} options={chartOptions} />
+        </div>);
     }
 };
 
