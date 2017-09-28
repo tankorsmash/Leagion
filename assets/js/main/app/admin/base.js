@@ -19,7 +19,7 @@ import {FourOhFour} from 'components/error-pages';
 import style from 'app.scss';
 
 
-class Admin extends React.Component {
+export default class Admin extends React.Component {
     render() {
         return (
             <div id="leagion-admin" >
@@ -51,5 +51,3 @@ class Admin extends React.Component {
         );
     }
 }
-
-module.exports = Admin;
