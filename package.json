@@ -63,7 +63,7 @@
     "react-router-dom": "^4.0.0",
     "react-spinkit": "^2.1.1",
     "react-transition-group": "^2.1.0",
-    "reactstrap": "^4.8.0",
+    "reactstrap": "^5.0.0-alpha.2",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "toastr": "^2.1.2",
