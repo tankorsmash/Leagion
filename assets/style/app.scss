@@ -1,3 +1,4 @@
+@import '~bootstrap/scss/functions';
 @import 'common/variables';
 @import 'form';
 @import 'players';
@@ -29,7 +30,7 @@ a {
 }
 
 .appbar {
-    background-color: $brand-primary;
+    background-color: theme-color("primary");
 }
 
 .titlebar {

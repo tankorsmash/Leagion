@@ -20,6 +20,11 @@ $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:  #000 !default;
 
+//josh edits
+$gray-light:                #94B09F !default;
+$gray-lighter:              #C5DCCF !default;
+$gray-lightest:             #F5FAF7 !default;
+
 $grays: () !default;
 $grays: map-merge((
   "100": $gray-100,
