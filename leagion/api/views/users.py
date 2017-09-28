@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
-from rest_framework import generics, views as drf_views
+from rest_framework import generics, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
 
@@ -12,6 +12,14 @@ from leagion.utils import reverse_js
 
 User = get_user_model()
 
+class UserFilterBackend(filters.BaseFilterBackend):
+    def filter_queryset(self, request, user_qs, view):
+        user = request.user
+        if user.is_staff or user.is_moderator:
+            return user_qs
+
+        return user_qs.filter(teams__season__league__league_commissioners=user)
+
 
 @reverse_js
 class UserList(generics.ListCreateAPIView):
@@ -19,6 +27,7 @@ class UserList(generics.ListCreateAPIView):
         "teams"
     )
     serializer_class = UserSerializer
+    filter_backends = (UserFilterBackend,)
 
 
 @reverse_js
@@ -29,6 +38,8 @@ class UserDetail(generics.RetrieveUpdateAPIView):
         "teams"
     )
     serializer_class = UserSerializer
+    filter_backends = (UserFilterBackend,)
+
 
 @reverse_js
 class AddLeaguesToCommission(drf_views.APIView):

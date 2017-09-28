@@ -19,6 +19,7 @@ class TeamFilterBackend(filters.BaseFilterBackend):
 
         return team_qs.filter(season__league__league_commissioners=user)
 
+
 @reverse_js
 class TeamList(generics.ListCreateAPIView):
     queryset = Team.objects.all().prefetch_related(
