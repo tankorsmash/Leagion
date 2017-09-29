@@ -1,4 +1,5 @@
 @import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
 @import 'common/variables';
 @import 'form';
 @import 'players';
@@ -6,6 +7,11 @@
 
 @import 'components/misc';
 @import 'components/tabs';
+
+
+.btn {
+	cursor: pointer;
+}
 
 .container {
     background-color: $white;
@@ -36,7 +42,7 @@ a {
 .titlebar {
     background-color: $black;
     color: $white;
-    text-align: center;
+    justify-content: center;
 }
 
 .content {
@@ -82,5 +88,4 @@ a {
         cursor: move;
         touch-action: none;
     }
-        
 }
