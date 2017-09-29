@@ -18,6 +18,14 @@ def build_filter_leagues_to_commissioner(user):
     """filter down the leagues to the leagues the league commissioner can see"""
     return Q(league_commissioners=user)
 
+
+"""
+a collection of filters associated with the relevant model
+>>> leagues_comm_can_see = League.objects.filter(COMMISSIONER_FILTERS[League](commissioner))
+
+a helper function is defined to make it easier to use, so the above becomes
+>>> leagues_comm_can_see = filter_queryset(commissioner, League.objects.all())
+"""
 COMMISSIONER_FILTERS = {
     League: lambda u: build_filter_leagues_to_commissioner(u),
     Team: lambda u: build_filter_teams_to_commissioner(u),
@@ -25,26 +33,27 @@ COMMISSIONER_FILTERS = {
 }
 
 
-def filter_queryset(model, user, queryset):
+def filter_queryset(user, queryset):
     if is_moderator_or_better(user):
         return queryset
 
-    qs_filter = COMMISSIONER_FILTERS.get(model)
+    qs_filter = COMMISSIONER_FILTERS.get(queryset.modal)
     if qs_filter is None:
-        raise Exception("{} model is not in list of filters for filtering down to a league commissioner".format(model))
+        raise Exception("{} model is not in list of filters for filtering down to a league commissioner".format(queryset.model))
 
     return queryset.filter(qs_filter)
 
+
 class UserFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset(User, request.user, queryset)
+        return filter_queryset(request.user, queryset)
 
 
 class TeamFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset(Team, request.user, queryset)
+        return filter_queryset(request.user, queryset)
 
 
 class LeagueFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset(League, request.user, queryset)
+        return filter_queryset(request.user, queryset)
