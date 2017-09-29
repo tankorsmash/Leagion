@@ -7,17 +7,10 @@ from rest_framework import generics, serializers, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer
 from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer, CreateTeamSerializer
+from leagion.api.filters import TeamFilterBackend
 from leagion.models import Team, User
 
 from leagion.utils import reverse_js
-
-class TeamFilterBackend(filters.BaseFilterBackend):
-    def filter_queryset(self, request, team_qs, view):
-        user = request.user
-        if user.is_staff or user.is_moderator:
-            return team_qs
-
-        return team_qs.filter(season__league__league_commissioners=user)
 
 
 @reverse_js
