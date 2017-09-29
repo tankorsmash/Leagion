@@ -17,7 +17,7 @@ export class Appbar extends React.Component {
     render() {
         return (
             <div>
-                <Navbar className="appbar" inverse toggleable>
+                <Navbar className="appbar" dark expand>
                     <NavbarBrand href='/'>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>

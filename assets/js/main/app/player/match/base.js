@@ -116,7 +116,7 @@ class MatchDetail extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             match: {}, loaded: false };
     }
 
@@ -151,7 +151,7 @@ class MatchDetail extends React.Component {
                     {this.state.loaded &&
                         <div>
                             <Row>
-                                <Col className="text-center mt-3" md={{size:6, offset:3}}>
+                                <Col className="text-center mt-3 mx-auto" md={{size:6}}>
                                     <h3> {this.state.match.pretty_date} </h3>
                                     <h3> {'@ ' + this.state.match.pretty_time} </h3>
                                 </Col>

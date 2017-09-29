@@ -22,7 +22,7 @@
     }
 
     .team-card-bottom {
-        background-color: $brand-secondary;
+        background-color: theme-color("secondary");
         clip-path: polygon(0 30%, 100% 0, 100% 100%, 0 100%);
         color: $white;
         padding-top: 75px;
