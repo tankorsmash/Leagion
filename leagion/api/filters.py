@@ -24,7 +24,7 @@ a collection of filters associated with the relevant model
 >>> leagues_comm_can_see = League.objects.filter(COMMISSIONER_FILTERS[League](commissioner))
 
 a helper function is defined to make it easier to use, so the above becomes
->>> leagues_comm_can_see = filter_queryset(commissioner, League.objects.all())
+>>> leagues_comm_can_see = filter_queryset_to_commissioner(commissioner, League.objects.all())
 """
 COMMISSIONER_FILTERS = {
     League: lambda u: build_filter_leagues_to_commissioner(u),
@@ -33,7 +33,7 @@ COMMISSIONER_FILTERS = {
 }
 
 
-def filter_queryset(user, queryset):
+def filter_queryset_to_commissioner(user, queryset):
     if is_moderator_or_better(user):
         return queryset
 
@@ -46,14 +46,14 @@ def filter_queryset(user, queryset):
 
 class UserFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset(request.user, queryset)
+        return filter_queryset_to_commissioner(request.user, queryset)
 
 
 class TeamFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset(request.user, queryset)
+        return filter_queryset_to_commissioner(request.user, queryset)
 
 
 class LeagueFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset(request.user, queryset)
+        return filter_queryset_to_commissioner(request.user, queryset)
