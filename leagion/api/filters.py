@@ -1,6 +1,6 @@
 from rest_framework import generics, views as drf_views, filters
 
-from leagion.models import League, Team, User
+from leagion.models import League, Team, User, Season, Match, Roster
 
 def is_moderator_or_better(user):
     """is user at least a moderator"""
@@ -9,6 +9,18 @@ def is_moderator_or_better(user):
 def build_filter_users_to_commissioner(user):
     """filter down the users to the leagues the league commissioner can see"""
     return Q(teams__season__league__league_commissioners=user)
+
+def build_filter_rosters_to_commissioner(user):
+    """filter down the rosters to the leagues the league commissioner can see"""
+    return Q(match__season__league__league_commissioners=user)
+
+def build_filter_matches_to_commissioner(user):
+    """filter down the matches to the leagues the league commissioner can see"""
+    return Q(season__league__league_commissioners=user)
+
+def build_filter_seasons_to_commissioner(user):
+    """filter down the seasons to the leagues the league commissioner can see"""
+    return Q(league__league_commissioners=user)
 
 def build_filter_teams_to_commissioner(user):
     """filter down the teams to the leagues the league commissioner can see"""
@@ -28,6 +40,9 @@ a helper function is defined to make it easier to use, so the above becomes
 """
 COMMISSIONER_FILTERS = {
     League: lambda u: build_filter_leagues_to_commissioner(u),
+    Season: lambda u: build_filter_seasons_to_commissioner(u),
+    Roster: lambda u: build_filter_rosters_to_commissioner(u),
+    Match: lambda u: build_filter_matches_to_commissioner(u),
     Team: lambda u: build_filter_teams_to_commissioner(u),
     User: lambda u: build_filter_users_to_commissioner(u),
 }
