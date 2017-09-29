@@ -10,7 +10,7 @@ export default class Titlebar extends React.Component {
 
     render() {
         return (
-			<Navbar className="titlebar" inverse>
+			<Navbar className="titlebar" dark>
 				{this.props.title}
 			</Navbar>
         );
