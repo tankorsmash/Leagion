@@ -3,6 +3,7 @@ import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 
 import Tabs from 'components/tabs';
+import DatasetView from 'components/dataset_view';
 
 import teamUrls from 'main/app/player/team/urls';
 
@@ -15,25 +16,17 @@ import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';
 
-class TeamDetail extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            team: {},
-            loaded: false
-        };
+class TeamDetail extends DatasetView {
+    get datasetStateAttr() {
+        return "team";
     }
 
-    componentDidMount() {
-        ajax({
-            url: reverse('api-team-detail', {team_id: this.props.match.params.teamId}),
-        }).then(data => {
-            this.setState({
-                team: data,
-                loaded: true
-            });
-        });
+    get datasetViewName() {
+        return "api-team-detail";
+    }
+
+    get datasetViewKwargs() {
+        return {team_id: this.props.match.params.teamId};
     }
 
     render() {
@@ -46,7 +39,7 @@ class TeamDetail extends React.Component {
         }];
 
         return (
-            <SpinLoader loaded={this.state.loaded}>
+            <SpinLoader loaded={this.getIsLoaded()}>
                 <Titlebar title="My Team" />
                 <div className="team-detail-header">
                     <TeamTitle team={this.state.team} />
