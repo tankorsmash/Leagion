@@ -1,19 +1,9 @@
-import ajax from 'common/ajax';
-
 import {Link} from 'react-router-dom';
-
-import { Collapse, Navbar as BSNavbar, NavbarToggler,
-    NavbarBrand, NavDropdown, DropdownToggle, DropdownMenu,
-    DropdownItem, Nav, NavItem, NavLink
-} from 'reactstrap';
-
+import {Nav} from 'reactstrap';
 import adminUrls from 'main/app/admin/urls';
-import {LogoutButton, LoginButton} from 'components/buttons';
-import auth from 'main/auth';
-import {Appbar} from 'components/nav/base'
-import {BaseAppProfile} from 'main/app/components/nav';
-
-import {NOT_LOADED, DO_NOTHING, STOP_PROPAGATION} from 'common/constants';
+import {LogoutButton} from 'components/buttons';
+import {Appbar} from 'components/nav/base';
+import {AppProfile} from 'main/app/components/nav';
 
 class AdminNavItems extends React.Component {
     constructor(props) {
@@ -41,15 +31,22 @@ class AdminNavItems extends React.Component {
     }
 }
 
-class AdminProfile extends BaseAppProfile {
+class AdminProfile extends React.Component {
     getItems = () => {
         return [LogoutButton];
     };
+
+    render() {
+        return <AppProfile items={this.getItems()} {...this.props} />;
+    }
 }
 
-class AdminNavbar extends Appbar {
-	itemComponent = AdminNavItems;
-	profileComponent = AdminProfile;
-}
-
-module.exports = AdminNavbar;
+export default (props) => {
+    return (
+        <Appbar
+            itemComponent={AdminNavItems}
+            profileComponent={AdminProfile}
+            {...props}
+        />
+    );
+};

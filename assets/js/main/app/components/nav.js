@@ -1,9 +1,9 @@
-import { Collapse, Navbar as BSNavbar, NavbarToggler,
-    NavbarBrand, NavDropdown, DropdownToggle, DropdownMenu,
-    DropdownItem, Nav, NavItem, NavLink
+import {
+    NavDropdown, DropdownToggle, DropdownMenu,
+    DropdownItem, Nav
 } from 'reactstrap';
 
-class BaseAppProfile extends React.Component {
+export class AppProfile extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,6 +20,8 @@ class BaseAppProfile extends React.Component {
     }
 
     render() {
+        const {items} = this.props;
+
         return (
             <Nav className="ml-auto" navbar>
 				<NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
@@ -27,16 +29,12 @@ class BaseAppProfile extends React.Component {
 						{this.props.user.email}
 					</DropdownToggle>
 					<DropdownMenu right>
-						{this.getItems().map((item, i) => {
+						{items.map((item, i) => {
 							return (<DropdownItem tag={item} key={i}></DropdownItem>);
 						})}
 					</DropdownMenu>
 				</NavDropdown>
             </Nav>
-        )
+        );
     }
-}
-
-module.exports = {
-	BaseAppProfile: BaseAppProfile,
 }
