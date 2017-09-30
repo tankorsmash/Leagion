@@ -37,6 +37,14 @@ class TeamDetail extends React.Component {
     }
 
     render() {
+        let tabs = [{
+            label: 'Matches',
+            content: (<MatchTable matches={this.state.team.matches} />)
+        }, {
+            label: 'Team Members',
+            content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
+        }];
+
         return (
             <SpinLoader loaded={this.state.loaded}>
                 <Titlebar title="My Team" />
@@ -45,13 +53,7 @@ class TeamDetail extends React.Component {
                 </div>
                 <Tabs
                     className="team-match-table"
-                    tabs={[{
-                        label: 'Matches',
-                        content: (<MatchTable matches={this.state.team.matches} />)
-                    }, {
-                        label: 'Team Members',
-                        content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
-                    }]}
+                    tabs={tabs}
                 />
             </SpinLoader>
         );
