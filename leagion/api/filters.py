@@ -52,7 +52,7 @@ def filter_queryset_to_commissioner(user, queryset):
     if is_moderator_or_better(user):
         return queryset
 
-    qs_filter = COMMISSIONER_FILTERS.get(queryset.modal)
+    qs_filter = COMMISSIONER_FILTERS.get(queryset.model)
     if qs_filter is None:
         raise Exception("{} model is not in list of filters for filtering down to a league commissioner".format(queryset.model))
 
