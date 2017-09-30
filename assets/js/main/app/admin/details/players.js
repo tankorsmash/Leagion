@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 
 import {Container, Row, Col, ButtonGroup, Button, Media,
     UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem,
-    Card, CardImg, CardBlock, CardText, CardTitle,
+    Card, CardImg, CardBody, CardText, CardTitle,
 
     Modal, ModalHeader, ModalBody, ModalFooter
 
@@ -188,11 +188,11 @@ export class CreatePlayerCard extends React.Component {
             <div>
                 <Card>
                     <CardImg top className="w-100" src={`https://placeholdit.imgix.net/~text?txtsize=64&txt=Add%20Player&w=318&h=240`}/>
-                    <CardBlock className="d-flex">
+                    <CardBody className="d-flex">
                         <Button block color="link" onClick={this.toggle} className="">
                             <FontAwesome size="4x" name="plus"/>
                         </Button>
-                    </CardBlock>
+                    </CardBody>
                 </Card>
 
                 <Modal fade={false} isOpen={this.state.modalOpen} toggle={this.toggle} className={this.props.className}>
@@ -250,9 +250,9 @@ export class PlayerCard extends React.Component {
         //randomuser.me has only 200 male faces so we make sure to stay within that
         const limited_player_id = player.id % 200;
         return (
-            <Card>
+            <Card style={{flexBasis: "25%"}}>
                 <CardImg top className="w-100" src={`https://randomuser.me/api/portraits/men/${limited_player_id}.jpg`}/>
-                <CardBlock>
+                <CardBody>
                     <CardTitle>{ player.full_name }</CardTitle>
                     <CardText>
 
@@ -283,7 +283,7 @@ export class PlayerCard extends React.Component {
                                 })}
                             </DropdownMenu>
                         </UncontrolledDropdown>
-                </CardBlock>
+                </CardBody>
             </Card>
         );
     }

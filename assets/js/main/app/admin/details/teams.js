@@ -219,7 +219,7 @@ class TeamDetail extends DatasetView {
 
 
                 <div className="d-lg-flex">
-                    <CardDeck style={{flexBasis: "60%"}} className="justify-content-between">
+                    <CardDeck style={{flexBasis: "50%"}} className="">
 
                         <CreatePlayerCard
                             onCreateCallback={ this.updateDataset }
