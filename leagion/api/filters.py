@@ -1,5 +1,7 @@
 from rest_framework import generics, views as drf_views, filters
 
+from django.db.models import Q
+
 from leagion.models import League, Team, User, Season, Match, Roster
 
 def is_moderator_or_better(user):
@@ -52,7 +54,7 @@ def filter_queryset_to_commissioner(user, queryset):
     if is_moderator_or_better(user):
         return queryset
 
-    qs_filter = COMMISSIONER_FILTERS.get(queryset.model)
+    qs_filter = COMMISSIONER_FILTERS.get(queryset.model)(user)
     if qs_filter is None:
         raise Exception("{} model is not in list of filters for filtering down to a league commissioner".format(queryset.model))
 
