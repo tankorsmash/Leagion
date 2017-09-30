@@ -207,6 +207,26 @@ export const TeamRankTable = (props) => {
 	);
 };
 
+class TeamLogo extends React.Component {
+    render() {
+        return (
+            <div>
+                This is where you'll edit or view the logo
+            </div>
+        );
+    }
+};
+
+class TeamColor extends React.Component {
+    render() {
+        return (
+            <div>
+                This is where you'll edit or view the team color
+            </div>
+        );
+    }
+};
+
 export class TeamInfoTab extends DatasetView {
     get datasetStateAttr() {
         return "user";
@@ -216,16 +236,24 @@ export class TeamInfoTab extends DatasetView {
         return "api-my-details";
     }
 
+    userIsCaptain = () => {
+        return ( this.props.team.captains.includes(this.state.user.id) );
+    };
+
     render() {
         if (this.getIsLoaded() == false) {
             return ( "Loading..." );
         };
 
+        const user = this.state.user;
+        const team = this.props.team;
+        const isCaptain = this.userIsCaptain();
         return (
             <div>
-                Placeholder for team settings
+                <TeamLogo team={team} user={user} />
+                <hr/>
+                <TeamColor team={team} user={user} />
             </div>
-            // "You are team leader" + this.state.user.first_name
         );
     };
 };
