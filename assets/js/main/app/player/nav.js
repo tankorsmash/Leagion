@@ -1,14 +1,16 @@
+import {Link} from 'react-router-dom';
 import {Nav, NavItem} from 'reactstrap';
-
 import {LogoutButton, AdminButton, AccountSettingsButton} from 'components/buttons';
 import {Appbar} from 'components/nav/base';
 import {AppProfile} from 'main/app/components/nav';
+import playerUrls from 'main/app/player/urls';
 
 class PlayerItems extends React.Component {
     render() {
         return (
             <Nav navbar>
                 <NavItem>
+                    <Link className="nav-link" to={playerUrls.index}>My Teams</Link>
                 </NavItem>
             </Nav>
         );

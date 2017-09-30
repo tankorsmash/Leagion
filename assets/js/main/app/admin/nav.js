@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Nav} from 'reactstrap';
 import adminUrls from 'main/app/admin/urls';
-import {LogoutButton} from 'components/buttons';
+import {LogoutButton, PlayerAppButton} from 'components/buttons';
 import {Appbar} from 'components/nav/base';
 import {AppProfile} from 'main/app/components/nav';
 
@@ -33,7 +33,7 @@ class AdminNavItems extends React.Component {
 
 class AdminProfile extends React.Component {
     getItems = () => {
-        return [LogoutButton];
+        return [PlayerAppButton, LogoutButton];
     };
 
     render() {
