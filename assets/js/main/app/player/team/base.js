@@ -19,7 +19,7 @@ class TeamDetail extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             team: {},
             loaded: false
         };
@@ -59,11 +59,11 @@ class TeamDetail extends React.Component {
 }
 
 export class TeamList extends React.Component {
-    
+
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             teams: [],
             loaded: false
         };
