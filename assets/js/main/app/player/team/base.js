@@ -9,7 +9,7 @@ import teamUrls from 'main/app/player/team/urls';
 
 import {MatchTable} from 'components/app/match';
 import {PlayerAvatarList} from 'components/app/player';
-import {TeamCard, TeamTitle} from 'components/app/team';
+import {TeamCard, TeamTitle, TeamInfoTab} from 'components/app/team';
 import Titlebar from 'components/app/titlebar';
 
 import {FourOhFour} from 'components/error-pages';
@@ -36,6 +36,9 @@ class TeamDetail extends DatasetView {
         }, {
             label: 'Team Members',
             content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
+        }, {
+            label: 'Team Details',
+            content: (<TeamInfoTab team={this.state.team}/>)
         }];
 
         return (

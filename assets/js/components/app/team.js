@@ -1,10 +1,13 @@
 import {Link} from 'react-router-dom';
 import {Table} from 'reactstrap';
+
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
-import {Ribbon} from 'components/misc';
-import {FullRosterTable} from 'components/app/roster';
 
+import {Ribbon} from 'components/misc';
+import DatasetView from 'components/dataset_view';
+
+import {FullRosterTable} from 'components/app/roster';
 import {LeagueLink} from 'components/app/league';
 import {SeasonLink} from 'components/app/season';
 
@@ -202,4 +205,27 @@ export const TeamRankTable = (props) => {
 			</tbody>
 		</Table>
 	);
+};
+
+export class TeamInfoTab extends DatasetView {
+    get datasetStateAttr() {
+        return "user";
+    }
+
+    get datasetViewName() {
+        return "api-my-details";
+    }
+
+    render() {
+        if (this.getIsLoaded() == false) {
+            return ( "Loading..." );
+        };
+
+        return (
+            <div>
+                Placeholder for team settings
+            </div>
+            // "You are team leader" + this.state.user.first_name
+        );
+    };
 };
