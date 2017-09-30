@@ -15,14 +15,16 @@ export class Appbar extends React.Component {
         });
     }
     render() {
+        const {itemComponent, profileComponent} = this.props;
+
         return (
             <div>
                 <Navbar className="appbar" dark expand>
                     <NavbarBrand href='/'>Leagion</NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
-                        {React.createElement(this.itemComponent, this.props)}
-                        {React.createElement(this.profileComponent, this.props)}
+                        {React.createElement(itemComponent, this.props)}
+                        {React.createElement(profileComponent, this.props)}
                     </Collapse>
                 </Navbar>
             </div>

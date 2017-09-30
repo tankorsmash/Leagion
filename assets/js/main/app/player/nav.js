@@ -1,21 +1,23 @@
+import {Link} from 'react-router-dom';
 import {Nav, NavItem} from 'reactstrap';
-
 import {LogoutButton, AdminButton, AccountSettingsButton} from 'components/buttons';
 import {Appbar} from 'components/nav/base';
-import {BaseAppProfile} from 'main/app/components/nav';
+import {AppProfile} from 'main/app/components/nav';
+import playerUrls from 'main/app/player/urls';
 
 class PlayerItems extends React.Component {
     render() {
         return (
             <Nav navbar>
                 <NavItem>
+                    <Link className="nav-link" to={playerUrls.index}>My Teams</Link>
                 </NavItem>
             </Nav>
         );
     }
 }
 
-class PlayerProfile extends BaseAppProfile {
+class PlayerProfile extends React.Component {
     getItems = () => {
         let items = [AccountSettingsButton, LogoutButton];
 
@@ -25,10 +27,18 @@ class PlayerProfile extends BaseAppProfile {
 
         return items;
     };
+
+    render() {
+        return <AppProfile items={this.getItems()} {...this.props} />;
+    }
 }
 
-export default class PlayerNavbar extends Appbar {
-	itemComponent = PlayerItems;
-	profileComponent = PlayerProfile;
-
-}
+export default (props) => {
+    return (
+        <Appbar
+            itemComponent={PlayerItems}
+            profileComponent={PlayerProfile}
+            {...props}
+        />
+    );
+};

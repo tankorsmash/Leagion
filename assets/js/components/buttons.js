@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import publicUrls from 'main/public/urls';
 import adminUrls from 'main/app/admin/urls';
 import accountUrls from 'main/app/player/account/urls';
+import playerUrls from 'main/app/player/urls';
 import auth from 'main/auth';
 
 export const LogoutButton = ({...rest}) => {
@@ -27,5 +28,11 @@ export const AdminButton = ({...rest}) => {
 export const AccountSettingsButton = ({...rest}) => {
 	return (
 		<Link {...rest} to={accountUrls.index}>Profile</Link>
+	);
+};
+
+export const PlayerAppButton = ({...rest}) => {
+	return (
+		<Link {...rest} to={playerUrls.index}>Back to my teams</Link>
 	);
 };
