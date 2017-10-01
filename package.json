@@ -51,6 +51,7 @@
     "react-addons-css-transition-group": "^15.4.2",
     "react-addons-transition-group": "^15.4.2",
     "react-chartjs-2": "^2.6.2",
+    "react-color": "^2.13.8",
     "react-datetime": "^2.8.10",
     "react-dom": "^16.0.0",
     "react-dragula": "^1.1.17",

@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Table} from 'reactstrap';
+import { SketchPicker } from 'react-color';
 
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
@@ -221,6 +222,7 @@ class TeamColor extends React.Component {
     render() {
         return (
             <div>
+                <SketchPicker />
                 This is where you'll edit or view the team color
             </div>
         );
