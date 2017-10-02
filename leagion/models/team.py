@@ -10,6 +10,8 @@ class Team(models.Model):
     captains = models.ManyToManyField(User, related_name="captain_of_teams")
     players = models.ManyToManyField(User, related_name="teams")
 
+    color = models.CharField(max_length=6, default="196E3D") #store the hex color without '#': FF00FF
+
     def __str__(self):
         return "Team: {name}".format(name=self.name)
 
