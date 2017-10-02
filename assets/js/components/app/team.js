@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {Table, Button} from 'reactstrap';
+import {Table, Button, Media} from 'reactstrap';
 import { SketchPicker } from 'react-color';
 
 import teamUrls from 'main/app/player/team/urls';
@@ -221,9 +221,17 @@ class TeamLogo extends React.Component {
 class TeamColorView extends React.Component {
     render() {
         let {team} = this.props;
+
+        const style = {
+            backgroundColor: `#${team.color}`,
+            width: "128px",
+            height: "128px",
+        };
         return (
             <div>
-                This is the team color: #{team.color}
+                <div className="text-hide" style={style}>
+                    Team Color #{team.color}
+                </div>
             </div>
         );
     }
@@ -272,7 +280,7 @@ class TeamColor extends React.Component {
                     { inEditMode && "View" }
                 </Button>
 
-                <div>
+                <div className="pt-1">
                     { inViewMode && <TeamColorView team={team} />}
                     { inEditMode && <TeamColorEdit team={team} />}
                 </div>
