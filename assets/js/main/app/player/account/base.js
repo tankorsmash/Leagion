@@ -6,6 +6,7 @@ import ProfileForm from 'main/app/player/account/profile';
 import ChangePasswordForm from 'main/app/player/account/password';
 
 import ajax from 'common/ajax';
+import accountUrls from 'main/app/player/account/urls';
 
 export class Account extends React.Component {
 
@@ -30,11 +31,17 @@ export class Account extends React.Component {
 					className="account-settings-wrapper"
 					tabs={[{
 						label: 'Profile',
-						content: (<ProfileForm {...this.props} />)
+                        id: 'profile',
+                        content: (() => <ProfileForm {...this.props} />)
 					}, {
 						label: 'Change Password',
-						content: (<ChangePasswordForm {...this.props} />)
+                        id: 'change-password',
+                        content: (() => <ChangePasswordForm {...this.props} />)
 					}]}
+
+                    defaultPath={accountUrls.index}
+                    defaultPathName={"profile"}
+                    pathParams={{}}
 				/>
 			</div>
         );

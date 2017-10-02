@@ -30,25 +30,27 @@ class TeamDetail extends DatasetView {
     }
 
     render() {
+        const team = this.state.team;
+
         let tabs = [{
             label: 'Matches',
             id: 'matches',
-            content: (() => <MatchTable matches={this.state.team.matches} />)
+            content: (() => <MatchTable matches={team.matches} />)
         }, {
             label: 'Team Members',
             id: 'team-members',
-            content: (() => <PlayerAvatarList size={100} players={this.state.team.players}/>)
+            content: (() => <PlayerAvatarList size={100} players={team.players}/>)
         }, {
             label: 'Team Details',
             id: 'team-details',
-            content: (() => <TeamInfoTab team={this.state.team}/>)
+            content: (() => <TeamInfoTab team={team}/>)
         }];
 
         return (
             <SpinLoader loaded={this.getIsLoaded()}>
                 <Titlebar title="My Team" />
                 <div className="team-detail-header">
-                    <TeamTitle team={this.state.team} />
+                    <TeamTitle team={team} />
                 </div>
                 <Tabs
                     className="team-match-table"
@@ -56,7 +58,7 @@ class TeamDetail extends DatasetView {
 
                     defaultPath={teamUrls.detail}
                     defaultPathName={"matches"}
-                    pathParams={{teamId: this.state.team.id}}
+                    pathParams={{teamId: team.id}}
                 />
             </SpinLoader>
         );
