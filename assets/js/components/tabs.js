@@ -14,10 +14,10 @@ import pathToRegex from 'path-to-regexp';
 
 export default class Tabs extends React.Component {
 	static propTypes = {
-		// each tab in the array contains:
-		// -label
-		// -content
-		tabs: PropTypes.array.isRequired,
+        tabs: PropTypes.arrayOf(PropTypes.shape({
+            label: PropTypes.string.isRequired,
+            content: PropTypes.func.isRequired,
+        }))
 	};
 
     constructor(props) {
@@ -61,6 +61,7 @@ export default class Tabs extends React.Component {
 				<TabContent activeTab={this.state.activeTab}>
                     <Switch>
                         {this.props.tabs.map((tab, i) => {
+                            let url = this.buildUrlFromId(tab.id);
                             return (
                                 <Route key={tab.id} path={url} component={tab.content} />
                             );
