@@ -53,6 +53,10 @@ class TeamDetail extends DatasetView {
                 <Tabs
                     className="team-match-table"
                     tabs={tabs}
+
+                    defaultPath={teamUrls.detail}
+                    defaultPathName={"matches"}
+                    pathParams={{teamId: this.state.team.id}}
                 />
             </SpinLoader>
         );

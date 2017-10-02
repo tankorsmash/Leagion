@@ -17,7 +17,14 @@ export default class Tabs extends React.Component {
         tabs: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string.isRequired,
             content: PropTypes.func.isRequired,
-        }))
+        })),
+
+        //ie 'app/team/:teamid/'
+        defaultPath: PropTypes.string.isRequired,
+        //ie '{teamId: 5}' or '(args) => { teamId: args.id }' (TODO havent implemented the func support though)
+        pathParams: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+        //ie 'team-detail' to make: app/team/:teamid/team-detail
+        defaultPathName: PropTypes.string.isRequired,
 	};
 
     constructor(props) {
@@ -30,8 +37,8 @@ export default class Tabs extends React.Component {
 
     buildUrlFromId(id) {
         //TODO pass this root as a prop
-        const teamUrlizer = pathToRegex.compile(teamUrls.detail);
-        const url = teamUrlizer({teamId: 5});
+        const urlizer = pathToRegex.compile(this.props.defaultPath);
+        const url = urlizer(this.props.pathParams);
         return `${url}/${id}`;
     }
 
@@ -44,7 +51,7 @@ export default class Tabs extends React.Component {
 	}
 
 	render() {
-        const PLACEHOLDER = "team-members";
+        const defaultPathName = this.props.defaultPathName;
 		return (
 			<div className={this.props.className + ' tab-wrapper'}>
 				<Nav tabs>
@@ -66,7 +73,7 @@ export default class Tabs extends React.Component {
                                 <Route key={tab.id} path={url} component={tab.content} />
                             );
                         })}
-                        <Redirect from={teamUrls.detail} to={this.buildUrlFromId(PLACEHOLDER)} />
+                        <Redirect from={this.props.defaultPath} to={this.buildUrlFromId(defaultPathName)} />
                     </Switch>
 				</TabContent>
 			</div>
