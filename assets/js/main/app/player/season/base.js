@@ -16,7 +16,7 @@ class SeasonSchedule extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             season: {},
             loaded: false
         };
@@ -47,11 +47,17 @@ class SeasonSchedule extends React.Component {
                                 className="team-match-table"
                                 tabs={[{
                                     label: 'Schedule',
-                                    content: (<MatchTable matches={this.state.season.matches} />)
+                                    id: 'schedule',
+                                    content: () => (<MatchTable matches={this.state.season.matches} />)
                                 }, {
                                     label: 'Rankings',
-                                    content: (<TeamRankTable teams={this.state.season.teams} />)
+                                    id: 'rankings',
+                                    content: () => (<TeamRankTable teams={this.state.season.teams} />)
                                 }]}
+
+                                defaultPath={seasonUrls.detail}
+                                defaultPathName={"schedule"}
+                                pathParams={{seasonId: this.props.match.params.seasonId}}
                             />
                         </div>
                     }
@@ -67,7 +73,7 @@ export class Season extends React.Component {
     render() {
         return (
             <Switch>
-                <Route exact path={seasonUrls.detail} component={SeasonSchedule} />
+                <Route path={seasonUrls.detail} component={SeasonSchedule} />
                 <Route component={FourOhFour} />
             </Switch>
         );

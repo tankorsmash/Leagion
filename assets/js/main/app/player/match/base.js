@@ -50,13 +50,15 @@ const MatchDetailMobile = (props) => {
                 className="team-match-roster-table-mobile"
                 tabs={[{
                     label: 'Home Roster',
+                    id: "home-roster",
                     content: (
-                        <FullRosterTable user={props.user} rosterId={home_roster}/>
+                        () => <FullRosterTable user={props.user} rosterId={home_roster}/>
                     )
                 }, {
                     label: 'Away Roster',
+                    id: "away-roster",
                     content: (
-                        <FullRosterTable user={props.user} rosterId={away_roster}/>
+                        () => <FullRosterTable user={props.user} rosterId={away_roster}/>
                     )
                 }]}
             />
@@ -179,8 +181,6 @@ class MatchDetail extends React.Component {
 }
 
 export class Match extends React.Component {
-	//<Route exact path={teamUrls.index} component={TeamList} />
-
     render() {
         return (
             <Switch>
