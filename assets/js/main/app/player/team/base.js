@@ -32,13 +32,16 @@ class TeamDetail extends DatasetView {
     render() {
         let tabs = [{
             label: 'Matches',
-            content: (<MatchTable matches={this.state.team.matches} />)
+            id: 'matches',
+            content: (() => <MatchTable matches={this.state.team.matches} />)
         }, {
             label: 'Team Members',
-            content: (<PlayerAvatarList size={100} players={this.state.team.players}/>)
+            id: 'team-members',
+            content: (() => <PlayerAvatarList size={100} players={this.state.team.players}/>)
         }, {
             label: 'Team Details',
-            content: (<TeamInfoTab team={this.state.team}/>)
+            id: 'team-details',
+            content: (() => <TeamInfoTab team={this.state.team}/>)
         }];
 
         return (
@@ -100,7 +103,7 @@ export class Team extends React.Component {
         return (
             <Switch>
                 <Route exact path={teamUrls.index} component={TeamList} />
-                <Route exact path={teamUrls.detail} component={TeamDetail} />
+                <Route path={teamUrls.detailWide} component={TeamDetail} />
                 <Route component={FourOhFour} />
             </Switch>
         );

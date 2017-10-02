@@ -1,6 +1,16 @@
+import {ErrorBoundary} from 'react';
 import PropTypes from 'prop-types';
 
+import {Switch, Link, Redirect, NavLink as RouterNavLink} from 'react-router-dom';
+import {Route} from 'components/router';
+
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+
+
+//TODO remove this import
+import teamUrls from 'main/app/player/team/urls';
+import pathToRegex from 'path-to-regexp';
+
 
 export default class Tabs extends React.Component {
 	static propTypes = {
@@ -18,6 +28,13 @@ export default class Tabs extends React.Component {
         };
     }
 
+    buildUrlFromId(id) {
+        //TODO pass this root as a prop
+        const teamUrlizer = pathToRegex.compile(teamUrls.detail);
+        const url = teamUrlizer({teamId: 5});
+        return `${url}/${id}`;
+    }
+
 	toggle(tab) {
 		if (this.state.activeTab !== tab) {
 			this.setState({
@@ -27,30 +44,29 @@ export default class Tabs extends React.Component {
 	}
 
 	render() {
+        const PLACEHOLDER = "team-members";
 		return (
 			<div className={this.props.className + ' tab-wrapper'}>
 				<Nav tabs>
 					{this.props.tabs.map((tab, i) => {
 						return (
 							<NavItem key={i}>
-								<NavLink
-									className={this.state.activeTab === i ? "active" : ""}
-									onClick={() => { this.toggle(i); }}
-								>
-									{tab.label}
-								</NavLink>
+                                <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
+                                    {tab.label}
+                                </RouterNavLink>
 							</NavItem>
 						);
 					})}
 				</Nav>
 				<TabContent activeTab={this.state.activeTab}>
-					{this.props.tabs.map((tab, i) => {
-						return (
-							<TabPane key={i} tabId={i}>
-								{tab.content}
-							</TabPane>
-						);
-					})}
+                    <Switch>
+                        {this.props.tabs.map((tab, i) => {
+                            return (
+                                <Route key={tab.id} path={url} component={tab.content} />
+                            );
+                        })}
+                        <Redirect from={teamUrls.detail} to={this.buildUrlFromId(PLACEHOLDER)} />
+                    </Switch>
 				</TabContent>
 			</div>
 		);
