@@ -66,7 +66,9 @@ class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'player_ids', 'players', 'season_id', 'season', 'matches', 'captains'
+            'id', 'name', 'player_ids', 'players',
+            'season_id', 'season', 'matches', 'captains',
+            'color',
         )
 
     matches = serializers.SerializerMethodField('get_ordered_matches')
@@ -74,6 +76,8 @@ class TeamSerializer(serializers.ModelSerializer):
     player_ids = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), source="players", many=True, read_only=False)
     season = ShallowSeasonSerializer(read_only=True)
     season_id = serializers.IntegerField()
+
+    color = serializers.CharField()
 
     def get_ordered_matches(self, team):
         matches = list(team.home_matches.all()) + list(team.away_matches.all())

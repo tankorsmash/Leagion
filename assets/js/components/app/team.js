@@ -220,9 +220,10 @@ class TeamLogo extends React.Component {
 
 class TeamColor extends React.Component {
     render() {
+        let {team} = this.props;
         return (
             <div>
-                <SketchPicker />
+                <SketchPicker color={team.color} />
                 This is where you'll edit or view the team color
             </div>
         );
