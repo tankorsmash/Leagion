@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import {Table} from 'reactstrap';
+import {Table, Button} from 'reactstrap';
 import { SketchPicker } from 'react-color';
 
 import teamUrls from 'main/app/player/team/urls';
@@ -218,13 +218,64 @@ class TeamLogo extends React.Component {
     }
 };
 
-class TeamColor extends React.Component {
+class TeamColorView extends React.Component {
+    render() {
+        let {team} = this.props;
+        return (
+            <div>
+                This is the team color: #{team.color}
+            </div>
+        );
+    }
+};
+
+class TeamColorEdit extends React.Component {
     render() {
         let {team} = this.props;
         return (
             <div>
                 <SketchPicker color={team.color} />
-                This is where you'll edit or view the team color
+            </div>
+        );
+    }
+};
+
+const VIEW_MODE = "view";
+const EDIT_MODE = "edit";
+
+class TeamColor extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            viewOrEdit: VIEW_MODE,
+        };
+    }
+
+    toggleViewEdit = (e) => {
+        this.setState({
+            viewOrEdit: (this.state.viewOrEdit == VIEW_MODE) ? EDIT_MODE : VIEW_MODE,
+        });
+    }
+
+    render() {
+        let {team} = this.props;
+        const viewMode = this.state.viewOrEdit;
+        const inViewMode = viewMode == VIEW_MODE;
+        const inEditMode = viewMode == EDIT_MODE;
+        return (
+            <div>
+                <h3> Team Color </h3>
+
+                <Button onClick={this.toggleViewEdit}>
+                    { inViewMode && "Edit" }
+                    { inEditMode && "View" }
+                </Button>
+
+                <div>
+                    { inViewMode && <TeamColorView team={team} />}
+                    { inEditMode && <TeamColorEdit team={team} />}
+                </div>
             </div>
         );
     }
