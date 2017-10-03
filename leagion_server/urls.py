@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
+from django.views.static import serve
 
 from django.contrib import admin
 
@@ -30,7 +31,18 @@ from leagion.api.views import (
     leagues as leagues_views,
 )
 
-urlpatterns = [
+urlpatterns = []
+
+#NOTE according to the django docs this is a bad idea, but I'm not clear on why
+HAVE_FOUND_BETTER_SOLUTION_TO_MEDIA = False
+if not HAVE_FOUND_BETTER_SOLUTION_TO_MEDIA:
+    urlpatterns += [
+        url(r'^media/(?P<path>.*)$', serve, {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+    ]
+
+urlpatterns += [
     #authentication
 
     # django-rest-auth
@@ -53,3 +65,4 @@ urlpatterns = [
     url(r'^.*$', views.Main.as_view(), name="main"),
 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
