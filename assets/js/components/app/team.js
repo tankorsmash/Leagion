@@ -9,7 +9,9 @@ import ajax from 'common/ajax';
 import auth from 'main/auth';
 
 import {Ribbon} from 'components/misc';
+import ErrorBoundary from 'components/error-boundary';
 import DatasetView from 'components/dataset_view';
+import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 import {FullRosterTable} from 'components/app/roster';
 import {LeagueLink} from 'components/app/league';
@@ -211,6 +213,32 @@ export const TeamRankTable = (props) => {
 	);
 };
 
+class TeamName extends React.Component {
+    userIsCaptain = () => {
+        let {team, user} = this.props;
+        const isCaptain = ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
+        return isCaptain;
+    };
+
+    render() {
+        let {team} = this.props;
+        const userIsCaptain = this.userIsCaptain();
+        return (
+            <div>
+                <h3> Team name </h3>
+                <ErrorBoundary>
+                    { userIsCaptain && <AjaxTextInputUpdate
+                        putUrl={reverse('api-team-detail', {team_id: team.id})}
+                        putKwarg="name"
+                        data={team.name}
+                    /> }
+                    { !userIsCaptain && team.name }
+                </ErrorBoundary>
+            </div>
+        );
+    }
+};
+
 class TeamLogo extends React.Component {
     render() {
         return (
@@ -340,6 +368,8 @@ export class TeamInfoTab extends DatasetView {
         const team = this.props.team;
         return (
             <div>
+                <TeamName team={team} user={user} />
+                <hr/>
                 <TeamLogo team={team} user={user} />
                 <hr/>
                 <TeamColor team={team} user={user} />
