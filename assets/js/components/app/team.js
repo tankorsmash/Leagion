@@ -220,17 +220,17 @@ class TeamLogo extends React.Component {
 
 class TeamColorView extends React.Component {
     render() {
-        let {team} = this.props;
+        let {teamColor} = this.props;
 
         const style = {
-            backgroundColor: `#${team.color}`,
+            backgroundColor: `#${teamColor}`,
             width: "128px",
             height: "128px",
         };
         return (
             <div>
                 <div className="text-hide" style={style}>
-                    Team Color #{team.color}
+                    Team Color #{teamColor}
                 </div>
             </div>
         );
@@ -239,10 +239,12 @@ class TeamColorView extends React.Component {
 
 class TeamColorEdit extends React.Component {
     render() {
-        let {team} = this.props;
+        let {teamColor} = this.props;
         return (
             <div>
-                <SketchPicker color={team.color} />
+                <SketchPicker
+                    onChangeComplete={this.props.onChangeComplete}
+                    color={teamColor} />
             </div>
         );
     }
@@ -257,6 +259,7 @@ class TeamColor extends React.Component {
 
         this.state = {
             viewOrEdit: VIEW_MODE,
+            teamColor: this.props.team.color,
         };
     }
 
@@ -265,6 +268,15 @@ class TeamColor extends React.Component {
             viewOrEdit: (this.state.viewOrEdit == VIEW_MODE) ? EDIT_MODE : VIEW_MODE,
         });
     }
+    //
+    //happens when user finalizes the color picked
+    onChangeComplete = (color, event) => {
+        color = color.hex.replace(/#/g, '');
+        this.setState({
+            teamColor: color
+        });
+    }
+
 
     render() {
         let {team} = this.props;
@@ -281,8 +293,8 @@ class TeamColor extends React.Component {
                 </Button>
 
                 <div className="pt-1">
-                    { inViewMode && <TeamColorView team={team} />}
-                    { inEditMode && <TeamColorEdit team={team} />}
+                    { inViewMode && <TeamColorView teamColor={this.state.teamColor} />}
+                    { inEditMode && <TeamColorEdit onChangeComplete={this.onChangeComplete} teamColor={this.state.teamColor} />}
                 </div>
             </div>
         );
