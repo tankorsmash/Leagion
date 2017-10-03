@@ -103,6 +103,41 @@ class ApiTest(BaseAPITestCase):
         response = self.get_url("api-league-list")
         self.assertEquals(len(response.json()), 2)
 
+    def test_update_team_color(self):
+        """
+        test getting and updating a teams color
+        """
+        league = self.create_league()
+        season = self.create_season(league)
+        team = self.create_team(season)
+
+        WHITE = "ffffff"
+
+        #get original color for final testing later
+        response = self.get_url(
+            "api-team-detail",
+            url_kwargs={"team_id": team.id}
+        )
+        old_color = response.data['color']
+        self.assertNotEquals(old_color, WHITE)
+
+        #update team color
+        data = { 'color': WHITE }
+        response = self.patch_url(
+            "api-team-detail",
+            url_kwargs={"team_id": team.id},
+            data=data,
+        )
+
+        #confirm new color
+        response = self.get_url(
+            "api-team-detail",
+            url_kwargs={"team_id": team.id}
+        )
+        new_color = response.data['color']
+        self.assertNotEquals(old_color, new_color)
+        self.assertEquals(WHITE, new_color)
+
     def test_commissioner_limits(self):
         """
         add a commissioner without leagues, make sure he can't see anything
