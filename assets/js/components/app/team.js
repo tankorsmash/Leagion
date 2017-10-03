@@ -5,6 +5,7 @@ import { SketchPicker } from 'react-color';
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 
+import ajax from 'common/ajax';
 import {Ribbon} from 'components/misc';
 import DatasetView from 'components/dataset_view';
 
@@ -243,6 +244,7 @@ class TeamColorEdit extends React.Component {
         return (
             <div>
                 <SketchPicker
+                    disableAlpha={true}
                     onChangeComplete={this.props.onChangeComplete}
                     color={teamColor} />
             </div>
@@ -274,6 +276,14 @@ class TeamColor extends React.Component {
         color = color.hex.replace(/#/g, '');
         this.setState({
             teamColor: color
+        });
+
+        ajax({
+            url: reverse('api-team-detail', {team_id: this.props.team.id}),
+            data: {color: color},
+            method: 'PATCH',
+        }).then(data => {
+            toastr.success('Updated team color!');
         });
     }
 
