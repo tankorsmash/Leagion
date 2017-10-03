@@ -1,12 +1,29 @@
 import auth from 'main/auth'
 import {getCookie} from 'common/utils';
 
-export default function ajax({
-    data=null,
-    method='GET',
-    url=null,
-    requireLogin=true
-}) {
+const DEFAULT_HEADERS = {
+    "Accept": "application/json",
+    "Content-Type": "application/json"
+}
+
+function buildInitialHandler(errorInfo) {
+    return (response) => {
+        errorInfo.responseHasErrorStatus = !response.ok;
+        return response.json()
+    };
+}
+
+function buildResponseHandler(errorInfo, onSuccess, onError) {
+    return (data) => {
+        if (errorInfo.responseHasErrorStatus == false) {
+            onSuccess(data);
+        } else {
+            onError(data);
+        }
+    }
+};
+
+function validateUrl(url) {
     if (!url) {
         throw('you need a url to make an ajax call');
     }
@@ -14,15 +31,21 @@ export default function ajax({
     if (url.includes("undefined")) {
         console.warn(`'undefined' found in URL, potential for unset variables upstream in '${url}'`)
     }
+};
+
+export default function ajax({
+    data=null,
+    method='GET',
+    url=null,
+    requireLogin=true
+}) {
+    validateUrl(url);
 
     let info = {
         method: method,
         body: data ? JSON.stringify(data) : null,
         credentials: "same-origin",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
+        headers: DEFAULT_HEADERS,
     }
 
     if (requireLogin) {
@@ -30,27 +53,19 @@ export default function ajax({
     }
 
     return new Promise(
-        (resolveHandler, rejectHandler) => {
-            let responseHasErrorStatus = false;
+        (onSuccess, onError) => {
+            //can't pass a variable by ref in js, but you can alter properties
+            let errorInfo = {
+                responseHasErrorStatus: false,
+            };
 
             fetch(url, info)
-                .then(response => {
-                    if (!response.ok) {
-                        responseHasErrorStatus = true;
-                    }
-                    return response.json()
-                })
-                .then(data => {
-                    if (responseHasErrorStatus) {
-                        rejectHandler(data);
-                    } else {
-                        resolveHandler(data);
-                    }
-                })
+                .then(buildInitialHandler(errorInfo))
+                .then(buildResponseHandler(errorInfo, onSuccess, onError))
                 //send err to rejection handler. can't think of a good way to handle
                 // server throwing a 500 (thus invalid json)
                 .catch(err => {
-                    rejectHandler(err);
+                    onError(err);
                 });
         }
     );

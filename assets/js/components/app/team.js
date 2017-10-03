@@ -291,7 +291,8 @@ class TeamColor extends React.Component {
 
     userIsCaptain = () => {
         let {team, user} = this.props;
-        return ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
+        const isCaptain = ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
+        return isCaptain;
     };
 
     render() {
