@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 import ajax from 'common/ajax';
 
 class AjaxTextInputUpdate extends React.Component {
@@ -82,6 +83,7 @@ class AjaxTextInputUpdate extends React.Component {
         if (this.state.expanded == false) {
             return  (
                 <div
+                    style={{cursor: "pointer"}}
                     className={this.props.className}
                     onClick={this.setExpanded}>
                     { content }
