@@ -265,6 +265,24 @@ class TeamLogoEdit extends React.Component {
         });
     }
 
+    upload = (e) => {
+        let data  = new FormData();
+
+        let f = this.state.files[0];
+        data.append('logo', f)
+
+        let url = reverse("api-team-detail", {team_id: this.props.team.id});
+        ajax({
+            url:url,
+            data:data,
+            method:"PATCH",
+            stringifyData: false,
+            headers: {},
+        }).then(response => {
+            console.log("new logo url:", response.logo);
+        });
+    }
+
     render() {
         return (
             <div>
@@ -280,6 +298,9 @@ class TeamLogoEdit extends React.Component {
                         })}
                     </ul>
                 </aside>
+                <Button onClick={this.upload} >
+                    UPLOAD
+                </Button>
             </div>
         );
     }

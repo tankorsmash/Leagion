@@ -37,15 +37,26 @@ export default function ajax({
     data=null,
     method='GET',
     url=null,
-    requireLogin=true
+    requireLogin=true,
+    headers=null,
+    stringifyData=true,
 }) {
     validateUrl(url);
 
+    if (stringifyData && data) {
+        data = JSON.stringify(data);
+    };
+
     let info = {
         method: method,
-        body: data ? JSON.stringify(data) : null,
+        body: data,
         credentials: "same-origin",
-        headers: DEFAULT_HEADERS,
+    }
+
+    if (headers != null) {
+        info.headers = headers;
+    } else {
+        info.headers = DEFAULT_HEADERS;
     }
 
     if (requireLogin) {

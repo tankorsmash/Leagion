@@ -68,7 +68,7 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'player_ids', 'players',
             'season_id', 'season', 'matches', 'captains',
-            'color',
+            'color', 'logo',
         )
 
     matches = serializers.SerializerMethodField('get_ordered_matches')
@@ -78,6 +78,7 @@ class TeamSerializer(serializers.ModelSerializer):
     season_id = serializers.IntegerField()
 
     color = serializers.CharField()
+    logo = serializers.ImageField()
 
     def get_ordered_matches(self, team):
         matches = list(team.home_matches.all()) + list(team.away_matches.all())
