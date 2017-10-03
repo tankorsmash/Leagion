@@ -60,17 +60,33 @@ def filter_queryset_to_commissioner(user, queryset):
 
     return queryset.filter(qs_filter)
 
+def filter_request_queryset_generic(request, queryset, view):
+    """
+    filters a queryset down to what the user can see, depending on request method
+
+    admins/mods/staff see everything
+    commissioners can read and write their own leagues
+
+    TODO: standard user/player permissions
+    """
+    user = request.user
+
+    if is_moderator_or_better(user):
+        return queryset
+
+    return filter_queryset_to_commissioner(user, queryset)
+
 
 class UserFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset_to_commissioner(request.user, queryset)
+        return filter_request_queryset_generic(request, queryset, view)
 
 
 class TeamFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset_to_commissioner(request.user, queryset)
+        return filter_request_queryset_generic(request, queryset, view)
 
 
 class LeagueFilterBackend(filters.BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
-        return filter_queryset_to_commissioner(request.user, queryset)
+        return filter_request_queryset_generic(request, queryset, view)
