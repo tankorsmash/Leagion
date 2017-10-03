@@ -1,6 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Table, Button, Media} from 'reactstrap';
 import { SketchPicker } from 'react-color';
+import Dropzone from 'react-dropzone'
 
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
@@ -239,11 +240,59 @@ class TeamName extends React.Component {
     }
 };
 
-class TeamLogo extends React.Component {
+
+class TeamLogoView extends React.Component {
     render() {
         return (
             <div>
-                This is where you'll edit or view the logo
+                This is where you'll VIEW the logo
+            </div>
+        );
+    }
+};
+
+class TeamLogoEdit extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            files: []
+        };
+    }
+
+    onDrop = (files) => {
+        this.setState({
+            files
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                This is where you'll EDIT the logo
+                <Dropzone onDrop={this.onDrop}>
+                    <p>Try dropping some files here, or click to select files to upload.</p>
+                </Dropzone>
+                <aside>
+                    <h2>Dropped files</h2>
+                    <ul>
+                        { this.state.files.map((f) => {
+                            return <li key={f.name}>{f.name} - {f.size} bytes</li>
+                        })}
+                    </ul>
+                </aside>
+            </div>
+        );
+    }
+};
+
+
+class TeamLogo extends React.Component {
+    render() {
+        let {team, user} = this.props;
+        return (
+            <div>
+                <TeamLogoView team={team} user={user} />
+                <TeamLogoEdit team={team} user={user} />
             </div>
         );
     }
