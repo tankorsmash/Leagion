@@ -6,6 +6,8 @@ import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
 
 import ajax from 'common/ajax';
+import auth from 'main/auth';
+
 import {Ribbon} from 'components/misc';
 import DatasetView from 'components/dataset_view';
 
@@ -270,7 +272,7 @@ class TeamColor extends React.Component {
             viewOrEdit: (this.state.viewOrEdit == VIEW_MODE) ? EDIT_MODE : VIEW_MODE,
         });
     }
-    //
+
     //happens when user finalizes the color picked
     onChangeComplete = (color, event) => {
         color = color.hex.replace(/#/g, '');
@@ -287,24 +289,32 @@ class TeamColor extends React.Component {
         });
     }
 
+    userIsCaptain = () => {
+        let {team, user} = this.props;
+        return ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
+    };
 
     render() {
         let {team} = this.props;
+        const isCaptain = this.userIsCaptain();
+
         const viewMode = this.state.viewOrEdit;
+
         const inViewMode = viewMode == VIEW_MODE;
         const inEditMode = viewMode == EDIT_MODE;
+
         return (
             <div>
                 <h3> Team Color </h3>
 
-                <Button onClick={this.toggleViewEdit}>
+                { isCaptain && <Button onClick={this.toggleViewEdit}>
                     { inViewMode && "Edit" }
                     { inEditMode && "View" }
-                </Button>
+                </Button> }
 
                 <div className="pt-1">
                     { inViewMode && <TeamColorView teamColor={this.state.teamColor} />}
-                    { inEditMode && <TeamColorEdit onChangeComplete={this.onChangeComplete} teamColor={this.state.teamColor} />}
+                    { isCaptain && inEditMode && <TeamColorEdit onChangeComplete={this.onChangeComplete} teamColor={this.state.teamColor} />}
                 </div>
             </div>
         );
@@ -320,10 +330,6 @@ export class TeamInfoTab extends DatasetView {
         return "api-my-details";
     }
 
-    userIsCaptain = () => {
-        return ( this.props.team.captains.includes(this.state.user.id) );
-    };
-
     render() {
         if (this.getIsLoaded() == false) {
             return ( "Loading..." );
@@ -331,7 +337,6 @@ export class TeamInfoTab extends DatasetView {
 
         const user = this.state.user;
         const team = this.props.team;
-        const isCaptain = this.userIsCaptain();
         return (
             <div>
                 <TeamLogo team={team} user={user} />
