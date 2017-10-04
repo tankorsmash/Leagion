@@ -279,7 +279,9 @@ class TeamLogoEdit extends React.Component {
             stringifyData: false,
             headers: {},
         }).then(response => {
-            console.log("new logo url:", response.logo);
+            toastr.success("Successfully updated team logo!");
+        }).catch(response => {
+            toastr.error("Unknown error occurred updating team logo!");
         });
     }
 
