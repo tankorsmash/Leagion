@@ -226,7 +226,7 @@ class TeamName extends React.Component {
         const userIsCaptain = this.userIsCaptain();
         return (
             <div>
-                <h3> Team name </h3>
+                <h3> Name </h3>
                 <ErrorBoundary>
                     { userIsCaptain && <AjaxTextInputUpdate
                         putUrl={reverse('api-team-detail', {team_id: team.id})}
@@ -351,6 +351,7 @@ class TeamLogo extends React.Component {
         console.log("files:", this.state.files);
         return (
             <div>
+                <h3> Logo </h3>
                 { isCaptain && <Button onClick={this.toggleViewEdit}>
                     { inViewMode && "Edit" }
                     { inEditMode && "View" }
@@ -377,7 +378,7 @@ class TeamColorView extends React.Component {
         return (
             <div>
                 <div className="text-hide" style={style}>
-                    Team Color #{teamColor}
+                    Color #{teamColor}
                 </div>
             </div>
         );
@@ -449,7 +450,7 @@ class TeamColor extends React.Component {
 
         return (
             <div>
-                <h3> Team Color </h3>
+                <h3> Color </h3>
 
                 { isCaptain && <Button onClick={this.toggleViewEdit}>
                     { inViewMode && "Edit" }
