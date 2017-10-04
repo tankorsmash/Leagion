@@ -245,21 +245,71 @@ class TeamLogoView extends React.Component {
     render() {
         return (
             <div>
-                This is where you'll VIEW the logo
+                <Media>
+                    <Media width="200px" className="" object src={this.props.teamLogo} />
+                </Media>
             </div>
         );
     }
 };
 
 class TeamLogoEdit extends React.Component {
-    constructor() {
-        super();
+    render() {
+        const newLogoPrepared = this.props.files.length > 0;
+
+        return (
+            <div>
+                <Dropzone onDrop={this.props.onDrop}>
+                    <div>
+                        { !newLogoPrepared && <span className="text-center">
+                            Click or drag in new team logo
+                        </span> }
+
+                        { this.props.files.map((f) => {
+                            return (
+                                <Media key={f.name}>
+                                    <Media className="w-100" object src={f.preview} />
+                                </Media>
+                            );
+                        })}
+                    </div>
+                </Dropzone>
+                { newLogoPrepared &&
+                        <Button className="mt-1" onClick={this.props.upload} >
+                            Confirm
+                        </Button>
+                }
+            </div>
+        );
+    }
+};
+
+
+class TeamLogo extends React.Component {
+    constructor(props) {
+        super(props);
+
         this.state = {
+            viewOrEdit: VIEW_MODE,
+            teamLogo: this.props.team.logo,
             files: []
         };
     }
 
+    toggleViewEdit = (e) => {
+        this.setState({
+            viewOrEdit: (this.state.viewOrEdit == VIEW_MODE) ? EDIT_MODE : VIEW_MODE,
+        });
+    }
+
+    userIsCaptain = () => {
+        let {team, user} = this.props;
+        const isCaptain = ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
+        return isCaptain;
+    };
+
     onDrop = (files) => {
+        console.log("ondrop files:", files);
         this.setState({
             files
         });
@@ -283,46 +333,33 @@ class TeamLogoEdit extends React.Component {
         }).catch(response => {
             toastr.error("Unknown error occurred updating team logo!");
         });
+        this.setState({
+            teamLogo: f.preview,
+        });
     }
 
-    render() {
-        const newLogoPrepared = this.state.files.length > 0;
-
-        return (
-            <div>
-                <Dropzone onDrop={this.onDrop}>
-                    <div>
-                        { !newLogoPrepared && <span className="text-center">
-                            Click or drag in new team logo
-                        </span> }
-
-                        { this.state.files.map((f) => {
-                            return (
-                                <Media key={f.name}>
-                                    <Media className="w-100" object src={f.preview} />
-                                </Media>
-                            );
-                        })}
-                    </div>
-                </Dropzone>
-                { newLogoPrepared &&
-                        <Button className="mt-1" onClick={this.upload} >
-                            Confirm
-                        </Button>
-                }
-            </div>
-        );
-    }
-};
 
 
-class TeamLogo extends React.Component {
     render() {
         let {team, user} = this.props;
+        const isCaptain = this.userIsCaptain();
+
+        const viewMode = this.state.viewOrEdit;
+        const inViewMode = viewMode == VIEW_MODE;
+        const inEditMode = viewMode == EDIT_MODE;
+
+        console.log("files:", this.state.files);
         return (
             <div>
-                <TeamLogoView team={team} user={user} />
-                <TeamLogoEdit team={team} user={user} />
+                { isCaptain && <Button onClick={this.toggleViewEdit}>
+                    { inViewMode && "Edit" }
+                    { inEditMode && "View" }
+                </Button> }
+
+                <div className="pt-1">
+                    { inViewMode && <TeamLogoView teamLogo={this.state.teamLogo} />}
+                    { isCaptain && inEditMode && <TeamLogoEdit onChangeComplete={this.onChangeComplete} files={this.state.files} upload={this.upload} onDrop={this.onDrop} teamLogo={this.state.teamLogo} />}
+                </div>
             </div>
         );
     }
@@ -407,7 +444,6 @@ class TeamColor extends React.Component {
         const isCaptain = this.userIsCaptain();
 
         const viewMode = this.state.viewOrEdit;
-
         const inViewMode = viewMode == VIEW_MODE;
         const inEditMode = viewMode == EDIT_MODE;
 
