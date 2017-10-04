@@ -286,23 +286,30 @@ class TeamLogoEdit extends React.Component {
     }
 
     render() {
+        const newLogoPrepared = this.state.files.length > 0;
+
         return (
             <div>
-                This is where you'll EDIT the logo
                 <Dropzone onDrop={this.onDrop}>
-                    <p>Try dropping some files here, or click to select files to upload.</p>
-                </Dropzone>
-                <aside>
-                    <h2>Dropped files</h2>
-                    <ul>
+                    <div>
+                        { !newLogoPrepared && <span className="text-center">
+                            Click or drag in new team logo
+                        </span> }
+
                         { this.state.files.map((f) => {
-                            return <li key={f.name}>{f.name} - {f.size} bytes</li>
+                            return (
+                                <Media key={f.name}>
+                                    <Media className="w-100" object src={f.preview} />
+                                </Media>
+                            );
                         })}
-                    </ul>
-                </aside>
-                <Button onClick={this.upload} >
-                    UPLOAD
-                </Button>
+                    </div>
+                </Dropzone>
+                { newLogoPrepared &&
+                        <Button className="mt-1" onClick={this.upload} >
+                            Confirm
+                        </Button>
+                }
             </div>
         );
     }
