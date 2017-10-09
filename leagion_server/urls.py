@@ -31,18 +31,7 @@ from leagion.api.views import (
     leagues as leagues_views,
 )
 
-urlpatterns = []
-
-#NOTE according to the django docs this is a bad idea, but I'm not clear on why
-HAVE_FOUND_BETTER_SOLUTION_TO_MEDIA = False
-if not HAVE_FOUND_BETTER_SOLUTION_TO_MEDIA:
-    urlpatterns += [
-        url(r'^media/(?P<path>.*)$', serve, {
-            'document_root': settings.MEDIA_ROOT,
-        }),
-    ]
-
-urlpatterns += [
+urlpatterns = [
     #authentication
 
     # django-rest-auth
@@ -63,6 +52,9 @@ urlpatterns += [
     url(r'^api/', include('leagion.api.urls')),
 
     url(r'^.*$', views.Main.as_view(), name="main"),
+]
 
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
+print(settings.STATIC_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

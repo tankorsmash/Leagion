@@ -158,7 +158,7 @@ LOGIN_REDIRECT_URL = 'index'
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT = '/assets/media/'
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'media/')
 MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = (
