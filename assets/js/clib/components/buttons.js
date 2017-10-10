@@ -9,18 +9,32 @@ export class ButtonComp extends BaseComponent {
         ],
     };
 
-    static optional_attrs = {
-    };
+    static optional_attrs = ['outline'];
+
+    getAttrsAsCode() {
+        let attrs = '';
+        for (let attr in this.required_attrs) {
+            attrs += `${attr}="${this.state[attr]}" `;
+        }
+
+        for (let attr of this.optional_attrs) {
+            if (this.state[attr]) {
+                attrs += `${attr} `;
+            }
+        }
+
+        return attrs;
+    }
 
     renderCode() {
         return (`
-            <Button color="${this.state.color}">Cool Button</Button>
+<Button ${this.getAttrsAsCode()}>Cool Button</Button>
         `);
     }
 
     renderComponent() {
         return (
-            <Button color={this.state.color}>Cool Button</Button>
+            <Button {...this.state}>Cool Button</Button>
         );
     }
 }

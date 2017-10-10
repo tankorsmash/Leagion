@@ -21,9 +21,12 @@ export default class Base extends React.Component {
 
 
         return (
-            <Container fluid className="pt-0">
+            <div className="component-library">
+                <h4 className="clib-title">
+                    Component Library
+                </h4>
                 <Row>
-                    <Col className="bg-faded pt-3" sm="2">
+                    <Col sm="2">
                         <Nav pills vertical>
                             { this.components.map((tab, i) => {
                                 if (tab.header) {
@@ -52,11 +55,11 @@ export default class Base extends React.Component {
                             })}
                         </Nav>
                     </Col>
-                    <Col className="pt-3" sm="10">
+                    <Col className="" sm="10">
                         <SelectedComponent />
                     </Col>
                 </Row>
-            </Container>
+            </div>
         );
     }
 }
