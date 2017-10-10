@@ -4,4 +4,4 @@ class Main(TemplateView):
     template_name = "react/main.html"
 
 class PatternLibrary(TemplateView):
-    template_name = "react/component_library.html"
+    template_name = "react/clib.html"

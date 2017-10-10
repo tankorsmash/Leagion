@@ -8,8 +8,8 @@ config.entry.vendor = config.entry.vendor.concat([
 
 config.output.publicPath = 'http://localhost:20034/assets/bundles/';
 
-config.entry.component_library = [
-	'./assets/js/component_library/index'
+config.entry.clib = [
+    './assets/js/clib/index'
 ];
 
 module.exports = config;
