@@ -48,13 +48,13 @@ urlpatterns = [
 
     #dont want the user views to be easily scriptable, so no 'login' or 'admin' as the patterns
     url(r'^man/', admin.site.urls),
+    url(r'^clib/', views.PatternLibrary.as_view(), name="pattern-library"),
 
     url(r'^api/', include('leagion.api.urls')),
 
     url(r'^.*$', views.Main.as_view(), name="main"),
 ]
 
-print(settings.STATIC_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

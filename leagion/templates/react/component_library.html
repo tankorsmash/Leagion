@@ -1,0 +1,20 @@
+{% load render_bundle from webpack_loader %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Leagion Component Library</title>
+
+		{% render_bundle 'vendor' 'css'%}
+		{% render_bundle 'component_library' 'css'%}
+	</head>
+
+	<body>
+		<div id="root"></div>
+		{% render_bundle 'vendor' 'js'%}
+		{% render_bundle 'component_library' 'js'%}
+	</body>
+</html>
