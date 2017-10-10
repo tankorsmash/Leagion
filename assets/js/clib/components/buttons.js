@@ -7,24 +7,10 @@ export class ButtonComp extends BaseComponent {
             'primary', 'secondary', 'success',
             'info', 'warning', 'danger', 'link',
         ],
+        size: ['md', 'sm', 'lg'],
     };
 
-    static optional_attrs = ['outline'];
-
-    getAttrsAsCode() {
-        let attrs = '';
-        for (let attr in this.required_attrs) {
-            attrs += `${attr}="${this.state[attr]}" `;
-        }
-
-        for (let attr of this.optional_attrs) {
-            if (this.state[attr]) {
-                attrs += `${attr} `;
-            }
-        }
-
-        return attrs;
-    }
+    static optional_attrs = ['outline', 'block', 'active', 'disabled'];
 
     renderCode() {
         return (`

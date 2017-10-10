@@ -1,4 +1,4 @@
-import { Container, Row, Col, Nav, NavLink, NavItem } from 'reactstrap';
+import {Row, Col, Nav, NavLink, NavItem} from 'reactstrap';
 import {ButtonComp} from 'clib/components/buttons';
 
 export default class Base extends React.Component {
@@ -6,7 +6,7 @@ export default class Base extends React.Component {
 
     components = [
         {'header': true, 'name': 'Elements'}, // header
-        {'name': 'Buttons', 'component': ButtonComp},
+        {'name': 'Buttons', 'components': [ButtonComp]},
         {'header': true, 'name': 'Components'}, // header
     ];
 
@@ -17,8 +17,7 @@ export default class Base extends React.Component {
     };
 
     render() {
-        const SelectedComponent = this.components[this.state.selected].component;
-
+        const selectedComponents = this.components[this.state.selected].components;
 
         return (
             <div className="component-library">
@@ -43,7 +42,7 @@ export default class Base extends React.Component {
                                         <NavItem key={i} >
                                             <NavLink
                                                 href="#"
-                                                active={tab.component === SelectedComponent}
+                                                active={tab.components === selectedComponents}
                                                 data-i={i}
                                                 onClick={this.selectComponent}
                                             >
@@ -56,7 +55,9 @@ export default class Base extends React.Component {
                         </Nav>
                     </Col>
                     <Col className="" sm="10">
-                        <SelectedComponent />
+                        {selectedComponents.map((Component, i) => {
+                            return <Component key={i} />;
+                        })}
                     </Col>
                 </Row>
             </div>

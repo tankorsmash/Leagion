@@ -22,6 +22,21 @@ export default class BaseComponent extends React.Component {
         }
     }
 
+    getAttrsAsCode = () => {
+        let attrs = '';
+        for (let attr in this.required_attrs) {
+            attrs += `${attr}="${this.state[attr]}" `;
+        }
+
+        for (let attr of this.optional_attrs) {
+            if (this.state[attr]) {
+                attrs += `${attr} `;
+            }
+        }
+
+        return attrs;
+    };
+
     changeAttr = (e) => {
         const attr = e.target.dataset.attr;
         const value = e.target.value;
@@ -41,7 +56,7 @@ export default class BaseComponent extends React.Component {
                     <Col className="clib-component" md="6">
                         {this.renderComponent()}
                     </Col>
-                    <Col className="" md="6">
+                    <Col className="clib-component-props" md="6">
                         <SyntaxHighlighter
                             language="javascript"
                         >
@@ -82,7 +97,7 @@ export default class BaseComponent extends React.Component {
                                         ></Input>
                                     </Col>
                                 </FormGroup>
-                            )
+                            );
                         })}
                     </Col>
                 </Row>

@@ -1,11 +1,19 @@
 $clib-border: 2px solid black;
 
 .clib-component {
-    border-left: $clib-border;
     min-height: 100vh;
+    background-color: white;
+    padding: 20px;
+}
+
+.clib-component-props {
+    .form-group {
+        margin: 0;
+    }
 }
 
 .component-library {
+
 }
 
 .clib-title {
