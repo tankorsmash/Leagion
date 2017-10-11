@@ -1,31 +1,97 @@
+import PropTypes from 'prop-types';
 import {
-    Modal as BSModal, ModalBody, ModalFooter, ModalHeader
+    Modal as RModal, ModalBody, ModalFooter, ModalHeader
 } from 'reactstrap';
+import {Button} from 'components/buttons';
 
 export class Modal extends React.Component {
+    static propTypes = {
+        toggle: PropTypes.func,
+        isOpen: PropTypes.bool,
+        className: PropTypes.string,
+        title: PropTypes.string,
+        body: PropTypes.element,
+        footer: PropTypes.element,
+    };
+
     render() {
-		//left and right buttons have el
-		const { title, className, toggle, isOpen } = this.props;
+        const {
+            title, className, toggle,
+            isOpen, body, footer
+        } = this.props;
 
         return (
-			<BSModal
-				backdropTransitionTimeout={25}
-				modalTransitionTimeout={50}
-				fade={false}
-				isOpen={isOpen}
-				toggle={toggle}
-				className={className}>
+            <RModal
+                fade={true}
+                isOpen={isOpen}
+                toggle={toggle}
+                className={className}>
 
-				<ModalHeader toggle={toggle}> {title}</ModalHeader>
+                <ModalHeader toggle={toggle}>{title}</ModalHeader>
 
-				<ModalBody>
-					{this.props.body}
-				</ModalBody>
+                <ModalBody>
+                    {body}
+                </ModalBody>
 
-				<ModalFooter>
-					{this.props.footer}
-				</ModalFooter>
-			</BSModal>
+                <ModalFooter>
+                    {footer}
+                </ModalFooter>
+            </RModal>
+        );
+    }
+}
+
+export class SimpleModal extends Modal {
+    static propTypes = {
+        buttonText: PropTypes.string,
+        buttonProps: PropTypes.shape(Button.propTypes),
+        className: PropTypes.string,
+        title: PropTypes.string,
+        body: PropTypes.element,
+        submitText: PropTypes.string,
+    };
+
+    state = {isOpen: false};
+
+    toggle = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+
+        return false;
+    };
+
+    render() {
+        const {
+            handleSubmit, buttonProps, buttonText,
+            body, title,
+        } = this.props;
+
+        const submitText = this.props.submitText || 'Submit';
+
+        return (
+            <div>
+                <Button
+                    href="#"
+                    onClick={this.toggle}
+                    {...buttonProps}
+                >
+                    {buttonText}
+                </Button>
+                <Modal
+                    toggle={this.toggle}
+                    isOpen={this.state.isOpen}
+                    title={title}
+                    footer={
+                        <div>
+                            <Button color="link" onClick={this.toggle}>Cancel</Button>
+                            {' '}
+                            <Button color="primary" onClick={handleSubmit}>{submitText}</Button>
+                        </div>
+                    }
+                    body={body}
+                />
+            </div>
         );
     }
 }

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 export default class BaseComponent extends React.Component {
     constructor (props) {
         super(props);
-        this.state = {};
+        this.state = this.state || {};
 
         this.choiceAttrs = this.constructor.choiceAttrs || {};
         this.ignoreAttrs = this.constructor.ignoreAttrs || [];
