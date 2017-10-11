@@ -17,7 +17,7 @@ export default class Tabs extends React.Component {
         })),
 
         //ie 'app/team/:teamid/'
-        basePath: PropTypes.string.isRequired,
+        basePath: PropTypes.string,
         //ie '{teamId: 5}' or '(args) => { teamId: args.id }'
         pathParams: PropTypes.object,
     };
@@ -53,23 +53,42 @@ export default class Tabs extends React.Component {
                     {tabs.map((tab, i) => {
                         return (
                             <NavItem key={i}>
-                                <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
-                                    {tab.label}
-                                </RouterNavLink>
+                                {basePath &&
+                                    <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
+                                        {tab.label}
+                                    </RouterNavLink>
+                                }
+                                {!basePath &&
+                                    <NavLink
+                                        className={this.state.activeTab === i ? "active" : ""}
+                                        onClick={() => { this.toggle(i); }}
+                                    >
+                                        {tab.label}
+                                    </NavLink>
+                                }
                             </NavItem>
                         );
                     })}
                 </Nav>
                 <TabContent activeTab={activeTab}>
-                    <Switch>
-                        {tabs.map((tab) => {
-                            let url = this.buildUrlFromId(tab.id);
-                            return (
-                                <Route key={tab.id} path={url} component={() => tab.content} />
-                            );
-                        })}
-                        <Redirect from={basePath} to={this.buildUrlFromId(tabs[0].id)} />
-                    </Switch>
+                    {basePath &&
+                        <Switch>
+                            {tabs.map((tab) => {
+                                let url = this.buildUrlFromId(tab.id);
+                                return (
+                                    <Route key={tab.id} path={url} component={() => tab.content} />
+                                );
+                            })}
+                            <Redirect from={basePath} to={this.buildUrlFromId(tabs[0].id)} />
+                        </Switch>
+                    }
+                    {!basePath && tabs.map((tab, i) => {
+                        return (
+                            <TabPane key={i} tabId={i}>
+                                {tab.content}
+                            </TabPane>
+                        );
+                    })}
                 </TabContent>
             </div>
         );

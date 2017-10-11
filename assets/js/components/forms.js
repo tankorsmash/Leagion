@@ -52,7 +52,7 @@ export class FormGroup extends React.Component {
 					id={this.props.id}
 					value={this.props.value}
 					onChange={this.props.onChange}
-					state={this.props.error ? 'danger' : ''}
+					valid={!this.props.error}
 				/>
 				<FormFeedback>{this.props.error || ''}</FormFeedback>
 			</BootstrapFormGroup>
