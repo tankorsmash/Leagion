@@ -1,5 +1,6 @@
 import {
     Dropdown as RDropdown,
+    NavDropdown as RNavDropdown,
     DropdownToggle as RDropdownToggle,
     DropdownMenu as RDropdownMenu,
     DropdownItem as RDropdownItem,
@@ -7,37 +8,9 @@ import {
 
 import PropTypes from 'prop-types';
 
-export const DropdownToggle = (props) => {
-    return (
-        <RDropdownToggle
-            caret={props.caret}
-            color={props.color}
-            disabled={props.disabled}
-        >
-            {props.children}
-        </RDropdownToggle>
-    );
-};
-
-export const DropdownMenu = (props) => {
-    return (
-        <RDropdownMenu right={props.right}>
-            {props.children}
-        </RDropdownMenu>
-    );
-};
-
-export const DropdownItem = (props) => {
-    return (
-        <RDropdownItem
-            header={props.header}
-            divider={props.divider}
-            disabled={props.disabled}
-        >
-            {props.children}
-        </RDropdownItem>
-    );
-};
+export const DropdownToggle = RDropdownToggle;
+export const DropdownMenu = RDropdownMenu;
+export const DropdownItem = RDropdownItem;
 
 export class Dropdown extends React.Component {
     static propTypes = {
@@ -66,8 +39,10 @@ export class Dropdown extends React.Component {
             menuRight, buttonText, children, nav,
         } = this.props;
 
+        const Component = nav ? RNavDropdown : RDropdown;
+
         return (
-            <RDropdown
+            <Component
                 isOpen={this.state.isOpen}
                 toggle={this.toggle}
                 dropup={dropup}
@@ -84,7 +59,7 @@ export class Dropdown extends React.Component {
                 <DropdownMenu right={menuRight}>
                     {children}
                 </DropdownMenu>
-            </RDropdown>
+            </Component>
         );
     }
 }

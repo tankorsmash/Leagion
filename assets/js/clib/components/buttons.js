@@ -1,4 +1,4 @@
-import { Button } from 'components/buttons';
+import {Button} from 'components/buttons';
 import BaseComponent from './base';
 
 export class ButtonComp extends BaseComponent {
@@ -13,6 +13,7 @@ export class ButtonComp extends BaseComponent {
 
     renderCode() {
         return `
+import {Button} from 'components/buttons';
 <Button ${this.getAttrsAsCode()}>
     Cool Button
 </Button>`;

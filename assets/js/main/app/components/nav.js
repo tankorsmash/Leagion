@@ -1,7 +1,5 @@
-import {
-    NavDropdown, DropdownToggle, DropdownMenu,
-    DropdownItem, Nav
-} from 'reactstrap';
+import {Nav} from 'reactstrap';
+import {Dropdown, DropdownItem} from 'components/dropdowns';
 
 export class AppProfile extends React.Component {
     constructor(props) {
@@ -24,16 +22,14 @@ export class AppProfile extends React.Component {
 
         return (
             <Nav className="ml-auto" navbar>
-				<NavDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-					<DropdownToggle nav caret>
-						{this.props.user.email}
-					</DropdownToggle>
-					<DropdownMenu right>
-						{items.map((item, i) => {
-							return (<DropdownItem tag={item} key={i}></DropdownItem>);
-						})}
-					</DropdownMenu>
-				</NavDropdown>
+                <Dropdown caret menuRight nav
+                    color="primary"
+                    buttonText={this.props.user.email}
+                >
+                    {items.map((item, i) => {
+                        return (<DropdownItem tag={item} key={i}></DropdownItem>);
+                    })}
+                </Dropdown>
             </Nav>
         );
     }

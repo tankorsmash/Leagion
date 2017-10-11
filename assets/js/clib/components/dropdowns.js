@@ -14,6 +14,8 @@ export class DropdownComp extends BaseComponent {
     renderCode() {
         return (
 `
+import {Dropdown, DropdownItem} from 'components/dropdowns';
+
 <Dropdown ${this.getAttrsAsCode()}>
     <DropdownItem header>Header</DropdownItem>
     <DropdownItem>Item 1</DropdownItem>
