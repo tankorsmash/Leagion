@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import SpinLoader from 'components/spinloader';
-import Titlebar from 'components/app/titlebar';
+import {Titlebar} from 'components/text';
 import {RoutedTabs} from 'components/tabs';
 import ProfileForm from 'main/app/player/account/profile';
 import ChangePasswordForm from 'main/app/player/account/password';
@@ -27,7 +27,7 @@ export class Account extends React.Component {
         return (
             <div>
                 <Titlebar title="Account Settings" />
-                <Tabs
+                <RoutedTabs
                     className="account-settings-wrapper"
                     tabs={[{
                         label: 'Profile',

@@ -8,7 +8,7 @@ import matchUrls from 'main/app/player/match/urls';
 import {TeamMatchCard, TeamMatchCardMobile} from 'components/app/team';
 import {FourOhFour} from 'components/error-pages';
 
-import Titlebar from 'components/app/titlebar';
+import {Titlebar} from 'components/text';
 import ajax from 'common/ajax';
 import update from 'immutability-helper';
 

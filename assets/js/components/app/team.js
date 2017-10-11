@@ -348,7 +348,6 @@ class TeamLogo extends React.Component {
         const inViewMode = viewMode == VIEW_MODE;
         const inEditMode = viewMode == EDIT_MODE;
 
-        console.log("files:", this.state.files);
         return (
             <div>
                 <h3> Logo </h3>

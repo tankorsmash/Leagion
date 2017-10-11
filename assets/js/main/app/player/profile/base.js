@@ -1,5 +1,5 @@
 import SpinLoader from 'components/spinloader';
-import Titlebar from 'components/app/titlebar';
+import {Titlebar} from 'components/text';
 import ajax from 'common/ajax';
 import {PlayerAvatar} from 'components/app/player';
 import {StaticRow} from 'components/forms';
@@ -9,7 +9,7 @@ export class PlayerProfile extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = { 
+        this.state = {
             player: {},
             loaded: false
         };

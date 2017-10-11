@@ -10,7 +10,7 @@ import teamUrls from 'main/app/player/team/urls';
 import {MatchTable} from 'components/app/match';
 import {PlayerAvatarList} from 'components/app/player';
 import {TeamCard, TeamTitle, TeamInfoTab} from 'components/app/team';
-import Titlebar from 'components/app/titlebar';
+import {Titlebar} from 'components/text';
 
 import {FourOhFour} from 'components/error-pages';
 
@@ -52,7 +52,7 @@ class TeamDetail extends DatasetView {
                 <div className="team-detail-header">
                     <TeamTitle team={team} />
                 </div>
-                <Tabs
+                <RoutedTabs
                     className="team-match-table"
                     tabs={tabs}
                     basePath={teamUrls.detail}

@@ -5,7 +5,7 @@ import SpinLoader from 'components/spinloader';
 import leagueUrls from 'main/app/player/league/urls';
 import {SeasonLink} from 'components/app/season';
 
-import Titlebar from 'components/app/titlebar';
+import {Titlebar} from 'components/text';
 import {FourOhFour} from 'components/error-pages';
 
 import ajax from 'common/ajax';

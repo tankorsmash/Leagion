@@ -20,6 +20,8 @@ export class RoutedTabs extends React.Component {
         className: PropTypes.string,
     };
 
+    state = {activeTab: 0};
+
     buildUrlFromId(id) {
         //TODO pass this root as a prop
         const urlizer = pathToRegex.compile(this.props.basePath);

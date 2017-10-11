@@ -5,7 +5,7 @@ import {MatchTable} from 'components/app/match';
 import {TeamRankTable} from 'components/app/team';
 
 import seasonUrls from 'main/app/player/season/urls';
-import Titlebar from 'components/app/titlebar';
+import {Titlebar} from 'components/text';
 
 import {FourOhFour} from 'components/error-pages';
 import {RoutedTabs} from 'components/tabs';
@@ -43,7 +43,7 @@ class SeasonSchedule extends React.Component {
                             <div className="text-center">
                                 <h3>{this.state.season.pretty_name}</h3>
                             </div>
-                            <Tabs
+                            <RoutedTabs
                                 className="team-match-table"
                                 tabs={[{
                                     label: 'Schedule',
