@@ -1,5 +1,7 @@
 import '../../style/clib.scss';
-require("expose-loader?reverse!common/reverse");
+import'codemirror/lib/codemirror.css';
+import 'codemirror/theme/monokai.css';
+import "expose-loader?reverse!common/reverse";
 
 import ReactDOM from 'react-dom';
 import { AppContainer  } from 'react-hot-loader';

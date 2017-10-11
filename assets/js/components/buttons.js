@@ -4,6 +4,8 @@ import adminUrls from 'main/app/admin/urls';
 import accountUrls from 'main/app/player/account/urls';
 import playerUrls from 'main/app/player/urls';
 import auth from 'main/auth';
+import {Button as RButton} from 'reactstrap';
+import PropTypes from 'prop-types';
 
 export const LogoutButton = ({...rest}) => {
 	return (
@@ -36,3 +38,17 @@ export const PlayerAppButton = ({...rest}) => {
 		<Link {...rest} to={playerUrls.index}>Back to my teams</Link>
 	);
 };
+
+export class Button extends React.Component {
+	static propTypes = {
+		color: PropTypes.string,
+		outline: PropTypes.bool,
+		disabled: PropTypes.bool,
+		block: PropTypes.bool,
+		active: PropTypes.bool,
+	};
+
+	render() {
+		return <RButton {...this.props}>{this.props.children}</RButton>;
+	}
+}

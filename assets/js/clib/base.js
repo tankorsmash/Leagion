@@ -1,13 +1,13 @@
 import {Row, Col, Nav, NavLink, NavItem} from 'reactstrap';
 import {ButtonComp} from 'clib/components/buttons';
+import {DropdownComp} from 'clib/components/dropdowns';
 
 export default class Base extends React.Component {
-    state = {selected: 1};
+    state = {selected: 0};
 
     components = [
-        {'header': true, 'name': 'Elements'}, // header
         {'name': 'Buttons', 'components': [ButtonComp]},
-        {'header': true, 'name': 'Components'}, // header
+        {'name': 'Dropdowns', 'components': [DropdownComp]},
     ];
 
     selectComponent = (e) => {
