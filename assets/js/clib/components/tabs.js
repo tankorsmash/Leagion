@@ -1,5 +1,5 @@
 import {Tabs, RoutedTabs} from 'components/tabs';
-import BaseComponent from './base';
+import {BaseComponent} from './base';
 
 export class TabComp extends BaseComponent {
     static ignoreAttrs = ['basePath'];

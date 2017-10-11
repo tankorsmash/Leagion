@@ -1,42 +1,60 @@
-import {Dropdown, DropdownItem} from 'components/dropdowns';
-import BaseComponent from './base';
+import {Titlebar} from 'components/text';
+import {BaseComponent} from './base';
 
-export class DropdownComp extends BaseComponent {
-    static choiceAttrs = {
-        color: [
-            'primary', 'secondary', 'success',
-            'info', 'warning', 'danger', 'link',
-        ],
-    };
-    static defaultAttrs = {buttonText: 'Cool Button'};
-    static component = Dropdown;
+export class TitlebarComp extends BaseComponent {
+    static component = Titlebar;
+    static defaultAttrs = {title: 'Good Title'};
+    title = 'titlebar';
 
     renderCode() {
         return (
 `
-import {Dropdown, DropdownItem} from 'components/dropdowns';
+import {Titlebar} from 'components/text';
 
-<Dropdown ${this.getAttrsAsCode()}>
-    <DropdownItem header>Header</DropdownItem>
-    <DropdownItem>Item 1</DropdownItem>
-    <DropdownItem>Item 2</DropdownItem>
-    <DropdownItem divider>Disabled item</DropdownItem>
-    <DropdownItem disabled>Disabled item</DropdownItem>
-</Dropdown>
+<Titlebar ${this.getAttrsAsCode()}/>;
+`
+        );
+    }
+
+    renderComponent() {
+        return <Titlebar {...this.state}/>;
+    }
+}
+
+export class TextComp extends BaseComponent {
+    title = 'Text';
+
+    renderCode() {
+        return (
+`
+<div>
+    <h1>Jumbo</h1>
+    <h2>Display</h2>
+    <h3>Headline</h3>
+    <h4>Title</h4>
+    <h5>Subheader</h5>
+    <h6>Caption</h6>
+    <p>Paragraph</p>
+    <strong>Strong</strong>
+    <small>Small</small>
+</div>
 `
         );
     }
 
     renderComponent() {
         return (
-            <Dropdown {...this.state}>
-                <DropdownItem header>Header</DropdownItem>
-                <DropdownItem>Item 1</DropdownItem>
-                <DropdownItem>Item 2</DropdownItem>
-                <DropdownItem divider>Disabled item</DropdownItem>
-                <DropdownItem disabled>Disabled item</DropdownItem>
-            </Dropdown>
+            <div>
+                <h1>Jumbo</h1>
+                <h2>Display</h2>
+                <h3>Headline</h3>
+                <h4>Title</h4>
+                <h5>Subheader</h5>
+                <h6>Caption</h6>
+                <p>Paragraph</p>
+                <strong>Strong</strong><br/>
+                <small>Small</small>
+            </div>
         );
     }
 }
-

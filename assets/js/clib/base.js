@@ -3,6 +3,7 @@ import {ButtonComp} from 'clib/components/buttons';
 import {DropdownComp} from 'clib/components/dropdowns';
 import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 import {SimpleModalComp} from 'clib/components/modals';
+import {TitlebarComp, TextComp} from 'clib/components/text';
 
 export default class Base extends React.Component {
     state = {selected: 0};
@@ -12,6 +13,7 @@ export default class Base extends React.Component {
         {'name': 'Dropdowns', 'components': [DropdownComp]},
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
         {'name': 'Modals', 'components': [SimpleModalComp]},
+        {'name': 'Text', 'components': [TitlebarComp, TextComp]},
     ];
 
     selectComponent = (e) => {

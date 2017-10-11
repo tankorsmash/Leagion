@@ -1,5 +1,5 @@
 import {Button} from 'components/buttons';
-import BaseComponent from './base';
+import {BaseComponent} from './base';
 
 export class ButtonComp extends BaseComponent {
     static choiceAttrs = {

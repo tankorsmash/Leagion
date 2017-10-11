@@ -1,5 +1,5 @@
 import {Dropdown, DropdownItem} from 'components/dropdowns';
-import BaseComponent from './base';
+import {BaseComponent} from './base';
 
 export class DropdownComp extends BaseComponent {
     static choiceAttrs = {

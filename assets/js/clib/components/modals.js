@@ -1,5 +1,5 @@
 import {SimpleModal} from 'components/modals';
-import BaseComponent from './base';
+import {BaseComponent} from './base';
 
 export class SimpleModalComp extends BaseComponent {
     static component = SimpleModal;

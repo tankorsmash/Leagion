@@ -3,7 +3,7 @@ import CodeMirror from 'react-codemirror2';
 import 'codemirror/mode/jsx/jsx';
 import PropTypes from 'prop-types';
 
-export default class BaseComponent extends React.Component {
+export class BaseComponent extends React.Component {
     constructor (props) {
         super(props);
         this.state = this.state || {};
@@ -12,40 +12,38 @@ export default class BaseComponent extends React.Component {
         this.ignoreAttrs = this.constructor.ignoreAttrs || [];
         this.defaultAttrs = this.constructor.defaultAttrs || {};
 
-        if (!this.constructor.component) {
-            throw 'A static property of "component" is required\
-                in order to extract proptypes';
-        }
-        if (!this.constructor.component.propTypes) {
-            throw 'propTypes are required on all common components';
-        }
-
         for (let attr in this.choiceAttrs) {
             this.state[attr] = this.choiceAttrs[attr][0];
         }
 
+        const hasComponentAndProptypes = this.constructor.component && this.constructor.component.propTypes;
+
         this.boolAttrs = [];
-        for (let attr of Object.keys(this.constructor.component.propTypes)) {
-            const propType = this.constructor.component.propTypes[attr];
-            if (
-                propType === PropTypes.bool &&
-                !this.ignoreAttrs.includes(attr)
-            ) {
-                this.state[attr] = false;
-                this.boolAttrs.push(attr);
+        if (hasComponentAndProptypes) {
+            for (let attr of Object.keys(this.constructor.component.propTypes)) {
+                const propType = this.constructor.component.propTypes[attr];
+                if (
+                    propType === PropTypes.bool &&
+                    !this.ignoreAttrs.includes(attr)
+                ) {
+                    this.state[attr] = false;
+                    this.boolAttrs.push(attr);
+                }
             }
         }
 
         this.stringAttrs = [];
-        for (let attr of Object.keys(this.constructor.component.propTypes)) {
-            const propType = this.constructor.component.propTypes[attr];
-            if (
-                propType === PropTypes.string &&
-                !Object.keys(this.choiceAttrs).includes(attr) &&
-                !this.ignoreAttrs.includes(attr)
-            ) {
-                this.state[attr] = '';
-                this.stringAttrs.push(attr);
+        if (hasComponentAndProptypes) {
+            for (let attr of Object.keys(this.constructor.component.propTypes)) {
+                const propType = this.constructor.component.propTypes[attr];
+                if (
+                    propType === PropTypes.string &&
+                    !Object.keys(this.choiceAttrs).includes(attr) &&
+                    !this.ignoreAttrs.includes(attr)
+                ) {
+                    this.state[attr] = '';
+                    this.stringAttrs.push(attr);
+                }
             }
         }
 
