@@ -35,15 +35,15 @@ class TeamDetail extends DatasetView {
         let tabs = [{
             label: 'Matches',
             id: 'matches',
-            content: (() => <MatchTable matches={team.matches} />)
+            content: <MatchTable matches={team.matches} />
         }, {
             label: 'Team Members',
             id: 'team-members',
-            content: (() => <PlayerAvatarList size={100} players={team.players}/>)
+            content: <PlayerAvatarList size={100} players={team.players}/>
         }, {
             label: 'Team Details',
             id: 'team-details',
-            content: (() => <TeamInfoTab team={team}/>)
+            content: <TeamInfoTab team={team}/>
         }];
 
         return (
@@ -55,9 +55,7 @@ class TeamDetail extends DatasetView {
                 <Tabs
                     className="team-match-table"
                     tabs={tabs}
-
-                    defaultPath={teamUrls.detail}
-                    defaultPathName={"matches"}
+                    basePath={teamUrls.detail}
                     pathParams={{teamId: team.id}}
                 />
             </SpinLoader>

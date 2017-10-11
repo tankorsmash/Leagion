@@ -48,15 +48,13 @@ class SeasonSchedule extends React.Component {
                                 tabs={[{
                                     label: 'Schedule',
                                     id: 'schedule',
-                                    content: () => (<MatchTable matches={this.state.season.matches} />)
+                                    content: <MatchTable matches={this.state.season.matches} />
                                 }, {
                                     label: 'Rankings',
                                     id: 'rankings',
-                                    content: () => (<TeamRankTable teams={this.state.season.teams} />)
+                                    content: <TeamRankTable teams={this.state.season.teams} />
                                 }]}
-
-                                defaultPath={seasonUrls.detail}
-                                defaultPathName={"schedule"}
+                                basePath={seasonUrls.detail}
                                 pathParams={{seasonId: this.props.match.params.seasonId}}
                             />
                         </div>

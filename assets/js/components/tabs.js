@@ -6,9 +6,6 @@ import {Route} from 'components/router';
 
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 
-
-//TODO remove this import
-import teamUrls from 'main/app/player/team/urls';
 import pathToRegex from 'path-to-regexp';
 
 
@@ -16,29 +13,25 @@ export default class Tabs extends React.Component {
     static propTypes = {
         tabs: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string.isRequired,
-            content: PropTypes.func.isRequired,
+            content: PropTypes.element.isRequired,
         })),
 
         //ie 'app/team/:teamid/'
-        defaultPath: PropTypes.string.isRequired,
-        //ie '{teamId: 5}' or '(args) => { teamId: args.id }' (TODO havent implemented the func support though)
-        pathParams: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
-        //ie 'team-detail' to make: app/team/:teamid/team-detail
-        defaultPathName: PropTypes.string.isRequired,
+        basePath: PropTypes.string.isRequired,
+        //ie '{teamId: 5}' or '(args) => { teamId: args.id }'
+        pathParams: PropTypes.object,
     };
 
     constructor(props) {
         super(props);
-
-        this.state = {
-            activeTab: 0,
-        };
+        this.state = {activeTab: 0};
+        this.basePath = props.basePath;
     }
 
     buildUrlFromId(id) {
         //TODO pass this root as a prop
-        const urlizer = pathToRegex.compile(this.props.defaultPath);
-        const url = urlizer(this.props.pathParams);
+        const urlizer = pathToRegex.compile(this.props.basePath);
+        const url = urlizer(this.props.pathParams || {});
         return `${url}/${id}`;
     }
 
@@ -51,11 +44,13 @@ export default class Tabs extends React.Component {
     }
 
     render() {
-        const defaultPathName = this.props.defaultPathName;
+        const {basePath, tabs} = this.props;
+        const {activeTab} = this.state;
+
         return (
             <div className={this.props.className + ' tab-wrapper'}>
                 <Nav tabs>
-                    {this.props.tabs.map((tab, i) => {
+                    {tabs.map((tab, i) => {
                         return (
                             <NavItem key={i}>
                                 <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
@@ -65,15 +60,15 @@ export default class Tabs extends React.Component {
                         );
                     })}
                 </Nav>
-                <TabContent activeTab={this.state.activeTab}>
+                <TabContent activeTab={activeTab}>
                     <Switch>
-                        {this.props.tabs.map((tab, i) => {
+                        {tabs.map((tab) => {
                             let url = this.buildUrlFromId(tab.id);
                             return (
-                                <Route key={tab.id} path={url} component={tab.content} />
+                                <Route key={tab.id} path={url} component={() => tab.content} />
                             );
                         })}
-                        <Redirect from={this.props.defaultPath} to={this.buildUrlFromId(defaultPathName)} />
+                        <Redirect from={basePath} to={this.buildUrlFromId(tabs[0].id)} />
                     </Switch>
                 </TabContent>
             </div>

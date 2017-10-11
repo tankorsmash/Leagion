@@ -51,16 +51,14 @@ const MatchDetailMobile = (props) => {
                 tabs={[{
                     label: 'Home Roster',
                     id: "home-roster",
-                    content: (
-                        () => <FullRosterTable user={props.user} rosterId={home_roster}/>
-                    )
+                    content: <FullRosterTable user={props.user} rosterId={home_roster}/>
                 }, {
                     label: 'Away Roster',
                     id: "away-roster",
-                    content: (
-                        () => <FullRosterTable user={props.user} rosterId={away_roster}/>
-                    )
+                    content: <FullRosterTable user={props.user} rosterId={away_roster}/>
                 }]}
+                basePath={matchUrls.detail}
+                pathParams={{matchId: props.matchId}}
             />
         </div>
     );
