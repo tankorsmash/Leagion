@@ -13,7 +13,7 @@ import pathToRegex from 'path-to-regexp';
 
 
 export default class Tabs extends React.Component {
-	static propTypes = {
+    static propTypes = {
         tabs: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string.isRequired,
             content: PropTypes.func.isRequired,
@@ -25,7 +25,7 @@ export default class Tabs extends React.Component {
         pathParams: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
         //ie 'team-detail' to make: app/team/:teamid/team-detail
         defaultPathName: PropTypes.string.isRequired,
-	};
+    };
 
     constructor(props) {
         super(props);
@@ -42,30 +42,30 @@ export default class Tabs extends React.Component {
         return `${url}/${id}`;
     }
 
-	toggle(tab) {
-		if (this.state.activeTab !== tab) {
-			this.setState({
-				activeTab: tab
-			});
-		}
-	}
+    toggle(tab) {
+        if (this.state.activeTab !== tab) {
+            this.setState({
+                activeTab: tab
+            });
+        }
+    }
 
-	render() {
+    render() {
         const defaultPathName = this.props.defaultPathName;
-		return (
-			<div className={this.props.className + ' tab-wrapper'}>
-				<Nav tabs>
-					{this.props.tabs.map((tab, i) => {
-						return (
-							<NavItem key={i}>
+        return (
+            <div className={this.props.className + ' tab-wrapper'}>
+                <Nav tabs>
+                    {this.props.tabs.map((tab, i) => {
+                        return (
+                            <NavItem key={i}>
                                 <RouterNavLink to={this.buildUrlFromId(tab.id)} className="nav-link" activeClassName="active">
                                     {tab.label}
                                 </RouterNavLink>
-							</NavItem>
-						);
-					})}
-				</Nav>
-				<TabContent activeTab={this.state.activeTab}>
+                            </NavItem>
+                        );
+                    })}
+                </Nav>
+                <TabContent activeTab={this.state.activeTab}>
                     <Switch>
                         {this.props.tabs.map((tab, i) => {
                             let url = this.buildUrlFromId(tab.id);
@@ -75,8 +75,8 @@ export default class Tabs extends React.Component {
                         })}
                         <Redirect from={this.props.defaultPath} to={this.buildUrlFromId(defaultPathName)} />
                     </Switch>
-				</TabContent>
-			</div>
-		);
-	}
+                </TabContent>
+            </div>
+        );
+    }
 }

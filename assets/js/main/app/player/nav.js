@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Nav, NavItem} from 'reactstrap';
 import {LogoutButton, AdminButton, AccountSettingsButton} from 'components/buttons';
-import {Appbar} from 'components/nav/base';
+import {Navbar} from 'components/nav';
 import {AppProfile} from 'main/app/components/nav';
 import playerUrls from 'main/app/player/urls';
 
@@ -35,10 +35,10 @@ class PlayerProfile extends React.Component {
 
 export default (props) => {
     return (
-        <Appbar
-            itemComponent={PlayerItems}
-            profileComponent={PlayerProfile}
+        <Navbar
             {...props}
+            ItemComponent={PlayerItems}
+            ProfileComponent={PlayerProfile}
         />
     );
 };

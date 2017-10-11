@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {Nav} from 'reactstrap';
 import adminUrls from 'main/app/admin/urls';
 import {LogoutButton, PlayerAppButton} from 'components/buttons';
-import {Appbar} from 'components/nav/base';
+import {Navbar} from 'components/nav';
 import {AppProfile} from 'main/app/components/nav';
 
 class AdminNavItems extends React.Component {
@@ -43,10 +43,10 @@ class AdminProfile extends React.Component {
 
 export default (props) => {
     return (
-        <Appbar
-            itemComponent={AdminNavItems}
-            profileComponent={AdminProfile}
+        <Navbar
             {...props}
+            ItemComponent={AdminNavItems}
+            ProfileComponent={AdminProfile}
         />
     );
 };
