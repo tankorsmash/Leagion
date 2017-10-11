@@ -2,14 +2,14 @@ import {Dropdown, DropdownItem} from 'components/dropdowns';
 import BaseComponent from './base';
 
 export class DropdownComp extends BaseComponent {
-    static choice_attrs = {
+    static choiceAttrs = {
         color: [
             'primary', 'secondary', 'success',
             'info', 'warning', 'danger', 'link',
         ],
     };
+    static defaultAttrs = {buttonText: 'Cool Button'};
     static component = Dropdown;
-    static hasChildren = true;
 
     renderCode() {
         return (

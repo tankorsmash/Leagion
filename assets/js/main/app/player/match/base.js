@@ -13,7 +13,7 @@ import ajax from 'common/ajax';
 import update from 'immutability-helper';
 
 import {MediaBreakpoints} from 'common/responsive';
-import Tabs from 'components/tabs';
+import {Tabs} from 'components/tabs';
 import {FullRosterTable} from 'components/app/roster';
 
 const MatchDetailMobile = (props) => {

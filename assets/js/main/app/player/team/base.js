@@ -2,7 +2,7 @@ import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 
-import Tabs from 'components/tabs';
+import {RoutedTabs} from 'components/tabs';
 import DatasetView from 'components/dataset_view';
 
 import teamUrls from 'main/app/player/team/urls';

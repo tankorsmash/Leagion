@@ -23,6 +23,7 @@ export class Dropdown extends React.Component {
         group: PropTypes.bool,
         nav: PropTypes.bool,
         children: PropTypes.node.isRequired,
+        className: PropTypes.string,
     };
 
     state = {isOpen: false};
@@ -37,12 +38,14 @@ export class Dropdown extends React.Component {
         const {
             caret, disabled, color, dropup, group,
             menuRight, buttonText, children, nav,
+            className,
         } = this.props;
 
         const Component = nav ? RNavDropdown : RDropdown;
 
         return (
             <Component
+                className={className}
                 isOpen={this.state.isOpen}
                 toggle={this.toggle}
                 dropup={dropup}

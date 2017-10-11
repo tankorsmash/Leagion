@@ -1,4 +1,5 @@
 import '../../style/clib.scss';
+import '../../style/app.scss';
 import'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 import "expose-loader?reverse!common/reverse";

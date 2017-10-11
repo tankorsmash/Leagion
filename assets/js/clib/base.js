@@ -1,6 +1,7 @@
 import {Row, Col, Nav, NavLink, NavItem} from 'reactstrap';
 import {ButtonComp} from 'clib/components/buttons';
 import {DropdownComp} from 'clib/components/dropdowns';
+import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 
 export default class Base extends React.Component {
     state = {selected: 0};
@@ -8,6 +9,7 @@ export default class Base extends React.Component {
     components = [
         {'name': 'Buttons', 'components': [ButtonComp]},
         {'name': 'Dropdowns', 'components': [DropdownComp]},
+        {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
     ];
 
     selectComponent = (e) => {

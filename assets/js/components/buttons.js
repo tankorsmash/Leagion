@@ -46,6 +46,7 @@ export class Button extends React.Component {
 		disabled: PropTypes.bool,
 		block: PropTypes.bool,
 		active: PropTypes.bool,
+        className: PropTypes.string,
 	};
 
 	render() {

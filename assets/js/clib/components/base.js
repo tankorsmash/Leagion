@@ -8,56 +8,65 @@ export default class BaseComponent extends React.Component {
         super(props);
         this.state = {};
 
-        this.choice_attrs = this.constructor.choice_attrs;
-
-        if (!this.choice_attrs) {
-            throw 'please define choice_attrs';
-        }
+        this.choiceAttrs = this.constructor.choiceAttrs || {};
+        this.ignoreAttrs = this.constructor.ignoreAttrs || [];
+        this.defaultAttrs = this.constructor.defaultAttrs || {};
 
         if (!this.constructor.component) {
             throw 'A static property of "component" is required\
                 in order to extract proptypes';
         }
-
-        for (let attr in this.choice_attrs) {
-            this.state[attr] = this.choice_attrs[attr][0];
+        if (!this.constructor.component.propTypes) {
+            throw 'propTypes are required on all common components';
         }
 
-        this.bool_attrs = [];
+        for (let attr in this.choiceAttrs) {
+            this.state[attr] = this.choiceAttrs[attr][0];
+        }
+
+        this.boolAttrs = [];
         for (let attr of Object.keys(this.constructor.component.propTypes)) {
             const propType = this.constructor.component.propTypes[attr];
-            if (propType === PropTypes.bool) {
+            if (
+                propType === PropTypes.bool &&
+                !this.ignoreAttrs.includes(attr)
+            ) {
                 this.state[attr] = false;
-                this.bool_attrs.push(attr);
+                this.boolAttrs.push(attr);
             }
         }
 
-        this.string_attrs = [];
+        this.stringAttrs = [];
         for (let attr of Object.keys(this.constructor.component.propTypes)) {
             const propType = this.constructor.component.propTypes[attr];
             if (
                 propType === PropTypes.string &&
-                !Object.keys(this.choice_attrs).includes(attr)
+                !Object.keys(this.choiceAttrs).includes(attr) &&
+                !this.ignoreAttrs.includes(attr)
             ) {
-                this.state[attr] = 'Default Text';
-                this.string_attrs.push(attr);
+                this.state[attr] = '';
+                this.stringAttrs.push(attr);
             }
+        }
+
+        for (let attr of Object.keys(this.defaultAttrs)) {
+            this.state[attr] = this.defaultAttrs[attr];
         }
     }
 
     getAttrsAsCode = () => {
         let attrs = '';
-        for (let attr in this.choice_attrs) {
+        for (let attr in this.choiceAttrs) {
             attrs += `${attr}="${this.state[attr]}" `;
         }
 
-        for (let attr of this.bool_attrs) {
+        for (let attr of this.boolAttrs) {
             if (this.state[attr]) {
                 attrs += `${attr} `;
             }
         }
 
-        for (let attr of this.string_attrs) {
+        for (let attr of this.stringAttrs) {
             if (this.state[attr]) {
                 attrs += `${attr}="${this.state[attr]}" `;
             }
@@ -68,7 +77,7 @@ export default class BaseComponent extends React.Component {
 
     changeAttr = (e) => {
         const attr = e.target.dataset.attr;
-        const value = e.target.value || 'Default Text';
+        const value = e.target.value || '';
         this.setState({[attr]: value});
     };
 
@@ -83,6 +92,8 @@ export default class BaseComponent extends React.Component {
             <div>
                 <Row>
                     <Col className="clib-component" md="6">
+                        <h3>{this.title}</h3>
+                        <p>{this.description}</p>
                         {this.renderComponent()}
                     </Col>
                     <Col className="clib-component-props" md="6">
@@ -97,8 +108,8 @@ export default class BaseComponent extends React.Component {
                         <h5 className="clib-title">
                             Component Properties
                         </h5>
-                        {Object.keys(this.choice_attrs).map((attr, i) => {
-                            const choices = this.choice_attrs[attr];
+                        {Object.keys(this.choiceAttrs).map((attr, i) => {
+                            const choices = this.choiceAttrs[attr];
                             return (
                                 <FormGroup row key={i}>
                                     <Label sm={6}>{attr}</Label>
@@ -107,6 +118,7 @@ export default class BaseComponent extends React.Component {
                                             type="select"
                                             data-attr={attr}
                                             onChange={this.changeAttr}
+                                            value={this.state[attr]}
                                         >
                                             {choices.map((choice, j) => {
                                                 return <option key={j} value={choice}>{choice}</option>;
@@ -117,7 +129,7 @@ export default class BaseComponent extends React.Component {
                                 </FormGroup>
                             );
                         })}
-                        {this.string_attrs.map((attr, i) => {
+                        {this.stringAttrs.map((attr, i) => {
                             return (
                                 <FormGroup row key={i}>
                                     <Label sm={6}>{attr}</Label>
@@ -126,12 +138,13 @@ export default class BaseComponent extends React.Component {
                                             type="text"
                                             data-attr={attr}
                                             onChange={this.changeAttr}
+                                            value={this.state[attr]}
                                         ></Input>
                                     </Col>
                                 </FormGroup>
                             );
                         })}
-                        {this.bool_attrs.map((attr, i) => {
+                        {this.boolAttrs.map((attr, i) => {
                             return (
                                 <FormGroup row key={i}>
                                     <Label sm={6}>{attr}</Label>
@@ -140,6 +153,7 @@ export default class BaseComponent extends React.Component {
                                             type="checkbox"
                                             data-attr={attr}
                                             onClick={this.changeBoolAttr}
+                                            value={this.state[attr]}
                                         ></Input>
                                     </Col>
                                 </FormGroup>

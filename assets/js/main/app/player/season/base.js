@@ -8,7 +8,7 @@ import seasonUrls from 'main/app/player/season/urls';
 import Titlebar from 'components/app/titlebar';
 
 import {FourOhFour} from 'components/error-pages';
-import Tabs from 'components/tabs';
+import {RoutedTabs} from 'components/tabs';
 
 import ajax from 'common/ajax';
 

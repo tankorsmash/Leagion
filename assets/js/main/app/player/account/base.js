@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import SpinLoader from 'components/spinloader';
 import Titlebar from 'components/app/titlebar';
-import Tabs from 'components/tabs';
+import {RoutedTabs} from 'components/tabs';
 import ProfileForm from 'main/app/player/account/profile';
 import ChangePasswordForm from 'main/app/player/account/password';
 

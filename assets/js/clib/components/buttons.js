@@ -2,7 +2,7 @@ import {Button} from 'components/buttons';
 import BaseComponent from './base';
 
 export class ButtonComp extends BaseComponent {
-    static choice_attrs = {
+    static choiceAttrs = {
         color: [
             'primary', 'secondary', 'success',
             'info', 'warning', 'danger', 'link',
