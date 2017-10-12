@@ -47,9 +47,11 @@ export class BaseComponent extends React.Component {
             }
         }
 
+        console.log(this.defaultAttrs);
         for (let attr of Object.keys(this.defaultAttrs)) {
             this.state[attr] = this.defaultAttrs[attr];
         }
+        console.log(this.state);
     }
 
     getAttrsAsCode = () => {
@@ -150,8 +152,8 @@ export class BaseComponent extends React.Component {
                                         <Input
                                             type="checkbox"
                                             data-attr={attr}
-                                            onClick={this.changeBoolAttr}
-                                            value={this.state[attr]}
+                                            onChange={this.changeBoolAttr}
+                                            checked={this.state[attr]}
                                         ></Input>
                                     </Col>
                                 </FormGroup>
@@ -163,4 +165,3 @@ export class BaseComponent extends React.Component {
         );
     }
 }
-
