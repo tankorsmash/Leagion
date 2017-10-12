@@ -11,8 +11,7 @@ export class TableComp extends BaseComponent {
 
     renderCode() {
         return (
-`
-import {Table} from 'components/tables';
+`import {Table} from 'components/tables';
 
 <Table
     ${this.getAttrsAsCode()}
@@ -26,8 +25,7 @@ import {Table} from 'components/tables';
         {header: 'First Name', cell: 'firstName'},
         {header: 'First Name', cell: (item) => <small>item.lastName</small> },
     ]}
-/>
-`
+/>`
         );
     }
 

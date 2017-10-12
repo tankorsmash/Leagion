@@ -13,8 +13,7 @@ export class DropdownComp extends BaseComponent {
 
     renderCode() {
         return (
-`
-import {Dropdown, DropdownItem} from 'components/dropdowns';
+`import {Dropdown, DropdownItem} from 'components/dropdowns';
 
 <Dropdown ${this.getAttrsAsCode()}>
     <DropdownItem header>Header</DropdownItem>
@@ -22,8 +21,7 @@ import {Dropdown, DropdownItem} from 'components/dropdowns';
     <DropdownItem>Item 2</DropdownItem>
     <DropdownItem divider>Disabled item</DropdownItem>
     <DropdownItem disabled>Disabled item</DropdownItem>
-</Dropdown>
-`
+</Dropdown>`
         );
     }
 

@@ -8,8 +8,7 @@ export class TabComp extends BaseComponent {
 
     renderCode() {
         return (
-`
-import {Tabs} from 'components/tabs';
+`import {Tabs} from 'components/tabs';
 
 <Tabs
     ${this.getAttrsAsCode()}
@@ -20,8 +19,7 @@ import {Tabs} from 'components/tabs';
         label: 'Tab 2',
         content: <h3>Tab 2 content</h3>
     }]}
-/>
-`
+/>`
         );
     }
 

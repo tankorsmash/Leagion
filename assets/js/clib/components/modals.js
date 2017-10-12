@@ -15,14 +15,12 @@ export class SimpleModalComp extends BaseComponent {
 
     renderCode() {
         return (
-`
-import {SimpleModal} from 'components/modals';
+`import {SimpleModal} from 'components/modals';
 
 <SimpleModal
     ${this.getAttrsAsCode()}
     body={<h2>this is the modal content</h2>}
-/>
-`
+/>`
         );
     }
 

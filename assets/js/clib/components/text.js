@@ -8,11 +8,9 @@ export class TitlebarComp extends BaseComponent {
 
     renderCode() {
         return (
-`
-import {Titlebar} from 'components/text';
+`import {Titlebar} from 'components/text';
 
-<Titlebar ${this.getAttrsAsCode()}/>;
-`
+<Titlebar ${this.getAttrsAsCode()}/>;`
         );
     }
 

@@ -12,11 +12,13 @@ export class ButtonComp extends BaseComponent {
     static component = Button;
 
     renderCode() {
-        return `
-import {Button} from 'components/buttons';
+        return (
+`import {Button} from 'components/buttons';
+
 <Button ${this.getAttrsAsCode()}>
     Cool Button
-</Button>`;
+</Button>`
+        );
     }
 
     renderComponent() {
