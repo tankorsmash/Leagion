@@ -29,7 +29,7 @@ export default class Base extends React.Component {
 
         return (
             <div className="component-library">
-                <h4 className="clib-title">
+                <h4 className="ml-2 clib-title">
                     Component Library
                 </h4>
                 <Row>

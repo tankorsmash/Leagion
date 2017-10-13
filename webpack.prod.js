@@ -1,7 +1,6 @@
 const webpack = require('webpack');
-const BundleTracker = require('webpack-bundle-tracker');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = require('./webpack.common.js');
 
@@ -9,19 +8,17 @@ config.devtool = undefined;
 config.output.filename = "[name]-[hash].js";
 config.output.publicPath = '/static/';
 
-config.plugins = [
+config.plugins = config.plugins.concat([
     new UglifyJSPlugin(),
     new webpack.DefinePlugin({
         'process.env': {
             'NODE_ENV': JSON.stringify('production')
         }
     }),
-    new BundleTracker({filename: './webpack-stats.json'}),
-    new webpack.ProvidePlugin({
-        'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
-    }),
-    new ExtractTextPlugin('[name]-[hash].css')
-];
+	new ExtractTextPlugin({
+		filename: '[name]-[hash].css',
+	}),
+]);
 
 module.exports = config;
 

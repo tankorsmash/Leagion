@@ -1,7 +1,7 @@
-var path = require("path");
-var webpack = require('webpack');
-var BundleTracker = require('webpack-bundle-tracker');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require("path");
+const webpack = require('webpack');
+const BundleTracker = require('webpack-bundle-tracker');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
     context: __dirname,
@@ -31,15 +31,10 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        // do not emit compiled assets that include errors
         new webpack.ProvidePlugin({
             'fetch': 'imports-loader?this=>global!exports-loader?global.fetch!whatwg-fetch'
         }),
         new BundleTracker({filename: './webpack-stats.json'}),
-        new ExtractTextPlugin('[name].css'),
     ],
 
     module: {
@@ -52,14 +47,17 @@ module.exports = {
                 plugins: ["react-hot-loader/babel"]
             }
         }, {
-            test: /\.scss$/,
+            test: /\.scss$/, // files ending with .scss
+            use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: ['css-loader', 'postcss-loader', 'sass-loader'],
+            })),
+        }, {
+            test: /\.css$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
-                use: ['css-loader', 'postcss-loader', 'sass-loader']
+                use: ['css-loader']
             }),
-        },{
-            test: /\.css$/,
-            loader: ExtractTextPlugin.extract('css-loader')
         },
         {
             test: /\.(ttf|otf|eot|svg|woff(2)?)(\?[a-z0-9]+)?$/,
@@ -76,18 +74,5 @@ module.exports = {
             path.resolve(__dirname, 'assets/style/'),
         ],
         extensions: ['*', '.js', '.js', '.scss', '.css'],
-    },
-
-    devServer: {
-        host: 'localhost',
-        port: 20034,
-
-        historyApiFallback: true,
-        // respond to 404s with index.html
-        headers: { 'Access-Control-Allow-Origin': '*'  },
-
-        inline: true,
-        hot: true,
-        // enable HMR on the server
     },
 };
