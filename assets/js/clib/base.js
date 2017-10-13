@@ -4,7 +4,7 @@ import {DropdownComp} from 'clib/components/dropdowns';
 import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 import {SimpleModalComp} from 'clib/components/modals';
 import {TitlebarComp, TextComp} from 'clib/components/text';
-import {TableComp} from 'clib/components/tables';
+import {TableComp, DraggableTableComp} from 'clib/components/tables';
 
 export default class Base extends React.Component {
     state = {selected: 0};
@@ -15,7 +15,7 @@ export default class Base extends React.Component {
         {'name': 'Text', 'components': [TitlebarComp, TextComp]},
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
         {'name': 'Modals', 'components': [SimpleModalComp]},
-        {'name': 'Tables', 'components': [TableComp]},
+        {'name': 'Tables', 'components': [TableComp, DraggableTableComp]},
     ];
 
     selectComponent = (e) => {
