@@ -79,7 +79,7 @@ export class Table extends React.Component {
                     [this.oldIndex, 1],
                     [newIndex, 0, obj]
                 ]
-            }})
+            }});
         });
 
         this.drake.cancel(true);
@@ -109,9 +109,10 @@ export class Table extends React.Component {
 
     render() {
         const {
-            data, striped, hover, bordered, inverse,
-            className,
+            striped, hover, bordered, inverse, className,
         } = this.props;
+
+        const {data} = this.state;
         const size = this.props.small ? 'sm' : undefined;
         const responsive = this.props.responsive || true;
 

@@ -1,12 +1,19 @@
-$clib-border: 2px solid black;
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import 'common/variables';
+
+$clib-border: 1px solid $black;
 
 .clib-component {
     //min-height: 100vh;
-    background-color: white;
+    background-color: $white;
     padding: 20px;
 }
 
 .clib-component-props {
+    background-color: $gray-200;
+    padding: 30px;
+
     .form-group {
         margin: 0;
     }

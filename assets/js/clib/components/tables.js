@@ -7,6 +7,8 @@ export class TableComp extends BaseComponent {
         responsive: true,
         striped: true,
     };
+    static ignoreAttrs = ['draggable'];
+
     title = 'Table';
 
     renderCode() {
@@ -53,6 +55,7 @@ export class DraggableTableComp extends BaseComponent {
     static defaultAttrs = {
         responsive: true,
         striped: true,
+        draggable: true,
     };
     title = 'Draggable Table';
     description = 'use this kind of table if you want to be\
@@ -89,7 +92,6 @@ export class DraggableTableComp extends BaseComponent {
         return (
             <Table
                 {...this.state}
-                draggable
                 data={[
                     {firstName: 'Bill', lastName: 'Sanchez'},
                     {firstName: 'Tiger', lastName: 'Balmer'},

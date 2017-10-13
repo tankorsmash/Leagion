@@ -8,7 +8,10 @@ export class DropdownComp extends BaseComponent {
             'info', 'warning', 'danger', 'link',
         ],
     };
-    static defaultAttrs = {buttonText: 'Cool Button'};
+    static defaultAttrs = {
+        buttonText: 'Cool Button',
+        caret: true,
+    };
     static component = Dropdown;
 
     renderCode() {
