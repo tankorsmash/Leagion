@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom';
-import { Table } from 'reactstrap';
+import { Table } from 'components/tables';
 import Gravatar from 'react-gravatar';
 import profileUrls from 'main/app/player/profile/urls';
 
@@ -13,24 +13,13 @@ export const PublicProfileLink = (props) => {
 
 export const TeamPlayerTable = (props) => {
     return (
-        <Table striped>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.players.map((player, i) => {
-                    return (
-                        <tr key={i}>
-                            <td>{player.full_name}</td>
-                            <td>{player.email}</td>
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </Table>
+        <Table responsive striped
+            data={props.players}
+            columns={[
+                {header: 'Name', cell: 'full_name'},
+                {header: 'Email', cell: 'email'},
+            ]}
+        />
     );
 };
 

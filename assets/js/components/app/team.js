@@ -1,7 +1,8 @@
 import {Link} from 'react-router-dom';
-import {Table, Button, Media} from 'reactstrap';
+import {Button, Media} from 'reactstrap';
 import { SketchPicker } from 'react-color';
 import Dropzone from 'react-dropzone'
+import { Table } from 'components/tables';
 
 import teamUrls from 'main/app/player/team/urls';
 import matchUrls from 'main/app/player/match/urls';
@@ -185,32 +186,17 @@ export const TeamRankTable = (props) => {
     });
 
 	return (
-		<Table responsive className="leagion-table">
-			<thead>
-				<tr>
-					<th>Rank</th>
-					<th>Team Name</th>
-					<th>Wins</th>
-					<th>Ties</th>
-					<th>Losses</th>
-					<th>Points</th>
-				</tr>
-			</thead>
-			<tbody>
-				{teams.map((team, i) => {
-					return (
-						<tr key={i}>
-							<td>#{i + 1}</td>
-							<td><TeamLink id={team.id} text={team.name}/></td>
-							<td>{team.win_draw_loss_points.wins}</td>
-							<td>{team.win_draw_loss_points.draws}</td>
-							<td>{team.win_draw_loss_points.losses}</td>
-							<td>{team.win_draw_loss_points.points}</td>
-						</tr>
-					);
-				})}
-			</tbody>
-		</Table>
+        <Table responsive striped
+            data={teams}
+            columns={[
+                {header: 'Rank', cell: (team, i) => i + 1},
+                {header: 'Team Name', cell: (team) => <TeamLink id={team.id} text={team.name}/>},
+                {header: 'Wins', cell: (team) => team.win_draw_loss_points.wins},
+                {header: 'Ties', cell: (team) => team.win_draw_loss_points.draws},
+                {header: 'Losses', cell: (team) => team.win_draw_loss_points.losses},
+                {header: 'Points', cell: (team) => team.win_draw_loss_points.points},
+            ]}
+        />
 	);
 };
 

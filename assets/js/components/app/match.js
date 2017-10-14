@@ -1,5 +1,6 @@
 import {Link} from 'react-router-dom';
-import { ListGroup, ListGroupItem, Table } from 'reactstrap';
+import {ListGroup, ListGroupItem} from 'reactstrap';
+import { Table } from 'components/tables';
 import { Button, Input, Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
 import matchUrls from 'main/app/player/match/urls';
 import {TeamLink} from 'components/app/team';
@@ -17,39 +18,24 @@ export const MatchLink = (props) => {
 
 export const MatchTable = (props) => {
     return (
-        <Table responsive className="leagion-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Home Team</th>
-                    <th></th>
-                    <th>Away Team</th>
-                    <th>Location</th>
-                    <th>Results</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.matches.map((match, i) => {
-                    return (
-                        <tr key={i}>
-                            <td><MatchLink id={match.id} text={match.pretty_date}/></td>
-                            <td>{match.pretty_time}</td>
-                            <td><TeamLink id={match.home_team.id} text={match.home_team.name}/></td>
-                            <td>vs.</td>
-                            <td><TeamLink id={match.away_team.id} text={match.away_team.name}/></td>
-                            <td>{match.location.name}</td>
-                            <td>
-                                { match.completed ?
-                                        <span>{match.home_points} - {match.away_points}</span> :
-                                        <span>N/A </span>
-                                }
-                            </td>
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </Table>
+        <Table responsive striped
+            data={props.matches}
+            columns={[
+                {header: 'Date', cell: (match) => <MatchLink id={match.id} text={match.pretty_date}/>},
+                {header: 'Time', cell: 'pretty_time'},
+                {header: 'Home Team', cell: (match) => <TeamLink id={match.home_team.id} text={match.home_team.name}/>},
+                {header: '', cell: () => 'vs.'},
+                {header: 'Away Team', cell: (match) => <TeamLink id={match.away_team.id} text={match.away_team.name}/>},
+                {header: 'Location', cell: (match) => match.location.name},
+                {header: 'Results', cell: (match) => {
+                    if (match.completed) {
+                        return <span>{match.home_points} - {match.away_points}</span>;
+                    } else {
+                        return <span>N/A </span>;
+                    }
+                }},
+            ]}
+        />
     );
 };
 
