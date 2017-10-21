@@ -5,7 +5,7 @@ import {PlayerAvatar} from 'components/app/player';
 import {StaticRow} from 'components/forms';
 
 
-export class PlayerProfile extends React.Component {
+export default class PlayerProfileRouter extends React.Component {
     constructor(props) {
         super(props);
 
@@ -27,7 +27,7 @@ export class PlayerProfile extends React.Component {
     }
 
     render() {
-        const player = this.state.player
+        const player = this.state.player;
 
         return (
             <div>

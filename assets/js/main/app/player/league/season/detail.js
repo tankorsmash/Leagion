@@ -1,18 +1,13 @@
-import {Switch} from 'react-router-dom';
-import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 import {MatchTable} from 'components/app/match';
 import {TeamRankTable} from 'components/app/team';
 
-import seasonUrls from 'main/app/player/season/urls';
 import {Titlebar} from 'components/text';
-
-import {FourOhFour} from 'components/error-pages';
-import {RoutedTabs} from 'components/tabs';
+import {Tabs} from 'components/tabs';
 
 import ajax from 'common/ajax';
 
-class SeasonSchedule extends React.Component {
+export default class SeasonDetail extends React.Component {
     constructor(props) {
         super(props);
 
@@ -43,37 +38,28 @@ class SeasonSchedule extends React.Component {
                             <div className="text-center">
                                 <h3>{this.state.season.pretty_name}</h3>
                             </div>
-                            <RoutedTabs
+                            <Tabs
                                 className="team-match-table"
                                 tabs={[{
                                     label: 'Schedule',
-                                    id: 'schedule',
-                                    content: <MatchTable matches={this.state.season.matches} />
+                                    content: (<MatchTable
+                                        matches={this.state.season.matches}
+                                        seasonId={this.state.season.id}
+                                        leagueId={this.state.season.league_id}
+                                    />)
                                 }, {
                                     label: 'Rankings',
-                                    id: 'rankings',
-                                    content: <TeamRankTable teams={this.state.season.teams} />
+                                    content: <TeamRankTable
+                                        teams={this.state.season.teams}
+                                        seasonId={this.state.season.id}
+                                        leagueId={this.state.season.league_id}
+                                    />
                                 }]}
-                                basePath={seasonUrls.detail}
-                                pathParams={{seasonId: this.props.match.params.seasonId}}
                             />
                         </div>
                     }
                 </SpinLoader>
             </div>
-        );
-    }
-}
-
-
-export class Season extends React.Component {
-
-    render() {
-        return (
-            <Switch>
-                <Route path={seasonUrls.detail} component={SeasonSchedule} />
-                <Route component={FourOhFour} />
-            </Switch>
         );
     }
 }

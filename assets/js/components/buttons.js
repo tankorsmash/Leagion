@@ -1,41 +1,40 @@
-import {Link} from 'react-router-dom';
+import {Button as RButton} from 'reactstrap';
+import {Link as RLink} from 'react-router-dom';
 import publicUrls from 'main/public/urls';
 import adminUrls from 'main/app/admin/urls';
-import accountUrls from 'main/app/player/account/urls';
 import playerUrls from 'main/app/player/urls';
 import auth from 'main/auth';
-import {Button as RButton} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 export const LogoutButton = ({...rest}) => {
 	return (
-		<Link {...rest} to={publicUrls.login} onClick={auth.logout}>
+		<RLink {...rest} to={publicUrls.login} onClick={auth.logout}>
 			Logout
-		</Link>
+		</RLink>
 	);
 };
 
 export const LoginButton = ({...rest}) => {
 	return (
-		<Link {...rest} to={publicUrls.login}>Login</Link>
+		<RLink {...rest} to={publicUrls.login}>Login</RLink>
 	);
 };
 
 export const AdminButton = ({...rest}) => {
 	return (
-		<Link {...rest} to={adminUrls.index}>Manage League</Link>
+		<RLink {...rest} to={adminUrls.index}>Manage League</RLink>
 	);
 };
 
 export const AccountSettingsButton = ({...rest}) => {
 	return (
-		<Link {...rest} to={accountUrls.index}>Profile</Link>
+		<RLink {...rest} to={playerUrls.accountIndex}>Profile</RLink>
 	);
 };
 
 export const PlayerAppButton = ({...rest}) => {
 	return (
-		<Link {...rest} to={playerUrls.index}>Back to my teams</Link>
+		<RLink {...rest} to={playerUrls.index}>Back to my teams</RLink>
 	);
 };
 
@@ -47,9 +46,32 @@ export class Button extends React.Component {
 		block: PropTypes.bool,
 		active: PropTypes.bool,
         className: PropTypes.string,
+		href: PropTypes.string,
 	};
 
 	render() {
 		return <RButton {...this.props}>{this.props.children}</RButton>;
+	}
+}
+
+export class Link extends React.Component {
+    static propTypes = {
+        url: PropTypes.string,
+        args: PropTypes.object,
+        text: PropTypes.string,
+    };
+
+	render() {
+		let {url, args, children} = this.props;
+
+		for (let key of Object.keys(args)) {
+			url = url.replace(`:${key}?`, args[key]);
+		}
+
+		return (
+			<RLink to={url}>
+				{children}
+			</RLink>
+		);
 	}
 }

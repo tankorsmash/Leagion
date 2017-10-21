@@ -92,7 +92,9 @@ export class BaseComponent extends React.Component {
                     <Col className="clib-component" md="6">
                         <h3>{this.title}</h3>
                         <p>{this.description}</p>
-                        {this.renderComponent()}
+                        <div className="actual-component">
+                            {this.renderComponent()}
+                        </div>
                     </Col>
                     <Col className="clib-component-props" md="6">
                         <CodeMirror

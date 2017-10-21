@@ -1,16 +1,18 @@
+import {BrowserRouter as Router} from 'react-router-dom';
+import {Route} from 'components/router';
 import {Row, Col, Nav, NavLink, NavItem} from 'reactstrap';
-import {ButtonComp} from 'clib/components/buttons';
+import {ButtonComp, LinkComp, ButtonLinkComp} from 'clib/components/buttons';
 import {DropdownComp} from 'clib/components/dropdowns';
 import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 import {SimpleModalComp} from 'clib/components/modals';
 import {TitlebarComp, TextComp} from 'clib/components/text';
 import {TableComp, DraggableTableComp} from 'clib/components/tables';
 
-export default class Base extends React.Component {
+class Clib extends React.Component {
     state = {selected: 0};
 
     components = [
-        {'name': 'Buttons', 'components': [ButtonComp]},
+        {'name': 'Buttons', 'components': [ButtonComp, LinkComp, ButtonLinkComp]},
         {'name': 'Dropdowns', 'components': [DropdownComp]},
         {'name': 'Text', 'components': [TitlebarComp, TextComp]},
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
@@ -72,3 +74,20 @@ export default class Base extends React.Component {
         );
     }
 }
+
+export default class Base extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+    }
+
+    render() {
+
+        return (
+            <Router>
+                <Route path={`/`} component={Clib} />
+            </Router>
+        );
+    }
+}
+

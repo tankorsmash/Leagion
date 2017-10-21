@@ -1,16 +1,10 @@
-import {Switch} from 'react-router-dom';
-import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
-
-import leagueUrls from 'main/app/player/league/urls';
-import {SeasonLink} from 'components/app/season';
-
+import {Link} from 'components/buttons';
 import {Titlebar} from 'components/text';
-import {FourOhFour} from 'components/error-pages';
-
 import ajax from 'common/ajax';
+import urls from 'main/app/player/urls';
 
-export class LeagueDetail extends React.Component {
+export default class LeagueDetail extends React.Component {
     constructor(props) {
         super(props);
 
@@ -40,24 +34,23 @@ export class LeagueDetail extends React.Component {
                         <div className="text-center content">
                             <h3>{this.state.league.name}</h3>
                             {this.state.league.my_seasons.map((season, i) => {
-                                return <SeasonLink key={i} id={season.id} text={<h4>{season.pretty_date}</h4>}/>;
+                                return (
+                                    <Link
+                                        key={i}
+                                        url={urls.seasonDetail}
+                                        args={{
+                                            leagueId: season.league.id,
+                                            seasonId: season.id
+                                        }}
+                                    >
+                                        <h4>{season.pretty_date}</h4>
+                                    </Link>
+                                );
                             })}
                         </div>
                     }
                 </SpinLoader>
             </div>
-        );
-    }
-}
-
-export class League extends React.Component {
-
-    render() {
-        return (
-            <Switch>
-                <Route exact path={leagueUrls.detail} component={LeagueDetail} />
-                <Route component={FourOhFour} />
-            </Switch>
         );
     }
 }

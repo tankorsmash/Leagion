@@ -1,31 +1,56 @@
-import {Link} from 'react-router-dom';
+import {Link} from 'components/buttons';
+import urls from 'main/app/player/urls';
 import {ListGroup, ListGroupItem} from 'reactstrap';
 import { Table } from 'components/tables';
 import { Button, Input, Card, CardBlock, CardTitle, CardSubtitle, CardText } from 'reactstrap';
-import matchUrls from 'main/app/player/match/urls';
-import {TeamLink} from 'components/app/team';
 import ajax from 'common/ajax';
 import {Modal} from 'components/modals';
 import {FormBase, FormGroup} from 'components/forms';
 
-export const MatchLink = (props) => {
-    return (
-        <Link to={`${matchUrls.index}/${props.id}`}>
-            {props.text}
-        </Link>
-    );
-};
-
 export const MatchTable = (props) => {
+    const {matches, seasonId, leagueId} = props;
     return (
         <Table responsive striped
             data={props.matches}
             columns={[
-                {header: 'Date', cell: (match) => <MatchLink id={match.id} text={match.pretty_date}/>},
+                {header: 'Date', cell: (match) => (
+                    <Link
+                        url={urls.matchDetail}
+                        args={{
+                            leagueId: leagueId,
+                            seasonId: seasonId,
+                            matchId: match.id
+                        }}
+                    >
+                        {match.pretty_date}
+                    </Link>)
+                },
                 {header: 'Time', cell: 'pretty_time'},
-                {header: 'Home Team', cell: (match) => <TeamLink id={match.home_team.id} text={match.home_team.name}/>},
+                {header: 'Home Team', cell: (match) => (
+                    <Link
+                        url={urls.teamDetail}
+                        args={{
+                            leagueId: leagueId,
+                            seasonId: seasonId,
+                            teamId: match.home_team.id,
+                        }}
+                    >
+                        {match.home_team.name}
+                    </Link>)
+                },
                 {header: '', cell: () => 'vs.'},
-                {header: 'Away Team', cell: (match) => <TeamLink id={match.away_team.id} text={match.away_team.name}/>},
+                {header: 'Away Team', cell: (match) => (
+                    <Link
+                        url={urls.teamDetail}
+                        args={{
+                            leagueId: leagueId,
+                            seasonId: seasonId,
+                            teamId: match.away_team.id,
+                        }}
+                    >
+                        {match.away_team.name}
+                    </Link>)
+                },
                 {header: 'Location', cell: (match) => match.location.name},
                 {header: 'Results', cell: (match) => {
                     if (match.completed) {
@@ -45,9 +70,12 @@ export const MatchList = (props) => {
             {props.matches.map((match, i) => {
                 return (
                     <ListGroupItem key={i}>
-                        <Link to={`${matchUrls.index}/${match.id}`}>
-                            {match.pretty_name}
-                        </Link>
+                        {/*
+                            TODO Link
+                            <Link to={`${matchUrls.index}/${match.id}`}>
+                                {match.pretty_name}
+                            </Link>
+                        */}
                     </ListGroupItem>
                 );
             })}

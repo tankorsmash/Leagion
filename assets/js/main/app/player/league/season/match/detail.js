@@ -1,12 +1,7 @@
-import {Switch} from 'react-router-dom';
-import {Route} from 'components/router';
 import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 import MediaQuery from 'react-responsive';
-
-import matchUrls from 'main/app/player/match/urls';
 import {TeamMatchCard, TeamMatchCardMobile} from 'components/app/team';
-import {FourOhFour} from 'components/error-pages';
 
 import {Titlebar} from 'components/text';
 import ajax from 'common/ajax';
@@ -19,8 +14,7 @@ import {FullRosterTable} from 'components/app/roster';
 const MatchDetailMobile = (props) => {
     const {
         away_roster, home_roster, home_team, away_team,
-        home_points, away_points, pretty_date, pretty_time,
-        completed
+        home_points, away_points, completed
     } = props.match;
 
     return (
@@ -63,8 +57,7 @@ const MatchDetailMobile = (props) => {
 const MatchDetailDesktop = (props) => {
     const {
         away_roster, home_roster, home_team, away_team,
-        home_points, away_points, pretty_date, pretty_time,
-        completed
+        home_points, away_points, completed
     } = props.match;
 
     return (
@@ -108,7 +101,7 @@ const MatchDetailDesktop = (props) => {
     );
 };
 
-class MatchDetail extends React.Component {
+export default class MatchDetail extends React.Component {
     constructor(props) {
         super(props);
 
@@ -140,6 +133,7 @@ class MatchDetail extends React.Component {
     };
 
     render() {
+		console.log(this.props);
         return (
             <div>
                 <Titlebar title="Match" />
@@ -170,17 +164,6 @@ class MatchDetail extends React.Component {
                     }
                 </SpinLoader>
             </div>
-        );
-    }
-}
-
-export class Match extends React.Component {
-    render() {
-        return (
-            <Switch>
-                <Route exact path={matchUrls.detail} user={this.props.user} component={MatchDetail} />
-                <Route component={FourOhFour} />
-            </Switch>
         );
     }
 }

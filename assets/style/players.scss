@@ -19,6 +19,9 @@
         .h4 {
             flex: 0 0 66%;
         }
+        .team-title {
+            min-width: 250px;
+        }
     }
 
     .team-card-bottom {
@@ -28,7 +31,7 @@
         padding-top: 75px;
         padding-bottom: 25px;
 
-        a {
+        a, .p {
             color: $white;
         }
     }

@@ -1,14 +1,12 @@
-import {Link} from 'react-router-dom';
 import {Button, Media} from 'reactstrap';
 import { SketchPicker } from 'react-color';
 import Dropzone from 'react-dropzone'
 import { Table } from 'components/tables';
 
-import teamUrls from 'main/app/player/team/urls';
-import matchUrls from 'main/app/player/match/urls';
-
 import ajax from 'common/ajax';
 import auth from 'main/auth';
+import urls from 'main/app/player/urls';
+import {Link} from 'components/buttons';
 
 import {Ribbon} from 'components/misc';
 import ErrorBoundary from 'components/error-boundary';
@@ -16,27 +14,8 @@ import DatasetView from 'components/dataset_view';
 import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 import {FullRosterTable} from 'components/app/roster';
-import {LeagueLink} from 'components/app/league';
-import {SeasonLink} from 'components/app/season';
 
 import {MatchScoreSetter} from 'components/app/match';
-
-export const TeamLink = (props) => {
-    return (
-        <Link to={`${teamUrls.index}/${props.id}`}>
-            {props.text}
-        </Link>
-    );
-};
-
-export const TeamListLink = (props) => {
-    return (
-        <Link to={`${teamUrls.index}`}>
-            {props.text}
-        </Link>
-    );
-};
-
 
 export const TeamCard = (props) => {
     const team = props.team;
@@ -47,8 +26,15 @@ export const TeamCard = (props) => {
         matchComp = (
             <span>
                 {
-                    <Link to={`${matchUrls.index}/${match.id}`}>
-                        {match.pretty_name}
+                    <Link
+                        url={urls.matchDetail}
+                        args={{
+                            leagueId: team.season.league.id,
+                            seasonId: team.season.id,
+                            matchId: match.id
+                        }}
+                    >
+                        {team.season.pretty_date}
                     </Link>
                 }
             </span>
@@ -69,15 +55,37 @@ export const TeamCard = (props) => {
                     <div className="team-logo is-small"> </div>
                 </div>
                 <div className="h4 team-title">
-                    <TeamLink id={team.id} text="Stephen Valleys Apron Joint"/>
+                    <Link
+                        url={urls.teamDetail}
+                        args={{
+                            leagueId: team.season.league.id,
+                            seasonId: team.season.id,
+                            teamId: team.id,
+                        }}
+                    >
+                        {team.name}
+                    </Link>
                 </div>
             </div>
             <div className="team-card-bottom">
                 <div className="h5">
-                    <LeagueLink id={team.season.league.id} text={team.season.league.name}/>
+                    <Link
+                        url={urls.leagueDetail}
+                        args={{leagueId: team.season.league.id}}
+                    >
+                        {team.season.league.name}
+                    </Link>
                 </div>
                 <div className="h5">
-                    <SeasonLink id={team.season.id} text={team.season.pretty_date}/>
+                    <Link
+                        url={urls.seasonDetail}
+                        args={{
+                            leagueId: team.season.league.id,
+                            seasonId: team.season.id
+                        }}
+                    >
+                        {team.season.pretty_date}
+                    </Link>
                 </div>
                 <div className="p pt-2">upcoming match:</div>
                 <div className="small">{matchComp}</div>
@@ -172,8 +180,25 @@ export const TeamTitle = (props) => {
                 </div>
             </div>
             <Ribbon
-                leftEl={<LeagueLink id={team.season.league.id} text={team.season.league.name}/>}
-                rightEl={<SeasonLink id={team.season.id} text={team.season.pretty_date}/>}
+                leftEl={
+                    <Link
+                        url={urls.leagueDetail}
+                        args={{leagueId: team.season.league.id}}
+                    >
+                        {team.season.league.name}
+                    </Link>
+                }
+                rightEl={
+                    <Link
+                        url={urls.seasonDetail}
+                        args={{
+                            leagueId: team.season.league.id,
+                            seasonId: team.season.id,
+                        }}
+                    >
+                        {team.season.pretty_date}
+                    </Link>
+                }
             />
         </div>
     );
@@ -181,6 +206,7 @@ export const TeamTitle = (props) => {
 
 
 export const TeamRankTable = (props) => {
+    const {leagueId, seasonId} = props;
     const teams = props.teams.sort((teamA, teamB) => {
         return teamA.win_draw_loss_points.points < teamB.win_draw_loss_points.points;
     });
@@ -190,7 +216,18 @@ export const TeamRankTable = (props) => {
             data={teams}
             columns={[
                 {header: 'Rank', cell: (team, i) => i + 1},
-                {header: 'Team Name', cell: (team) => <TeamLink id={team.id} text={team.name}/>},
+                {header: 'Team Name', cell: (team) => (
+                    <Link
+                        url={urls.teamDetail}
+                        args={{
+                            leagueId: leagueId,
+                            seasonId: seasonId,
+                            teamId: team.id,
+                        }}
+                    >
+                        {team.name}
+                    </Link>)
+                },
                 {header: 'Wins', cell: (team) => team.win_draw_loss_points.wins},
                 {header: 'Ties', cell: (team) => team.win_draw_loss_points.draws},
                 {header: 'Losses', cell: (team) => team.win_draw_loss_points.losses},

@@ -7,7 +7,13 @@ $clib-border: 1px solid $black;
 .clib-component {
     //min-height: 100vh;
     background-color: $white;
-    padding: 20px;
+    padding: 40px;
+
+    .actual-component {
+        height: 85%;
+        padding: 30px;
+        border: 1px solid $gray-light;
+    }
 }
 
 .clib-component-props {

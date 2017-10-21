@@ -1,15 +1,7 @@
-import {Link} from 'react-router-dom';
 import { Table } from 'components/tables';
 import Gravatar from 'react-gravatar';
-import profileUrls from 'main/app/player/profile/urls';
-
-export const PublicProfileLink = (props) => {
-	return (
-		<Link to={`${profileUrls.index}/${props.id}`}>
-			{props.text}
-		</Link>
-	);
-};
+import urls from 'main/app/player/urls';
+import {Link} from 'components/buttons';
 
 export const TeamPlayerTable = (props) => {
     return (
@@ -47,7 +39,12 @@ export const PlayerAvatarList = (props) => {
                         size={props.size}
                         email={player.email}
                     >
-                        <PublicProfileLink id={player.id} text={player.full_name}/>
+                        <Link
+                            url={urls.profileDetail}
+                            args={{playerId: player.id}}
+                        >
+                            {player.full_name}
+                        </Link>
                     </PlayerAvatar>
                 );
             })}

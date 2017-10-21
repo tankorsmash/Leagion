@@ -18,7 +18,7 @@ export default class DatasetView extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            [this.datasetStateAttr]: [],
+            [this.datasetStateAttr]: null,
             isLoaded: false,
         };
     }
