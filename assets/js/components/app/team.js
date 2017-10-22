@@ -237,39 +237,17 @@ export const TeamRankTable = (props) => {
 	);
 };
 
-class TeamName extends React.Component {
-    userIsCaptain = () => {
-        let {team, user} = this.props;
-        const isCaptain = ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
-        return isCaptain;
-    };
-
-    render() {
-        let {team} = this.props;
-        const userIsCaptain = this.userIsCaptain();
-        return (
-            <div>
-                <h3> Name </h3>
-                <ErrorBoundary>
-                    { userIsCaptain && <AjaxTextInputUpdate
-                        putUrl={reverse('api-team-detail', {team_id: team.id})}
-                        putKwarg="name"
-                        data={team.name}
-                    /> }
-                    { !userIsCaptain && team.name }
-                </ErrorBoundary>
-            </div>
-        );
-    }
-};
-
-
 class TeamLogoView extends React.Component {
     render() {
         return (
             <div>
                 <Media>
-                    <Media width="200px" className="" object src={this.props.teamLogo} />
+                    <Media
+                        width="200px"
+                        className=""
+                        object
+                        src={this.props.teamLogo}
+                    />
                 </Media>
             </div>
         );
@@ -506,8 +484,6 @@ export class TeamInfoTab extends DatasetView {
         const team = this.props.team;
         return (
             <div>
-                <TeamName team={team} user={user} />
-                <hr/>
                 <TeamLogo team={team} user={user} />
                 <hr/>
                 <TeamColor team={team} user={user} />

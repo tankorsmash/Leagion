@@ -31,8 +31,14 @@ from leagion.api.views import (
     leagues as leagues_views,
 )
 
-urlpatterns = [
-    #authentication
+urlpatterns = []
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += [
+    # authentication
 
     # django-rest-auth
     url(r'lin/', reg_views.LoginView.as_view(), name='rest_login'),
@@ -54,7 +60,3 @@ urlpatterns = [
 
     url(r'^.*$', views.Main.as_view(), name="main"),
 ]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
