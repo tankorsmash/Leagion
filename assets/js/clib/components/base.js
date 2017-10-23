@@ -16,12 +16,18 @@ export class BaseComponent extends React.Component {
             this.state[attr] = this.choiceAttrs[attr][0];
         }
 
-        const hasComponentAndProptypes = this.constructor.component && this.constructor.component.propTypes;
+        const component = this.constructor.component;
+        const hasComponentAndProptypes = component && component.propTypes;
+        const hasComponentAndDefaultProps = component && component.defaultProps;
+
+        if (hasComponentAndDefaultProps) {
+            this.defaultAttrs = Object.assign({}, component.defaultProps, this.defaultAttrs);
+        }
 
         this.boolAttrs = [];
         if (hasComponentAndProptypes) {
-            for (let attr of Object.keys(this.constructor.component.propTypes)) {
-                const propType = this.constructor.component.propTypes[attr];
+            for (let attr of Object.keys(component.propTypes)) {
+                const propType = component.propTypes[attr];
                 if (
                     propType === PropTypes.bool &&
                     !this.ignoreAttrs.includes(attr)
@@ -34,10 +40,10 @@ export class BaseComponent extends React.Component {
 
         this.stringAttrs = [];
         if (hasComponentAndProptypes) {
-            for (let attr of Object.keys(this.constructor.component.propTypes)) {
-                const propType = this.constructor.component.propTypes[attr];
+            for (let attr of Object.keys(component.propTypes)) {
+                const propType = component.propTypes[attr];
                 if (
-                    propType === PropTypes.string &&
+                    [PropTypes.string, PropTypes.string.isRequired].includes(propType) &&
                     !Object.keys(this.choiceAttrs).includes(attr) &&
                     !this.ignoreAttrs.includes(attr)
                 ) {

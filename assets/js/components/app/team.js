@@ -1,6 +1,6 @@
 import {Button, Media} from 'reactstrap';
 import { SketchPicker } from 'react-color';
-import Dropzone from 'react-dropzone'
+import Dropzone from 'react-dropzone';
 import { Table } from 'components/tables';
 
 import ajax from 'common/ajax';
@@ -9,9 +9,7 @@ import urls from 'main/app/player/urls';
 import {Link} from 'components/buttons';
 
 import {Ribbon} from 'components/misc';
-import ErrorBoundary from 'components/error-boundary';
 import DatasetView from 'components/dataset_view';
-import {AjaxTextInputUpdate} from 'main/app/admin/components/ajax_update';
 
 import {FullRosterTable} from 'components/app/roster';
 

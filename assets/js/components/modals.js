@@ -49,22 +49,28 @@ export class SimpleModal extends Modal {
         title: PropTypes.string,
         body: PropTypes.element,
         submitText: PropTypes.string,
+        onSubmit: PropTypes.func,
     };
 
     state = {isOpen: false};
 
     toggle = () => {
+        if (this.state.isOpen) {
+            this.props.onClose();
+        }
         this.setState({
             isOpen: !this.state.isOpen
         });
-
         return false;
+    };
+
+    handleSubmit = () => {
+        this.props.onSubmit(this.toggle);
     };
 
     render() {
         const {
-            handleSubmit, buttonProps, buttonText,
-            body, title,
+            buttonProps, buttonText, body, title,
         } = this.props;
 
         const submitText = this.props.submitText || 'Submit';
@@ -86,7 +92,7 @@ export class SimpleModal extends Modal {
                         <div>
                             <Button color="link" onClick={this.toggle}>Cancel</Button>
                             {' '}
-                            <Button color="primary" onClick={handleSubmit}>{submitText}</Button>
+                            <Button color="primary" onClick={this.handleSubmit}>{submitText}</Button>
                         </div>
                     }
                     body={body}

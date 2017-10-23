@@ -5,6 +5,8 @@ import {ButtonComp, LinkComp, ButtonLinkComp} from 'clib/components/buttons';
 import {DropdownComp} from 'clib/components/dropdowns';
 import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 import {SimpleModalComp} from 'clib/components/modals';
+import {AvatarSelectorComp} from 'clib/components/files';
+import {AvatarComp} from 'clib/components/media';
 import {TitlebarComp, TextComp} from 'clib/components/text';
 import {TableComp, DraggableTableComp} from 'clib/components/tables';
 
@@ -18,6 +20,8 @@ class Clib extends React.Component {
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
         {'name': 'Modals', 'components': [SimpleModalComp]},
         {'name': 'Tables', 'components': [TableComp, DraggableTableComp]},
+        {'name': 'Files', 'components': [AvatarSelectorComp]},
+        {'name': 'Media', 'components': [AvatarComp]},
     ];
 
     selectComponent = (e) => {

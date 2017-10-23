@@ -1,0 +1,26 @@
+.le-avatar {
+    &.le-avatar-sm {
+        width: 48px;
+    }
+
+    &.le-avatar-md {
+        width: 128px;
+    }
+
+    &.le-avatar-lg {
+        width: 256px;
+    }
+
+    &.le-avatar-circle {
+        border-radius: 50%;
+    }
+}
+
+.cropper-crop-box, .cropper-view-box {
+    border-radius: 50%;
+}
+
+.cropper-view-box {
+    box-shadow: 0 0 0 1px #39f;
+    outline: 0;
+}

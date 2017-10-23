@@ -20,6 +20,13 @@ export class SimpleModalComp extends BaseComponent {
 <SimpleModal
     ${this.getAttrsAsCode()}
     body={<h2>this is the modal content</h2>}
+    onSubmit={(e, toggle) => {
+        toggle();
+        console.log(e)}
+    }
+    onClose={() => {
+        console.log('modal has closed')}
+    }
 />`
         );
     }
@@ -29,6 +36,13 @@ export class SimpleModalComp extends BaseComponent {
             <SimpleModal
                 {...this.state}
                 body={<h2>this is the modal content</h2>}
+                onSubmit={(e, toggle) => {
+                    toggle();
+                    console.log('handle modal submit here')}
+                }
+                onClose={() => {
+                    console.log('modal has closed')}
+                }
             />
         );
     }
