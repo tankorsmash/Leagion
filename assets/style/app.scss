@@ -11,7 +11,10 @@
 
 
 .btn {
-	cursor: pointer;
+    cursor: pointer;
+    &[disabled] {
+        cursor: not-allowed;
+    }
 }
 
 .container {
@@ -50,8 +53,8 @@ a {
 }
 
 .le-card {
-	border: 1px solid $black;
-	background-color: $white;
+    border: 1px solid $black;
+    background-color: $white;
 }
 
 .full-screen {

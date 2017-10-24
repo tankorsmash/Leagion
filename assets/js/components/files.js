@@ -17,10 +17,17 @@ export class AvatarSelector extends React.Component {
         avatarSize: "md",
     };
 
-    state = {file: null};
+    state = {
+        file: null,
+        allowSave: false,
+    };
 
     onDrop = (file) => {
-        this.setState({file: file[0]});
+        this.setState({
+            file: file[0],
+            allowSave: true,
+        });
+
     };
 
     onConfirm = (toggle) => {
@@ -31,20 +38,27 @@ export class AvatarSelector extends React.Component {
     };
 
     reset = () => {
-        this.setState({file: null});
+        this.setState({
+            file: null,
+            allowSave: false,
+        });
     };
 
     render() {
         let {dropzoneText, title, buttonText} = this.props;
-        let {file} = this.state;
+        let {file, allowSave} = this.state;
 
         return (
             <SimpleModal
                 buttonText={buttonText} title={title} submitText="Save"
                 body={
                     !file ? (
-                        <Dropzone onDrop={this.onDrop}>
-                            {dropzoneText ?  dropzoneText : ''}
+                        <Dropzone
+                            onDrop={this.onDrop}
+                            style={{}}
+                            className="le-avatar-dropzone"
+                        >
+                            <h5>{dropzoneText ?  dropzoneText : ''}</h5>
                         </Dropzone>
                     ) : (
                         <div>
@@ -62,6 +76,9 @@ export class AvatarSelector extends React.Component {
                         </div>
                     )
                 }
+                submitAttrs={{
+                    disabled: !allowSave,
+                }}
                 onSubmit={this.onConfirm}
                 onClose={this.reset}
             />

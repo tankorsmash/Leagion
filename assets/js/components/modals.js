@@ -12,6 +12,8 @@ export class Modal extends React.Component {
         title: PropTypes.string,
         body: PropTypes.element,
         footer: PropTypes.element,
+        cancelAttrs: PropTypes.object,
+        submitAttrs: PropTypes.object,
     };
 
     render() {
@@ -71,6 +73,7 @@ export class SimpleModal extends Modal {
     render() {
         const {
             buttonProps, buttonText, body, title,
+            submitAttrs, cancelAttrs
         } = this.props;
 
         const submitText = this.props.submitText || 'Submit';
@@ -90,9 +93,9 @@ export class SimpleModal extends Modal {
                     title={title}
                     footer={
                         <div>
-                            <Button color="link" onClick={this.toggle}>Cancel</Button>
+                            <Button {...cancelAttrs} color="link" onClick={this.toggle}>Cancel</Button>
                             {' '}
-                            <Button color="primary" onClick={this.handleSubmit}>{submitText}</Button>
+                            <Button {...submitAttrs} color="primary" onClick={this.handleSubmit}>{submitText}</Button>
                         </div>
                     }
                     body={body}

@@ -24,3 +24,18 @@
     box-shadow: 0 0 0 1px #39f;
     outline: 0;
 }
+.le-avatar-dropzone {
+    width: 100%;
+    height: 200px;
+    color: $gray-light;
+    border: 2px dashed $gray-light;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+        background-color: $gray-lightest;
+        cursor: pointer;
+    }
+}
