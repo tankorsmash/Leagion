@@ -68,6 +68,7 @@ const MatchDetailDesktop = (props) => {
                         title="Home Team"
                         teamName={home_team.name}
                         teamId={home_team.id}
+                        teamLogo={home_team.logo_url}
                         score={home_points}
                         user={props.user}
                         rosterId={home_roster}
@@ -86,6 +87,7 @@ const MatchDetailDesktop = (props) => {
                         title="Away Team"
                         teamName={away_team.name}
                         teamId={away_team.id}
+                        teamLogo={away_team.logo_url}
                         score={away_points}
                         user={props.user}
                         rosterId={away_roster}
@@ -133,7 +135,6 @@ export default class MatchDetail extends React.Component {
     };
 
     render() {
-		console.log(this.props);
         return (
             <div>
                 <Titlebar title="Match" />

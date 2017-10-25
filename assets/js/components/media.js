@@ -9,14 +9,14 @@ export class Avatar extends React.Component {
     };
 
     render() {
-        const {size, src, square} = this.props;
+        const {size, src, square, className} = this.props;
 
         const circleClass = square ? '' : 'le-avatar-circle';
-        const className = `le-avatar le-avatar-${size} ${circleClass}`;
+        const classNames = `le-avatar le-avatar-${size} ${circleClass} ${className}`;
 
         return (
             <Media
-                className={className}
+                className={classNames}
                 object src={src}
             />
         );

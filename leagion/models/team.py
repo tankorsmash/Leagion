@@ -1,6 +1,12 @@
+import os
 from django.db import models
+from django.conf import settings
 
 from leagion.models import User
+
+
+def get_logo_path(instance, filename):
+    return 'teams/{}/logo.png'.format(instance.id)
 
 
 class Team(models.Model):
@@ -11,7 +17,18 @@ class Team(models.Model):
     players = models.ManyToManyField(User, related_name="teams")
 
     color = models.CharField(max_length=6, default="196E3D") #store the hex color without '#': FF00FF
-    logo = models.ImageField(blank=True, null=True)
+    logo = models.ImageField(
+        upload_to=get_logo_path,
+        null=True
+    )
+
+    @property
+    def logo_url(self):
+        if self.logo:
+            return self.logo.url
+        else:
+            return os.path.join(
+                settings.STATIC_URL, '/static/images/defaults/baseball.png')
 
     def __str__(self):
         return "Team: {name}".format(name=self.name)

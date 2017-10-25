@@ -14,6 +14,9 @@ import DatasetView from 'components/dataset_view';
 import {FullRosterTable} from 'components/app/roster';
 
 import {MatchScoreSetter} from 'components/app/match';
+import {Avatar} from 'components/media';
+import {AvatarSelector} from 'components/files';
+
 
 export const TeamCard = (props) => {
     const team = props.team;
@@ -32,7 +35,7 @@ export const TeamCard = (props) => {
                             matchId: match.id
                         }}
                     >
-                        {team.season.pretty_date}
+                        {match.pretty_date}
                     </Link>
                 }
             </span>
@@ -50,7 +53,7 @@ export const TeamCard = (props) => {
         <div className="team-card">
             <div className="team-card-top">
                 <div>
-                    <div className="team-logo is-small"> </div>
+                    <Avatar className="team-logo" size="md" src={team.logo_url}  />
                 </div>
                 <div className="h4 team-title">
                     <Link
@@ -123,7 +126,7 @@ export const TeamMatchCard = (props) => {
             <h3 className="team-match-card-title font-weight-bold">
                 {title}
             </h3>
-            <div className="team-logo is-medium"> </div>
+            <Avatar className="team-logo" size="md" src={teamLogo}  />
             <h3>{teamName}</h3>
             {scoreEl}
             <FullRosterTable
@@ -136,7 +139,7 @@ export const TeamMatchCard = (props) => {
 
 export const TeamMatchCardMobile = (props) => {
     const {
-        user, teamLogo, score, team, completed,
+        user, score, team, completed,
         home_team, away_team, matchId, updateScore,
         noTopBorder
     } = props;
@@ -148,7 +151,7 @@ export const TeamMatchCardMobile = (props) => {
 
     return (
         <div className="team-match-card-mobile le-card" style={style}>
-            <div className="team-logo is-medium"> </div>
+            <Avatar className="team-logo" size="sm" src={team.logo_url}  />
             <span className="team-name">
                 <h4>{team.name}</h4>
                 {!completed && user.captain_of_teams.includes(team.id) &&
@@ -171,7 +174,7 @@ export const TeamTitle = (props) => {
         <div className="team-box-wrapper">
             <div className="team-box">
                 <div className="team-box-main">
-                    <div className="team-logo is-medium"> </div>
+                    <Avatar className="team-logo" size="md" src={team.logo_url}  />
                     <div className="h3 team-title">
                         {team.name}
                     </div>
@@ -285,40 +288,11 @@ class TeamLogoEdit extends React.Component {
 
 
 class TeamLogo extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {teamLogo: this.props.team.logo_url};
 
-        this.state = {
-            viewOrEdit: VIEW_MODE,
-            teamLogo: this.props.team.logo,
-            files: []
-        };
-    }
-
-    toggleViewEdit = (e) => {
-        this.setState({
-            viewOrEdit: (this.state.viewOrEdit == VIEW_MODE) ? EDIT_MODE : VIEW_MODE,
-        });
-    }
-
-    userIsCaptain = () => {
-        let {team, user} = this.props;
-        const isCaptain = ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
-        return isCaptain;
-    };
-
-    onDrop = (files) => {
-        console.log("ondrop files:", files);
-        this.setState({
-            files
-        });
-    }
-
-    upload = (e) => {
+    upload = (file) => {
         let data  = new FormData();
-
-        let f = this.state.files[0];
-        data.append('logo', f)
+        data.append('logo', file);
 
         let url = reverse("api-team-detail", {team_id: this.props.team.id});
         ajax({
@@ -329,40 +303,30 @@ class TeamLogo extends React.Component {
             headers: {},
         }).then(response => {
             toastr.success("Successfully updated team logo!");
+            this.setState({
+                teamLogo: response.logo,
+            });
         }).catch(response => {
             toastr.error("Unknown error occurred updating team logo!");
         });
-        this.setState({
-            teamLogo: f.preview,
-        });
-    }
-
-
+    };
 
     render() {
-        let {team, user} = this.props;
-        const isCaptain = this.userIsCaptain();
-
-        const viewMode = this.state.viewOrEdit;
-        const inViewMode = viewMode == VIEW_MODE;
-        const inEditMode = viewMode == EDIT_MODE;
-
+        let {team} = this.props;
         return (
-            <div>
-                <h3> Logo </h3>
-                { isCaptain && <Button onClick={this.toggleViewEdit}>
-                    { inViewMode && "Edit" }
-                    { inEditMode && "View" }
-                </Button> }
-
-                <div className="pt-1">
-                    { inViewMode && <TeamLogoView teamLogo={this.state.teamLogo} />}
-                    { isCaptain && inEditMode && <TeamLogoEdit onChangeComplete={this.onChangeComplete} files={this.state.files} upload={this.upload} onDrop={this.onDrop} teamLogo={this.state.teamLogo} />}
-                </div>
+            <div className="team-details">
+                <h3>Logo</h3>
+                <Avatar className="team-logo" size="md" src={this.state.teamLogo}  />
+                <AvatarSelector
+                    dropzoneText="Drag and drop or click to upload file"
+                    title="Change your team's logo"
+                    buttonText="Change Logo"
+                    onConfirm={this.upload}
+                />
             </div>
         );
     }
-};
+}
 
 class TeamColorView extends React.Component {
     render() {

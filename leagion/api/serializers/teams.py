@@ -68,7 +68,7 @@ class TeamSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'name', 'player_ids', 'players',
             'season_id', 'season', 'matches', 'captains',
-            'color', 'logo',
+            'color', 'logo_url', 'logo',
         )
 
     matches = serializers.SerializerMethodField('get_ordered_matches')

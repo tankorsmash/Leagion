@@ -128,18 +128,21 @@ def filter_request_queryset_generic(request, queryset, view):
 
     standard user/player can only read, nothing else
     """
-    user = request.user
+    # TODO work out permissions, but permessions should add to queryset
+    # NOT filter it
+    return queryset
+    # user = request.user
 
-    if is_moderator_or_better(user):
-        return queryset
+    # if is_moderator_or_better(user):
+        # return queryset
 
-    if user.is_commissioner:
-        return filter_queryset_to_commissioner(user, queryset)
+    # if user.is_commissioner:
+        # return filter_queryset_to_commissioner(user, queryset)
 
-    if request.method == "GET":
-        return filter_queryset_to_standard_user(user, queryset)
-    else:
-        return queryset.none()
+    # if request.method == "GET":
+        # return filter_queryset_to_standard_user(user, queryset)
+    # else:
+        # return queryset.none()
 
 
 class UserFilterBackend(filters.BaseFilterBackend):

@@ -8,13 +8,8 @@ export class AvatarSelector extends React.Component {
     static propTypes = {
         onConfirm: PropTypes.func.isRequired,
         dropzoneText: PropTypes.string.isRequired,
-        avatarSize: PropTypes.string,
         title: PropTypes.string.isRequired,
         buttonText: PropTypes.string.isRequired,
-    };
-
-    static defaultProps = {
-        avatarSize: "md",
     };
 
     state = {
@@ -33,6 +28,7 @@ export class AvatarSelector extends React.Component {
     onConfirm = (toggle) => {
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             this.props.onConfirm(blob);
+            toggle();
         });
 
     };

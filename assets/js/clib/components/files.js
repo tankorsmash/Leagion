@@ -13,12 +13,13 @@ export class AvatarSelectorComp extends BaseComponent {
 
     renderCode() {
         return (
-`import {SimpleModal} from 'components/modals';
+`import {AvatarSelector} from 'components/files';
 
-<SimpleModal
+<AvatarSelector
     ${this.getAttrsAsCode()}
-    body={<h2>this is the modal content</h2>}
-/>`
+    onConfirm={(file) => console.log('File: ' + file, true)}
+/>
+`
         );
     }
 

@@ -7,7 +7,7 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
         fields = (
-            'id', 'name', 'season'
+            'id', 'name', 'season', 'logo_url'
         )
 
 class ShallowLocationSerializer(serializers.ModelSerializer):
