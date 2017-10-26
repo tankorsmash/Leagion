@@ -1,4 +1,5 @@
 import os
+import uuid
 from django.db import models
 from django.conf import settings
 
@@ -6,7 +7,7 @@ from leagion.models import User
 
 
 def get_logo_path(instance, filename):
-    return 'teams/{}/logo.png'.format(instance.id)
+    return 'teams/{}/logo/{}.png'.format(instance.id, uuid.uuid4())
 
 
 class Team(models.Model):

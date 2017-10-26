@@ -31,6 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
             'alt_phonenumber', 'teams',
             'captain_of_teams', 'leagues_commissioned',
             'is_commissioner', 'is_staff', 'is_moderator',
+            'avatar', 'avatar_url'
         )
         extra_kwargs = {
             'password': {'write_only': True},
@@ -39,6 +40,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     teams = ShallowTeamSerializer(many=True, read_only=True)
     leagues_commissioned = ShallowLeagueSerializer(many=True, read_only=True)
+    avatar = serializers.ImageField()
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -57,8 +59,14 @@ class PublicUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'email', 'first_name', 'last_name', 'full_name',
-                'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',)
+        fields = (
+            'id', 'email', 'first_name', 'last_name', 'full_name',
+            'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',
+            'avatar_url'
+        )
 
-        read_only_fields = ('id', 'email', 'first_name', 'last_name', 'full_name',
-                'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',)
+        read_only_fields = (
+            'id', 'email', 'first_name', 'last_name', 'full_name',
+            'default_phonenumber', 'alt_phonenumber', 'teams', 'captain_of_teams',
+            'avatar_url'
+        )

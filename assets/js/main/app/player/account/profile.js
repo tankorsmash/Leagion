@@ -4,9 +4,9 @@ import {FormBase, FormGroup} from 'components/forms';
 import ajax from 'common/ajax';
 
 export default class ProfileForm extends FormBase {
-	static propTypes = {
-		user: PropTypes.object.isRequired,
-	};
+    static propTypes = {
+        user: PropTypes.object.isRequired,
+    };
 
     url = 'api-my-details';
 
@@ -28,11 +28,11 @@ export default class ProfileForm extends FormBase {
         ajax({
             url: reverse(this.url),
             requireLogin: true,
-			method: 'PATCH',
+            method: 'PATCH',
             data: this.state.form,
         }).then(data => {
             toastr.success('Profile information successfully changed!');
-			this.props.setUserState(data);
+            this.props.setUserState(data);
         }).catch(data => {
             this.handleErrors(data);
         });
@@ -40,7 +40,7 @@ export default class ProfileForm extends FormBase {
     }
 
     render() {
-		return (
+        return (
             <Form onSubmit={this.handleSubmit}>
                 <FormGroup
                     label="Email"
@@ -67,10 +67,10 @@ export default class ProfileForm extends FormBase {
                     error={this.state.errors.alt_phonenumber}
                 />
                 <div className="text-center">
-					<Button type='submit' value='Submit'>Save</Button>
-				</div>
+                    <Button type='submit' value='Submit'>Save</Button>
+                </div>
             </Form>
-		);
+        );
     }
 
 }

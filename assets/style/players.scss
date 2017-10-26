@@ -53,7 +53,6 @@
 
     .le-avatar {
         margin: 5px;
-
     }
 }
 
@@ -128,6 +127,13 @@
     .tab-pane {
         padding: 30px;
         background-color: $white;
+    }
+
+    .avatar-form {
+        text-align: center;
+        .le-avatar {
+            margin: 5px;
+        }
     }
 }
 

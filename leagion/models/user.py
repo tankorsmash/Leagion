@@ -1,15 +1,16 @@
-import re
-import json
-import enum
+import os
+import uuid
 
 from django.db import models
+from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
-    )
+)
 
 from leagion.models.base import Timestamped
+
 
 class UserManager(BaseUserManager):
 
@@ -47,6 +48,11 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+
+def get_avatar_path(instance, filename):
+    return 'users/{}/avatar/{}.png'.format(instance.id, uuid.uuid4())
+
+
 class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 
     email = models.EmailField(
@@ -75,6 +81,19 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
         "League",
         related_name="league_commissioners"
     )
+
+    avatar = models.ImageField(
+        upload_to=get_avatar_path,
+        null=True
+    )
+
+    @property
+    def avatar_url(self):
+        if self.avatar:
+            return self.avatar.url
+        else:
+            return os.path.join(
+                settings.STATIC_URL, '/static/images/defaults/silouette.png')
 
     objects = UserManager()
 

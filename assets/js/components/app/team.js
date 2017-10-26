@@ -255,38 +255,6 @@ class TeamLogoView extends React.Component {
     }
 };
 
-class TeamLogoEdit extends React.Component {
-    render() {
-        const newLogoPrepared = this.props.files.length > 0;
-
-        return (
-            <div>
-                <Dropzone onDrop={this.props.onDrop}>
-                    <div>
-                        { !newLogoPrepared && <span className="text-center">
-                            Click or drag in new team logo
-                        </span> }
-
-                        { this.props.files.map((f) => {
-                            return (
-                                <Media key={f.name}>
-                                    <Media className="w-100" object src={f.preview} />
-                                </Media>
-                            );
-                        })}
-                    </div>
-                </Dropzone>
-                { newLogoPrepared &&
-                        <Button className="mt-1" onClick={this.props.upload} >
-                            Confirm
-                        </Button>
-                }
-            </div>
-        );
-    }
-};
-
-
 class TeamLogo extends React.Component {
     state = {teamLogo: this.props.team.logo_url};
 
@@ -307,7 +275,7 @@ class TeamLogo extends React.Component {
                 teamLogo: response.logo,
             });
         }).catch(response => {
-            toastr.error("Unknown error occurred updating team logo!");
+            toastr.error("Unknown error occurred updating team logo.");
         });
     };
 

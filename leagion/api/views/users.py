@@ -96,8 +96,6 @@ class RemoveLeaguesToCommission(drf_views.APIView):
         return Response("Success! Added {} new leagues_commissioned".format(new_count-old_count))
 
 
-
-
 @reverse_js
 class MyUserDetailsView(generics.RetrieveUpdateAPIView):
     """ GET, PUT, and PATCH current users details """

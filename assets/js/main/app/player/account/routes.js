@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import {Titlebar} from 'components/text';
 import {Tabs} from 'components/tabs';
 import ProfileForm from 'main/app/player/account/profile';
+import ChangeAvatarForm from 'main/app/player/account/avatar';
 import ChangePasswordForm from 'main/app/player/account/password';
 
 export default class AccountRouter extends React.Component {
@@ -28,6 +29,9 @@ export default class AccountRouter extends React.Component {
                     tabs={[{
                         label: 'Profile',
                         content: <ProfileForm {...this.props} />
+                    }, {
+                        label: 'Avatar',
+                        content: <ChangeAvatarForm {...this.props} />
                     }, {
                         label: 'Change Password',
                         content: <ChangePasswordForm {...this.props} />
