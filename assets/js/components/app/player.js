@@ -1,7 +1,7 @@
 import { Table } from 'components/tables';
-import Gravatar from 'react-gravatar';
 import urls from 'main/app/player/urls';
 import {Link} from 'components/buttons';
+import {Avatar} from 'components/media';
 
 export const TeamPlayerTable = (props) => {
     return (
@@ -15,37 +15,26 @@ export const TeamPlayerTable = (props) => {
     );
 };
 
-export const PlayerAvatar = (props) => {
-    return (
-        <div className="player-avatar">
-            <Gravatar className="player-avatar-pic" size={props.size} email={props.email} default="mm" />
-            <div
-                className="player-avatar-name"
-                style={{width: props.size + 'px'}}
-            >
-                {props.children}
-            </div>
-        </div>
-    );
-};
-
 export const PlayerAvatarList = (props) => {
     return (
         <div className="player-avatar-list">
             {props.players.map((player, i) => {
                 return (
-                    <PlayerAvatar
-                        key={i}
-                        size={props.size}
-                        email={player.email}
-                    >
+                    <div key={i} className="player-avatar">
                         <Link
                             url={urls.profileDetail}
                             args={{playerId: player.id}}
                         >
+                            <Avatar
+                                className="player-avatar-pic"
+                                size="md"
+                                src={player.avatar_url}
+                            />
+                            <div>
                             {player.full_name}
+                            </div>
                         </Link>
-                    </PlayerAvatar>
+                    </div>
                 );
             })}
         </div>

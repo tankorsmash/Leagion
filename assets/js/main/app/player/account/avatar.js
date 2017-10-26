@@ -11,11 +11,11 @@ export default class ChangeAvatarForm extends React.Component {
 
         ajax({
             url: reverse(this.url),
+            data: data,
             requireLogin: true,
             stringifyData: false,
             headers: {},
             method: 'PATCH',
-            data: data,
         }).then(data => {
             toastr.success('Avatar successfully changed!');
             this.props.setUserState(data);
@@ -28,7 +28,7 @@ export default class ChangeAvatarForm extends React.Component {
         return (
             <div className="avatar-form">
                 <h3>Avatar</h3>
-                <Avatar className="" size="md" src={this.props.user.avatar_url}  />
+                <Avatar size="md" src={this.props.user.avatar_url}  />
                 <AvatarSelector
                     dropzoneText="Drag and drop or click to upload avatar"
                     title="Change your avatar"

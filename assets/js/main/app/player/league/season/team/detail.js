@@ -42,7 +42,7 @@ export default class TeamDetail extends DatasetView {
                                 />),
                             }, {
                                 label: 'Team Members',
-                                content: <PlayerAvatarList size={100} players={team.players}/>
+                                content: <PlayerAvatarList players={team.players}/>
                             }, {
                                 label: 'Team Details',
                                 content: <TeamInfoTab team={team}/>

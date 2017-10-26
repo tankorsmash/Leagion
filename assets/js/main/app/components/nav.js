@@ -1,4 +1,5 @@
 import {Nav} from 'reactstrap';
+import {Avatar} from 'components/media';
 import {Dropdown, DropdownItem} from 'components/dropdowns';
 
 export class AppProfile extends React.Component {
@@ -24,7 +25,9 @@ export class AppProfile extends React.Component {
             <Nav className="ml-auto" navbar>
                 <Dropdown caret menuRight nav
                     color="primary"
-                    buttonText={this.props.user.email}
+                    buttonText={
+                        <Avatar size="xs" src={this.props.user.avatar_url}/>
+                    }
                 >
                     {items.map((item, i) => {
                         return (<DropdownItem tag={item} key={i}></DropdownItem>);

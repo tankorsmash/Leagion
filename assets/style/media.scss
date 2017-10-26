@@ -1,4 +1,10 @@
 .le-avatar {
+    border: 1px solid $black;
+
+    &.le-avatar-xs {
+        width: 26px;
+    }
+
     &.le-avatar-sm {
         width: 48px;
     }

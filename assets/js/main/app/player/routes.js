@@ -7,7 +7,7 @@ import urls from 'main/app/player/urls';
 import Dashboard from 'main/app/player/dashboard';
 import LeagueRouter from 'main/app/player/league/routes';
 import AccountRouter from 'main/app/player/account/routes';
-import PlayerProfileRouter from 'main/app/player/profile/routes';
+import PlayerProfileDetail from 'main/app/player/profile/detail';
 import {FourOhFour} from 'components/error-pages';
 
 export default class Player extends React.Component {
@@ -21,7 +21,7 @@ export default class Player extends React.Component {
                     <Route exact path={urls.index} component={Dashboard} setUserState={setUserState} user={user} />
                     <Route path={urls.leagueIndex} component={LeagueRouter} setUserState={setUserState} user={user} />
                     <Route path={urls.accountIndex} component={AccountRouter} setUserState={setUserState} user={user} />
-                    <Route path={urls.profileIndex} component={PlayerProfileRouter} setUserState={setUserState} user={user} />
+                    <Route path={urls.profileDetail} component={PlayerProfileDetail} setUserState={setUserState} user={user} />
                     <Route component={FourOhFour} />
                 </Switch>
             </div>
