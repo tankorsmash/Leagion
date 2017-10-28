@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 
     'phonenumber_field',
     'address',
+    'django_cleanup',
 ]
 
 MIDDLEWARE_CLASSES = [

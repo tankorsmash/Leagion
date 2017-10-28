@@ -27,3 +27,6 @@ phonenumberslite==8.4.3
 
 #team logo
 Pillow==4.3.0
+
+#cleanup old files
+django-cleanup==1.0.1
