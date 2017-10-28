@@ -1,3 +1,4 @@
+import { withState, lifecycle, compose, setDisplayName } from 'recompose';
 import {Button, Media} from 'reactstrap';
 import { SketchPicker } from 'react-color';
 import Dropzone from 'react-dropzone';
@@ -9,7 +10,7 @@ import urls from 'main/app/player/urls';
 import {Link} from 'components/buttons';
 
 import {Ribbon} from 'components/misc';
-import DatasetView from 'components/dataset_view';
+import DatasetView from 'components/DatasetView';
 
 import {FullRosterTable} from 'components/app/roster';
 
@@ -366,7 +367,7 @@ class TeamColor extends React.Component {
 
     userIsCaptain = () => {
         let {team, user} = this.props;
-        const isCaptain = ( auth.moderatorOrBetter(user) || team.captains.includes(user.id) );
+        const isCaptain = ( team.captains.includes(user.id) );
         return isCaptain;
     };
 
@@ -394,30 +395,14 @@ class TeamColor extends React.Component {
             </div>
         );
     }
-};
+}
 
-export class TeamInfoTab extends DatasetView {
-    get datasetStateAttr() {
-        return "user";
-    }
-
-    get datasetViewName() {
-        return "api-my-details";
-    }
-
-    render() {
-        if (this.getIsLoaded() == false) {
-            return ( "Loading..." );
-        };
-
-        const user = this.state.user;
-        const team = this.props.team;
-        return (
-            <div>
-                <TeamLogo team={team} user={user} />
-                <hr/>
-                <TeamColor team={team} user={user} />
-            </div>
-        );
-    };
+export const TeamInfoTab = ({user, team}) => {
+    return (
+        <div>
+            <TeamLogo team={team} user={user} />
+            <hr/>
+            <TeamColor team={team} user={user} />
+        </div>
+    );
 };

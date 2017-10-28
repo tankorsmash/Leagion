@@ -67,6 +67,7 @@
     "react-spinkit": "^2.1.1",
     "react-transition-group": "^2.1.0",
     "reactstrap": "^5.0.0-alpha.2",
+    "recompose": "^0.26.0",
     "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "toastr": "^2.1.2",

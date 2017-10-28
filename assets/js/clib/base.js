@@ -8,6 +8,7 @@ import {SimpleModalComp} from 'clib/components/modals';
 import {AvatarSelectorComp} from 'clib/components/files';
 import {AvatarComp} from 'clib/components/media';
 import {TitlebarComp, TextComp} from 'clib/components/text';
+import {DatasetViewComp} from 'clib/components/no_ui';
 import {TableComp, DraggableTableComp} from 'clib/components/tables';
 
 class Clib extends React.Component {
@@ -22,6 +23,7 @@ class Clib extends React.Component {
         {'name': 'Tables', 'components': [TableComp, DraggableTableComp]},
         {'name': 'Files', 'components': [AvatarSelectorComp]},
         {'name': 'Media', 'components': [AvatarComp]},
+        {'name': 'No Ui', 'components': [DatasetViewComp]},
     ];
 
     selectComponent = (e) => {
