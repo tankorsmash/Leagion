@@ -1,6 +1,6 @@
 import SpinLoader from 'components/spinloader';
 import {MatchTable} from 'components/app/match';
-import {TeamRankTable} from 'components/app/team';
+import TeamRankTable from 'main/app/player/league/season/team/TeamRankTable';
 
 import {Titlebar} from 'components/text';
 import {Tabs} from 'components/tabs';

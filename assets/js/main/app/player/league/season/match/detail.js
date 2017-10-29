@@ -1,7 +1,8 @@
 import SpinLoader from 'components/spinloader';
 import {Row, Col} from 'reactstrap';
 import MediaQuery from 'react-responsive';
-import {TeamMatchCard, TeamMatchCardMobile} from 'components/app/team';
+import TeamMatchCard from 'main/app/player/league/season/match/TeamMatchCard';
+import TeamMatchCardMobile from 'main/app/player/league/season/match/TeamMatchCardMobile';
 
 import {Titlebar} from 'components/text';
 import ajax from 'common/ajax';

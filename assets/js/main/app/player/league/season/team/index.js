@@ -1,7 +1,8 @@
 import SpinLoader from 'components/spinloader';
-import {TeamCard} from 'components/app/team';
 import {Titlebar} from 'components/text';
 import ajax from 'common/ajax';
+
+import TeamCard from 'main/app/player/league/season/team/TeamCard';
 
 export default class TeamList extends React.Component {
 

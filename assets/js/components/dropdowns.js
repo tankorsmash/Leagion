@@ -17,7 +17,10 @@ export class Dropdown extends React.Component {
         caret: PropTypes.bool,
         color: PropTypes.string,
         menuRight: PropTypes.bool,
-        buttonText: PropTypes.string,
+        buttonText: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.element,
+        ]),
         disabled: PropTypes.bool,
         dropup: PropTypes.bool,
         group: PropTypes.bool,

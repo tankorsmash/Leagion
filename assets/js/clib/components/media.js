@@ -4,7 +4,7 @@ import {BaseComponent} from './base';
 export class AvatarComp extends BaseComponent {
     static component = Avatar;
     static choiceAttrs = {
-        size: ['sm', 'md', 'lg'],
+        size: ['xs', 'sm', 'md', 'lg'],
     };
     static defaultAttrs = {
         src: "https://avatars.io/static/default_256.jpg",

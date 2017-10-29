@@ -2,14 +2,16 @@ import { withState, compose, setDisplayName } from 'recompose';
 
 import reverse from 'common/reverse';
 
-import SpinLoader from 'components/spinloader';
 import {Titlebar} from 'components/text';
-import {TeamTitle, TeamInfoTab} from 'components/app/team';
 import DatasetView from 'components/DatasetView';
 import {Tabs} from 'components/tabs';
 
 import {MatchTable} from 'components/app/match';
 import {PlayerAvatarList} from 'components/app/player';
+
+import TeamTitle from 'main/app/player/league/season/team/TeamTitle';
+import TeamColorUploader from 'main/app/player/league/season/team/TeamColorUploader';
+import TeamLogoUploader from 'main/app/player/league/season/team/TeamLogoUploader';
 
 const enhance = compose(
     setDisplayName('TeamDetail'),
@@ -46,13 +48,12 @@ export default enhance(({team, setTeam, user, constants, match}) => {
                             content: <PlayerAvatarList players={team.players}/>
                         }, {
                             label: 'Team Details',
-                            content: <TeamInfoTab
-                                team={team}
-                                user={user}
-                                constants={constants}
-                                isCaptain={isCaptain}
-                                setTeam={setTeam}
-                            />
+                            content: (
+                                <div className="team-details">
+                                    <TeamLogoUploader team={team} setTeam={setTeam} user={user} isCaptain={isCaptain} />
+                                    <TeamColorUploader team={team} setTeam={setTeam} user={user} isCaptain={isCaptain} constants={constants} />
+                                </div>
+                            )
                         }]}
                     />
                 </div>
