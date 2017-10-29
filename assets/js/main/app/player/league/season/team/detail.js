@@ -6,7 +6,7 @@ import {Titlebar} from 'components/text';
 import DatasetView from 'components/DatasetView';
 import {Tabs} from 'components/tabs';
 
-import {MatchTable} from 'components/app/match';
+import MatchTable from 'main/app/player/league/season/match/MatchTable';
 import {PlayerAvatarList} from 'components/app/player';
 
 import TeamTitle from 'main/app/player/league/season/team/TeamTitle';

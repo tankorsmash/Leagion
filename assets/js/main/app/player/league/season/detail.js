@@ -1,5 +1,5 @@
 import SpinLoader from 'components/spinloader';
-import {MatchTable} from 'components/app/match';
+import MatchTable from 'main/app/player/league/season/match/MatchTable';
 import TeamRankTable from 'main/app/player/league/season/team/TeamRankTable';
 
 import {Titlebar} from 'components/text';
