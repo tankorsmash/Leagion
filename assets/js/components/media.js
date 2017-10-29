@@ -8,10 +8,11 @@ export class Avatar extends React.Component {
         size: PropTypes.string.isRequired,
         src: PropTypes.string.isRequired,
         square: PropTypes.bool,
+        style: PropTypes.object,
     };
 
     render() {
-        const {size, src, square, className} = this.props;
+        const {size, src, square, className, style} = this.props;
 
         const circleClass = square ? '' : 'le-avatar-circle';
         const classNames = `le-avatar le-avatar-${size} ${circleClass} ${className}`;
@@ -20,6 +21,7 @@ export class Avatar extends React.Component {
             <Media
                 className={classNames}
                 object src={src}
+                style={style}
             />
         );
     }

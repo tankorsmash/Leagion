@@ -51,6 +51,7 @@ export default enhance(({team, setTeam, user, constants, match}) => {
                                 user={user}
                                 constants={constants}
                                 isCaptain={isCaptain}
+                                setTeam={setTeam}
                             />
                         }]}
                     />

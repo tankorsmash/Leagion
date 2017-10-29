@@ -41,6 +41,10 @@ class Team(models.Model):
     )
 
     @property
+    def color_value(self):
+        return dict(self.COLOR_CHOICES)[self.color]
+
+    @property
     def logo_url(self):
         if self.logo:
             return self.logo.url

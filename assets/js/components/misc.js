@@ -4,7 +4,10 @@ export const Ribbon = (props) => {
 			<div className="p ribbon-left">
 				{props.leftEl}
 			</div>
-			<div className="p ribbon-right">
+			<div
+				className="p ribbon-right"
+				style={{backgroundColor: props.color}}
+			>
 				{props.rightEl}
 			</div>
 		</div>

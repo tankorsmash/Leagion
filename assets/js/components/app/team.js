@@ -68,7 +68,10 @@ export const TeamCard = (props) => {
                     </Link>
                 </div>
             </div>
-            <div className="team-card-bottom">
+            <div
+                className="team-card-bottom"
+                style={{backgroundColor: team.color_value}}
+            >
                 <div className="h5">
                     <Link
                         url={urls.leagueDetail}
@@ -97,8 +100,8 @@ export const TeamCard = (props) => {
 
 export const TeamMatchCard = (props) => {
     const {
-        title, user, rosterId, teamLogo, teamName, score,
-        completed, teamId, home_team, away_team, matchId, updateScore
+        title, user, rosterId, team, score,
+        completed, home_team, away_team, matchId, updateScore
     } = props;
 
     let scoreEl;
@@ -109,7 +112,7 @@ export const TeamMatchCard = (props) => {
         scoreEl = (
             <span>
                 <h2>N/A</h2>
-                {user.captain_of_teams.includes(teamId) &&
+                {user.captain_of_teams.includes(team.id) &&
                     <MatchScoreSetter
                         home_team={home_team}
                         away_team={away_team}
@@ -123,12 +126,22 @@ export const TeamMatchCard = (props) => {
 
     return (
         <div className="team-match-card le-card">
-            <h3 className="team-match-card-title font-weight-bold">
-                {title}
-            </h3>
-            <Avatar className="team-logo" size="md" src={teamLogo}  />
-            <h3>{teamName}</h3>
-            {scoreEl}
+            <div
+                className="team-match-card-header"
+                style={{borderBottom: '5px solid ' + team.color_value}}
+            >
+                <h3 className="team-match-card-title font-weight-bold">
+                    {title}
+                </h3>
+                <Avatar
+                    style={{border: '5px solid ' + team.color_value}}
+                        className="team-logo"
+                        size="md"
+                        src={team.logo_url}
+                />
+                <h3>{team.name}</h3>
+                {scoreEl}
+            </div>
             <FullRosterTable
                 user={user}
                 rosterId={rosterId}
@@ -151,7 +164,12 @@ export const TeamMatchCardMobile = (props) => {
 
     return (
         <div className="team-match-card-mobile le-card" style={style}>
-            <Avatar className="team-logo" size="sm" src={team.logo_url}  />
+            <Avatar
+                style={{border: '5px solid ' + team.color_value}}
+                className="team-logo"
+                size="sm"
+                src={team.logo_url}
+            />
             <span className="team-name">
                 <h4>{team.name}</h4>
                 {!completed && user.captain_of_teams.includes(team.id) &&
@@ -181,6 +199,7 @@ export const TeamTitle = (props) => {
                 </div>
             </div>
             <Ribbon
+                color={team.color_value}
                 leftEl={
                     <Link
                         url={urls.leagueDetail}
@@ -239,8 +258,6 @@ export const TeamRankTable = (props) => {
 };
 
 class TeamLogo extends React.Component {
-    state = {teamLogo: this.props.team.logo_url};
-
     upload = (file) => {
         let data  = new FormData();
         data.append('logo', file);
@@ -252,11 +269,9 @@ class TeamLogo extends React.Component {
             method:"PATCH",
             stringifyData: false,
             headers: {},
-        }).then(response => {
+        }).then(data => {
             toastr.success("Successfully updated team logo!");
-            this.setState({
-                teamLogo: response.logo,
-            });
+            this.props.setTeam(data);
         }).catch(response => {
             toastr.error("Unknown error occurred updating team logo.");
         });
@@ -267,7 +282,7 @@ class TeamLogo extends React.Component {
         return (
             <div className="team-logo-changer">
                 <h3>Logo</h3>
-                <Avatar className="team-logo" size="md" src={this.state.teamLogo}  />
+                <Avatar className="team-logo" size="md" src={team.logo_url}  />
 
                 {isCaptain &&
                     <AvatarSelector
@@ -283,19 +298,13 @@ class TeamLogo extends React.Component {
 }
 
 class TeamColor extends React.Component {
-    state = {
-        teamColor: this.props.team.color,
-    };
-
     changeColor = (color) => {
         ajax({
             url: reverse('api-team-detail', {team_id: this.props.team.id}),
             data: {color: color},
             method: 'PATCH',
         }).then(data => {
-            this.setState({
-                teamColor: data.color
-            });
+            this.props.setTeam(data);
             toastr.success('Updated team color!');
         });
     };

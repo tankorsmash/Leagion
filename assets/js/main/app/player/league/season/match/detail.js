@@ -66,9 +66,7 @@ const MatchDetailDesktop = (props) => {
                 <Col md="5" className="d-flex justify-content-end">
                     <TeamMatchCard
                         title="Home Team"
-                        teamName={home_team.name}
-                        teamId={home_team.id}
-                        teamLogo={home_team.logo_url}
+                        team={home_team}
                         score={home_points}
                         user={props.user}
                         rosterId={home_roster}
@@ -85,9 +83,7 @@ const MatchDetailDesktop = (props) => {
                 <Col md="5" className="team-match-column">
                     <TeamMatchCard
                         title="Away Team"
-                        teamName={away_team.name}
-                        teamId={away_team.id}
-                        teamLogo={away_team.logo_url}
+                        team={away_team}
                         score={away_points}
                         user={props.user}
                         rosterId={away_roster}
