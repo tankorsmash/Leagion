@@ -16,20 +16,12 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
-from django.views.static import serve
 
 from django.contrib import admin
 
 from leagion import views
 
-from leagion.api.views import (
-    registration as reg_views,
-    users as users_views,
-    matches as matches_views,
-    rosters as rosters_views,
-    teams as teams_views,
-    leagues as leagues_views,
-)
+from leagion.api.views import registration as reg_views
 
 urlpatterns = []
 

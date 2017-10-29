@@ -26,6 +26,7 @@ var viewnames = {
     "api-season-detail": "/api/season/<season_id>/",
     "api-season-list": "/api/season/",
     "api-set-match-score": "/api/set-match-score/<match_id>/",
+    "api-site-constants": "/api/site-constants/",
     "api-stats-index": "/api/stats/",
     "api-team-detail": "/api/team/<team_id>/",
     "api-team-list": "/api/team/",

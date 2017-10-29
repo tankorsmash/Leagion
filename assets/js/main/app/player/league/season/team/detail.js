@@ -15,7 +15,9 @@ const enhance = compose(
     setDisplayName('TeamDetail'),
     withState('team', 'setTeam', null),
 );
-export default enhance(({team, setTeam, user, match}) => {
+export default enhance(({team, setTeam, user, constants, match}) => {
+    const isCaptain = team && team.captains.includes(user.id);
+
     return (
         <DatasetView
             url={reverse(
@@ -44,7 +46,12 @@ export default enhance(({team, setTeam, user, match}) => {
                             content: <PlayerAvatarList players={team.players}/>
                         }, {
                             label: 'Team Details',
-                            content: <TeamInfoTab team={team} user={user}/>
+                            content: <TeamInfoTab
+                                team={team}
+                                user={user}
+                                constants={constants}
+                                isCaptain={isCaptain}
+                            />
                         }]}
                     />
                 </div>

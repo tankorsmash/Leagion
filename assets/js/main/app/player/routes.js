@@ -13,13 +13,13 @@ import {FourOhFour} from 'components/error-pages';
 export default class Player extends React.Component {
 
     render() {
-        const {setUserState, user} = this.props;
+        const {setUserState, user, constants} = this.props;
         return (
             <div>
                 <PlayerNavbar {...this.props}/>
                 <Switch>
                     <Route exact path={urls.index} component={Dashboard} setUserState={setUserState} user={user} />
-                    <Route path={urls.leagueIndex} component={LeagueRouter} setUserState={setUserState} user={user} />
+                    <Route path={urls.leagueIndex} component={LeagueRouter} setUserState={setUserState} user={user} constants={constants} />
                     <Route path={urls.accountIndex} component={AccountRouter} setUserState={setUserState} user={user} />
                     <Route path={urls.profileDetail} component={PlayerProfileDetail} setUserState={setUserState} user={user} />
                     <Route component={FourOhFour} />

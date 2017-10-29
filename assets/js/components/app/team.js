@@ -1,6 +1,5 @@
 import { withState, lifecycle, compose, setDisplayName } from 'recompose';
 import {Button, Media} from 'reactstrap';
-import { SketchPicker } from 'react-color';
 import Dropzone from 'react-dropzone';
 import { Table } from 'components/tables';
 
@@ -15,7 +14,7 @@ import DatasetView from 'components/DatasetView';
 import {FullRosterTable} from 'components/app/roster';
 
 import {MatchScoreSetter} from 'components/app/match';
-import {Avatar} from 'components/media';
+import {Avatar, ColorSelector} from 'components/media';
 import {AvatarSelector} from 'components/files';
 
 
@@ -239,23 +238,6 @@ export const TeamRankTable = (props) => {
 	);
 };
 
-class TeamLogoView extends React.Component {
-    render() {
-        return (
-            <div>
-                <Media>
-                    <Media
-                        width="200px"
-                        className=""
-                        object
-                        src={this.props.teamLogo}
-                    />
-                </Media>
-            </div>
-        );
-    }
-};
-
 class TeamLogo extends React.Component {
     state = {teamLogo: this.props.team.logo_url};
 
@@ -281,128 +263,70 @@ class TeamLogo extends React.Component {
     };
 
     render() {
-        let {team} = this.props;
+        let {team, isCaptain} = this.props;
         return (
-            <div className="team-details">
+            <div className="team-logo-changer">
                 <h3>Logo</h3>
                 <Avatar className="team-logo" size="md" src={this.state.teamLogo}  />
-                <AvatarSelector
-                    dropzoneText="Drag and drop or click to upload file"
-                    title="Change your team's logo"
-                    buttonText="Change Logo"
-                    onConfirm={this.upload}
-                />
+
+                {isCaptain &&
+                    <AvatarSelector
+                        dropzoneText="Drag and drop or click to upload file"
+                        title="Change your team's logo"
+                        buttonText="Change Logo"
+                        onConfirm={this.upload}
+                    />
+                }
             </div>
         );
     }
 }
 
-class TeamColorView extends React.Component {
-    render() {
-        let {teamColor} = this.props;
-
-        const style = {
-            backgroundColor: `#${teamColor}`,
-            width: "128px",
-            height: "128px",
-        };
-        return (
-            <div>
-                <div className="text-hide" style={style}>
-                    Color #{teamColor}
-                </div>
-            </div>
-        );
-    }
-};
-
-class TeamColorEdit extends React.Component {
-    render() {
-        let {teamColor} = this.props;
-        return (
-            <div>
-                <SketchPicker
-                    disableAlpha={true}
-                    onChangeComplete={this.props.onChangeComplete}
-                    color={teamColor} />
-            </div>
-        );
-    }
-};
-
-const VIEW_MODE = "view";
-const EDIT_MODE = "edit";
-
 class TeamColor extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        teamColor: this.props.team.color,
+    };
 
-        this.state = {
-            viewOrEdit: VIEW_MODE,
-            teamColor: this.props.team.color,
-        };
-    }
-
-    toggleViewEdit = (e) => {
-        this.setState({
-            viewOrEdit: (this.state.viewOrEdit == VIEW_MODE) ? EDIT_MODE : VIEW_MODE,
-        });
-    }
-
-    //happens when user finalizes the color picked
-    onChangeComplete = (color, event) => {
-        color = color.hex.replace(/#/g, '');
-        this.setState({
-            teamColor: color
-        });
-
+    changeColor = (color) => {
         ajax({
             url: reverse('api-team-detail', {team_id: this.props.team.id}),
             data: {color: color},
             method: 'PATCH',
         }).then(data => {
+            this.setState({
+                teamColor: data.color
+            });
             toastr.success('Updated team color!');
         });
-    }
-
-    userIsCaptain = () => {
-        let {team, user} = this.props;
-        const isCaptain = ( team.captains.includes(user.id) );
-        return isCaptain;
     };
 
     render() {
-        let {team} = this.props;
-        const isCaptain = this.userIsCaptain();
-
-        const viewMode = this.state.viewOrEdit;
-        const inViewMode = viewMode == VIEW_MODE;
-        const inEditMode = viewMode == EDIT_MODE;
-
+        const {constants, team, isCaptain} = this.props;
         return (
-            <div>
+            <div className="team-color-changer">
                 <h3> Color </h3>
-
-                { isCaptain && <Button onClick={this.toggleViewEdit}>
-                    { inViewMode && "Edit" }
-                    { inEditMode && "View" }
-                </Button> }
-
-                <div className="pt-1">
-                    { inViewMode && <TeamColorView teamColor={this.state.teamColor} />}
-                    { isCaptain && inEditMode && <TeamColorEdit onChangeComplete={this.onChangeComplete} teamColor={this.state.teamColor} />}
+                <div className="team-color"
+                    style={{backgroundColor: constants.teamColors[team.color]}}>
                 </div>
+                {isCaptain &&
+                    <ColorSelector
+                        title="Change your team's Color"
+                        buttonText="Change Team Color"
+                        onConfirm={this.changeColor}
+                        initialColor={team.color || 0}
+                        colorChoices={constants.teamColors}
+                    />
+                }
             </div>
         );
     }
 }
 
-export const TeamInfoTab = ({user, team}) => {
+export const TeamInfoTab = (props) => {
     return (
-        <div>
-            <TeamLogo team={team} user={user} />
-            <hr/>
-            <TeamColor team={team} user={user} />
+        <div className="team-details">
+            <TeamLogo {...props} />
+            <TeamColor {...props} />
         </div>
     );
 };

@@ -12,6 +12,7 @@ from leagion.api.views import (
     leagues as leagues_views,
     seasons as seasons_views,
     stats as stats_views,
+    constants as const_views,
 )
 
 urlpatterns = [
@@ -51,5 +52,7 @@ urlpatterns = [
 
     url(r'^location/$', locations_views.LocationList.as_view(), name='api-location-list'),
     url(r'^location/(?P<location_id>\d+)/$', locations_views.LocationDetail.as_view(), name='api-location-detail'),
+
+    url(r'^site-constants/$', const_views.SiteConstants.as_view(), name='api-site-constants'),
 
 ]

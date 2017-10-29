@@ -11,13 +11,30 @@ def get_logo_path(instance, filename):
 
 
 class Team(models.Model):
+    COLOR_CHOICES = (
+        (0, '#C0392B'),
+        (1, '#E74C3C'),
+        (2, '#9B59B6'),
+        (3, '#8E44AD'),
+        (4, '#2980B9'),
+        (5, '#3498DB'),
+        (6, '#1ABC9C'),
+        (7, '#16A085'),
+        (8, '#27AE60'),
+        (9, '#2ECC71'),
+        (10, '#F1C40F'),
+        (11, '#F39C12'),
+        (12, '#E67E22'),
+        (13, '#D35400')
+    )
+
     name = models.CharField(max_length=255)
     season = models.ForeignKey("Season", related_name="teams")
 
     captains = models.ManyToManyField(User, related_name="captain_of_teams")
     players = models.ManyToManyField(User, related_name="teams")
 
-    color = models.CharField(max_length=6, default="196E3D") #store the hex color without '#': FF00FF
+    color = models.IntegerField(default=0)
     logo = models.ImageField(
         upload_to=get_logo_path,
         null=True

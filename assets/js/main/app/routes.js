@@ -15,16 +15,11 @@ import SpinLoader from 'components/spinloader';
 
 
 class AppRouter extends React.Component {
-    constructor(props){
-        super(props);
-
-        this.state = {
-            user: {},
-            loaded: false,
-        };
-
-        this.setUserState = this.setUserState.bind(this);
-    }
+    state = {
+        user: {},
+        userLoaded: false,
+        constantsLoaded: false,
+    };
 
     componentDidMount() {
         ajax({
@@ -32,20 +27,30 @@ class AppRouter extends React.Component {
         }).then(data => {
             this.setState({
                 user: data,
-                loaded: true,
+                userLoaded: true,
+            });
+        });
+
+        ajax({
+            url: reverse('api-site-constants'),
+        }).then(data => {
+
+            this.setState({
+                constants: data,
+                constantsLoaded: true,
             });
         });
     }
 
-    setUserState(newUser) {
+    setUserState = (newUser) => {
         this.setState({
             user: newUser,
         });
-    }
+    };
 
     render() {
         return (
-            <SpinLoader loaded={this.state.loaded}>
+            <SpinLoader loaded={this.state.userLoaded && this.state.constantsLoaded}>
                 <Switch>
                     <Route exact path={appUrls.index} {...this.state} component={PlayerRouter} />
                     <Route path={adminUrls.index} {...this.state} component={Admin} />

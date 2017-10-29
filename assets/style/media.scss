@@ -45,3 +45,22 @@
         cursor: pointer;
     }
 }
+
+.color-list-selector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 75px;
+
+    .color-list-choice {
+        width: 26px;
+        height: 26px;
+        margin: 2px;
+        cursor: pointer;
+        &.active {
+            border-radius: 5px;
+            box-shadow: 0 0 0 3px $black;
+        }
+    }
+
+}
