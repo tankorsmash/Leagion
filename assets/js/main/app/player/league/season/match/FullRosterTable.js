@@ -1,9 +1,8 @@
 import { Table } from 'components/tables';
 import ajax from 'common/ajax';
-import Dragula from 'react-dragula';
 import SpinLoader from 'components/spinloader';
 
-export class FullRosterTable extends React.Component {
+export default class FullRosterTable extends React.Component {
     constructor(props) {
         super(props);
 

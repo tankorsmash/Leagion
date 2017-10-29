@@ -7,7 +7,7 @@ import DatasetView from 'components/DatasetView';
 import {Tabs} from 'components/tabs';
 
 import MatchTable from 'main/app/player/league/season/match/MatchTable';
-import {PlayerAvatarList} from 'components/app/player';
+import PlayerAvatarList from 'main/app/player/league/season/team/PlayerAvatarList';
 
 import TeamTitle from 'main/app/player/league/season/team/TeamTitle';
 import TeamColorUploader from 'main/app/player/league/season/team/TeamColorUploader';

@@ -1,24 +1,16 @@
-import { Table } from 'components/tables';
-import urls from 'main/app/player/urls';
+import {compose, setDisplayName} from 'recompose';
+
 import {Link} from 'components/buttons';
 import {Avatar} from 'components/media';
+import urls from 'main/app/player/urls';
 
-export const TeamPlayerTable = (props) => {
-    return (
-        <Table responsive striped
-            data={props.players}
-            columns={[
-                {header: 'Name', cell: 'full_name'},
-                {header: 'Email', cell: 'email'},
-            ]}
-        />
-    );
-};
-
-export const PlayerAvatarList = (props) => {
+const enhance = compose(
+	setDisplayName('PlayerAvatarList'),
+);
+export default enhance(({players}) => {
     return (
         <div className="player-avatar-list">
-            {props.players.map((player, i) => {
+            {players.map((player, i) => {
                 return (
                     <div key={i} className="player-avatar">
                         <Link
@@ -39,6 +31,4 @@ export const PlayerAvatarList = (props) => {
             })}
         </div>
     );
-};
-
-
+});

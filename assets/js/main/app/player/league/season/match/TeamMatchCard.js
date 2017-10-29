@@ -1,8 +1,8 @@
 import {compose, setDisplayName} from 'recompose';
 
 import {Avatar} from 'components/media';
-import {FullRosterTable} from 'components/app/roster';
 import MatchScoreSetter from 'main/app/player/league/season/match/MatchScoreSetter';
+import FullRosterTable from 'main/app/player/league/season/match/FullRosterTable';
 
 const enhance = compose(
 	setDisplayName('TeamMatchCard'),

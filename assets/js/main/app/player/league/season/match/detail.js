@@ -3,6 +3,7 @@ import {Row, Col} from 'reactstrap';
 import MediaQuery from 'react-responsive';
 import TeamMatchCard from 'main/app/player/league/season/match/TeamMatchCard';
 import TeamMatchCardMobile from 'main/app/player/league/season/match/TeamMatchCardMobile';
+import FullRosterTable from 'main/app/player/league/season/match/FullRosterTable';
 
 import {Titlebar} from 'components/text';
 import ajax from 'common/ajax';
@@ -10,7 +11,6 @@ import update from 'immutability-helper';
 
 import {MediaBreakpoints} from 'common/responsive';
 import {Tabs} from 'components/tabs';
-import {FullRosterTable} from 'components/app/roster';
 
 const MatchDetailMobile = (props) => {
     const {
