@@ -1,4 +1,3 @@
-import update from 'immutability-helper';
 import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 

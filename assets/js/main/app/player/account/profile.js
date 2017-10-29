@@ -1,71 +1,47 @@
 import PropTypes from 'prop-types';
-import {Button, Form, Label, Input} from 'reactstrap';
-import {FormBase, FormGroup} from 'components/forms';
+import {Button, Label, Input} from 'reactstrap';
+import {Form, FormGroup} from 'components/forms';
 import ajax from 'common/ajax';
 
-export default class ProfileForm extends FormBase {
+export default class ProfileForm extends React.Component {
     static propTypes = {
         user: PropTypes.object.isRequired,
     };
 
-    url = 'api-my-details';
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            form: {
-                'email': this.props.user.email,
-                'default_phonenumber': this.props.user.default_phonenumber,
-                'alt_phonenumber': this.props.user.alt_phonenumber,
-            },
-            errors: {},
-        };
-    }
-
-    handleSubmit(event) {
+    onSubmit(form, setErrors) {
         event.preventDefault();
 
         ajax({
-            url: reverse(this.url),
+            url: reverse('api-my-details'),
             requireLogin: true,
             method: 'PATCH',
-            data: this.state.form,
+            data: form,
         }).then(data => {
             toastr.success('Profile information successfully changed!');
             this.props.setUserState(data);
         }).catch(data => {
-            this.handleErrors(data);
+            setErrors(data);
         });
 
     }
 
     render() {
         return (
-            <Form onSubmit={this.handleSubmit}>
-                <FormGroup
-                    label="Email"
-                    type="email"
-                    id="email"
-                    value={this.state.form.email}
-                    onChange={this.handleInputChange}
-                    error={this.state.errors.email}
-                />
-                <FormGroup
-                    label="Phone Number"
-                    type="text"
-                    id="default_phonenumber"
-                    value={this.state.form.default_phonenumber}
-                    onChange={this.handleInputChange}
-                    error={this.state.errors.default_phonenumber}
-                />
-                <FormGroup
-                    label="Alternate Phone Number"
-                    type="text"
-                    id="alt_phonenumber"
-                    value={this.state.form.alt_phonenumber}
-                    onChange={this.handleInputChange}
-                    error={this.state.errors.alt_phonenumber}
-                />
+            <Form
+                onSubmit={this.onSubmit}
+                form={{
+                    'email': this.props.user.email,
+                    'first_name': this.props.user.first_name,
+                    'last_name': this.props.user.last_name,
+                    'default_phonenumber': this.props.user.default_phonenumber,
+                    'alt_phonenumber': this.props.user.alt_phonenumber,
+                }}
+            >
+                <FormGroup label="Email" type="email" id="email" />
+                <FormGroup label="First Name" type="text" id="first_name" />
+                <FormGroup label="Last Name" type="text" id="last_name" />
+                <FormGroup label="Phone Number" type="text" id="default_phonenumber" />
+                <FormGroup label="Alternate Phone Number" type="text" id="alt_phonenumber" />
                 <div className="text-center">
                     <Button type='submit' value='Submit'>Save</Button>
                 </div>
