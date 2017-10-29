@@ -59,7 +59,7 @@ export class ColorSelector extends React.Component {
                     <div>
                         <div className="color-list-selector">
                             {Object.keys(colorChoices).map((val) => {
-                                const active = color === val;
+                                const active = parseInt(color) === parseInt(val);
                                 const activeClass = active ? 'active' : '';
                                 const classNames = `color-list-choice ${activeClass}`;
 
