@@ -242,7 +242,7 @@ export class GeneralTable extends React.Component {
         const sortKey = this.state.sortKey;
 
         let rowData = [];
-        if (typeof(this.props.rowData) !== "undefined") {
+        if (typeof(this.props.rowData) !== "undefined" && this.props.rowData != null) {
             rowData = this.props.rowData.slice(); //slice so you copy and dont mutate props.rowData
         };
 
