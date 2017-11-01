@@ -315,8 +315,6 @@ class PlayerNameCell extends React.Component {
                 <a href="#" onClick={this.toggle}> { player.full_name }</a>
 
                 <Modal
-                    backdropTransitionTimeout={25}
-                    modalTransitionTimeout={50}
                     fade={false}
                     isOpen={this.state.isOpen}
                     toggle={this.toggle}
