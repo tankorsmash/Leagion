@@ -15,10 +15,14 @@ export default class DatasetView extends React.Component {
         return {};
     }
 
+    get datasetInitialValue() {
+        return null;
+    }
+
     constructor(props){
         super(props);
         this.state = {
-            [this.datasetStateAttr]: null,
+            [this.datasetStateAttr]: this.datasetInitialValue,
             isLoaded: false,
         };
     }

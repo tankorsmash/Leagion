@@ -1,34 +1,26 @@
 import SpinLoader from 'components/spinloader';
 import {Titlebar} from 'components/text';
+import DatasetView from 'components/dataset_view';
 import ajax from 'common/ajax';
 
 import TeamCard from 'main/app/player/league/season/team/TeamCard';
 
-export default class TeamList extends React.Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            teams: [],
-            loaded: false
-        };
+export default class TeamList extends DatasetView {
+    get datasetViewName() {
+        return "api-my-team-list";
     }
 
-    componentDidMount() {
-        ajax({
-            url: reverse('api-my-team-list'),
-        }).then(data => {
-            this.setState({
-                teams: data,
-                loaded: true
-            });
-        });
+    get datasetStateAttr() {
+        return "teams";
+    }
+
+    get datasetInitialValue() {
+        return [];
     }
 
     render() {
         return (
-            <SpinLoader loaded={this.state.loaded}>
+            <SpinLoader loaded={this.getIsLoaded()}>
                 <Titlebar title="My Teams" />
                 <div className="content team-listing">
                     {this.state.teams.map((team, i) => {
