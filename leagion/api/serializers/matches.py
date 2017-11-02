@@ -99,7 +99,6 @@ class MatchSerializer(serializers.ModelSerializer):
 class SetMatchSerializer(serializers.ModelSerializer):
     class Meta:
         model = Match
-
-        fields = (
-            'home_points', 'away_points',
-        )
+        fields = ('home_points', 'away_points')
+    home_points = serializers.IntegerField(min_value=0, max_value=10000)
+    away_points = serializers.IntegerField(min_value=0, max_value=10000)

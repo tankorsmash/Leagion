@@ -60,9 +60,7 @@ export class SimpleModal extends Modal {
         if (this.state.isOpen) {
             this.props.onClose();
         }
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
+        this.setState({isOpen: !this.state.isOpen});
         return false;
     };
 
@@ -99,6 +97,67 @@ export class SimpleModal extends Modal {
                         </div>
                     }
                     body={body}
+                />
+            </div>
+        );
+    }
+}
+
+export class FormModal extends Modal {
+    static propTypes = {
+        buttonText: PropTypes.string,
+        buttonProps: PropTypes.shape(Button.propTypes),
+        className: PropTypes.string,
+        title: PropTypes.string,
+        body: PropTypes.element,
+        submitText: PropTypes.string,
+    };
+
+    state = {isOpen: false};
+
+    toggle = () => {
+        if (this.state.isOpen) {
+            this.props.onClose();
+        }
+        this.setState({isOpen: !this.state.isOpen});
+        return false;
+    };
+
+    render() {
+        const {
+            buttonProps, buttonText, body, title,
+            submitAttrs, cancelAttrs
+        } = this.props;
+
+        const submitText = this.props.submitText || 'Submit';
+        const formId = body.props.id;
+
+        const form = React.cloneElement(body, {onSuccess: () => {
+            this.toggle();
+        }});
+
+
+        return (
+            <div>
+                <Button
+                    href="#"
+                    onClick={this.toggle}
+                    {...buttonProps}
+                >
+                    {buttonText}
+                </Button>
+                <Modal
+                    toggle={this.toggle}
+                    isOpen={this.state.isOpen}
+                    title={title}
+                    footer={
+                        <div>
+                            <Button {...cancelAttrs} color="link" onClick={this.toggle}>Cancel</Button>
+                            {' '}
+                            <Button {...submitAttrs} color="primary" form={formId}>{submitText}</Button>
+                        </div>
+                    }
+                    body={form}
                 />
             </div>
         );

@@ -5,13 +5,18 @@ import {
     Form as RForm,
     Label, Input, FormFeedback
 } from 'reactstrap';
-import {withState, withHandlers, setPropTypes, compose} from 'recompose';
+import {defaultProps, withState, withHandlers, setPropTypes, compose} from 'recompose';
+import {uuid4} from 'common/utils';
 
 const enhance = compose(
     setPropTypes({
         onSubmit: PropTypes.func.isRequired,
+        onErrors: PropTypes.func,
+        onSuccess: PropTypes.func,
         onStateUpdated: PropTypes.func,
+        id: PropTypes.string,
     }),
+    defaultProps({id: uuid4()}),
     withState('form', 'setForm', (props) => props.form),
     withState('errors', 'setErrors', {}),
     withHandlers({
@@ -26,14 +31,19 @@ const enhance = compose(
         },
         onFormSubmit: props => event => {
             event.preventDefault();
-            props.onSubmit(props.form, props.setErrors);
+            props.onSubmit(props.form, props.setErrors, props.setSuccess);
         },
-        setErrors: () => response => {
+        setErrors: props => response => {
             this.setState({ errors: response});
+            props.onError();
+        },
+        setSuccess: props => response => {
+            this.setState({ errors: {}});
+            props.onSuccess();
         },
     }),
 );
-export const Form = enhance(({children, onFormSubmit, onInputChange, form, errors}) => {
+export const Form = enhance(({id, children, onFormSubmit, onInputChange, form, errors}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
         if (child.type && ['FormGroup', 'Input'].includes(child.type.name)) {
             return React.cloneElement(child, {
@@ -47,7 +57,7 @@ export const Form = enhance(({children, onFormSubmit, onInputChange, form, error
     });
 
     return (
-        <RForm onSubmit={onFormSubmit}>
+        <RForm onSubmit={onFormSubmit} id={id}>
             {childrenWithProps}
         </RForm>
     );
