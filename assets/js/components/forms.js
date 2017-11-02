@@ -1,7 +1,7 @@
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 import {
-    FormGroup as BootstrapFormGroup,
+    FormGroup as RFormGroup,
     Form as RForm,
     Label, Input, FormFeedback
 } from 'reactstrap';
@@ -35,7 +35,7 @@ const enhance = compose(
 );
 export const Form = enhance(({children, onFormSubmit, onInputChange, form, errors}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
-        if (child.type.name == 'FormGroup') {
+        if (child.type && ['FormGroup', 'Input'].includes(child.type.name)) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
                 value: form[child.props.id],
@@ -93,24 +93,45 @@ export class FormBase extends React.Component {
     }
 }
 
-export class FormGroup extends React.Component {
-    render() {
-        return (
-            <BootstrapFormGroup color={this.props.error ? 'danger' : ''}>
-                <Label for={this.props.id}>{this.props.label}</Label>
-                <Input
-                    type={this.props.type}
-                    name={this.props.id}
-                    id={this.props.id}
-                    value={this.props.value}
-                    onChange={this.props.onChange}
-                    valid={!this.props.error}
-                />
-                <FormFeedback>{this.props.error || ''}</FormFeedback>
-            </BootstrapFormGroup>
-        );
-    }
-}
+export const FormGroup = (props) => {
+    const {
+        id, label, type, value, onChange, error, children,
+        className, placeholder
+    } = props;
+    const childrenWithProps = React.Children.map(children, (child) => {
+        if (child.type && child.type.name == 'Input') {
+            return React.cloneElement(child, {
+                onChange: onChange,
+                value: value,
+                error: error,
+            });
+        } else {
+            return child;
+        }
+    });
+
+    return (
+        <RFormGroup
+            className={className}
+            color={error ? 'danger' : ''}
+        >
+            {childrenWithProps}
+            {label && id &&
+                <Label for={id}>{label}</Label>
+            }
+            <Input
+                type={type}
+                name={id}
+                id={id}
+                value={value}
+                onChange={onChange}
+                valid={!error}
+                placeholder={placeholder}
+            />
+            <FormFeedback>{error || ''}</FormFeedback>
+        </RFormGroup>
+    );
+};
 
 export class StaticRow extends React.Component {
 

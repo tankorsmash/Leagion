@@ -9,8 +9,6 @@ export default class ProfileForm extends React.Component {
     };
 
     onSubmit(form, setErrors) {
-        event.preventDefault();
-
         ajax({
             url: reverse('api-my-details'),
             requireLogin: true,
@@ -19,6 +17,7 @@ export default class ProfileForm extends React.Component {
         }).then(data => {
             toastr.success('Profile information successfully changed!');
             this.props.setUserState(data);
+            setErrors({});
         }).catch(data => {
             setErrors(data);
         });
