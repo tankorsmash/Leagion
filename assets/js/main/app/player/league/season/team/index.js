@@ -1,35 +1,29 @@
-import SpinLoader from 'components/spinloader';
+import {compose, setDisplayName, withState} from 'recompose';
+
 import {Titlebar} from 'components/text';
-import DatasetView from 'components/dataset_view';
-import ajax from 'common/ajax';
+import DatasetView from 'components/DatasetView';
 
 import TeamCard from 'main/app/player/league/season/team/TeamCard';
 
-export default class TeamList extends DatasetView {
-    get datasetViewName() {
-        return "api-my-team-list";
-    }
+const enhance = compose(
+    setDisplayName('TeamList'),
+    withState('teams', 'setTeams', []),
+);
 
-    get datasetStateAttr() {
-        return "teams";
-    }
-
-    get datasetInitialValue() {
-        return [];
-    }
-
-    render() {
-        return (
-            <SpinLoader loaded={this.getIsLoaded()}>
-                <Titlebar title="My Teams" />
-                <div className="content team-listing">
-                    {this.state.teams.map((team, i) => {
-                        return (
-                            <TeamCard key={i} team={team} />
-                        );
-                    })}
-                </div>
-            </SpinLoader>
-        );
-    }
-}
+export default enhance(({teams, setTeams}) => {
+    return (
+        <DatasetView
+            url={reverse('api-my-team-list')}
+            onSuccess={(teams) => setTeams(teams)}
+        >
+            <Titlebar title="My Teams" />
+            <div className="content team-listing">
+                {teams.map((team, i) => {
+                    return (
+                        <TeamCard key={i} team={team} />
+                    );
+                })}
+            </div>
+        </DatasetView>
+    );
+});
