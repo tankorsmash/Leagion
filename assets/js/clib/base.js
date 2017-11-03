@@ -10,6 +10,7 @@ import {AvatarComp} from 'clib/components/media';
 import {TitlebarComp, TextComp} from 'clib/components/text';
 import {DatasetViewComp} from 'clib/components/no_ui';
 import {TableComp, DraggableTableComp} from 'clib/components/tables';
+import {FormComp} from 'clib/components/forms';
 
 class Clib extends React.Component {
     state = {selected: 0};
@@ -20,6 +21,7 @@ class Clib extends React.Component {
         {'name': 'Text', 'components': [TitlebarComp, TextComp]},
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
         {'name': 'Modals', 'components': [SimpleModalComp]},
+        {'name': 'Forms', 'components': [FormComp]},
         {'name': 'Tables', 'components': [TableComp, DraggableTableComp]},
         {'name': 'Files', 'components': [AvatarSelectorComp]},
         {'name': 'Media', 'components': [AvatarComp]},

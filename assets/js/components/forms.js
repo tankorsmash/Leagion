@@ -15,6 +15,7 @@ const enhance = compose(
         onSuccess: PropTypes.func,
         onStateUpdated: PropTypes.func,
         id: PropTypes.string,
+        className: PropTypes.string,
     }),
     defaultProps({id: uuid4()}),
     withState('form', 'setForm', (props) => props.form),
@@ -43,13 +44,13 @@ const enhance = compose(
         },
     }),
 );
-export const Form = enhance(({id, children, onFormSubmit, onInputChange, form, errors}) => {
+export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
-        if (child.type && ['FormGroup', 'Input'].includes(child.type.name)) {
+        if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
-                value: form[child.props.id],
-                error: errors[child.props.id],
+                form,
+                errors,
             });
         } else {
             return child;
@@ -57,7 +58,7 @@ export const Form = enhance(({id, children, onFormSubmit, onInputChange, form, e
     });
 
     return (
-        <RForm onSubmit={onFormSubmit} id={id}>
+        <RForm onSubmit={onFormSubmit} id={id} className={className}>
             {childrenWithProps}
         </RForm>
     );
@@ -105,40 +106,75 @@ export class FormBase extends React.Component {
 
 export const FormGroup = (props) => {
     const {
-        id, label, type, value, onChange, error, children,
-        className, placeholder
+        id, label, type, onChange, form, errors,
+        className, placeholder, check, row, inline, disabled,
+        tag
     } = props;
-    const childrenWithProps = React.Children.map(children, (child) => {
-        if (child.type && child.type.name == 'Input') {
-            return React.cloneElement(child, {
-                onChange: onChange,
-                value: value,
-                error: error,
-            });
+
+    let {name, value} = props;
+    if (type !== 'radio') {
+        name = id;
+    }
+
+    //populate values and errors from form object but not if
+    //explicitly passed in (i.e. for radios)
+    if (!value) {
+        value = form[name];
+    }
+    const error = errors[name];
+
+    const checkOrRadio = ['checkbox', 'radio'].includes(type);
+
+    //handle checkbox and radio initial values
+    let checked;
+    if (type === 'radio') {
+        checked = value === form[name];
+    } else if (type === 'checkbox') {
+        checked = value;
+    }
+
+    return (
+        <RFormGroup
+            row={row}
+            check={check}
+            inline={inline}
+            disabled={disabled}
+            tag={tag}
+            className={className}
+            color={error ? 'danger' : ''}
+        >
+            { checkOrRadio && (
+                <Label check>
+                    <Input checked={checked} type={type} name={name} id={id} value={value} onChange={onChange} valid={!error} placeholder={placeholder} />
+                    {label}
+                </Label>
+            )}
+            { !checkOrRadio &&
+                <Label check={check} for={id}>{label}</Label>
+            }
+            { !checkOrRadio &&
+                <Input type={type} name={name} id={id} value={value} onChange={onChange} valid={!error} placeholder={placeholder} />
+            }
+            <FormFeedback>{error || ''}</FormFeedback>
+        </RFormGroup>
+    );
+};
+
+export const FormGroupWrap = (props) => {
+    const {errors, form, onChange, className} = props;
+    const childrenWithProps = React.Children.map(props.children, (child) => {
+        if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
+            return React.cloneElement(child, { errors, form, onChange });
         } else {
             return child;
         }
     });
 
+    const classNames = `le-form-group-wrap ${className}`;
+
     return (
-        <RFormGroup
-            className={className}
-            color={error ? 'danger' : ''}
-        >
+        <RFormGroup className={classNames} {...props} >
             {childrenWithProps}
-            {label && id &&
-                <Label for={id}>{label}</Label>
-            }
-            <Input
-                type={type}
-                name={id}
-                id={id}
-                value={value}
-                onChange={onChange}
-                valid={!error}
-                placeholder={placeholder}
-            />
-            <FormFeedback>{error || ''}</FormFeedback>
         </RFormGroup>
     );
 };

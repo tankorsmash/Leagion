@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import {Button, Label, Input} from 'reactstrap';
-import {Form, FormGroup} from 'components/forms';
+import {Button} from 'reactstrap';
+import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import ajax from 'common/ajax';
 
 export default class ProfileForm extends React.Component {
@@ -35,15 +35,18 @@ export default class ProfileForm extends React.Component {
                     'default_phonenumber': this.props.user.default_phonenumber,
                     'alt_phonenumber': this.props.user.alt_phonenumber,
                 }}
+                className=""
             >
                 <FormGroup label="Email" type="email" id="email" />
-                <FormGroup label="First Name" type="text" id="first_name" />
-                <FormGroup label="Last Name" type="text" id="last_name" />
+                <FormGroupWrap row>
+                    <FormGroup className="col-md-6" label="First Name" type="text" id="first_name" />
+                    <FormGroup className="col-md-6" label="Last Name" type="text" id="last_name" />
+                </FormGroupWrap>
                 <FormGroup label="Phone Number" type="text" id="default_phonenumber" />
                 <FormGroup label="Alternate Phone Number" type="text" id="alt_phonenumber" />
-                <div className="text-center">
+                <FormGroupWrap className="text-center">
                     <Button type='submit' value='Submit'>Save</Button>
-                </div>
+                </FormGroupWrap>
             </Form>
         );
     }
