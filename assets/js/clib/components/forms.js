@@ -9,10 +9,10 @@ export class FormComp extends BaseComponent {
         //title: 'Modal Title',
     //};
 
-    title = 'Forms';
+    title = ' Quick Forms';
     description = (
         <p>
-            Use these forms as a guideline.<br/>
+            Use this form and formgroups as an easy way to do simple forms.<br/>
             Always use FormGroup and FormGroupWrap
             inside a form or else the form and error data won't get passed through
         </p>
@@ -63,6 +63,7 @@ import {Button} from 'reactstrap';
                     'email': '',
                     'text': '',
                     'number': '',
+                    'select': '',
                     'cb1': false,
                     'cb2': true,
                     'rgroup': 'radio1',
@@ -74,10 +75,15 @@ import {Button} from 'reactstrap';
                 <FormGroup label="Email" type="email" id="email" />
                 <FormGroup label="Text" type="text" id="text" />
                 <FormGroup label="Number" type="number" id="number" />
+                <FormGroup label="Select" type="select" id="select">
+                    <option>-- default option --</option>
+                    <option value="1">option 1</option>
+                    <option value="2">option 2</option>
+                </FormGroup>
                 <FormGroup label="Stacked Checkbox 1" type="checkbox" id="cb1" />
                 <FormGroup label="Stacked Checkbox 2" type="checkbox" id="cb2" />
                 <FormGroup inline label="Inline Radio 1" type="radio" name="rgroup" value="radio1" />
-                <FormGroup inline label="Radios need to be in a fieldset" type="radio" name="rgroup" value="radio2" />
+                <FormGroup inline label="Inline Radio 2" type="radio" name="rgroup" value="radio2" />
                 <FormGroup label="Range" type="range" id="range" />
                 <FormGroupWrap row>
                     <FormGroup className="col-md-6" label="Row" type="text" id="grouptext1" />

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
     FormGroup as RFormGroup,
     Form as RForm,
-    Label, Input, FormFeedback
+    Label, Input, FormFeedback, Select
 } from 'reactstrap';
 import {defaultProps, withState, withHandlers, setPropTypes, compose} from 'recompose';
 import {uuid4} from 'common/utils';
@@ -108,7 +108,7 @@ export const FormGroup = (props) => {
     const {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
-        tag
+        tag, children,
     } = props;
 
     let {name, value} = props;
@@ -133,6 +133,8 @@ export const FormGroup = (props) => {
         checked = value;
     }
 
+    const select = type === 'select';
+
     return (
         <RFormGroup
             row={row}
@@ -153,7 +155,17 @@ export const FormGroup = (props) => {
                 <Label check={check} for={id}>{label}</Label>
             }
             { !checkOrRadio &&
-                <Input type={type} name={name} id={id} value={value} onChange={onChange} valid={!error} placeholder={placeholder} />
+                <Input
+                    type={type}
+                    name={name}
+                    id={id}
+                    value={value}
+                    onChange={onChange}
+                    valid={!error}
+                    placeholder={placeholder}
+                >
+                    {children}
+                </Input>
             }
             <FormFeedback>{error || ''}</FormFeedback>
         </RFormGroup>
