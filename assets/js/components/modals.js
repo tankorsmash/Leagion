@@ -57,6 +57,10 @@ export class SimpleModal extends Modal {
         onclose: PropTypes.func,
     };
 
+    static defaultProps = {
+        onClose: () => {},
+    };
+
     state = {isOpen: false};
 
     toggle = (e) => {
@@ -116,6 +120,10 @@ export class FormModal extends Modal {
         body: PropTypes.element,
         submitText: PropTypes.string,
         onclose: PropTypes.func,
+    };
+
+    static defaultProps = {
+        onClose: () => {},
     };
 
     state = {isOpen: false};

@@ -1,4 +1,4 @@
-import {Form, FormGroup} from 'components/forms';
+import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import {FormModal} from 'components/modals';
 import ajax from 'common/ajax';
 
@@ -33,19 +33,22 @@ export default class MatchScoreSetter extends React.Component {
                             'away_points': '',
                         }}
                     >
-                        <FormGroup
-                            label={this.props.home_team.name}
-                            type="number"
-                            id="home_points"
-                        />
-                        <FormGroup
-                            label={this.props.away_team.name}
-                            type="number"
-                            id="away_points"
-                        />
+                        <FormGroupWrap row>
+                            <FormGroup
+                                className="col-md-6"
+                                label={this.props.home_team.name}
+                                type="number"
+                                id="home_points"
+                            />
+                            <FormGroup
+                                className="col-md-6"
+                                label={this.props.away_team.name}
+                                type="number"
+                                id="away_points"
+                            />
+                        </FormGroupWrap>
                     </Form>
                 }
-                onSubmit={this.onSubmit}
             >
             </FormModal>
         );
