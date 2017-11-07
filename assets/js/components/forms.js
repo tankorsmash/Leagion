@@ -5,8 +5,7 @@ import {
     Form as RForm,
     Label, Input, FormFeedback, Select
 } from 'reactstrap';
-import {defaultProps, withState, withHandlers, setPropTypes, compose} from 'recompose';
-import {uuid4} from 'common/utils';
+import {withProps, withState, withHandlers, setPropTypes, compose} from 'recompose';
 
 const enhance = compose(
     setPropTypes({
@@ -17,7 +16,6 @@ const enhance = compose(
         id: PropTypes.string,
         className: PropTypes.string,
     }),
-    defaultProps({id: uuid4()}),
     withState('form', 'setForm', (props) => props.form),
     withState('errors', 'setErrors', {}),
     withHandlers({

@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import {
     Modal as RModal, ModalBody, ModalFooter, ModalHeader
 } from 'reactstrap';
+
+import {uuid4} from 'common/utils';
 import {Button} from 'components/buttons';
 
 export class Modal extends React.Component {
@@ -52,11 +54,13 @@ export class SimpleModal extends Modal {
         body: PropTypes.element,
         submitText: PropTypes.string,
         onSubmit: PropTypes.func,
+        onclose: PropTypes.func,
     };
 
     state = {isOpen: false};
 
-    toggle = () => {
+    toggle = (e) => {
+        if (e) e.preventDefault();
         if (this.state.isOpen) {
             this.props.onClose();
         }
@@ -111,11 +115,13 @@ export class FormModal extends Modal {
         title: PropTypes.string,
         body: PropTypes.element,
         submitText: PropTypes.string,
+        onclose: PropTypes.func,
     };
 
     state = {isOpen: false};
 
-    toggle = () => {
+    toggle = (e) => {
+        if (e) e.preventDefault();
         if (this.state.isOpen) {
             this.props.onClose();
         }
@@ -130,12 +136,12 @@ export class FormModal extends Modal {
         } = this.props;
 
         const submitText = this.props.submitText || 'Submit';
-        const formId = body.props.id;
+        const formId = uuid4();
 
-        const form = React.cloneElement(body, {onSuccess: () => {
-            this.toggle();
-        }});
-
+        const form = React.cloneElement(body, {
+            setSuccess: () => {this.toggle();},
+            id: formId,
+        });
 
         return (
             <div>
