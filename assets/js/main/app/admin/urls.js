@@ -19,6 +19,8 @@ function buildSimpleUrls(root, kwargName) {
 
 module.exports = {
     index: index,
+
+	//TODO remove these
     dashboard: {
         index: dashboardUrl,
         overview: `${dashboardUrl}/overview`,
@@ -27,7 +29,7 @@ module.exports = {
         players: `${dashboardUrl}/players`,
     },
 
-    leagues: buildSimpleUrls(leaguesUrl, "leagueId"),
+    leagueIndex: `${index}/league`,
     seasons: buildSimpleUrls(seasonsUrl, "seasonId"),
     locations: buildSimpleUrls(locationsUrl, "locationId"),
     teams: {

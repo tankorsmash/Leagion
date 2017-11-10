@@ -9,7 +9,7 @@ import auth from 'main/auth';
 
 import AdminNavbar from 'main/app/admin/nav';
 import Dashboard from 'main/app/admin/dashboard';
-import {LeagueDetail, LeaguesCreate} from 'main/app/admin/details/leagues';
+import LeagueIndex from 'main/app/admin/league/index';
 import {SeasonDetail, SeasonsCreate} from 'main/app/admin/details/seasons';
 import {LocationDetail} from 'main/app/admin/details/locations';
 import {TeamDetail, TeamsCreate} from 'main/app/admin/details/teams';
@@ -32,8 +32,9 @@ export default class AdminRouter extends React.Component {
             <div id="leagion-admin" >
                 <AdminNavbar {...this.props} />
                 <Switch>
-                    <Redirect exact from={adminUrls.index} to={adminUrls.dashboard.overview} />
-                    <Redirect exact from={adminUrls.dashboard.index} to={adminUrls.dashboard.overview} />
+                    <Route exact path={adminUrls.index}  component={LeagueIndex} />
+
+                    {/*TODO remove this
                     <Route path={adminUrls.dashboard.index}  component={Dashboard} />
 
                     <Route exact path={adminUrls.leagues.create}  component={LeaguesCreate} />
@@ -51,7 +52,7 @@ export default class AdminRouter extends React.Component {
                     <Route path={adminUrls.matches.detail}  component={MatchDetail} />
 
                     <Route path={adminUrls.players.detail}  component={PlayerDetail} />
-
+                    */}
                     <Route component={FourOhFour} />
                 </Switch>
             </div>

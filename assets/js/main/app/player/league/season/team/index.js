@@ -17,7 +17,7 @@ export default enhance(({teams, setTeams}) => {
             onSuccess={(teams) => setTeams(teams)}
         >
             <Titlebar title="My Teams" />
-            <div className="content team-listing">
+            <div className="content le-listing">
                 {teams.map((team, i) => {
                     return (
                         <TeamCard key={i} team={team} />

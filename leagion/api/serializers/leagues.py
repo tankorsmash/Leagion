@@ -15,10 +15,13 @@ class LeagueSerializer(serializers.ModelSerializer):
     class Meta:
         model = League
         fields = (
-            'id', 'name', 'seasons'
+            'id', 'name', 'current_season', 'past_seasons',
+            'future_seasons',
         )
 
-    seasons = ShallowSeasonSerializer(many=True, read_only=True)
+    current_season = ShallowSeasonSerializer(read_only=True)
+    past_seasons = ShallowSeasonSerializer(many=True, read_only=True)
+    future_seasons = ShallowSeasonSerializer(many=True, read_only=True)
 
 
 class MyLeagueSerializer(LeagueSerializer):

@@ -1,3 +1,4 @@
+import datetime
 from django.db import models
 
 class League(models.Model):
@@ -9,3 +10,24 @@ class League(models.Model):
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
 
+    @property
+    def current_season(self):
+        today = datetime.datetime.now().date()
+        return self.seasons.filter(
+            start_date__lte=today,
+            end_date__gte=today
+        ).first()
+
+    @property
+    def past_seasons(self):
+        today = datetime.datetime.now().date()
+        return self.seasons.filter(
+            end_date__lt=today
+        )
+
+    @property
+    def future_seasons(self):
+        today = datetime.datetime.now().date()
+        return self.seasons.filter(
+            start_date__gt=today
+        )
