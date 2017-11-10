@@ -7,7 +7,7 @@ import appUrls from 'main/app/urls';
 import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';
 
-import Admin from 'main/app/admin/base';
+import AdminRouter from 'main/app/admin/routes';
 import PlayerRouter from 'main/app/player/routes';
 import {FourOhFour} from 'components/error-pages';
 import SpinLoader from 'components/spinloader';
@@ -52,7 +52,7 @@ class AppRouter extends React.Component {
             <SpinLoader loaded={this.state.userLoaded && this.state.constantsLoaded}>
                 <Switch>
                     <Route exact path={appUrls.index} {...this.state} component={PlayerRouter} />
-                    <Route path={adminUrls.index} {...this.state} component={Admin} />
+                    <Route path={adminUrls.index} {...this.state} component={AdminRouter} />
                     <Route path={playerUrls.index} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />
                     <Route component={FourOhFour} />
                 </Switch>

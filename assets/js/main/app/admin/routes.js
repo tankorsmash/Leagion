@@ -17,30 +17,16 @@ import {MatchDetail, MatchesCreate} from 'main/app/admin/details/matches';
 import PlayerDetail from 'main/app/admin/details/players';
 
 import {FourOhFour} from 'components/error-pages';
-
-import DatasetView from 'components/dataset_view';
-
 import style from 'app.scss';
 
-
-export default class Admin extends DatasetView {
-    get datasetStateAttr() {
-        return "user";
-    }
-
-    get datasetViewName() {
-        return "api-my-details";
-    }
-
+export default class AdminRouter extends React.Component {
     render() {
-        if (this.getIsLoaded() == false) {
-            return <div>logging you in as admin</div>;
-        };
 
-        const user = this.state.user
+        const {user} = this.props;
+
         if (!(auth.commissionerOrBetter(user))) {
             return ( <Redirect exact to={"/"} /> );
-        };
+        }
 
         return (
             <div id="leagion-admin" >

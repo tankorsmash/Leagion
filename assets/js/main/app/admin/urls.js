@@ -1,13 +1,13 @@
 import appUrls from 'main/app/urls';
-let adminUrl = `${appUrls.index}/admin`;
-let dashboardUrl = `${adminUrl}/dashboard`;
+let index = `${appUrls.index}/admin`;
+let dashboardUrl = `${index}/dashboard`;
 
-let leaguesUrl = `${adminUrl}/leagues`;
-let seasonsUrl = `${adminUrl}/seasons`;
-let locationsUrl = `${adminUrl}/locations`;
-let teamsUrl = `${adminUrl}/teams`;
-let matchesUrl = `${adminUrl}/matches`;
-let playersUrl = `${adminUrl}/players`;
+let leaguesUrl = `${index}/leagues`;
+let seasonsUrl = `${index}/seasons`;
+let locationsUrl = `${index}/locations`;
+let teamsUrl = `${index}/teams`;
+let matchesUrl = `${index}/matches`;
+let playersUrl = `${index}/players`;
 
 function buildSimpleUrls(root, kwargName) {
     return {
@@ -18,7 +18,7 @@ function buildSimpleUrls(root, kwargName) {
 };
 
 module.exports = {
-    index: adminUrl,
+    index: index,
     dashboard: {
         index: dashboardUrl,
         overview: `${dashboardUrl}/overview`,
