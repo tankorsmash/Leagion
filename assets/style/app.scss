@@ -37,6 +37,8 @@ a {
 .titlebar {
     color: $black;
     padding: $spacer;
+    display: flex;
+    justify-content: space-between;
 }
 
 .content {

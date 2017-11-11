@@ -12,9 +12,12 @@ export class Titlebar extends React.Component {
     render() {
         let {className} = this.props;
         return (
-            <h3 className={`titlebar ${className ? className : ""}`}>
-                {this.props.title}
-            </h3>
+            <div className={`titlebar ${className ? className : ""}`}>
+                <h3>{this.props.title}</h3>
+                <div>
+                    {this.props.right}
+                </div>
+            </div>
         );
     }
 }
