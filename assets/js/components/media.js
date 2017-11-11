@@ -31,7 +31,7 @@ export class ColorSelector extends React.Component {
     static propTypes = {
         onConfirm: PropTypes.func.isRequired,
         title: PropTypes.string.isRequired,
-        buttonText: PropTypes.string.isRequired,
+        Opener: PropTypes.element.isRequired,
         initialColor: PropTypes.number,
     };
 
@@ -49,12 +49,13 @@ export class ColorSelector extends React.Component {
     };
 
     render() {
-        let {colorPickerText, title, buttonText, colorChoices} = this.props;
+        let {colorPickerText, title, buttonText, colorChoices, Opener} = this.props;
         let {color} = this.state;
 
         return (
             <SimpleModal
-                buttonText={buttonText} title={title} submitText="Save"
+                Opener={Opener}
+                title={title} submitText="Save"
                 body={
                     <div>
                         <div className="color-list-selector">
