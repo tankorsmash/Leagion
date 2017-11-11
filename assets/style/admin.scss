@@ -1,0 +1,60 @@
+.league-card {
+    color: $black;
+    @include card();
+    width: 340px;
+    text-align: center;
+    margin: 0 25px 25px 25px;
+    padding: 25px;
+
+    .season-stat {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px 0 10px;
+
+        .fa {
+            width: 30px;
+            text-align: center;
+        }
+
+        .left {
+            text-align: left;
+        }
+        .right {
+            text-align: right;
+        }
+    }
+
+    .current-season {
+        @include card();
+        .h5 {
+            margin: 0;
+        }
+
+        .top {
+            background-color: $gray-lighter;
+            border-bottom: 1px solid $black;
+            padding: 0.5rem;
+        }
+
+        .bottom {
+            background-color: $gray-lightest;
+            padding: 0.5rem;
+        }
+    }
+
+    .seasons-inline {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+    }
+
+    .season-list {
+        .h5 {
+            text-decoration: underline;
+        }
+        .h6 {
+            margin: 0.2rem;
+        }
+    }
+
+}

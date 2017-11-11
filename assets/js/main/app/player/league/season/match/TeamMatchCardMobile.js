@@ -19,7 +19,7 @@ export default enhance((props) => {
     }
 
     return (
-        <div className="team-match-card-mobile le-card" style={style}>
+        <div className="team-match-card-mobile" style={style}>
             <Avatar
                 style={{border: '5px solid ' + team.color_value}}
                 className="team-logo"

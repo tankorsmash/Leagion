@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models import Q
+from .user import User
 
 class Season(models.Model):
     start_date = models.DateField()
@@ -26,4 +28,14 @@ class Season(models.Model):
             end_date=self.end_date.strftime('%b, %Y'),
         )
 
+    @property
+    def matches_completed_count(self):
+        return self.matches.filter(
+            ~Q(home_points=None) &
+            ~Q(away_points=None)
+        ).count()
 
+    @property
+    def players(self):
+        teams = self.teams.all()
+        return User.objects.filter(teams__in=teams).distinct()

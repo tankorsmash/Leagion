@@ -1,8 +1,8 @@
+
 .team-card {
+    @include card();
     min-width: 300px;
     max-width: 400px;
-    border: 1px solid $black;
-    background-color: $white;
     text-align: center;
     margin: 0 25px 25px 25px;
 
@@ -146,6 +146,7 @@
 }
 
 .team-match-card {
+    @include card();
     text-align: center;
     width: 450px;
     padding: 20px;
@@ -201,8 +202,7 @@
 }
 
 .public-profile {
-    border: 1px solid $black;
-    background-color: $white;
+    @include card();
     min-width: 300px;
     max-width: 500px;
     padding: 20px;

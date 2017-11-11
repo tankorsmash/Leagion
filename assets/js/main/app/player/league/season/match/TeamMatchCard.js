@@ -34,7 +34,7 @@ export default enhance((props) => {
     }
 
     return (
-        <div className="team-match-card le-card">
+        <div className="team-match-card">
             <div
                 className="team-match-card-header"
                 style={{borderBottom: '5px solid ' + team.color_value}}
