@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import {
     Modal as RModal, ModalBody, ModalFooter, ModalHeader
 } from 'reactstrap';
+import FontAwesome from 'react-fontawesome';
 
 import {uuid4} from 'common/utils';
 import {Button} from 'components/buttons';
@@ -16,12 +17,13 @@ export class Modal extends React.Component {
         footer: PropTypes.element,
         cancelAttrs: PropTypes.object,
         submitAttrs: PropTypes.object,
+        size: PropTypes.string,
     };
 
     render() {
         const {
             title, className, toggle,
-            isOpen, body, footer
+            isOpen, body, footer, size
         } = this.props;
 
         return (
@@ -29,9 +31,16 @@ export class Modal extends React.Component {
                 fade={true}
                 isOpen={isOpen}
                 toggle={toggle}
-                className={className}>
+                className={className}
+                size={size}
+            >
 
-                <ModalHeader toggle={toggle}>{title}</ModalHeader>
+                <div className="modal-header">
+                    <h2 className="modal-title">{title}</h2>
+                    <button type="button" className="close" onClick={toggle}>
+                        <FontAwesome name="times" />
+                    </button>
+                </div>
 
                 <ModalBody>
                     {body}
@@ -47,7 +56,7 @@ export class Modal extends React.Component {
 
 export class SimpleModal extends Modal {
     static propTypes = {
-        buttonText: PropTypes.string,
+        Opener: PropTypes.element,
         buttonProps: PropTypes.shape(Button.propTypes),
         className: PropTypes.string,
         title: PropTypes.string,
@@ -55,6 +64,7 @@ export class SimpleModal extends Modal {
         submitText: PropTypes.string,
         onSubmit: PropTypes.func,
         onclose: PropTypes.func,
+        size: PropTypes.string,
     };
 
     static defaultProps = {
@@ -78,28 +88,23 @@ export class SimpleModal extends Modal {
 
     render() {
         const {
-            buttonProps, buttonText, body, title,
-            submitAttrs, cancelAttrs
+            buttonProps, body, title,
+            submitAttrs, cancelAttrs, size, Opener,
         } = this.props;
 
         const submitText = this.props.submitText || 'Submit';
 
         return (
-            <div>
-                <Button
-                    href="#"
-                    onClick={this.toggle}
-                    {...buttonProps}
-                >
-                    {buttonText}
-                </Button>
+            <div onClick={this.toggle}>
+                {Opener}
                 <Modal
                     toggle={this.toggle}
                     isOpen={this.state.isOpen}
                     title={title}
+                    size={size}
                     footer={
                         <div>
-                            <Button {...cancelAttrs} color="link" onClick={this.toggle}>Cancel</Button>
+                            <Button {...cancelAttrs} color="info" onClick={this.toggle}>Cancel</Button>
                             {' '}
                             <Button {...submitAttrs} color="primary" onClick={this.handleSubmit}>{submitText}</Button>
                         </div>
@@ -113,13 +118,14 @@ export class SimpleModal extends Modal {
 
 export class FormModal extends Modal {
     static propTypes = {
-        buttonText: PropTypes.string,
+        Opener: PropTypes.element,
         buttonProps: PropTypes.shape(Button.propTypes),
         className: PropTypes.string,
         title: PropTypes.string,
         body: PropTypes.element,
         submitText: PropTypes.string,
         onclose: PropTypes.func,
+        size: PropTypes.string,
     };
 
     static defaultProps = {
@@ -139,8 +145,8 @@ export class FormModal extends Modal {
 
     render() {
         const {
-            buttonProps, buttonText, body, title,
-            submitAttrs, cancelAttrs
+            buttonProps, body, title,
+            submitAttrs, cancelAttrs, size, Opener
         } = this.props;
 
         const submitText = this.props.submitText || 'Submit';
@@ -152,18 +158,13 @@ export class FormModal extends Modal {
         });
 
         return (
-            <div>
-                <Button
-                    href="#"
-                    onClick={this.toggle}
-                    {...buttonProps}
-                >
-                    {buttonText}
-                </Button>
+            <div onClick={this.toggle}>
+                {Opener}
                 <Modal
                     toggle={this.toggle}
                     isOpen={this.state.isOpen}
                     title={title}
+                    size={size}
                     footer={
                         <div>
                             <Button {...cancelAttrs} color="link" onClick={this.toggle}>Cancel</Button>

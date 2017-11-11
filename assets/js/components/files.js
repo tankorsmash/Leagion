@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import {SimpleModal} from 'components/modals';
+import {Button} from 'components/buttons';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 
@@ -9,7 +10,7 @@ export class AvatarSelector extends React.Component {
         onConfirm: PropTypes.func.isRequired,
         dropzoneText: PropTypes.string.isRequired,
         title: PropTypes.string.isRequired,
-        buttonText: PropTypes.string.isRequired,
+        Opener: PropTypes.element.isRequired,
     };
 
     state = {
@@ -41,12 +42,13 @@ export class AvatarSelector extends React.Component {
     };
 
     render() {
-        let {dropzoneText, title, buttonText} = this.props;
+        let {dropzoneText, title, Opener} = this.props;
         let {file, allowSave} = this.state;
 
         return (
             <SimpleModal
-                buttonText={buttonText} title={title} submitText="Save"
+                title={title} submitText="Save"
+                Opener={Opener}
                 body={
                     !file ? (
                         <Dropzone

@@ -1,6 +1,7 @@
 import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import {FormModal} from 'components/modals';
 import ajax from 'common/ajax';
+import {Button} from 'components/buttons';
 
 export default class MatchScoreSetter extends React.Component {
     onSubmit = (form, setErrors, setSuccess) => {
@@ -21,6 +22,7 @@ export default class MatchScoreSetter extends React.Component {
     render() {
         return (
             <FormModal
+                Opener={<Button color="link">Completed this match?</Button>}
                 buttonText="Completed this match?"
                 buttonProps={{color: 'link'}}
                 title="Set the score for the match"

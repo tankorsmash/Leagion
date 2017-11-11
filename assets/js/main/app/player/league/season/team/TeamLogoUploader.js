@@ -1,6 +1,7 @@
 import ajax from 'common/ajax';
 import {Avatar} from 'components/media';
 import {AvatarSelector} from 'components/files';
+import {Button} from 'components/buttons';
 
 export default class TeamLogoUploader extends React.Component {
     upload = (file) => {
@@ -33,7 +34,7 @@ export default class TeamLogoUploader extends React.Component {
                     <AvatarSelector
                         dropzoneText="Drag and drop or click to upload file"
                         title="Change your team's logo"
-                        buttonText="Change Logo"
+                        Opener={<Button>Change Logo</Button>}
                         onConfirm={this.upload}
                     />
                 }

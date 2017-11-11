@@ -1,6 +1,7 @@
 import ajax from 'common/ajax';
 import {Avatar} from 'components/media';
 import {AvatarSelector} from 'components/files';
+import {Button} from 'components/buttons';
 
 export default class ChangeAvatarForm extends React.Component {
     url = 'api-my-details';
@@ -32,7 +33,7 @@ export default class ChangeAvatarForm extends React.Component {
                 <AvatarSelector
                     dropzoneText="Drag and drop or click to upload avatar"
                     title="Change your avatar"
-                    buttonText="Change Avatar"
+                    Opener={<Button>Change Avatar</Button>}
                     onConfirm={this.upload}
                 />
             </div>

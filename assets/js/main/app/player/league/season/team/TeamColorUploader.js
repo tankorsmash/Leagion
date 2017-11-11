@@ -1,5 +1,6 @@
 import ajax from 'common/ajax';
 import {ColorSelector} from 'components/media';
+import {Button} from 'components/buttons';
 
 export default class TeamColorUploader extends React.Component {
     changeColor = (color) => {
@@ -14,7 +15,7 @@ export default class TeamColorUploader extends React.Component {
     };
 
     render() {
-        const {constants, team, isCaptain} = this.props;
+        const {constants, team, isCaptain, Opener} = this.props;
         return (
             <div className="team-color-changer">
                 <h3> Color </h3>
@@ -24,7 +25,7 @@ export default class TeamColorUploader extends React.Component {
                 {isCaptain &&
                     <ColorSelector
                         title="Change your team's Color"
-                        buttonText="Change Team Color"
+                        Opener={<Button>Change Team Color</Button>}
                         onConfirm={this.changeColor}
                         initialColor={team.color || 0}
                         colorChoices={constants.teamColors}
