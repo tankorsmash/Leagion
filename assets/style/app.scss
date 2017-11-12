@@ -12,6 +12,10 @@
 @import 'components/misc';
 @import 'components/tabs';
 
+body {
+    color: $black;
+}
+
 .legion-navbar {
     background-color: theme-color("primary");
     padding: 0.2rem 1rem;

@@ -167,7 +167,7 @@ export class FormModal extends Modal {
                     size={size}
                     footer={
                         <div>
-                            <Button {...cancelAttrs} color="link" onClick={this.toggle}>Cancel</Button>
+                            <Button {...cancelAttrs} color="info" onClick={this.toggle}>Cancel</Button>
                             {' '}
                             <Button {...submitAttrs} color="primary" form={formId}>{submitText}</Button>
                         </div>

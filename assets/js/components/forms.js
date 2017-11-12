@@ -129,6 +129,7 @@ export const FormGroup = (props) => {
         value = form[name];
     }
     const error = errors[name];
+    const feedbackClass = error ? 'show-feedback' : '';
 
     const checkOrRadio = ['checkbox', 'radio'].includes(type);
     const isDatePicker = type === 'date';
@@ -178,7 +179,7 @@ export const FormGroup = (props) => {
                     value={value} type={type} name={name} id={id} placeholder={placeholder}
                 />
             }
-            <FormFeedback>{error || ''}</FormFeedback>
+            <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
         </RFormGroup>
     );
 };

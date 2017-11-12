@@ -144,9 +144,9 @@ $line-height-sm:         1.5;
 $border-width: 1px;
 $border-color: $gray-200;
 
-$border-radius:          .25rem;
-$border-radius-lg:       .3rem;
-$border-radius-sm:       .2rem;
+$border-radius:          1px;
+$border-radius-lg:       3px;
+$border-radius-sm:       1px;
 
 $component-active-color: $white;
 $component-active-bg:    theme-color("primary");
@@ -320,7 +320,7 @@ $input-transition:               border-color ease-in-out .15s, box-shadow ease-
 
 $form-text-margin-top:     .25rem;
 
-$form-check-margin-bottom:  .5rem;
+$form-check-margin-bottom:  .25rem;
 $form-check-input-gutter:   1.25rem;
 $form-check-input-margin-y: .25rem;
 $form-check-input-margin-x: .25rem;

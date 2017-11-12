@@ -64,7 +64,7 @@ export default enhance(({league}) => {
                 <SeasonList title="Future Seasons" seasons={league.future_seasons} />
                 <SeasonList title="Past Seasons" seasons={league.past_seasons} />
             </div>
-            <SeasonCreateModal />
+            <SeasonCreateModal league={league} />
         </div>
     );
 });

@@ -1,14 +1,11 @@
+body {
+    color: $black;
+}
+
 .btn {
-    border-radius: 0;
     cursor: pointer;
     &[disabled] {
         cursor: not-allowed;
-    }
-}
-
-.nav-pills {
-    .nav-link {
-        border-radius: 0;
     }
 }
 
@@ -20,6 +17,12 @@
 
 a {
     cursor: pointer;
+}
+
+form {
+    label {
+        margin-bottom: 0.2rem;
+    }
 }
 
 .modal-content {
@@ -45,4 +48,8 @@ a {
         background-color: white;
     }
 
+}
+
+.show-feedback {
+    display: block;
 }
