@@ -1,7 +1,7 @@
 import {compose, setDisplayName } from 'recompose';
-import SeasonList from './season/SeasonList';
 import FontAwesome from 'react-fontawesome';
-import {Button} from 'components/buttons';
+import SeasonList from './season/SeasonList';
+import SeasonCreateModal from './season/SeasonCreateModal';
 
 const SeasonStat = props => {
     return (
@@ -64,9 +64,7 @@ export default enhance(({league}) => {
                 <SeasonList title="Future Seasons" seasons={league.future_seasons} />
                 <SeasonList title="Past Seasons" seasons={league.past_seasons} />
             </div>
-            <Button color="primary" size="md" >
-                <FontAwesome name="plus"/> {' New Season'}
-            </Button>
+            <SeasonCreateModal />
         </div>
     );
 });

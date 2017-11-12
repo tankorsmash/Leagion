@@ -6,13 +6,11 @@ import {BaseComponent} from './base';
 export class FormComp extends BaseComponent {
     static component = Form;
     title = 'Quick Forms';
-    description = (
-        <p>
-            Use this form and formgroups as an easy way to do simple forms.<br/>
+    description = `
+            Use this form and formgroups as an easy way to do simple forms.
             Always use FormGroup and FormGroupWrap
             inside a form or else the form and error data won't get passed through
-        </p>
-    );
+    `;
 
     renderCode() {
         return (
@@ -70,6 +68,7 @@ import {Button} from 'reactstrap';
                     'cb2': true,
                     'rgroup': 'radio1',
                     'range': '',
+                    'date': '',
                     'grouptext1': '',
                     'grouptext2': '',
                 }}
@@ -87,6 +86,7 @@ import {Button} from 'reactstrap';
                 <FormGroup inline label="Inline Radio 1" type="radio" name="rgroup" value="radio1" />
                 <FormGroup inline label="Inline Radio 2" type="radio" name="rgroup" value="radio2" />
                 <FormGroup label="Range" type="range" id="range" />
+                <FormGroup label="Date" type="date" id="date" />
                 <FormGroupWrap row>
                     <FormGroup className="col-md-6" label="Row" type="text" id="grouptext1" />
                     <FormGroup className="col-md-6" label="Row 2" type="text" id="grouptext2" />

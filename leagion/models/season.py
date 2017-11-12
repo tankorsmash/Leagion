@@ -2,9 +2,11 @@ from django.db import models
 from django.db.models import Q
 from .user import User
 
+
 class Season(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
+    name = models.CharField(max_length=255, null=True, blank=True)
     league = models.ForeignKey("League", related_name="seasons")
 
     def __str__(self):

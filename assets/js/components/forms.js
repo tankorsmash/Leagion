@@ -1,11 +1,15 @@
+import {withState, withHandlers, setPropTypes, compose} from 'recompose';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
+import Datetime from 'react-datetime';
+import moment from 'moment';
 import {
     FormGroup as RFormGroup,
     Form as RForm,
-    Label, Input, FormFeedback, Select
+    Label, Input, FormFeedback
 } from 'reactstrap';
-import {withProps, withState, withHandlers, setPropTypes, compose} from 'recompose';
+
+import {DATE_FORMAT} from 'common/constants';
 
 const enhance = compose(
     setPropTypes({
@@ -19,11 +23,16 @@ const enhance = compose(
     withState('form', 'setForm', (props) => props.form),
     withState('errors', 'setErrors', {}),
     withHandlers({
-        onInputChange: props => event => {
-            const target = event.target;
-            const value = target.type === 'checkbox' ? target.checked : target.value;
-            const name = target.name;
-
+        onInputChange: props => e => {
+            let name, value;
+            if (e.target) {
+                const target = e.target;
+                value = target.type === 'checkbox' ? target.checked : target.value;
+                name = target.name;
+            } else {
+                name = e.name;
+                value = e.value;
+            }
             props.setForm((f) => {
                 return update(f, {[name]: {$set: value}});
             });
@@ -106,7 +115,7 @@ export const FormGroup = (props) => {
     const {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
-        tag, children,
+        tag, children
     } = props;
 
     let {name, value} = props;
@@ -122,6 +131,7 @@ export const FormGroup = (props) => {
     const error = errors[name];
 
     const checkOrRadio = ['checkbox', 'radio'].includes(type);
+    const isDatePicker = type === 'date';
 
     //handle checkbox and radio initial values
     let checked;
@@ -129,6 +139,8 @@ export const FormGroup = (props) => {
         checked = value === form[name];
     } else if (type === 'checkbox') {
         checked = value;
+    } else if (type === 'date') {
+
     }
 
     const select = type === 'select';
@@ -152,18 +164,19 @@ export const FormGroup = (props) => {
             { !checkOrRadio &&
                 <Label check={check} for={id}>{label}</Label>
             }
-            { !checkOrRadio &&
+            { !checkOrRadio && !isDatePicker &&
                 <Input
-                    type={type}
-                    name={name}
-                    id={id}
-                    value={value}
-                    onChange={onChange}
-                    valid={!error}
-                    placeholder={placeholder}
+                    type={type} name={name} id={id} value={value}
+                    onChange={onChange} valid={!error} placeholder={placeholder}
                 >
                     {children}
                 </Input>
+            }
+            { isDatePicker &&
+                <DatePicker
+                    className={error ? 'is-invalid' : 'is-valid'} onChange={onChange}
+                    value={value} type={type} name={name} id={id} placeholder={placeholder}
+                />
             }
             <FormFeedback>{error || ''}</FormFeedback>
         </RFormGroup>
@@ -202,3 +215,37 @@ export class StaticRow extends React.Component {
         );
     }
 }
+
+export const DatePicker = (props) => {
+    const {
+        onChange, value, name, id, placeholder
+    } = props;
+    const className = 'form-control ' + props.className;
+
+    const onDateChange = moment => {
+        const value = moment.format(DATE_FORMAT);
+        onChange({name, value});
+    };
+
+    return (
+        <Datetime
+            dateFormat={DATE_FORMAT}
+            timeFormat={false}
+            closeOnSelect={true}
+            onChange={onDateChange}
+            inputProps={{
+                name, id, placeholder, className, onChange, value,
+                readOnly: true,
+            }}
+        />
+    );
+};
+
+export const TimePicker = (props) => {
+    return (
+        <Datetime
+            dateFormat={false}
+            {...props}
+        />
+    );
+};
