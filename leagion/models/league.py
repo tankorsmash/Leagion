@@ -1,8 +1,11 @@
 import datetime
 from django.db import models
+from leagion.models import User
+
 
 class League(models.Model):
     name = models.CharField(max_length=255)
+    commissioner = models.ForeignKey(User, related_name='leagues_commissioned')
 
     def __str__(self):
         return "League: {name}".format(name=self.name)

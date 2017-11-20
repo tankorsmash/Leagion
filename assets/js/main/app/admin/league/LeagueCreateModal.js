@@ -7,26 +7,26 @@ import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import ajax from 'common/ajax';
 
 const enhance = compose(
-    setDisplayName('SeasonCreateModal'),
+    setDisplayName('LeagueCreateModal'),
 );
-export default enhance(({league}) => {
+export default enhance(({user}) => {
     return (
         <FormModal
-            title="Create a new season"
+            title="Create a new league"
             Opener={
                 <Button color="primary" size="md" >
-                    <FontAwesome name="plus"/> {' New Season'}
+                    <FontAwesome name="plus"/> {' Create New League'}
                 </Button>
             }
             body={
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {
                         ajax({
-                            url: reverse('api-season-list'),
+                            url: reverse('api-league-list'),
                             method: 'POST',
                             data: form,
                         }).then(data => {
-                            toastr.success("Season Created!");
+                            toastr.success("League Created!");
                             setSuccess();
                             //this.props.updateScore(data);
                         }).catch(data => {
@@ -34,15 +34,11 @@ export default enhance(({league}) => {
                         });
                     }}
                     form={{
-                        'start_date': '',
-                        'end_date': '',
-                        'league_id': league.id,
+                        'name': '',
+                        'commissioner': user.id,
                     }}
                 >
-                    <FormGroupWrap row>
-                        <FormGroup className="col-md-6" label="Start date" type="date" id="start_date" />
-                        <FormGroup className="col-md-6" label="End date" type="date" id="end_date" />
-                    </FormGroupWrap>
+                    <FormGroup label="Name" type="text" id="name" />
                 </Form>
             }
         />

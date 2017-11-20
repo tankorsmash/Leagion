@@ -11,6 +11,7 @@ var viewnames = {
     "api-match-detail": "/api/match/<match_id>/",
     "api-match-list": "/api/match/",
     "api-my-details": "/api/me/",
+    "api-my-league-commissioned-list": "/api/me/leagues-commissioned/",
     "api-my-league-detail": "/api/me/league/<league_id>/",
     "api-my-league-list": "/api/me/league/",
     "api-my-public-player-detail": "/api/public-player/<player_id>/",

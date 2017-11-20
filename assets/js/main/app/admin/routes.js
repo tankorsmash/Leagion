@@ -32,7 +32,7 @@ export default class AdminRouter extends React.Component {
             <div id="leagion-admin" >
                 <AdminNavbar {...this.props} />
                 <Switch>
-                    <Route exact path={adminUrls.index}  component={LeagueIndex} />
+                    <Route exact path={adminUrls.index} component={LeagueIndex} user={user}/>
 
                     {/*TODO remove this
                     <Route path={adminUrls.dashboard.index}  component={Dashboard} />

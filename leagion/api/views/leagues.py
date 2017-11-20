@@ -38,6 +38,7 @@ class LeagueSeasonsList(generics.ListCreateAPIView):
             "matches__away_team",
         )
 
+
 @reverse_js
 class LeagueDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "league_id"
@@ -45,6 +46,13 @@ class LeagueDetail(generics.RetrieveUpdateAPIView):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
     filter_backends = (LeagueFilterBackend,)
+
+
+@reverse_js
+class MyLeagueCommissionedList(LeagueList):
+
+    def get_queryset(self):
+        return self.request.user.leagues_commissioned.all()
 
 
 @reverse_js

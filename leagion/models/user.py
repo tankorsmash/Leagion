@@ -76,12 +76,6 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
     # can do everything admins can do besides modify admins
     is_moderator = models.BooleanField(default=False)
 
-    # leagues they've got full control of
-    leagues_commissioned = models.ManyToManyField(
-        "League",
-        related_name="league_commissioners"
-    )
-
     avatar = models.ImageField(
         upload_to=get_avatar_path,
         null=True

@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^league/(?P<league_id>\d+)/$', leagues_views.LeagueDetail.as_view(), name='api-league-detail'),
     url(r'^league/(?P<league_id>\d+)/seasons/$', leagues_views.LeagueSeasonsList.as_view(), name='api-league-season-list'),
     url(r'^me/league/$', leagues_views.MyLeagueList.as_view(), name='api-my-league-list'),
+    url(r'^me/leagues-commissioned/$', leagues_views.MyLeagueCommissionedList.as_view(), name='api-my-league-commissioned-list'),
     url(r'^me/league/(?P<league_id>\d+)/$', leagues_views.MyLeagueDetail.as_view(), name='api-my-league-detail'),
 
     url(r'^season/$', seasons_views.SeasonList.as_view(), name='api-season-list'),

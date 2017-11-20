@@ -28,7 +28,7 @@ class LeagueSerializer(serializers.ModelSerializer):
         model = League
         fields = (
             'id', 'name', 'current_season', 'past_seasons',
-            'future_seasons',
+            'future_seasons', 'commissioner',
         )
 
     current_season = ShallowSeasonSerializer(read_only=True)
