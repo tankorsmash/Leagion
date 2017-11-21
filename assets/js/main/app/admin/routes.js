@@ -1,20 +1,11 @@
 import {Switch, Redirect} from 'react-router-dom';
 import {Route} from 'components/router';
 
-import {Row, Col} from 'reactstrap';
-
 import adminUrls from 'main/app/admin/urls';
-
 import auth from 'main/auth';
 
 import AdminNavbar from 'main/app/admin/nav';
-import Dashboard from 'main/app/admin/dashboard';
 import LeagueIndex from 'main/app/admin/league/index';
-import {SeasonDetail, SeasonsCreate} from 'main/app/admin/details/seasons';
-import {LocationDetail} from 'main/app/admin/details/locations';
-import {TeamDetail, TeamsCreate} from 'main/app/admin/details/teams';
-import {MatchDetail, MatchesCreate} from 'main/app/admin/details/matches';
-import PlayerDetail from 'main/app/admin/details/players';
 
 import {FourOhFour} from 'components/error-pages';
 import style from 'app.scss';

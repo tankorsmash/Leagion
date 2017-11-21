@@ -9,7 +9,7 @@ import ajax from 'common/ajax';
 const enhance = compose(
     setDisplayName('LeagueCreateModal'),
 );
-export default enhance(({user}) => {
+export default enhance(({user, onSuccess}) => {
     return (
         <FormModal
             title="Create a new league"
@@ -28,7 +28,7 @@ export default enhance(({user}) => {
                         }).then(data => {
                             toastr.success("League Created!");
                             setSuccess();
-                            //this.props.updateScore(data);
+                            onSuccess();
                         }).catch(data => {
                             setErrors(data);
                         });

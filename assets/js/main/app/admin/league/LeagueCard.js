@@ -18,7 +18,7 @@ const SeasonStat = props => {
 const enhance = compose(
     setDisplayName('LeagueCard'),
 );
-export default enhance(({league}) => {
+export default enhance(({league, setRefresh}) => {
     const season = league.current_season;
     return (
         <div className="league-card">
@@ -64,7 +64,10 @@ export default enhance(({league}) => {
                 <SeasonList title="Future Seasons" seasons={league.future_seasons} />
                 <SeasonList title="Past Seasons" seasons={league.past_seasons} />
             </div>
-            <SeasonCreateModal league={league} />
+            <SeasonCreateModal
+                league={league}
+                onSuccess={() => {setRefresh(true);}}
+            />
         </div>
     );
 });

@@ -12,21 +12,36 @@ import {Button} from 'components/buttons';
 const enhance = compose(
     setDisplayName('LeagueList'),
     withState('leagues', 'setLeagues', []),
+    withState('refresh', 'setRefresh', false),
 );
 
-export default enhance(({leagues, setLeagues, user}) => {
+export default enhance(({leagues, setLeagues, user, refresh, setRefresh}) => {
     return (
         <DatasetView
             url={reverse('api-my-league-commissioned-list')}
-            onSuccess={(leagues) => setLeagues(leagues)}
+            refresh={refresh} setRefresh={setRefresh}
+            onSuccess={(leagues) => {
+                setLeagues(leagues);
+                setRefresh(false);
+            }}
         >
             <Titlebar
                 title="Manage Your Leagues"
-                right={( <LeagueCreateModal user={user} />)}
+                right={(
+                    <LeagueCreateModal
+                        user={user}
+                        onSuccess={() => {setRefresh(true);}}
+                    />
+                )}
             />
             <div className="content le-listing">
                 {leagues.map((league, i) => {
-                    return <LeagueCard league={league} key={i}/>;
+                    return (
+                        <LeagueCard
+                            league={league} key={i}
+                            setRefresh={setRefresh}
+                        />
+                    );
                 })}
             </div>
         </DatasetView>
