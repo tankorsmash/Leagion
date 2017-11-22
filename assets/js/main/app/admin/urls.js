@@ -14,13 +14,18 @@ function buildSimpleUrls(root, kwargName) {
         index: root,
         detail: `${root}/:${kwargName}`,
         create: `${root}/create`
-    }
-};
+    };
+}
 
 module.exports = {
     index: index,
 
-	//TODO remove these
+    leagueIndex: `${index}/league`,
+
+	seasonIndex: `${index}/league/:leagueId?/season`,
+	seasonDetail: `${index}/league/:leagueId?/season/:seasonId?`,
+
+	//TODO remove the rest
     dashboard: {
         index: dashboardUrl,
         overview: `${dashboardUrl}/overview`,
@@ -29,7 +34,8 @@ module.exports = {
         players: `${dashboardUrl}/players`,
     },
 
-    leagueIndex: `${index}/league`,
+
+
     seasons: buildSimpleUrls(seasonsUrl, "seasonId"),
     locations: buildSimpleUrls(locationsUrl, "locationId"),
     teams: {

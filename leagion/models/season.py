@@ -17,7 +17,7 @@ class Season(models.Model):
 
     @property
     def pretty_name(self):
-        return "{}: {}".format(self.league.name, self.pretty_date)
+        return "{} ({})".format(self.league.name, self.pretty_date)
 
     @property
     def league_name(self):

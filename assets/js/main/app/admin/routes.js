@@ -6,6 +6,7 @@ import auth from 'main/auth';
 
 import AdminNavbar from 'main/app/admin/nav';
 import LeagueIndex from 'main/app/admin/league/index';
+import LeagueRouter from 'main/app/admin/league/routes';
 
 import {FourOhFour} from 'components/error-pages';
 import style from 'app.scss';
@@ -18,12 +19,12 @@ export default class AdminRouter extends React.Component {
         if (!(auth.commissionerOrBetter(user))) {
             return ( <Redirect exact to={"/"} /> );
         }
-
         return (
             <div id="leagion-admin" >
                 <AdminNavbar {...this.props} />
                 <Switch>
                     <Route exact path={adminUrls.index} component={LeagueIndex} user={user}/>
+                    <Route path={adminUrls.leagueIndex} component={LeagueRouter} user={user}/>
 
                     {/*TODO remove this
                     <Route path={adminUrls.dashboard.index}  component={Dashboard} />

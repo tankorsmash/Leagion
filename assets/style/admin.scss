@@ -1,4 +1,4 @@
-.league-card {
+.league-card, a .league-card {
     color: $black;
     @include card();
     width: 340px;

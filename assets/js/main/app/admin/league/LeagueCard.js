@@ -2,6 +2,9 @@ import {compose, setDisplayName } from 'recompose';
 import FontAwesome from 'react-fontawesome';
 import SeasonList from './season/SeasonList';
 import SeasonCreateModal from './season/SeasonCreateModal';
+import urls from 'main/app/admin/urls';
+import {Link} from 'components/buttons';
+
 
 const SeasonStat = props => {
     return (
@@ -20,22 +23,31 @@ const enhance = compose(
 );
 export default enhance(({league, setRefresh}) => {
     const season = league.current_season;
+    const SeasonTag = season ? Link : 'div';
     return (
         <div className="league-card">
             <div className="h4 title">
                 {league.name}
             </div>
             <div className="current-season">
-                <div className="top">
-                    <div className="h5">Current Season</div>
-                    {
-                        season && (
-                            <div className="h5">
-                                {'(' + league.current_season.pretty_date + ')'}
-                            </div>
-                        )
-                    }
-                </div>
+                <SeasonTag
+                    url={season && urls.seasonDetail}
+                    args={season && {
+                        leagueId: league.id,
+                        seasonId: season.id,
+                    }}
+                >
+                    <div className="top">
+                        <div className="h5">Current Season</div>
+                        {
+                            season && (
+                                <div className="h5">
+                                    {'(' + season.pretty_date + ')'}
+                                </div>
+                            )
+                        }
+                    </div>
+                </SeasonTag>
                 <div className="bottom">
                     {
                         season ? (
@@ -61,8 +73,10 @@ export default enhance(({league, setRefresh}) => {
                 </div>
             </div>
             <div className="seasons-inline">
-                <SeasonList title="Future Seasons" seasons={league.future_seasons} />
-                <SeasonList title="Past Seasons" seasons={league.past_seasons} />
+                <SeasonList title="Future Seasons" league={league}
+                    seasons={league.future_seasons} />
+                <SeasonList title="Past Seasons" league={league}
+                    seasons={league.past_seasons} />
             </div>
             <SeasonCreateModal
                 league={league}
