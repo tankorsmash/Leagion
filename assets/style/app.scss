@@ -71,4 +71,9 @@ body {
         cursor: move;
         touch-action: none;
     }
+
+    input[type="checkbox"] {
+        margin: 0;
+        position: relative;
+    }
 }

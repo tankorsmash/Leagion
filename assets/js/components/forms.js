@@ -6,7 +6,8 @@ import moment from 'moment';
 import {
     FormGroup as RFormGroup,
     Form as RForm,
-    Label, Input, FormFeedback
+    Input as RInput,
+    Label, FormFeedback
 } from 'reactstrap';
 
 import {DATE_FORMAT} from 'common/constants';
@@ -183,6 +184,30 @@ export const FormGroup = (props) => {
         </RFormGroup>
     );
 };
+
+
+export class Input extends React.Component {
+    componentDidMount() {
+        this.el.indeterminate = this.props.indeterminate;
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.indeterminate !== this.props.indeterminate) {
+            this.el.indeterminate = this.props.indeterminate;
+        }
+    }
+    render() {
+        let props = Object.assign({}, this.props);
+        delete props.indeterminate;
+
+        return (
+            <RInput
+                {...props}
+                innerRef={el => {this.el = el;}}
+            />
+        );
+    }
+}
 
 export const FormGroupWrap = (props) => {
     const {errors, form, onChange, className} = props;

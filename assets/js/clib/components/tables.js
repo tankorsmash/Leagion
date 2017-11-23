@@ -109,3 +109,54 @@ export class DraggableTableComp extends BaseComponent {
         );
     }
 }
+
+export class RowSelectTableComp extends BaseComponent {
+    static component = Table;
+    static defaultAttrs = {
+        responsive: true,
+        striped: true,
+    };
+    static ignoreAttrs = ['draggable'];
+
+    title = 'Table';
+
+    renderCode() {
+        return (
+`import {Table} from 'components/tables';
+
+<Table
+    ${this.getAttrsAsCode()}
+    data={[
+        {firstName: 'Bill', lastName: 'Sanchez'},
+        {firstName: 'Tiger', lastName: 'Balmer'},
+        {firstName: 'Carmen', lastName: 'Sandiego'},
+        {firstName: 'Blaise', lastName: 'Pascal'},
+    ]}
+    columns={[
+        {header: 'First Name', cell: 'firstName'},
+        {header: 'First Name', cell: (item) => <small>item.lastName</small> },
+    ]}
+/>`
+        );
+    }
+
+    renderComponent() {
+        return (
+            <Table
+                {...this.state}
+                rowSelectId="id"
+                onRowSelect={(selectedRows) => {console.log(selectedRows)}}
+                data={[
+                    {id: 3, firstName: 'Bill', lastName: 'Sanchez'},
+                    {id: 5, firstName: 'Tiger', lastName: 'Balmer'},
+                    {id: 6, firstName: 'Carmen', lastName: 'Sandiego'},
+                    {id: 9, firstName: 'Blaise', lastName: 'Pascal'},
+                ]}
+                columns={[
+                    {header: 'First Name', cell: 'firstName'},
+                    {header: 'First Name', cell: (item) => <small>item.lastName</small> },
+                ]}
+            />
+        );
+    }
+}

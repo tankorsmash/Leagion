@@ -2,6 +2,7 @@ import {Table as RTable } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Dragula from 'react-dragula';
 import update from 'immutability-helper';
+import {Input} from 'components/forms';
 
 export class Table extends React.Component {
     static propTypes = {
@@ -15,6 +16,7 @@ export class Table extends React.Component {
         inverse: PropTypes.bool,
         className: PropTypes.string,
         draggable: PropTypes.bool,
+        onRowSelect: PropTypes.func,
         onDrop: function(props, propName, componentName) {
             if (
                 (props['draggable'] == true &&
@@ -31,13 +33,10 @@ export class Table extends React.Component {
         },
     };
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data: props.data
-        };
-    }
+    state = {
+        data: this.props.data,
+        selectedRows: [],
+    };
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.data !== this.state.data) {
@@ -107,12 +106,39 @@ export class Table extends React.Component {
         }
     }
 
+    toggleRow = i => {
+        const {selectedRows} = this.state;
+
+        if (selectedRows.includes(i)) {
+            this.setState({
+                selectedRows: selectedRows.filter(row => row !== i)
+            });
+        } else {
+            this.setState({selectedRows: selectedRows.concat(i)});
+        }
+
+    };
+
+    toggleAllRows = () => {
+        const {selectedRows, data} = this.state;
+
+        if (selectedRows.length === data.length) {
+            this.setState({selectedRows: []});
+        } else {
+            this.setState({
+                selectedRows: data.map((row, i) => i)
+            });
+        }
+
+    };
+
     render() {
         const {
             striped, hover, bordered, inverse, className,
+            onRowSelect,
         } = this.props;
 
-        const {data} = this.state;
+        const {data, selectedRows} = this.state;
         const size = this.props.small ? 'sm' : undefined;
         const responsive = this.props.responsive || true;
 
@@ -130,6 +156,16 @@ export class Table extends React.Component {
             >
                 <thead ref={(el) => {this.thead=el;}}>
                     <tr>
+                        {onRowSelect &&
+                            <th className="le-select-all-rows">
+                                <Input
+                                    type="checkbox"
+                                    onClick={this.toggleAllRows}
+                                    checked={selectedRows.length === data.length}
+                                    indeterminate={selectedRows.length && selectedRows.length < data.length}
+                                />
+                            </th>
+                        }
                         {columns.map((column, i) => {
                             return <th key={i}>{column.header}</th>;
                         })}
@@ -139,6 +175,15 @@ export class Table extends React.Component {
                     {data.map((item, i) => {
                         return (
                             <tr key={i}>
+                                {onRowSelect &&
+                                    <td>
+                                        <Input
+                                            type="checkbox"
+                                            onClick={() => {this.toggleRow(i);}}
+                                            checked={selectedRows.includes(i)}
+                                        />
+                                    </td>
+                                }
                                 {columns.map((column, j) => {
                                     let cell;
                                     if (typeof(column.cell) === 'function') {

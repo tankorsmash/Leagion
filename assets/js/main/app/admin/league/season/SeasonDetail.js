@@ -1,8 +1,9 @@
 import {compose, setDisplayName, withState} from 'recompose';
-//import FontAwesome from 'react-fontawesome';
+import FontAwesome from 'react-fontawesome';
 
 import {Titlebar} from 'components/text';
 import DatasetView from 'components/DatasetView';
+import {Tabs} from 'components/tabs';
 
 const enhance = compose(
     setDisplayName('SeasonDetail'),
@@ -19,7 +20,18 @@ export default enhance(({season, setSeason, user, match}) => {
                 title={season.pretty_name}
             />
             <div className="content le-listing">
-                Here be dragons
+                <Tabs
+                    tabs={[{
+                        label: 'Teams',
+                        content: <h3>teams table</h3>
+                    }, {
+                        label: 'Matches',
+                        content: <h3>matches table</h3>
+                    }, {
+                        label: 'Players',
+                        content: <h3>player table</h3>
+                    }]}
+                />
             </div>
         </DatasetView>
     );
