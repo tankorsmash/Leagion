@@ -144,7 +144,6 @@ export class RowSelectTableComp extends BaseComponent {
         return (
             <Table
                 {...this.state}
-                rowSelectId="id"
                 onRowSelect={(selectedRows) => {console.log(selectedRows)}}
                 data={[
                     {id: 3, firstName: 'Bill', lastName: 'Sanchez'},

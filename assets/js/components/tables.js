@@ -108,28 +108,34 @@ export class Table extends React.Component {
 
     toggleRow = i => {
         const {selectedRows} = this.state;
+        let srows;
 
         if (selectedRows.includes(i)) {
-            this.setState({
-                selectedRows: selectedRows.filter(row => row !== i)
-            });
+            srows = selectedRows.filter(row => row !== i);
         } else {
-            this.setState({selectedRows: selectedRows.concat(i)});
+            srows = selectedRows.concat(i);
         }
 
+        this.setState({selectedRows: srows});
+        this.selectRows(srows);
     };
 
     toggleAllRows = () => {
         const {selectedRows, data} = this.state;
+        let srows;
 
         if (selectedRows.length === data.length) {
-            this.setState({selectedRows: []});
+            srows = [];
         } else {
-            this.setState({
-                selectedRows: data.map((row, i) => i)
-            });
+            srows = data.map((row, i) => i);
         }
 
+        this.setState({selectedRows: srows});
+        this.selectRows(srows);
+    };
+
+    selectRows = (srows) => {
+        this.props.onRowSelect(srows);
     };
 
     render() {
