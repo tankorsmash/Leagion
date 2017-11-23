@@ -9,7 +9,8 @@ import {AvatarSelectorComp} from 'clib/components/files';
 import {AvatarComp} from 'clib/components/media';
 import {TitlebarComp, TextComp} from 'clib/components/text';
 import {DatasetViewComp} from 'clib/components/no_ui';
-import {TableComp, DraggableTableComp, RowSelectTableComp} from 'clib/components/tables';
+import {TableComp, DraggableTableComp,
+    RowSelectTableComp, ActionColumnTableComp} from 'clib/components/tables';
 import {FormComp, FormModalComp} from 'clib/components/forms';
 
 class Clib extends React.Component {
@@ -22,7 +23,10 @@ class Clib extends React.Component {
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
         {'name': 'Modals', 'components': [SimpleModalComp]},
         {'name': 'Forms', 'components': [FormComp, FormModalComp]},
-        {'name': 'Tables', 'components': [TableComp, DraggableTableComp, RowSelectTableComp]},
+        {'name': 'Tables', 'components': [
+            TableComp, DraggableTableComp,
+            RowSelectTableComp, ActionColumnTableComp
+        ]},
         {'name': 'Files', 'components': [AvatarSelectorComp]},
         {'name': 'Media', 'components': [AvatarComp]},
         {'name': 'No Ui', 'components': [DatasetViewComp]},

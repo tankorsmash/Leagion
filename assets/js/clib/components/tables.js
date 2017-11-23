@@ -1,5 +1,6 @@
 import {Table} from 'components/tables';
 import {BaseComponent} from './base';
+import {Dropdown, DropdownItem} from 'components/dropdowns';
 
 export class TableComp extends BaseComponent {
     static component = Table;
@@ -118,7 +119,7 @@ export class RowSelectTableComp extends BaseComponent {
     };
     static ignoreAttrs = ['draggable'];
 
-    title = 'Row Selection Table';
+    title = 'Row Selections in Table';
 
     renderCode() {
         return (
@@ -155,6 +156,69 @@ export class RowSelectTableComp extends BaseComponent {
                 columns={[
                     {header: 'First Name', cell: 'firstName'},
                     {header: 'First Name', cell: (item) => <small>item.lastName</small> },
+                ]}
+            />
+        );
+    }
+}
+
+export class ActionColumnTableComp extends BaseComponent {
+    static component = Table;
+    static defaultAttrs = {
+        responsive: true,
+        striped: true,
+    };
+    static ignoreAttrs = ['draggable'];
+
+    title = 'Action Columns in Table';
+
+    renderCode() {
+        return (
+`import {Table} from 'components/tables';
+
+<Table
+    ${this.getAttrsAsCode()}
+    data={[
+        {id: 3, firstName: 'Bill', lastName: 'Sanchez'},
+        {id: 5, firstName: 'Tiger', lastName: 'Balmer'},
+    ]}
+    columns={[
+        {header: 'First Name', cell: 'firstName'},
+        {header: 'First Name', cell: (item) => <small>item.lastName</small> },
+        {cell: (item) => {
+            return (
+                <Dropdown dotdotdot >
+                    <DropdownItem
+                        onClick={() => {console.log(item.firstName + " is cool");}}
+                    > make cool </DropdownItem>
+                </Dropdown>
+            );
+        }},
+    ]}
+/>`
+        );
+    }
+
+    renderComponent() {
+        return (
+            <Table
+                {...this.state}
+                data={[
+                    {id: 3, firstName: 'Bill', lastName: 'Sanchez'},
+                    {id: 5, firstName: 'Tiger', lastName: 'Balmer'},
+                ]}
+                columns={[
+                    {header: 'First Name', cell: 'firstName'},
+                    {header: 'First Name', cell: (item) => <small>item.lastName</small> },
+                    {cell: (item) => {
+                        return (
+                            <Dropdown dotdotdot >
+                                <DropdownItem
+                                    onClick={() => {console.log(item.firstName + " is cool");}}
+                                > make cool </DropdownItem>
+                            </Dropdown>
+                        );
+                    }},
                 ]}
             />
         );
