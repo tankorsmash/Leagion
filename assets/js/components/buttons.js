@@ -5,6 +5,7 @@ import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';
 import auth from 'main/auth';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
 export const LogoutButton = ({...rest}) => {
 	return (
@@ -47,10 +48,25 @@ export class Button extends React.Component {
 		active: PropTypes.bool,
         className: PropTypes.string,
 		href: PropTypes.string,
+        dotdotdot: PropTypes.bool,
 	};
 
 	render() {
-		return <RButton {...this.props}>{this.props.children}</RButton>;
+        const {className, dotdotdot} = this.props;
+        let props = Object.assign({}, this.props);
+        const dotClass = dotdotdot ? 'le-ellipsis-button' : '';
+        const classNames = `${className} ${dotClass}`;
+
+        props.className = classNames;
+        props.dotdotdot = undefined;
+        props.color = dotdotdot ? 'link' : props.color;
+
+        return (
+            <RButton {...props}>
+                {!dotdotdot && this.props.children}
+                {dotdotdot && <FontAwesome name="ellipsis-h"/>}
+            </RButton>
+        );
 	}
 }
 
