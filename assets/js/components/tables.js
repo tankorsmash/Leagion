@@ -170,9 +170,6 @@ export class Table extends React.Component {
                                     checked={selectedRows.length === data.length}
                                     indeterminate={selectedRows.length && selectedRows.length < data.length}
                                 />
-                                <DropdownItem
-                                    onClick={() => {console.log(item.firstName + " is cool");}}
-                                > make cool </DropdownItem>
                             </th>
                         }
                         {columns.map((column, i) => {
