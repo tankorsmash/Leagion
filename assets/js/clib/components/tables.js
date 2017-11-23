@@ -118,7 +118,7 @@ export class RowSelectTableComp extends BaseComponent {
     };
     static ignoreAttrs = ['draggable'];
 
-    title = 'Table';
+    title = 'Row Selection Table';
 
     renderCode() {
         return (
@@ -126,11 +126,12 @@ export class RowSelectTableComp extends BaseComponent {
 
 <Table
     ${this.getAttrsAsCode()}
+    onRowSelect={(selectedRows) => {console.log(selectedRows)}}
     data={[
-        {firstName: 'Bill', lastName: 'Sanchez'},
-        {firstName: 'Tiger', lastName: 'Balmer'},
-        {firstName: 'Carmen', lastName: 'Sandiego'},
-        {firstName: 'Blaise', lastName: 'Pascal'},
+        {id: 3, firstName: 'Bill', lastName: 'Sanchez'},
+        {id: 5, firstName: 'Tiger', lastName: 'Balmer'},
+        {id: 6, firstName: 'Carmen', lastName: 'Sandiego'},
+        {id: 9, firstName: 'Blaise', lastName: 'Pascal'},
     ]}
     columns={[
         {header: 'First Name', cell: 'firstName'},
