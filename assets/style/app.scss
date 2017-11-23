@@ -77,3 +77,13 @@ body {
         position: relative;
     }
 }
+
+.le-ellipsis-button {
+    color: $black;
+    padding: 1px 8px;
+
+    &:hover {
+        border: 1px solid $gray;
+        border-radius: 3px;
+    }
+}

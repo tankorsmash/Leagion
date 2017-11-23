@@ -7,6 +7,7 @@ import {
 } from 'reactstrap';
 
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
 export const DropdownToggle = RDropdownToggle;
 export const DropdownMenu = RDropdownMenu;
@@ -27,6 +28,7 @@ export class Dropdown extends React.Component {
         nav: PropTypes.bool,
         children: PropTypes.node.isRequired,
         className: PropTypes.string,
+        dotdotdot: PropTypes.bool,
     };
 
     state = {isOpen: false};
@@ -39,12 +41,16 @@ export class Dropdown extends React.Component {
 
     render() {
         const {
-            caret, disabled, color, dropup, group,
+            caret, disabled, dropup, group,
             menuRight, buttonText, children, nav,
-            className,
+            className, dotdotdot,
         } = this.props;
 
         const Component = nav ? RNavDropdown : RDropdown;
+
+        const color = dotdotdot ? 'link' : this.props.color;
+        const dotClass = dotdotdot ? 'le-ellipsis-button' : '';
+        const classNames = `${className} ${dotClass}`;
 
         return (
             <Component
@@ -59,8 +65,10 @@ export class Dropdown extends React.Component {
                     color={color}
                     disabled={disabled}
                     nav={nav}
+                    className={classNames}
                 >
-                    {buttonText}
+                    {!dotdotdot && buttonText}
+                    {dotdotdot && <FontAwesome name="ellipsis-h"/>}
                 </DropdownToggle>
                 <DropdownMenu right={menuRight}>
                     {children}

@@ -2,7 +2,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {Route} from 'components/router';
 import {Row, Col, Nav, NavLink, NavItem} from 'reactstrap';
 import {ButtonComp, LinkComp, ButtonLinkComp} from 'clib/components/buttons';
-import {DropdownComp} from 'clib/components/dropdowns';
+import {DropdownComp, EllipsisDropdownComp} from 'clib/components/dropdowns';
 import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 import {SimpleModalComp} from 'clib/components/modals';
 import {AvatarSelectorComp} from 'clib/components/files';
@@ -17,7 +17,7 @@ class Clib extends React.Component {
 
     components = [
         {'name': 'Buttons', 'components': [ButtonComp, LinkComp, ButtonLinkComp]},
-        {'name': 'Dropdowns', 'components': [DropdownComp]},
+        {'name': 'Dropdowns', 'components': [DropdownComp, EllipsisDropdownComp]},
         {'name': 'Text', 'components': [TitlebarComp, TextComp]},
         {'name': 'Tabs', 'components': [TabComp, RoutedTabComp]},
         {'name': 'Modals', 'components': [SimpleModalComp]},

@@ -13,6 +13,7 @@ export class DropdownComp extends BaseComponent {
         caret: true,
     };
     static component = Dropdown;
+    title = 'normal dropdown';
 
     renderCode() {
         return (
@@ -41,3 +42,36 @@ export class DropdownComp extends BaseComponent {
     }
 }
 
+export class EllipsisDropdownComp extends BaseComponent {
+    static defaultAttrs = {
+        dotdotdot: true,
+    };
+    static component = Dropdown;
+    title = 'ellipsis dropdown';
+
+    renderCode() {
+        return (
+`import {Dropdown, DropdownItem} from 'components/dropdowns';
+
+<Dropdown ${this.getAttrsAsCode()}>
+    <DropdownItem header>Header</DropdownItem>
+    <DropdownItem>Item 1</DropdownItem>
+    <DropdownItem>Item 2</DropdownItem>
+    <DropdownItem divider>Disabled item</DropdownItem>
+    <DropdownItem disabled>Disabled item</DropdownItem>
+</Dropdown>`
+        );
+    }
+
+    renderComponent() {
+        return (
+            <Dropdown {...this.state}>
+                <DropdownItem header>Header</DropdownItem>
+                <DropdownItem>Item 1</DropdownItem>
+                <DropdownItem>Item 2</DropdownItem>
+                <DropdownItem divider>Disabled item</DropdownItem>
+                <DropdownItem disabled>Disabled item</DropdownItem>
+            </Dropdown>
+        );
+    }
+}
