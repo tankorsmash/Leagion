@@ -69,6 +69,7 @@ class TeamSerializer(serializers.ModelSerializer):
             'id', 'name', 'player_ids', 'players',
             'season_id', 'season', 'matches', 'captains',
             'color', 'color_value', 'logo_url', 'logo',
+            'win_draw_loss_points',
         )
         read_only_fields = ('color_value', 'logo_url')
 

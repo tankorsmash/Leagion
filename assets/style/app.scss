@@ -55,6 +55,12 @@ body {
     margin: auto;
 }
 
+.tab-wrapper {
+    max-width: 1000px;
+    margin: auto;
+    padding: 10px;
+}
+
 .leagion-table {
     &.gu-mirror {
         border: 2px solid $gray-lighter;

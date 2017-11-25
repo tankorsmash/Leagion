@@ -5,6 +5,8 @@ import {Titlebar} from 'components/text';
 import DatasetView from 'components/DatasetView';
 import {Tabs} from 'components/tabs';
 
+import TeamTable from './teams/TeamTable';
+
 const enhance = compose(
     setDisplayName('SeasonDetail'),
     withState('season', 'setSeason', {}),
@@ -23,7 +25,7 @@ export default enhance(({season, setSeason, user, match}) => {
                 <Tabs
                     tabs={[{
                         label: 'Teams',
-                        content: <h3>teams table</h3>
+                        content: <TeamTable season={season}/>,
                     }, {
                         label: 'Matches',
                         content: <h3>matches table</h3>

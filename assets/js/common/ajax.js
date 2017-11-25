@@ -43,15 +43,23 @@ export default function ajax({
 }) {
     validateUrl(url);
 
+    //add query params from data if it's a GET
+    if (method === 'GET' && data) {
+        let esc = encodeURIComponent;
+        const urlParams = new URLSearchParams(Object.entries(data));
+        url += '?' + urlParams;
+        data = null;
+    }
+
     if (stringifyData && data) {
         data = JSON.stringify(data);
-    };
+    }
 
     let info = {
         method: method,
         body: data,
         credentials: "same-origin",
-    }
+    };
 
     if (headers != null) {
         info.headers = headers;

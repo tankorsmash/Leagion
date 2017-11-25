@@ -4,7 +4,6 @@ from rest_framework import generics, filters
 
 from leagion.api.serializers.leagues import LeagueSerializer, MyLeagueSerializer
 from leagion.api.serializers.seasons import SeasonSerializer
-from leagion.api.filters import LeagueFilterBackend
 from leagion.models import League, Season
 
 from leagion.utils import reverse_js
@@ -16,7 +15,6 @@ User = get_user_model()
 class LeagueList(generics.ListCreateAPIView):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
-    filter_backends = (LeagueFilterBackend,)
 
 
 @reverse_js
@@ -45,7 +43,6 @@ class LeagueDetail(generics.RetrieveUpdateAPIView):
 
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
-    filter_backends = (LeagueFilterBackend,)
 
 
 @reverse_js

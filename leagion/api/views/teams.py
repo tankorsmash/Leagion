@@ -7,7 +7,6 @@ from rest_framework import generics, serializers, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer
 from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer, CreateTeamSerializer
-from leagion.api.filters import TeamFilterBackend
 from leagion.models import Team, User
 
 from leagion.utils import reverse_js
@@ -20,15 +19,10 @@ class TeamList(generics.ListCreateAPIView):
     ).select_related(
         "season"
     )
-    serializer_class = PureTeamSerializer
-    filter_backends = (TeamFilterBackend,)
+    serializer_class = TeamSerializer
+    filter_fields = ('season',)
 
     def get_serializer_class(self):
-        """
-        returns a simple create team serializer since it starts
-        off without players or captains or even matches
-        """
-
         if self.request.method == "POST":
             return CreateTeamSerializer
 
@@ -55,7 +49,6 @@ class TeamDetail(generics.RetrieveUpdateAPIView):
         "season", "season__league",
     )
     serializer_class = TeamSerializer
-    filter_backends = (TeamFilterBackend,)
 
 
 @reverse_js

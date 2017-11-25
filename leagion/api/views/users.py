@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework import generics, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
-from leagion.api.filters import UserFilterBackend
 
 from leagion.models import Season
 
@@ -20,7 +19,6 @@ class UserList(generics.ListCreateAPIView):
         "teams"
     )
     serializer_class = UserSerializer
-    filter_backends = (UserFilterBackend,)
 
 
 @reverse_js
@@ -31,7 +29,6 @@ class UserDetail(generics.RetrieveUpdateAPIView):
         "teams"
     )
     serializer_class = UserSerializer
-    filter_backends = (UserFilterBackend,)
 
 
 @reverse_js

@@ -2,33 +2,34 @@ import { withPropsOnChange, withState, lifecycle, compose, setDisplayName } from
 import ajax from 'common/ajax';
 import SpinLoader from 'components/spinloader';
 
+const sendRequest = (props) => {
+    const {url, data, onSuccess, setIsLoaded} = props;
+
+    console.log(data);
+    ajax({
+        url: url,
+        data: data,
+    }).then(data => {
+        onSuccess(data);
+        setIsLoaded(true);
+    }, error => {
+        console.warn(error);
+    });
+}
+
 const enhance = compose(
     setDisplayName('DataSetView'),
     withState('isLoaded', 'setIsLoaded', false),
     lifecycle({
         componentWillMount() {
-            ajax({
-                url: this.props.url,
-            }).then(data => {
-                this.props.onSuccess(data);
-                this.props.setIsLoaded(true);
-            }, error => {
-                console.warn(error);
-            });
+            sendRequest(this.props);
         },
         componentWillUpdate(props) {
             if (typeof(props.setRefresh) === 'function' && props.refresh) {
                 props.setRefresh(false);
                 props.setIsLoaded(false);
 
-                ajax({
-                    url: this.props.url,
-                }).then(data => {
-                    this.props.onSuccess(data);
-                    this.props.setIsLoaded(true);
-                }, error => {
-                    console.warn(error);
-                });
+                sendRequest(this.props);
             }
         }
     })
