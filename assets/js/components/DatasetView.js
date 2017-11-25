@@ -5,7 +5,6 @@ import SpinLoader from 'components/spinloader';
 const sendRequest = (props) => {
     const {url, data, onSuccess, setIsLoaded} = props;
 
-    console.log(data);
     ajax({
         url: url,
         data: data,

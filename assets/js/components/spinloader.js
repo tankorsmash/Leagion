@@ -1,7 +1,7 @@
 import Spinner from 'react-spinkit';
 
 export default class SpinLoader extends React.Component {
-    
+
     constructor(props) {
         super(props);
 
@@ -23,7 +23,7 @@ export default class SpinLoader extends React.Component {
     render() {
 
         if (this.state.loaded == false) {
-            return (<Spinner spinnerName='three-bounce' />);
+            return (<Spinner name='three-bounce' />);
         } else {
             return (
                 <div>
