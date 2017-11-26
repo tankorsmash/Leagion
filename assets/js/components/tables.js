@@ -294,7 +294,7 @@ export class DataTable extends React.Component {
         refresh: false,
         page: 1,
         count: 0,
-        page_size: 2,
+        page_size: 25,
     };
 
     setRefresh = (refresh) => {this.setState({refresh: refresh});};
@@ -308,7 +308,7 @@ export class DataTable extends React.Component {
     render() {
         const {
             toolbarLeft, toolbarRight, url, tableProps,
-            params, emptyEl, emptySearchEl, setData
+            params, emptySearchEl
         } = this.props;
 
         const {data, search, refresh, page, page_size, count} = this.state;

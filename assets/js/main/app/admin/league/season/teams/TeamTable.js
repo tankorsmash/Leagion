@@ -10,13 +10,10 @@ import TeamCreateModal from './TeamCreateModal';
 const enhance = compose(
     setDisplayName('TeamTable'),
 );
-export default enhance(({season, user, setRefresh, teams, setTeams}) => {
+export default enhance(({season, setRefresh}) => {
     return (
         <div>
             <DataTable
-                user={user}
-                data={teams}
-                setData={setTeams}
                 url={reverse('api-team-list')}
                 params={{season: season.id}}
                 toolbarLeft={<TeamCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>}

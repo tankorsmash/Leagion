@@ -10,14 +10,11 @@ import TeamTable from './teams/TeamTable';
 const enhance = compose(
     setDisplayName('SeasonDetail'),
     withState('season', 'setSeason', {}),
-    withState('teams', 'setTeams', []),
-    withState('matches', 'setMatches', []),
-    withState('players', 'setPlayers', []),
     withState('refresh', 'setRefresh', false),
 );
 
 export default enhance(({season, setSeason, user, match,
-    refresh, setRefresh, setTeams, teams}) => {
+    refresh, setRefresh}) => {
     return (
         <DatasetView
             url={reverse('api-season-detail', {season_id: match.params.seasonId})}
@@ -35,8 +32,6 @@ export default enhance(({season, setSeason, user, match,
                             season={season}
                             user={user}
                             setRefresh={setRefresh}
-                            setTeams={setTeams}
-                            teams={teams}
                         />,
                     }, {
                         label: 'Matches',
