@@ -149,6 +149,8 @@ export const FormGroup = (props) => {
 
     }
 
+	const valid = error ? false : undefined;
+
     const select = type === 'select';
 
     return (
@@ -173,14 +175,14 @@ export const FormGroup = (props) => {
             { !checkOrRadio && !isDatePicker &&
                 <Input
                     type={type} name={name} id={id} value={value}
-                    onChange={onChange} valid={!error} placeholder={placeholder}
+                    onChange={onChange} valid={valid} placeholder={placeholder}
                 >
                     {children}
                 </Input>
             }
             { isDatePicker &&
                 <DatePicker
-                    className={error ? 'is-invalid' : 'is-valid'} onChange={onChange}
+                    className={error ? 'is-invalid' : ''} onChange={onChange}
                     value={value} type={type} name={name} id={id} placeholder={placeholder}
                 />
             }

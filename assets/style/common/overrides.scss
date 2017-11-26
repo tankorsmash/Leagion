@@ -2,6 +2,10 @@ body {
     color: $black;
 }
 
+button {
+    cursor: pointer;
+}
+
 .btn {
     cursor: pointer;
     &[disabled] {
