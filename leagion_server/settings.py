@@ -136,6 +136,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'leagion.api.pagination.DefaultPaginator',
 }
 
 WEBPACK_LOADER = {

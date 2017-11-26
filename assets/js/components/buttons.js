@@ -55,7 +55,7 @@ export class Button extends React.Component {
         const {className, dotdotdot} = this.props;
         let props = Object.assign({}, this.props);
         const dotClass = dotdotdot ? 'le-ellipsis-button' : '';
-        const classNames = `${className} ${dotClass}`;
+        const classNames = `${className || ''} ${dotClass}`;
 
         props.className = classNames;
         props.dotdotdot = undefined;

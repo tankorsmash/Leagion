@@ -299,7 +299,7 @@ export const SearchInput = enhanceSearch(({
             <InputGroupButton>
                     {search ? (
 						<Button
-							color="info" outline
+							color="danger" outline
 							onClick={() => {
 								setSearch('');
 								setTypedSearch('');
