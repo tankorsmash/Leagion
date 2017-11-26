@@ -1,7 +1,7 @@
 import {compose, setDisplayName, withState} from 'recompose';
 import FontAwesome from 'react-fontawesome';
 
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 import {Tabs} from 'components/tabs';
 
@@ -10,13 +10,15 @@ import TeamTable from './teams/TeamTable';
 const enhance = compose(
     setDisplayName('SeasonDetail'),
     withState('season', 'setSeason', {}),
+    withState('refresh', 'setRefresh', false),
 );
 
-export default enhance(({season, setSeason, user, match}) => {
+export default enhance(({season, setSeason, user, match, refresh, setRefresh}) => {
     return (
         <DatasetView
             url={reverse('api-season-detail', {season_id: match.params.seasonId})}
             onSuccess={(season) => { setSeason(season); }}
+            refresh={refresh} setRefresh={setRefresh}
         >
             <Titlebar
                 title={season.pretty_name}
@@ -25,7 +27,7 @@ export default enhance(({season, setSeason, user, match}) => {
                 <Tabs
                     tabs={[{
                         label: 'Teams',
-                        content: <TeamTable season={season}/>,
+                        content: <TeamTable season={season} user={user} setRefresh={setRefresh}/>,
                     }, {
                         label: 'Matches',
                         content: <h3>matches table</h3>

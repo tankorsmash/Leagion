@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import {Tabs} from 'components/tabs';
 import ProfileForm from 'main/app/player/account/profile';
 import ChangeAvatarForm from 'main/app/player/account/avatar';

@@ -37,7 +37,7 @@ export class LinkComp extends BaseComponent {
     static ignoreAttrs = ['url', 'args'];
     static defaultAttrs = {
         text: 'Awesome Link',
-    }
+    };
     static component = Link;
 
     renderCode() {

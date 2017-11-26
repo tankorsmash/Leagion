@@ -5,7 +5,7 @@ import TeamMatchCard from 'main/app/player/league/season/match/TeamMatchCard';
 import TeamMatchCardMobile from 'main/app/player/league/season/match/TeamMatchCardMobile';
 import FullRosterTable from 'main/app/player/league/season/match/FullRosterTable';
 
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import ajax from 'common/ajax';
 import update from 'immutability-helper';
 

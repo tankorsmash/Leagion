@@ -2,7 +2,7 @@ import { withState, compose, setDisplayName } from 'recompose';
 
 import reverse from 'common/reverse';
 
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 import {Tabs} from 'components/tabs';
 

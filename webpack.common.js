@@ -12,6 +12,7 @@ module.exports = {
         vendor: [
             'babel-polyfill',
             "expose-loader?React!react",
+            "expose-loader?R!ramda",
             "expose-loader?$!expose-loader?jQuery!jquery/dist/jquery.slim",
             "expose-loader?toastr!toastr",
             'whatwg-fetch',

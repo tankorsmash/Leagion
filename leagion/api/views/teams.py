@@ -21,6 +21,7 @@ class TeamList(generics.ListCreateAPIView):
     )
     serializer_class = TeamSerializer
     filter_fields = ('season',)
+    search_fields = ('name',)
 
     def get_serializer_class(self):
         if self.request.method == "POST":

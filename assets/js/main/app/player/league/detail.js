@@ -1,6 +1,6 @@
 import SpinLoader from 'components/spinloader';
 import {Link} from 'components/buttons';
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import ajax from 'common/ajax';
 import urls from 'main/app/player/urls';
 

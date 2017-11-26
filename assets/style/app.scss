@@ -94,3 +94,16 @@ body {
         border-radius: 3px;
     }
 }
+
+.le-left-right {
+    display: flex;
+    justify-content: space-between;
+}
+
+.le-no-data-card {
+    text-align: center;
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}

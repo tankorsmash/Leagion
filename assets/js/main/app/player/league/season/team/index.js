@@ -1,6 +1,6 @@
 import {compose, setDisplayName, withState} from 'recompose';
 
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 
 import TeamCard from 'main/app/player/league/season/team/TeamCard';

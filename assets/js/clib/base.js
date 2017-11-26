@@ -7,7 +7,7 @@ import {TabComp, RoutedTabComp} from 'clib/components/tabs';
 import {SimpleModalComp} from 'clib/components/modals';
 import {AvatarSelectorComp} from 'clib/components/files';
 import {AvatarComp} from 'clib/components/media';
-import {TitlebarComp, TextComp} from 'clib/components/text';
+import {TitlebarComp, TextComp} from 'clib/components/misc';
 import {DatasetViewComp} from 'clib/components/no_ui';
 import {TableComp, DraggableTableComp,
     RowSelectTableComp, ActionColumnTableComp} from 'clib/components/tables';

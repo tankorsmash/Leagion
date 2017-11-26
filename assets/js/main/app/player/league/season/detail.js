@@ -2,7 +2,7 @@ import SpinLoader from 'components/spinloader';
 import MatchTable from 'main/app/player/league/season/match/MatchTable';
 import TeamRankTable from 'main/app/player/league/season/team/TeamRankTable';
 
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import {Tabs} from 'components/tabs';
 
 import ajax from 'common/ajax';

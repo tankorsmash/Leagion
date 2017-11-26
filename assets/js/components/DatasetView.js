@@ -3,7 +3,12 @@ import ajax from 'common/ajax';
 import SpinLoader from 'components/spinloader';
 
 const sendRequest = (props) => {
-    const {url, data, onSuccess, setIsLoaded} = props;
+    const {url, onSuccess, setIsLoaded, search} = props;
+    let data = Object.assign({}, props.data || {});
+
+    if (search) {
+        data.search = search;
+    }
 
     ajax({
         url: url,
@@ -14,7 +19,7 @@ const sendRequest = (props) => {
     }, error => {
         console.warn(error);
     });
-}
+};
 
 const enhance = compose(
     setDisplayName('DataSetView'),
@@ -24,11 +29,16 @@ const enhance = compose(
             sendRequest(this.props);
         },
         componentWillUpdate(props) {
-            if (typeof(props.setRefresh) === 'function' && props.refresh) {
+            if (
+                this.props.search !== props.search ||
+                (
+                    typeof(props.setRefresh) === 'function' &&
+                    props.refresh
+                )
+            ) {
                 props.setRefresh(false);
                 props.setIsLoaded(false);
-
-                sendRequest(this.props);
+                sendRequest(props);
             }
         }
     })

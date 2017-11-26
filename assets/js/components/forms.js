@@ -1,16 +1,20 @@
-import {withState, withHandlers, setPropTypes, compose} from 'recompose';
+import {withState, withHandlers, setPropTypes, lifecycle, compose} from 'recompose';
 import update from 'immutability-helper';
 import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
-import moment from 'moment';
+import FontAwesome from 'react-fontawesome';
 import {
     FormGroup as RFormGroup,
     Form as RForm,
     Input as RInput,
-    Label, FormFeedback
+    Label, FormFeedback,
+    InputGroup, InputGroupButton,
 } from 'reactstrap';
 
 import {DATE_FORMAT} from 'common/constants';
+import {onKeyPress} from 'common/functions';
+
+import {Button} from 'components/buttons';
 
 const enhance = compose(
     setPropTypes({
@@ -275,3 +279,41 @@ export const TimePicker = (props) => {
         />
     );
 };
+
+const enhanceSearch = compose(
+	withState('typedSearch', 'setTypedSearch', (props) => props.search)
+);
+export const SearchInput = enhanceSearch(({
+	setSearch, search, typedSearch, setTypedSearch
+}) => {
+    return (
+        <InputGroup>
+            <Input
+                onChange={R.compose(setTypedSearch, R.prop('value'), R.prop('target'))}
+                onKeyPress={R.compose(setSearch, onKeyPress('Enter', search))}
+                placeholder="search..."
+				value={typedSearch}
+            />
+            <InputGroupButton>
+                    {search ? (
+						<Button
+							color="info" outline
+							onClick={() => {
+								setSearch('');
+								setTypedSearch('');
+							}}
+						>
+							<FontAwesome name="times"/>
+						</Button>
+					) : (
+						<Button
+							color="info" outline
+							onClick={() => {setSearch(typedSearch);}}
+						>
+							<FontAwesome name="search"/>
+						</Button>
+					)}
+            </InputGroupButton>
+        </InputGroup>
+    );
+});

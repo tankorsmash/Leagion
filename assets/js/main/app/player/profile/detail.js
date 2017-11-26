@@ -1,5 +1,5 @@
 import SpinLoader from 'components/spinloader';
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import ajax from 'common/ajax';
 import {StaticRow} from 'components/forms';
 import {Avatar} from 'components/media';

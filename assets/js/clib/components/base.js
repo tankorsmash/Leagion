@@ -1,5 +1,5 @@
 import {Input, Label, Row, Col, FormGroup} from 'reactstrap';
-import CodeMirror from 'react-codemirror2';
+import {Controlled as CodeMirror} from 'react-codemirror2';
 import 'codemirror/mode/jsx/jsx';
 import PropTypes from 'prop-types';
 

@@ -1,4 +1,4 @@
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import {BaseComponent} from './base';
 
 export class TitlebarComp extends BaseComponent {
@@ -8,7 +8,7 @@ export class TitlebarComp extends BaseComponent {
 
     renderCode() {
         return (
-`import {Titlebar} from 'components/text';
+`import {Titlebar} from 'components/misc';
 
 <Titlebar ${this.getAttrsAsCode()}/>;`
         );

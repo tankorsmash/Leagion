@@ -1,7 +1,7 @@
 import {compose, setDisplayName, withState} from 'recompose';
 import FontAwesome from 'react-fontawesome';
 
-import {Titlebar} from 'components/text';
+import {Titlebar} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 import LeagueCard from './LeagueCard';
 import LeagueCreateModal from './LeagueCreateModal';
@@ -20,10 +20,7 @@ export default enhance(({leagues, setLeagues, user, refresh, setRefresh}) => {
         <DatasetView
             url={reverse('api-my-league-commissioned-list')}
             refresh={refresh} setRefresh={setRefresh}
-            onSuccess={(leagues) => {
-                setLeagues(leagues);
-                setRefresh(false);
-            }}
+            onSuccess={(leagues) => {setLeagues(leagues);}}
         >
             <Titlebar
                 title="Manage Your Leagues"
