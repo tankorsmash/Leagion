@@ -23,7 +23,7 @@ export default class SpinLoader extends React.Component {
     render() {
 
         if (this.state.loaded == false) {
-            return (<Spinner name='three-bounce' />);
+            return (<Spinner name='circle' />);
         } else {
             return (
                 <div>
