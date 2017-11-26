@@ -155,7 +155,7 @@ export class Table extends React.Component {
         const {
             striped, hover, bordered, inverse, className,
             onRowSelect, toolbarLeft, toolbarRight, url,
-            withSearch, params, emptyEl, emptySearchEl,
+            withSearch, params, emptyEl, emptySearchEl, setData
         } = this.props;
 
         const {data, selectedRows, search, refresh} = this.state;
@@ -251,12 +251,11 @@ export class Table extends React.Component {
 
         if (url) {
             return (
-
                 <DatasetView
                     url={url}
                     data={params} search={search}
                     refresh={refresh} setRefresh={this.setRefresh}
-                    onSuccess={(newData) => {this.setState({data: newData});}}
+                    onSuccess={(newData) => { setData(newData);}}
                 >
                     {Content}
                 </DatasetView>
