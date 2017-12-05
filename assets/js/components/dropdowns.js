@@ -1,10 +1,11 @@
 import {
     Dropdown as RDropdown,
-    NavDropdown as RNavDropdown,
     DropdownToggle as RDropdownToggle,
     DropdownMenu as RDropdownMenu,
     DropdownItem as RDropdownItem,
 } from 'reactstrap';
+
+import {keyCodes} from 'common/utils';
 
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
@@ -12,6 +13,25 @@ import FontAwesome from 'react-fontawesome';
 export const DropdownToggle = RDropdownToggle;
 export const DropdownMenu = RDropdownMenu;
 export const DropdownItem = RDropdownItem;
+
+// extended from reactstrap so we can include leaving the dropdown modal open if we
+// click inside a modal
+class ExtendedRDropdown extends RDropdown {
+    handleDocumentClick(e) {
+        if (e && (e.which === 3 || (e.type === 'keyup' && e.which !== keyCodes.tab))) return;
+        const container = this.getContainer();
+
+        if (container.contains(e.target) && container !== e.target && (e.type !== 'keyup' || e.which === keyCodes.tab)) {
+            return;
+        }
+
+        if (e.target.classList.contains('modal') || e.target.closest('.modal')) {
+            return;
+        }
+
+        this.toggle(e);
+    }
+}
 
 export class Dropdown extends React.Component {
     static propTypes = {
@@ -46,19 +66,19 @@ export class Dropdown extends React.Component {
             className, dotdotdot,
         } = this.props;
 
-        const Component = nav ? RNavDropdown : RDropdown;
 
         const color = dotdotdot ? 'link' : this.props.color;
         const dotClass = dotdotdot ? 'le-ellipsis-button' : '';
         const classNames = `${className} ${dotClass}`;
 
         return (
-            <Component
+            <ExtendedRDropdown
                 className={className}
                 isOpen={this.state.isOpen}
                 toggle={this.toggle}
                 dropup={dropup}
                 group={group}
+                nav={nav}
             >
                 <DropdownToggle
                     caret={caret}
@@ -73,7 +93,7 @@ export class Dropdown extends React.Component {
                 <DropdownMenu right={menuRight}>
                     {children}
                 </DropdownMenu>
-            </Component>
+            </ExtendedRDropdown>
         );
     }
 }

@@ -157,9 +157,11 @@ export class FormModal extends Modal {
             id: formId,
         });
 
+        const OpenerToggler = React.cloneElement(Opener, { onClick: this.toggle, });
+
         return (
-            <div onClick={this.toggle}>
-                {Opener}
+            <div>
+                {OpenerToggler}
                 <Modal
                     toggle={this.toggle}
                     isOpen={this.state.isOpen}

@@ -6,6 +6,7 @@ import {Table, DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
 import TeamCreateModal from './TeamCreateModal';
+import TeamEditModal from './TeamEditModal';
 
 const enhance = compose(
     setDisplayName('TeamTable'),
@@ -42,9 +43,10 @@ export default enhance(({season, setRefresh}) => {
                         {cell: (item) => {
                             return (
                                 <Dropdown dotdotdot >
-                                    <DropdownItem
-                                        onClick={() => {console.log(item.firstName + " is cool");}}
-                                    > make cool </DropdownItem>
+                                    <TeamEditModal
+                                        team={item}
+                                        onSuccess={() =>{setRefresh(true);}}
+                                    />
                                 </Dropdown>
                             );
                         }},
