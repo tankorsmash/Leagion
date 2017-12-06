@@ -107,4 +107,3 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 
     def __str__(self):
         return self.email
-

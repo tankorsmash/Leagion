@@ -8,13 +8,13 @@ from leagion.models import Location
 from leagion.utils import reverse_js
 
 @reverse_js
-class LocationList(generics.ListCreateAPIView):
+class MyCommLocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
 
 
 @reverse_js
-class LocationDetail(generics.RetrieveUpdateAPIView):
+class MyCommLocationDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "location_id"
 
     queryset = Location.objects.all()

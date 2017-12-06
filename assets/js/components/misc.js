@@ -42,11 +42,11 @@ export class LeftRight extends React.Component {
     render() {
         let {className, left, right} = this.props;
         return (
-            <div className={'le-left-right ' + className}>
-                <div>
+            <div className={'le-left-right row ' + className}>
+                <div className="col-md-6">
                     {left && left}
                 </div>
-                <div>
+                <div className="col-md-6">
                     {right && right}
                 </div>
             </div>

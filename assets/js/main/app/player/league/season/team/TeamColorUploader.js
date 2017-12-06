@@ -5,7 +5,7 @@ import {Button} from 'components/buttons';
 export default class TeamColorUploader extends React.Component {
     changeColor = (color) => {
         ajax({
-            url: reverse('api-team-detail', {team_id: this.props.team.id}),
+            url: reverse('api-my-team-detail', {team_id: this.props.team.id}),
             data: {color: color},
             method: 'PATCH',
         }).then(data => {

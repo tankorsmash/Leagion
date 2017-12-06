@@ -22,7 +22,7 @@ export default enhance(({season, onSuccess}) => {
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {
                         ajax({
-                            url: reverse('api-team-list'),
+                            url: reverse('api-my-comm-team-list'),
                             method: 'POST',
                             data: form,
                         }).then(data => {

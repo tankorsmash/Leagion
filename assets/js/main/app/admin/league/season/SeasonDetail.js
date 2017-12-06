@@ -17,7 +17,7 @@ export default enhance(({season, setSeason, user, match,
     refresh, setRefresh}) => {
     return (
         <DatasetView
-            url={reverse('api-season-detail', {season_id: match.params.seasonId})}
+            url={reverse('api-my-comm-season-detail', {season_id: match.params.seasonId})}
             onSuccess={(season) => { setSeason(season); }}
             refresh={refresh} setRefresh={setRefresh}
         >

@@ -8,7 +8,7 @@ export default class TeamLogoUploader extends React.Component {
         let data  = new FormData();
         data.append('logo', file);
 
-        let url = reverse("api-team-detail", {team_id: this.props.team.id});
+        let url = reverse("api-my-team-detail", {team_id: this.props.team.id});
         ajax({
             url:url,
             data:data,

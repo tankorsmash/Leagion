@@ -23,7 +23,7 @@ export default enhance(({team, onSuccess}) => {
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {
                         ajax({
-                            url: reverse('api-team-detail', {team_id: team.id}),
+                            url: reverse('api-my-comm-team-detail', {team_id: team.id}),
                             method: 'PATCH',
                             data: form,
                         }).then(data => {

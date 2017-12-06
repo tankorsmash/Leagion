@@ -23,9 +23,10 @@ export default enhance(({team, setTeam, user, constants, match}) => {
     return (
         <DatasetView
             url={reverse(
-                'api-team-detail',
+                'api-my-team-detail',
                 {team_id: match.params.teamId}
             )}
+            refreshObject={match}
             onSuccess={(team) => setTeam(team)}
         >
             { team &&
@@ -41,7 +42,7 @@ export default enhance(({team, setTeam, user, constants, match}) => {
                             content: (<MatchTable
                                 matches={team.matches}
                                 seasonId={team.season.id}
-                                leagueId={team.season.league_id}
+                                leagueId={team.season.league.id}
                             />),
                         }, {
                             label: 'Team Members',

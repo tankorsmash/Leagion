@@ -110,7 +110,7 @@ export default class MatchDetail extends React.Component {
 
     componentDidMount() {
         ajax({
-            url: reverse('api-match-detail', {match_id: this.props.match.params.matchId}),
+            url: reverse('api-my-match-detail', {match_id: this.props.match.params.matchId}),
         }).then(data => {
             this.setState({
                 match: data,

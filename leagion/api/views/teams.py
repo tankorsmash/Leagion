@@ -13,15 +13,20 @@ from leagion.utils import reverse_js
 
 
 @reverse_js
-class TeamList(generics.ListCreateAPIView):
-    queryset = Team.objects.all().prefetch_related(
-        "home_matches", "away_matches", "players"
-    ).select_related(
-        "season"
-    )
+class MyCommTeamList(generics.ListCreateAPIView):
     serializer_class = TeamSerializer
     filter_fields = ('season',)
     search_fields = ('name',)
+
+    def get_queryset(self):
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
+        return Team.objects.filter(
+            season__league_id__in=league_ids
+        ).distinct().prefetch_related(
+            "home_matches", "away_matches", "players"
+        ).select_related(
+            "season"
+        )
 
     def get_serializer_class(self):
         if self.request.method == "POST":
@@ -29,27 +34,38 @@ class TeamList(generics.ListCreateAPIView):
 
         return super().get_serializer_class()
 
+    def post(self, request, *args, **kwargs):
+        import ipdb; ipdb.set_trace()
+        objects = self.get_queryset()
+        # object.delete()
+        return Response()
+
 
 @reverse_js
-class TeamDetail(generics.RetrieveUpdateAPIView):
+class MyCommTeamDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "team_id"
-
-    queryset = Team.objects.all().prefetch_related(
-        "home_matches__home_team", "home_matches__home_roster",
-        "home_matches__away_team", "home_matches__away_roster",
-        "home_matches__location", "home_matches__season",
-        "home_matches__postponed_to", "home_matches__postponed_from",
-
-        "away_matches__home_team", "away_matches__home_roster",
-        "away_matches__away_team", "away_matches__away_roster",
-        "away_matches__location", "away_matches__season",
-        "away_matches__postponed_to","away_matches__postponed_from",
-
-        "players"
-    ).select_related(
-        "season", "season__league",
-    )
     serializer_class = TeamSerializer
+
+    def get_queryset(self):
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
+
+        Team.objects.filter(
+            season__league_id__in=league_ids
+        ).distinct().prefetch_related(
+            "home_matches__home_team", "home_matches__home_roster",
+            "home_matches__away_team", "home_matches__away_roster",
+            "home_matches__location", "home_matches__season",
+            "home_matches__postponed_to", "home_matches__postponed_from",
+
+            "away_matches__home_team", "away_matches__home_roster",
+            "away_matches__away_team", "away_matches__away_roster",
+            "away_matches__location", "away_matches__season",
+            "away_matches__postponed_to", "away_matches__postponed_from",
+
+            "players"
+        ).select_related(
+            "season", "season__league",
+        )
 
 
 @reverse_js
@@ -111,3 +127,13 @@ class MyTeamList(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         return Team.objects.filter(players=user)
+
+
+@reverse_js
+class MyTeamDetail(generics.RetrieveUpdateAPIView):
+    lookup_url_kwarg = "team_id"
+    serializer_class = TeamSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return Team.objects.filter(season_id__in=user.teams.values_list('id', flat=True))

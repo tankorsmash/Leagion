@@ -18,7 +18,7 @@ const enhance = compose(
 export default enhance(({leagues, setLeagues, user, refresh, setRefresh}) => {
     return (
         <DatasetView
-            url={reverse('api-my-league-commissioned-list')}
+            url={reverse('api-my-comm-league-list')}
             refresh={refresh} setRefresh={setRefresh}
             onSuccess={(leagues) => {setLeagues(leagues);}}
         >

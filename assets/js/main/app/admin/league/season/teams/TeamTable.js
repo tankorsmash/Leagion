@@ -7,23 +7,38 @@ import {NoDataCard} from 'components/cards';
 
 import TeamCreateModal from './TeamCreateModal';
 import TeamEditModal from './TeamEditModal';
+import TeamDeleteModal from './TeamDeleteModal';
 
 const enhance = compose(
+    withState('selectedRows', 'setSelectedRows', []),
     setDisplayName('TeamTable'),
 );
-export default enhance(({season, setRefresh}) => {
+export default enhance(({season, setRefresh, selectedRows, setSelectedRows}) => {
     return (
         <div>
             <DataTable
-                url={reverse('api-team-list')}
+                url={reverse('api-my-comm-team-list')}
                 params={{season: season.id}}
-                toolbarLeft={<TeamCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>}
+                toolbarLeft={(
+                    <div className="d-flex">
+                        <Dropdown
+                            disabled={!selectedRows.length}
+                            className="mr-1"
+                            color="info"
+                            buttonText="..."
+                        >
+                            <TeamDeleteModal onClick={() => {}} onSuccess={() =>{}}/>
+                        </Dropdown>
+                        <TeamCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
+                    </div>
+                )}
                 emptySearchEl={
                     <NoDataCard>
                         <p>{ "No teams match your search criteria" }</p>
                     </NoDataCard>
                 }
                 tableProps={{
+                    onRowSelect: setSelectedRows,
                     responsive: true,
                     striped: true,
                     emptyEl: (

@@ -10,37 +10,47 @@ User = get_user_model()
 
 
 @reverse_js
-class SeasonList(generics.ListCreateAPIView):
-    queryset = Season.objects.all().select_related(
-        "league",
-    ).prefetch_related(
-        "teams", "matches",
-
-        "matches__home_team",
-        "matches__location",
-        "matches__away_team",
-    )
-
+class MyCommSeasonList(generics.ListCreateAPIView):
     serializer_class = SeasonSerializer
+
+    def get_queryset(self):
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
+        return Season.objects.filter(
+            league_id__in=league_ids
+        ).distinct().select_related(
+            "league",
+        ).prefetch_related(
+            "teams", "matches",
+
+            "matches__home_team",
+            "matches__location",
+            "matches__away_team",
+        )
 
 
 @reverse_js
-class SeasonDetail(generics.RetrieveUpdateAPIView):
+class MyCommSeasonDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "season_id"
-
-    queryset = SeasonList.queryset
     serializer_class = SeasonSerializer
 
+    def get_queryset(self):
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
+        return Season.objects.filter(
+            league_id__in=league_ids
+        ).distinct()
+
+
 @reverse_js
-class MySeasonList(SeasonList):
+class MySeasonList(MyCommSeasonList):
     serializer_class = MySeasonSerializer
 
     def get_queryset(self):
         user = self.request.user
         return Season.objects.filter(teams__players=user).distinct()
 
+
 @reverse_js
-class MySeasonDetail(SeasonDetail):
+class MySeasonDetail(MyCommSeasonDetail):
     def get_queryset(self):
         user = self.request.user
         return Season.objects.filter(teams__players=user).distinct()

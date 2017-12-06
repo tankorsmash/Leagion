@@ -7,42 +7,51 @@ from leagion.api.serializers.matches import MatchSerializer, SetMatchSerializer
 from leagion.models import Match
 
 from leagion.utils import reverse_js
+from leagion.api.utils import match_queryset_as_player
 
 User = get_user_model()
 
 
 @reverse_js
-class MatchList(generics.ListCreateAPIView):
-    queryset = Match.objects.all().select_related(
-        "season", "location",
-        'away_team', 'away_roster__team',
-        'away_team__season',
-        'away_team__name',
-
-        'home_team', 'home_roster__team',
-        'home_team__season',
-        'home_team__name',
-
-        'postponed_to',
-    ).prefetch_related(
-        'postponed_to', 'postponed_from',
-        'location',
-        'away_team', 'away_roster', 'away_roster__team',
-        'away_team__season',
-
-        'home_team', 'home_roster','home_roster__team',
-        'home_team__season',
-    )
-
+class MyCommMatchList(generics.ListCreateAPIView):
     serializer_class = MatchSerializer
+
+    def get_queryset(self):
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
+        return Match.objects.filter(
+            season__league_id__in=league_ids
+        ).distinct().select_related(
+            "season", "location",
+            'away_team', 'away_roster__team',
+            'away_team__season',
+            'away_team__name',
+
+            'home_team', 'home_roster__team',
+            'home_team__season',
+            'home_team__name',
+
+            'postponed_to',
+        ).prefetch_related(
+            'postponed_to', 'postponed_from',
+            'location',
+            'away_team', 'away_roster', 'away_roster__team',
+            'away_team__season',
+
+            'home_team', 'home_roster','home_roster__team',
+            'home_team__season',
+        )
 
 
 @reverse_js
-class MatchDetail(generics.RetrieveUpdateAPIView):
+class MyCommMatchDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "match_id"
-
-    queryset = Match.objects.all()
     serializer_class = MatchSerializer
+
+    def get_queryset(self):
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
+        return Match.objects.filter(
+            season__league_id__in=league_ids
+        ) .distinct()
 
 
 class SetMatchPermission(permissions.BasePermission):
@@ -56,7 +65,28 @@ class SetMatchPermission(permissions.BasePermission):
         else:
             return False
 
+
 @reverse_js
-class SetMatchScore(MatchDetail):
+class SetMatchScore(generics.RetrieveUpdateAPIView):
+    lookup_url_kwarg = "match_id"
+    serializer_class = MatchSerializer
     permission_classes = (SetMatchPermission,)
     serializer_class = SetMatchSerializer
+    queryset = Match.objects.all()
+
+
+@reverse_js
+class MyMatchList(generics.ListCreateAPIView):
+    serializer_class = MatchSerializer
+
+    def get_queryset(self):
+        return match_queryset_as_player(self.request.user)
+
+
+@reverse_js
+class MyMatchDetail(generics.RetrieveUpdateAPIView):
+    lookup_url_kwarg = "match_id"
+    serializer_class = MatchSerializer
+
+    def get_queryset(self):
+        return match_queryset_as_player(self.request.user)

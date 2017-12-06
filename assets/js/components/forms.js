@@ -286,10 +286,11 @@ const enhanceSearch = compose(
 	withState('typedSearch', 'setTypedSearch', (props) => props.search)
 );
 export const SearchInput = enhanceSearch(({
-	setSearch, search, typedSearch, setTypedSearch
+	setSearch, search, typedSearch, setTypedSearch, className,
 }) => {
     return (
-        <InputGroup>
+        <InputGroup
+            className={"le-search-input " + className}>
             <Input
                 onChange={R.compose(setTypedSearch, R.prop('value'), R.prop('target'))}
                 onKeyPress={R.compose(setSearch, onKeyPress('Enter', search))}

@@ -31,13 +31,14 @@ const enhance = compose(
         componentWillUpdate(props) {
             if (
                 this.props.search !== props.search ||
+                this.props.refreshObject !== props.refreshObject ||
                 (
                     typeof(props.setRefresh) === 'function' &&
                     props.refresh
                 )
             ) {
-                props.setRefresh(false);
-                props.setIsLoaded(false);
+                props.setRefresh && props.setRefresh(false);
+                props.setIsLoaded && props.setIsLoaded(false);
                 sendRequest(props);
             }
         }

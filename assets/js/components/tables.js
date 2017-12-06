@@ -336,7 +336,7 @@ export class DataTable extends React.Component {
                     <LeftRight className="mb-3"
                         left={toolbarLeft}
                         right={(
-                            <div className="d-flex">
+                            <div className="d-flex flex-row-reverse">
                                 <SearchInput
                                     setSearch={this.setSearch}
                                     search={search}
