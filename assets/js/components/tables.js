@@ -42,6 +42,7 @@ export class Table extends React.Component {
     state = {
         data: this.props.data,
         selectedRows: [],
+        selectedIds: [],
     };
 
     setRefresh = (refresh) => {this.setState({refresh: refresh});};
@@ -116,35 +117,47 @@ export class Table extends React.Component {
     }
 
     toggleRow = i => {
-        const {selectedRows} = this.state;
+        const {selectedRows, selectedIds, data} = this.state;
         let srows;
+        let sids;
 
         if (selectedRows.includes(i)) {
+            sids = selectedIds.filter(row => row !== data[i].id);
             srows = selectedRows.filter(row => row !== i);
         } else {
+            sids = selectedIds.concat(data[i].id);
             srows = selectedRows.concat(i);
         }
 
-        this.setState({selectedRows: srows});
-        this.selectRows(srows);
+        this.setState({
+            selectedRows: srows,
+            selectedIds: sids,
+        });
+        this.selectRows(sids);
     };
 
     toggleAllRows = () => {
         const {selectedRows, data} = this.state;
         let srows;
+        let sids;
 
         if (selectedRows.length === data.length) {
             srows = [];
+            sids = [];
         } else {
+            sids = data.map((row) => row.id);
             srows = data.map((row, i) => i);
         }
 
-        this.setState({selectedRows: srows});
-        this.selectRows(srows);
+        this.setState({
+            selectedRows: srows,
+            selectedIds: sids,
+        });
+        this.selectRows(sids);
     };
 
-    selectRows = (srows) => {
-        this.props.onRowSelect(srows);
+    selectRows = (sids) => {
+        this.props.onRowSelect(sids);
     };
 
     render() {

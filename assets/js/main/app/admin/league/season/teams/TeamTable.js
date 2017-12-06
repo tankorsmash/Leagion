@@ -1,19 +1,18 @@
 import {compose, setDisplayName, withState } from 'recompose';
-import FontAwesome from 'react-fontawesome';
 
 import {Dropdown, DropdownItem} from 'components/dropdowns';
-import {Table, DataTable} from 'components/tables';
+import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
 import TeamCreateModal from './TeamCreateModal';
 import TeamEditModal from './TeamEditModal';
-import TeamDeleteModal from './TeamDeleteModal';
+import TeamDeleteManyModal from './TeamDeleteManyModal';
 
 const enhance = compose(
-    withState('selectedRows', 'setSelectedRows', []),
+    withState('selectedIds', 'setSelectedIds', []),
     setDisplayName('TeamTable'),
 );
-export default enhance(({season, setRefresh, selectedRows, setSelectedRows}) => {
+export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
     return (
         <div>
             <DataTable
@@ -22,12 +21,16 @@ export default enhance(({season, setRefresh, selectedRows, setSelectedRows}) => 
                 toolbarLeft={(
                     <div className="d-flex">
                         <Dropdown
-                            disabled={!selectedRows.length}
+                            disabled={!selectedIds.length}
                             className="mr-1"
                             color="info"
                             buttonText="..."
                         >
-                            <TeamDeleteModal onClick={() => {}} onSuccess={() =>{}}/>
+                            <TeamDeleteManyModal
+                                ids={selectedIds}
+                                Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
+                                onSuccess={() =>{setRefresh(true);}}
+                            />
                         </Dropdown>
                         <TeamCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                     </div>
@@ -38,7 +41,7 @@ export default enhance(({season, setRefresh, selectedRows, setSelectedRows}) => 
                     </NoDataCard>
                 }
                 tableProps={{
-                    onRowSelect: setSelectedRows,
+                    onRowSelect: setSelectedIds,
                     responsive: true,
                     striped: true,
                     emptyEl: (

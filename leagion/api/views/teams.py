@@ -10,10 +10,11 @@ from leagion.api.serializers.teams import TeamSerializer, PureTeamSerializer, Cr
 from leagion.models import Team, User
 
 from leagion.utils import reverse_js
+from .utils import DeleteManyViewMixin
 
 
 @reverse_js
-class MyCommTeamList(generics.ListCreateAPIView):
+class MyCommTeamList(DeleteManyViewMixin, generics.ListCreateAPIView):
     serializer_class = TeamSerializer
     filter_fields = ('season',)
     search_fields = ('name',)
@@ -34,15 +35,9 @@ class MyCommTeamList(generics.ListCreateAPIView):
 
         return super().get_serializer_class()
 
-    def post(self, request, *args, **kwargs):
-        import ipdb; ipdb.set_trace()
-        objects = self.get_queryset()
-        # object.delete()
-        return Response()
-
 
 @reverse_js
-class MyCommTeamDetail(generics.RetrieveUpdateAPIView):
+class MyCommTeamDetail(generics.RetrieveUpdateDestroyAPIView):
     lookup_url_kwarg = "team_id"
     serializer_class = TeamSerializer
 
