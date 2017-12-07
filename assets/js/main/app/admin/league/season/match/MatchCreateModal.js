@@ -34,11 +34,17 @@ export default enhance(({season, onSuccess}) => {
                         });
                     }}
                     form={{
-                        'name': '',
-                        'season_id': season.id,
+                        'date': '',
+                        'time': '',
+                        'home_team_id': '',
+                        'away_team_id': '',
+                        'season': season.id,
                     }}
                 >
-                    <FormGroup label="Name" type="text" id="name" />
+                    <FormGroup label="Date" type="date" id="date" />
+                    <FormGroup label="Time" type="time" id="time" />
+                    <FormGroup label="Home Team" type="text" id="home_team_id" />
+                    <FormGroup label="Away Team" type="text" id="Away_team_id" />
                 </Form>
             }
         />

@@ -51,6 +51,14 @@ class Match(models.Model):
         )
 
     @property
+    def date(self):
+        return self.match_datetime.date()
+
+    @property
+    def time(self):
+        return self.match_datetime.time()
+
+    @property
     def pretty_date(self):
         return self.match_datetime.strftime('%A, %b %d, %Y')
 

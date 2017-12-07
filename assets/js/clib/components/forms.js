@@ -104,7 +104,6 @@ import {Button} from 'reactstrap';
 export class FormModalComp extends BaseComponent {
     static component = FormModal;
     static defaultAttrs = {
-        buttonText: 'Open Form Modal',
         title: 'Form Modal Title',
     };
     title = 'Form Modal';
@@ -136,6 +135,7 @@ import {FormModal} from 'components/modals';
         return (
             <FormModal
                 {...this.state}
+                Opener={<Button>Open Form Modal</Button>}
                 body={
                     <Form
                         onSubmit={(form, setErrors, setSuccess) => {console.log(form);setSuccess();}}
