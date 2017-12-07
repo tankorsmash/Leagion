@@ -8,6 +8,7 @@ import TeamCreateModal from './TeamCreateModal';
 import TeamEditModal from './TeamEditModal';
 import TeamDeleteManyModal from './TeamDeleteManyModal';
 import TeamDeleteModal from './TeamDeleteModal';
+import {Avatar} from 'components/media';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
@@ -51,6 +52,9 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     </NoDataCard>
                 ),
                 columns: [
+                    {header: 'Logo', cell: (team) => (
+                        <Avatar className="team-logo" size="xs" src={team.logo_url}/>
+                    )},
                     {header: 'Name', cell: 'name'},
                     {header: 'Matches', cell: (team) => team.matches.length},
                     {header: 'Players', cell: (team) => team.player_ids.length},
@@ -59,6 +63,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {header: 'Losses', cell: (team) => team.win_draw_loss_points.losses},
                     {header: 'Points', cell: (team) => team.win_draw_loss_points.points},
                     {cell: (item) => {
+                        console.log(item);
                         return (
                             <Dropdown dotdotdot >
                                 <TeamEditModal
