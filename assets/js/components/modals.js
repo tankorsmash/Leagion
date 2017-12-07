@@ -20,13 +20,6 @@ export class Modal extends React.Component {
         size: PropTypes.string,
     };
 
-    update = () => {
-        console.log(this.el);
-    };
-
-    componentDidMount() {this.update();}
-    componentDidUpdate() {this.update();}
-
     render() {
         const {
             title, className, toggle,
