@@ -44,7 +44,7 @@ class MyCommTeamDetail(generics.RetrieveUpdateDestroyAPIView):
     def get_queryset(self):
         league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
 
-        Team.objects.filter(
+        return Team.objects.filter(
             season__league_id__in=league_ids
         ).distinct().prefetch_related(
             "home_matches__home_team", "home_matches__home_roster",

@@ -10,15 +10,11 @@ import ajax from 'common/ajax';
 const enhance = compose(
     setDisplayName('TeamEditModal'),
 );
-export default enhance(({team, onSuccess}) => {
+export default enhance(({team, onSuccess, Opener}) => {
     return (
         <FormModal
             title={"Edit Team"}
-            Opener={
-                <DropdownItem toggle={false}>
-                    {'Edit Team'}
-                </DropdownItem>
-            }
+            Opener={Opener}
             body={
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {

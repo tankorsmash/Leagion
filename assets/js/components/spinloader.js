@@ -23,7 +23,7 @@ export default class SpinLoader extends React.Component {
     render() {
 
         if (this.state.loaded == false) {
-            return (<Spinner name='circle' />);
+            return (<Spinner name='circle' fadeIn="none"/>);
         } else {
             return (
                 <div>

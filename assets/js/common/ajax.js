@@ -1,15 +1,15 @@
-import auth from 'main/auth'
-import {getCookie} from 'common/utils';
-
 const DEFAULT_HEADERS = {
     "Accept": "application/json",
     "Content-Type": "application/json"
-}
+};
 
 function buildInitialHandler(errorInfo) {
     return (response) => {
         errorInfo.responseHasErrorStatus = !response.ok;
-        return response.json()
+        if (response.status === 204) {
+            return {};
+        }
+        return response.json();
     };
 }
 
@@ -20,8 +20,8 @@ function buildResponseHandler(errorInfo, onSuccess, onError) {
         } else {
             onError(data);
         }
-    }
-};
+    };
+}
 
 function validateUrl(url) {
     if (!url) {
@@ -31,7 +31,7 @@ function validateUrl(url) {
     if (url.includes("undefined")) {
         console.warn(`'undefined' found in URL, potential for unset variables upstream in '${url}'`)
     }
-};
+}
 
 export default function ajax({
     data=null,
@@ -45,7 +45,6 @@ export default function ajax({
 
     //add query params from data if it's a GET
     if (method === 'GET' && data) {
-        let esc = encodeURIComponent;
         const urlParams = new URLSearchParams(Object.entries(data));
         url += '?' + urlParams;
         data = null;

@@ -20,6 +20,13 @@ export class Modal extends React.Component {
         size: PropTypes.string,
     };
 
+    update = () => {
+        console.log(this.el);
+    };
+
+    componentDidMount() {this.update();}
+    componentDidUpdate() {this.update();}
+
     render() {
         const {
             title, className, toggle,
@@ -33,10 +40,11 @@ export class Modal extends React.Component {
                 toggle={toggle}
                 className={className}
                 size={size}
+                autoFocus={true}
             >
 
                 <div className="modal-header">
-                    <h2 className="modal-title">{title}</h2>
+                    <h3 className="modal-title">{title}</h3>
                     <button type="button" className="close" onClick={toggle}>
                         <FontAwesome name="times" />
                     </button>
