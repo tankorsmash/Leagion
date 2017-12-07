@@ -307,7 +307,7 @@ export class DataTable extends React.Component {
         refresh: false,
         page: 1,
         count: 0,
-        page_size: 25,
+        page_size: 10,
     };
 
     setRefresh = (refresh) => {this.setState({refresh: refresh});};
