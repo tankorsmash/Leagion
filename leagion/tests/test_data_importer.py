@@ -1,4 +1,5 @@
 import time
+import csv
 import datetime
 
 from django.test import TestCase, override_settings
@@ -12,18 +13,27 @@ from rest_framework.authtoken.models import Token
 from leagion.models import League, Season, Team
 User = get_user_model()
 
-from leagion.data_imports.template_generation import TemplateGenerator
+from leagion.tests.test_api import CreatorMixin #TODO move this out of there
+from leagion.data_imports.template_generation import TeamsTemplateGenerator
 
 
-class BaseDataExporter(APITestCase):
+class BaseDataExporter(APITestCase, CreatorMixin):
     """
     test the creation of the CSV template for Data Imports
     """
-    pass
+    # def test_build_empty_csv(self):
+    #     tempgen = BaseTemplateGenerator()
+    #     self.assertIsInstance()
 
 
 class TeamExporterTestCase(BaseDataExporter):
     def test_export_teams_in_league_template(self):
+        team_gen = TeamsTemplateGenerator()
+
+        league = self.create_league()
+        season = self.create_season(league)
+        team = self.create_team(season)
+
         pass
 
 

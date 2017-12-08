@@ -14,7 +14,12 @@ User = get_user_model()
 
 from leagion.api import views as api_views
 
-class BaseAPITestCase(APITestCase):
+class CreatorMixin(object):
+    """
+    a mixing of data creation helper
+    TODO move out of test_api
+    """
+
     def create_league(self, league_name=None):
         if league_name is None:
             #uses time to make sure the default name isnt repeated
@@ -22,6 +27,7 @@ class BaseAPITestCase(APITestCase):
 
         return League.objects.create(
             name=league_name,
+            commissioner_id=1, #FIXME hardcoded first user
         )
 
     def create_season(self, league):
@@ -37,6 +43,16 @@ class BaseAPITestCase(APITestCase):
             season=season
         )
 
+    def create_player(self):
+        return User.objects.create(
+            first_name="test",
+            last_name="user2",
+            password="abcd1234"
+        )
+
+
+class BaseAPITestCase(APITestCase, CreatorMixin):
+
     def setup_client(self, user):
         self.client = APIClient()
         self.client.login(email=user.email, password=user.password)
@@ -44,13 +60,6 @@ class BaseAPITestCase(APITestCase):
         # token = Token.objects.get(user=user)
         # client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
         self.client.force_authenticate(user=user)
-
-    def create_player(self):
-        return User.objects.create(
-            first_name="test",
-            last_name="user2",
-            password="abcd1234"
-        )
 
     def get_url(self, url_name, url_args=None, url_kwargs=None, data=None):
         url = reverse(url_name, args=url_args, kwargs=url_kwargs)

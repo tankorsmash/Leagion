@@ -23,7 +23,14 @@ I - Visitor Score (left as "null" until game is played as to not factor into ran
 
 
 class BaseTemplateGenerator(object):
-    pass
+    def build_empty_csv(self):
+        pass
+
+    def next_row(self):
+        """
+        yields a generator for each row of data
+        """
+        pass
 
 
 class TeamsTemplateGenerator(BaseTemplateGenerator):
