@@ -2,7 +2,7 @@ import csv
 import time
 import datetime
 
-from functools import partial
+from functools import partial, lru_cache
 
 from django.test import TestCase, override_settings
 from django.contrib.auth import get_user_model
@@ -12,7 +12,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate, APIClient
 from rest_framework.authtoken.models import Token
 
-from leagion.models import League, Season, Team
+from leagion.models import League, Season, Team, Location
 User = get_user_model()
 
 from leagion.tests.test_api import CreatorMixin #TODO move this out of there
@@ -32,7 +32,8 @@ class BaseDataExporter(APITestCase, CreatorMixin):
     test the creation of the CSV template for Data Imports
     """
 
-    GeneratorClass = None
+    GeneratorClass = None #ie TeamsTemplateGenerator
+    ModelClass = None #ie Team
 
     def setUp(self):
         self.template_generator = self.GeneratorClass()
@@ -46,13 +47,42 @@ class BaseDataExporter(APITestCase, CreatorMixin):
             expected_data,
         )
 
+    @lru_cache(maxsize=1000) #high because I'm not sure if child classes reset this counter
+    def get_row_instance(self, row_data, col_name):
+        """
+        gets an instance of the ModelClass from the database based on row_data
+
+        ie
+        >>> Team.objects.get(id=row_data.team_id.data)
+        """
+        id_data = getattr(row_data, col_name).data
+        return self.ModelClass.objects.get(id=id_data)
+
+
+    @lru_cache(maxsize=1000) #high because I'm not sure if child classes reset this counter
+    def get_assert_row_partial(self, row_data, instance):
+        """
+        returns a partially applied function which takes only the col id and
+        instance attr name, instead of the row data and instance
+
+        >>> self.assertRowMatch(row_data, team, "team_id", "id")
+        >>> self.assertRowMatch(row_data, team, "team_name", "name")
+        # becomes
+        >>> assert_row = self.get_assert_row_partial(row_data, team)
+        >>> assert_row("team_id", "id")
+        >>> assert_row("team_name", "name")
+        """
+        return partial(self.assertRowMatch, row_data, instance)
+
 
 class TeamExporterTestCase(BaseDataExporter):
     GeneratorClass = TeamsTemplateGenerator
+    ModelClass = Team
 
     def setUp(self):
         super().setUp()
 
+        #generate 5 teams
         self.league = self.create_league()
         self.season = self.create_season(self.league)
         self.teams = []
@@ -60,11 +90,9 @@ class TeamExporterTestCase(BaseDataExporter):
             self.teams.append(self.create_team(self.season))
 
     def test_export_teams_in_league_template(self):
-        #assert all teams' ids show up
         for row_data in self.template_generator.next_row():
-            team_id = row_data.team_id
-            team = Team.objects.get(id=row_data.team_id.data)
-            assert_row = partial(self.assertRowMatch, row_data, team)
+            team = self.get_row_instance(row_data, "team_id")
+            assert_row = self.get_assert_row_partial(row_data, team)
 
             assert_row("team_id", "id")
             assert_row("team_name", "name")
@@ -78,17 +106,18 @@ class TeamExporterTestCase(BaseDataExporter):
 
 class LocationsExporterTestCase(BaseDataExporter):
     GeneratorClass = TeamsTemplateGenerator
+    ModelClass = Location
 
     def setUp(self):
         super().setUp()
 
+        #generate five locations
         generate_locations(5)
 
     def test_export_locations_in_league_template(self):
         for row_data in self.template_generator.next_row():
-            location_id = row_data.location_id
-            location = Location.objects.get(id=location_id)
-            assert_row = partial(self.assertRowMatch, row_data, location)
+            location = self.get_row_instance(row_data, "location_id")
+            assert_row = self.get_assert_row_partial(row_data, location)
 
             assert_row("location_id","id")
             assert_row("location_name","name")
