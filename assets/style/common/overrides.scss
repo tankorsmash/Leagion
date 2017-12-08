@@ -57,3 +57,37 @@ form {
 .show-feedback {
     display: block;
 }
+
+body {
+    .Select {
+        .Select-control {
+            height: 42px;
+            border-radius: $input-border-radius;
+            border-color: $input-border-color;
+
+            .Select-placeholder, .Select-value {
+                top: 3px;
+            }
+        }
+        &.is-open {
+            .Select-control {
+                border-color: $input-focus-border-color;
+            }
+        }
+        &.is-focused {
+            &:not(.is-open) {
+                .Select-control {
+                    border-color: $input-focus-border-color;
+                }
+            }
+        }
+        .Select-clear-zone {
+            &:hover {
+                color: $red;
+            }
+        }
+        .Select-clear {
+            font-size: 30px;
+        }
+    }
+}
