@@ -26,8 +26,39 @@ from leagion.utils import generate_locations
 
 NO_DATA = 0xDEADBEEF
 
+def column_order_checker(self):
+    """
+    added to TestCases below via metaclass
 
-class BaseDataExporter(APITestCase, CreatorMixin):
+    checks to make sure columns are output in order
+    """
+
+    instance = self.ModelClass.objects.first()
+    row = self.template_generator.build_row(instance)
+    self.assertEquals(
+        [col.col_id for col in row],
+        self.template_generator.column_order
+    )
+
+
+class DataExporterScaffolding(type):
+    """
+    sets up a test for checking the column order of the subclassed TestCases
+
+    This needs to be generated because you can't add them in __init__ and have
+    unittest pick them up, and I don't want to copy and paste the test for each
+    subclass (of which there is only two TBF)
+    """
+    def __new__(cls, name, bases, attrs):
+        #skip BaseDataExporter
+        if name != "BaseDataExporter":
+            attrs["test_column_order"] = column_order_checker
+
+        return super().__new__(cls, name, bases, attrs)
+
+
+
+class BaseDataExporter(APITestCase, CreatorMixin, metaclass=DataExporterScaffolding):
     """
     test the creation of the CSV template for Data Imports
     """
