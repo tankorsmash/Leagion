@@ -105,7 +105,7 @@ class TeamExporterTestCase(BaseDataExporter):
 
 
 class LocationsExporterTestCase(BaseDataExporter):
-    GeneratorClass = TeamsTemplateGenerator
+    GeneratorClass = LocationTemplateGenerator
     ModelClass = Location
 
     def setUp(self):
