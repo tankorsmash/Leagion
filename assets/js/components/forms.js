@@ -121,13 +121,17 @@ export class FormBase extends React.Component {
 const formGroupEnhance = compose(
     setDisplayName('FormGroup'),
     withHandlers({
-        onSelectChange: props => ({value}) => {
+        onSelectChange: props => (item) => {
+            let value = '';
+            if (item) {
+                value = item.value;
+            }
             props.setForm((f) => {
                 return update(f, {[props.id]: {$set: value}});
             });
         },
     }),
-)
+);
 export const FormGroup = formGroupEnhance((props) => {
     const {
         id, label, type, onChange, form, errors,

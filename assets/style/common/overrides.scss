@@ -89,5 +89,11 @@ body {
         .Select-clear {
             font-size: 30px;
         }
+        .Select-option {
+            &.is-focused {
+                background-color: $gray-lighter;
+
+            }
+        }
     }
 }
