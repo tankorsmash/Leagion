@@ -59,7 +59,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {header: 'Home Team', cell: (match) => match.home_team.name},
                     {header: '', cell: () => 'vs.'},
                     {header: 'Away Team', cell: (match) => match.away_team.name},
-                    {header: 'Location', cell: (match) => match.location.name},
+                    {header: 'Location', cell: (match) => match.location ? match.location.name : ''},
                     {header: 'Results', cell: (match) => {
                         if (match.completed) {
                             return <span>{match.home_points} - {match.away_points}</span>;

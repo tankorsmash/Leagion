@@ -1,5 +1,6 @@
-import {withState, withHandlers, setPropTypes, lifecycle, compose} from 'recompose';
+import {setDisplayName, withState, withHandlers, setPropTypes, lifecycle, compose} from 'recompose';
 import update from 'immutability-helper';
+import Select from 'react-select';
 import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
 import FontAwesome from 'react-fontawesome';
@@ -56,13 +57,14 @@ const enhance = compose(
         },
     }),
 );
-export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors}) => {
+export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors, setForm}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
         if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
                 form,
                 errors,
+                setForm,
             });
         } else {
             return child;
@@ -116,18 +118,27 @@ export class FormBase extends React.Component {
     }
 }
 
-export const FormGroup = (props) => {
+const formGroupEnhance = compose(
+    setDisplayName('FormGroup'),
+    withHandlers({
+        onSelectChange: props => ({value}) => {
+            props.setForm((f) => {
+                return update(f, {[props.id]: {$set: value}});
+            });
+        },
+    }),
+)
+export const FormGroup = formGroupEnhance((props) => {
     const {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
-        tag, children
+        tag, children, selectOptions, options, onSelectChange,
     } = props;
 
     let {name, value} = props;
     if (type !== 'radio') {
         name = id;
     }
-
     //populate values and errors from form object but not if
     //explicitly passed in (i.e. for radios)
     if (!value) {
@@ -145,13 +156,11 @@ export const FormGroup = (props) => {
         checked = value === form[name];
     } else if (type === 'checkbox') {
         checked = value;
-    } else if (type === 'date') {
-
     }
 
 	const valid = error ? false : undefined;
 
-    const select = type === 'select';
+    const isSelect = type === 'select';
 
     return (
         <RFormGroup
@@ -172,7 +181,7 @@ export const FormGroup = (props) => {
             { !checkOrRadio &&
                 <Label check={check} for={id}>{label}</Label>
             }
-            { !checkOrRadio && !isDatePicker &&
+            { !checkOrRadio && !isDatePicker && !isSelect &&
                 <Input
                     type={type} name={name} id={id} value={value}
                     onChange={onChange} valid={valid} placeholder={placeholder}
@@ -186,10 +195,17 @@ export const FormGroup = (props) => {
                     value={value} type={type} name={name} id={id} placeholder={placeholder}
                 />
             }
+            { isSelect &&
+                <Select
+                    id={id} name={name} value={value}
+                    options={options} onChange={onSelectChange}
+                    placeholder={placeholder} {...selectOptions}
+                />
+            }
             <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
         </RFormGroup>
     );
-};
+});
 
 
 export class Input extends React.Component {

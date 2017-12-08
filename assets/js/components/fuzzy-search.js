@@ -90,39 +90,21 @@ export default class FuzzySearch extends React.Component {
 
     getOptions() {
         const {
-            caseSensitive,
-            id,
-            include,
-            keys,
-            shouldSort,
-            sortFn,
-            tokenize,
-            verbose,
-            maxPatternLength,
-            distance,
-            threshold,
+            caseSensitive, id, include, keys, shouldSort, sortFn,
+            tokenize, verbose, maxPatternLength, distance, threshold,
             location,
         } = this.props;
 
         return {
-            caseSensitive,
-            id,
-            include,
-            keys,
-            shouldSort,
-            sortFn,
-            tokenize,
-            verbose,
-            maxPatternLength,
-            distance,
-            threshold,
+            caseSensitive, id, include, keys, shouldSort, sortFn,
+            tokenize, verbose, maxPatternLength, distance, threshold,
             location,
         };
     }
 
     getResultsTemplate() {
         return this.state.results.map((val, i) => {
-            <ResultItem key={i} />
+            <ResultItem key={i} />;
         });
     }
 
@@ -130,7 +112,7 @@ export default class FuzzySearch extends React.Component {
         this.setState({
             results: this.fuse.search(e.target.value).slice(0, this.props.maxResults - 1),
         });
-    }
+    };
 
     handleKeyDown = (e) => {
         const { results, selectedIndex } = this.state;
@@ -154,7 +136,7 @@ export default class FuzzySearch extends React.Component {
                 selectedIndex: 0,
             });
         }
-    }
+    };
 
     onClick = (clickedIndex) => {
         const { results } = this.state;
@@ -166,10 +148,10 @@ export default class FuzzySearch extends React.Component {
             results: [],
             selectedIndex: 0,
         });
-    }
+    };
 
     render() {
-        const { className, width, placeholder, autoFocus } = this.props;
+        const {className, placeholder, autoFocus} = this.props;
 
         const ResultsComponent = this.props.ResultsComponent;
 
@@ -177,7 +159,7 @@ export default class FuzzySearch extends React.Component {
 
         return (
             <div className={mainClass} onKeyDown={this.handleKeyDown}>
-                <div >
+                <div>
                     <Input
                         type="text"
                         onChange={this.handleChange}
@@ -186,17 +168,17 @@ export default class FuzzySearch extends React.Component {
                         value={this.state.selectedValue && this.state.selectedValue.title}
                     />
                 </div>
-                {this.state.results &&
-                        this.state.results.length > 0 &&
-                        <div>
-                            <ResultsComponent
-                                props={this.props}
-                                state={this.state}
-                                styles={{}}
-                                onClick={this.onClick}
-                            />
-                        </div>}
+                {this.state.results && this.state.results.length > 0 &&
+                    <div>
+                        <ResultsComponent
+                            props={this.props}
+                            state={this.state}
+                            styles={{}}
+                            onClick={this.onClick}
+                        />
                     </div>
+                }
+            </div>
         );
     }
 }

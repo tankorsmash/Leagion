@@ -63,7 +63,6 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {header: 'Losses', cell: (team) => team.win_draw_loss_points.losses},
                     {header: 'Points', cell: (team) => team.win_draw_loss_points.points},
                     {cell: (item) => {
-                        console.log(item);
                         return (
                             <Dropdown dotdotdot >
                                 <TeamEditModal

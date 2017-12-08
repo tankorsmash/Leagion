@@ -10,6 +10,10 @@ const enhance = compose(
     setDisplayName('MatchCreateModal'),
 );
 export default enhance(({season, onSuccess}) => {
+    const teamOptions = season.teams.map((team) => ({
+        value: team.id,
+        label: team.name,
+    }));
     return (
         <FormModal
             title="Add a match"
@@ -43,8 +47,8 @@ export default enhance(({season, onSuccess}) => {
                 >
                     <FormGroup label="Date" type="date" id="date" />
                     <FormGroup label="Time" type="time" id="time" />
-                    <FormGroup label="Home Team" type="text" id="home_team_id" />
-                    <FormGroup label="Away Team" type="text" id="Away_team_id" />
+                    <FormGroup label="Home Team" type="select" id="home_team_id" options={teamOptions} />
+                    <FormGroup label="Away Team" type="select" id="away_team_id" options={teamOptions} />
                 </Form>
             }
         />

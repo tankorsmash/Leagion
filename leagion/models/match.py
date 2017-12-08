@@ -17,11 +17,11 @@ class Match(models.Model):
     )
 
     home_team = models.ForeignKey(Team, related_name="home_matches")
-    home_points = models.IntegerField(null=True, blank=True, default=0)
+    home_points = models.IntegerField(null=True, blank=True, default=None)
     home_roster = models.ForeignKey(Roster, null=True, blank=True, related_name="home_rosters")
 
     away_team = models.ForeignKey(Team, related_name="away_matches")
-    away_points = models.IntegerField(null=True, blank=True, default=0)
+    away_points = models.IntegerField(null=True, blank=True, default=None)
     away_roster = models.ForeignKey(Roster, null=True, blank=True, related_name="away_rosters")
 
     match_datetime = models.DateTimeField()
