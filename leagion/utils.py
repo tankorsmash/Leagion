@@ -1,3 +1,4 @@
+import sys
 import pytz
 import faker
 import random
@@ -18,6 +19,12 @@ User = get_user_model()
 viewnames_exposed_js = set()
 
 F = faker.Faker("en_ca") #limit to canadian style
+
+IS_TEST = 'test' in sys.argv
+
+def print_t(*args):
+    if not IS_TEST:
+        print(*args)
 
 def reverse_js(view):
     viewnames_exposed_js.add(view)
@@ -56,18 +63,18 @@ def generate_users(count, team=None):
     return created_users
 
 def generate_league(name=None):
-    print("generating league")
+    print_t("generating league")
     if name is None:
         name = F.company()+" League"
     league = League.objects.create(name=name)
 
-    print("generating season for league")
+    print_t("generating season for league")
     generate_season(league)
 
     return league
 
 def generate_season(league, start_date=None, end_date=None, teams_count=5, players_in_team_count=15):
-    print("generating season")
+    print_t("generating season")
 
     if start_date is None:
         start_date = F.date_object()
@@ -76,7 +83,7 @@ def generate_season(league, start_date=None, end_date=None, teams_count=5, playe
 
     season = Season.objects.create(league=league, start_date=start_date, end_date=end_date)
 
-    print("generating teams for league")
+    print_t("generating teams for league")
     generate_teams(season, teams_count, players_in_team_count)
 
     return season
@@ -87,13 +94,13 @@ def generate_teams(season, team_count, players_count):
             name=F.street_name(),
             season=season
         )
-        print("generating players for team", i + 1, "of", team_count)
+        print_t("generating players for team", i + 1, "of", team_count)
         generate_users(players_count, team)
 
 def generate_locations(location_count=10):
 
     locations = []
-    print("generating", location_count, "locations")
+    print_t("generating", location_count, "locations")
     for i in range(location_count):
         loc = Location.objects.create(
             name=F.city(),
@@ -114,7 +121,7 @@ def generate_batter(roster, player, index):
     return batter
 
 def generate_roster(team):
-    print("generating roster for team", str(team))
+    print_t("generating roster for team", str(team))
     roster = Roster.objects.create(
         team=team,
     )
@@ -181,7 +188,7 @@ def generate_matches(season, match_count=10):
             print("not enough teams for season %s" % season)
             break
 
-        print("generating match", i+1, "of", match_count)
+        print_t("generating match", i+1, "of", match_count)
         home_team, away_team = random.sample(teams, 2)
         location = random.choice(locations)
 
@@ -190,7 +197,7 @@ def generate_matches(season, match_count=10):
 
         should_postpone = random.randint(0, 5) == 0
         if should_postpone:
-            print("generating postponed match for ", i+1, "of", match_count)
+            print_t("generating postponed match for ", i+1, "of", match_count)
             match.status = 2 #Match.StatusChoices.Postponed once we get that going
             match.save()
 
@@ -215,7 +222,7 @@ def generate_superuser():
         superuser.is_staff = True
         superuser.save()
 
-        print("created superuser", superuser)
+        print_t("created superuser", superuser)
 
     except AttributeError as e:
         print(e)
