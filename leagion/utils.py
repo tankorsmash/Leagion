@@ -96,7 +96,9 @@ def generate_locations(location_count=10):
     print("generating", location_count, "locations")
     for i in range(location_count):
         loc = Location.objects.create(
-            name=F.city()
+            name=F.city(),
+            address=F.address()
+
         )
         locations.append(loc)
 
