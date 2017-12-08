@@ -28,8 +28,8 @@ from collections import namedtuple
 
 from leagion.models import League, Season, Team, Location
 
-ColumnTemplate = namedtuple("ColumnTemplate", ["id", "attr_name", "displayed_as"])
-ColumnData = namedtuple("ColumnData", ["template_id", "data"])
+ColumnTemplate = namedtuple("ColumnTemplate", ["col_id", "attr_name", "displayed_as"])
+ColumnData = namedtuple("ColumnData", ["col_id", "data"])
 
 class BaseTemplateGenerator(object):
     model = None
@@ -46,7 +46,7 @@ class BaseTemplateGenerator(object):
         self.sanity_check_columns()
 
     def sanity_check_columns(self):
-        column_ids = [col.id for col in self.columns]
+        column_ids = [col.col_id for col in self.columns]
         assert len(self.column_order) == len(column_ids)
         assert sorted(self.column_order) == sorted(column_ids)
 
@@ -71,7 +71,7 @@ class BaseTemplateGenerator(object):
         sorted_columns = self.sort_data(self.columns)
         return namedtuple(
             "RowData",
-            [col.id for col in sorted_columns]
+            [col.col_id for col in sorted_columns]
         )
 
     def next_row(self):
@@ -93,7 +93,7 @@ class BaseTemplateGenerator(object):
 
             column_data.append((
                 ColumnData(
-                    column_template.id,
+                    column_template.col_id,
                     col_data,
                 )
             ))
