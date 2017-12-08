@@ -14,27 +14,31 @@ from leagion.models import League, Season, Team
 User = get_user_model()
 
 from leagion.tests.test_api import CreatorMixin #TODO move this out of there
-from leagion.data_imports.template_generation import TeamsTemplateGenerator
+from leagion.data_imports.template_generation import TeamsTemplateGenerator, ColumnData
 
 
 class BaseDataExporter(APITestCase, CreatorMixin):
     """
     test the creation of the CSV template for Data Imports
     """
-    # def test_build_empty_csv(self):
-    #     tempgen = BaseTemplateGenerator()
-    #     self.assertIsInstance()
 
 
 class TeamExporterTestCase(BaseDataExporter):
+    def setUp(self):
+        self.team_gen = TeamsTemplateGenerator()
+
+        self.league = self.create_league()
+        self.season = self.create_season(self.league)
+        self.teams = []
+        for _ in range(5):
+            self.teams.append(self.create_team(self.season))
+
     def test_export_teams_in_league_template(self):
-        team_gen = TeamsTemplateGenerator()
-
-        league = self.create_league()
-        season = self.create_season(league)
-        team = self.create_team(season)
-
-        pass
+        #assert all teams' ids show up
+        for row_data in self.team_gen.next_row():
+            team_id = row_data.team_id
+            team = Team.objects.get(id=row_data.team_id.data)
+            self.assertEquals(row_data.team_id.data, team.id)
 
 
 class LocationsExporterTestCase(BaseDataExporter):
