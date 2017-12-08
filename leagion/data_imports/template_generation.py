@@ -26,7 +26,7 @@ import operator
 import functools
 from collections import namedtuple
 
-from leagion.models import League, Season, Team
+from leagion.models import League, Season, Team, Location
 
 ColumnTemplate = namedtuple("ColumnTemplate", ["id", "attr_name", "displayed_as"])
 ColumnData = namedtuple("ColumnData", ["template_id", "data"])
@@ -122,5 +122,15 @@ class TeamsTemplateGenerator(BaseTemplateGenerator):
         return ", ".join(cap.email for cap in team.captains.all())
 
 
-class ScheduleTemplateGenerator(BaseTemplateGenerator):
-    pass
+class LocationTemplateGenerator(BaseTemplateGenerator):
+    model = Location
+    columns = [
+        ColumnTemplate("location_id", "id", "Location ID"),
+        ColumnTemplate("location_name", "name", "Name"),
+        ColumnTemplate("location_address", "address", "Address"),
+    ]
+    column_order = [
+        "location_id",
+        "location_name",
+        "location_address",
+    ]
