@@ -55,11 +55,14 @@ class BaseTemplateGenerator(object):
 
     def sort_data(self, data):
         """
-        note can be ColumnTemplates or raw data, doesn't matter.
-        """
-        sorted_data = [col for _, col in sorted(zip(self.column_order, data))]
-        return data
+        sorts the data by col_id in self.column_order
 
+        NOTE: can be ColumnTemplates or ColumnData, so long as it has a col_id
+        """
+        sorted_data = []
+        for co in self.column_order:
+            sorted_data.append(list(filter(lambda d: d.col_id == co, data))[0])
+        return sorted_data
 
     @property
     @functools.lru_cache(maxsize=1)

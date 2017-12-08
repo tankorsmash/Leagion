@@ -31,12 +31,30 @@ def column_order_checker(self):
     added to TestCases below via metaclass
 
     checks to make sure columns are output in order
+
+    NOTE: avoiding using 'test' in the name so it doesn't get picked up by
+    unittest until after it's been assigned
     """
 
     instance = self.ModelClass.objects.first()
+
+    #check row data against column order
     row = self.template_generator.build_row(instance)
     self.assertEquals(
         [col.col_id for col in row],
+        self.template_generator.column_order
+    )
+
+    #swap the column order, make sure the old one fails and the new rows matches
+    self.template_generator.column_order = self.template_generator.column_order[::-1]
+    old_row = row
+    row = self.template_generator.build_row(instance)
+    self.assertEquals(
+        [col.col_id for col in row],
+        self.template_generator.column_order
+    )
+    self.assertNotEquals(
+        [col.col_id for col in old_row],
         self.template_generator.column_order
     )
 
@@ -70,9 +88,13 @@ class BaseDataExporter(APITestCase, CreatorMixin, metaclass=DataExporterScaffold
         self.template_generator = self.GeneratorClass()
 
     def tearDown(self):
+        self.clear_lru_caches()
+
+    def clear_lru_caches(self):
         #clear the LRU caches (not sure if necessary, but making sure)
         self.get_row_instance.cache_clear()
         self.get_assert_row_partial.cache_clear()
+
 
     def assertRowMatch(self, row_data, team, col_id, team_attr, expected_data=NO_DATA):
         if expected_data == NO_DATA:
