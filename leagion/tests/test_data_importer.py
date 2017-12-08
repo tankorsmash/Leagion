@@ -69,6 +69,11 @@ class BaseDataExporter(APITestCase, CreatorMixin, metaclass=DataExporterScaffold
     def setUp(self):
         self.template_generator = self.GeneratorClass()
 
+    def tearDown(self):
+        #clear the LRU caches (not sure if necessary, but making sure)
+        self.get_row_instance.cache_clear()
+        self.get_assert_row_partial.cache_clear()
+
     def assertRowMatch(self, row_data, team, col_id, team_attr, expected_data=NO_DATA):
         if expected_data == NO_DATA:
             expected_data = getattr(team, team_attr)
