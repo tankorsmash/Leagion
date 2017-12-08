@@ -53,6 +53,14 @@ class BaseTemplateGenerator(object):
     def build_queryset(self):
         return self.model.objects.all()
 
+    def sort_data(self, data):
+        """
+        note can be ColumnTemplates or raw data, doesn't matter.
+        """
+        sorted_data = [col for _, col in sorted(zip(self.column_order, data))]
+        return data
+
+
     @property
     @functools.lru_cache(maxsize=1)
     def row_class(self):
@@ -60,9 +68,10 @@ class BaseTemplateGenerator(object):
         builds a class type based on the column ids in class.columns
         id RowData("team_name", "team_id")
         """
+        sorted_columns = self.sort_data(self.columns)
         return namedtuple(
             "RowData",
-            [col.id for col in self.columns]
+            [col.id for col in sorted_columns]
         )
 
     def next_row(self):
@@ -90,7 +99,7 @@ class BaseTemplateGenerator(object):
             ))
 
         RowClass = self.row_class
-        return RowClass(*column_data)
+        return RowClass(*self.sort_data(column_data))
 
 
 class TeamsTemplateGenerator(BaseTemplateGenerator):
