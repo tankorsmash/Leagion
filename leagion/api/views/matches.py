@@ -9,11 +9,13 @@ from leagion.models import Match
 from leagion.utils import reverse_js
 from leagion.api.utils import match_queryset_as_player
 
+from .utils import DeleteManyViewMixin
+
 User = get_user_model()
 
 
 @reverse_js
-class MyCommMatchList(generics.ListCreateAPIView):
+class MyCommMatchList(DeleteManyViewMixin, generics.ListCreateAPIView):
     serializer_class = MatchSerializer
 
     def get_queryset(self):

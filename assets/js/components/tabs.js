@@ -73,17 +73,29 @@ export class Tabs extends React.Component {
 
     state = {activeTab: 0};
 
+    getActiveTab = () => {
+        return R.is(Number, this.props.activeTab) ?
+                          this.props.activeTab : this.state.activeTab;
+    };
+
     toggle(tab) {
-        if (this.state.activeTab !== tab) {
-            this.setState({
-                activeTab: tab
-            });
+        const {setTab} = this.props;
+        const activeTab = this.getActiveTab();
+
+        if (activeTab !== tab) {
+            if (setTab) {
+                setTab(tab);
+            } else {
+                this.setState({
+                    activeTab: tab
+                });
+            }
         }
     }
 
     render() {
         const {tabs} = this.props;
-        const {activeTab} = this.state;
+        const activeTab = this.getActiveTab();
 
         return (
             <div className={this.props.className + ' tab-wrapper'}>
@@ -92,7 +104,7 @@ export class Tabs extends React.Component {
                         return (
                             <NavItem key={i}>
                                 <NavLink
-                                    className={this.state.activeTab === i ? "active" : ""}
+                                    className={activeTab === i ? "active" : ""}
                                     onClick={() => { this.toggle(i); }}
                                 >
                                     {tab.label}

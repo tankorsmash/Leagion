@@ -6,7 +6,7 @@ import {NoDataCard} from 'components/cards';
 
 import MatchCreateModal from './MatchCreateModal';
 //import MatchEditModal from './MatchEditModal';
-//import MatchDeleteManyModal from './MatchDeleteManyModal';
+import MatchDeleteManyModal from './MatchDeleteManyModal';
 //import MatchDeleteModal from './MatchDeleteModal';
 import {Avatar} from 'components/media';
 
@@ -21,7 +21,6 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
             params={{season: season.id}}
             toolbarLeft={(
                 <div className="d-flex">
-                        {/*
                     <Dropdown
                         disabled={!selectedIds.length}
                         className="mr-1"
@@ -34,7 +33,6 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                             onSuccess={() =>{setRefresh(true);}}
                         />
                     </Dropdown>
-                            */}
                     <MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                 </div>
             )}

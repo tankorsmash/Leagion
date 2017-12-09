@@ -12,10 +12,11 @@ const enhance = compose(
     setDisplayName('SeasonDetail'),
     withState('season', 'setSeason', {}),
     withState('refresh', 'setRefresh', false),
+    withState('tab', 'setTab', 0),
 );
 
 export default enhance(({season, setSeason, user, match,
-    refresh, setRefresh}) => {
+    refresh, setRefresh, tab, setTab}) => {
     return (
         <DatasetView
             url={reverse('api-my-comm-season-detail', {season_id: match.params.seasonId})}
@@ -27,6 +28,8 @@ export default enhance(({season, setSeason, user, match,
             />
             <div className="">
                 <Tabs
+                    activeTab={tab}
+                    setTab={setTab}
                     tabs={[{
                         label: 'Teams',
                         content: <TeamTable

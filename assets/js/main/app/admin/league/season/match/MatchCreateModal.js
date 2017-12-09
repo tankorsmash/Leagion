@@ -45,8 +45,10 @@ export default enhance(({season, onSuccess}) => {
                         'season': season.id,
                     }}
                 >
-                    <FormGroup label="Date" type="date" id="date" />
-                    <FormGroup label="Time" type="time" id="time" />
+                    <FormGroupWrap row>
+                        <FormGroup className="col-md-6" label="Date" type="date" id="date" />
+                        <FormGroup className="col-md-6" label="Time" type="time" id="time" />
+                    </FormGroupWrap>
                     <FormGroup label="Home Team" type="select" id="home_team_id" options={teamOptions} />
                     <FormGroup label="Away Team" type="select" id="away_team_id" options={teamOptions} />
                 </Form>
