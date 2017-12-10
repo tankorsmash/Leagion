@@ -64,7 +64,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {header: 'Points', cell: (team) => team.win_draw_loss_points.points},
                     {cell: (item) => {
                         return (
-                            <Dropdown dotdotdot >
+                            <Dropdown menuRight dotdotdot >
                                 <TeamEditModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}

@@ -4,14 +4,12 @@ import {AvatarSelector} from 'components/files';
 import {Button} from 'components/buttons';
 
 export default class ChangeAvatarForm extends React.Component {
-    url = 'api-my-details';
-
     upload = (file) => {
         let data  = new FormData();
         data.append('avatar', file);
 
         ajax({
-            url: reverse(this.url),
+            url: this.props.url,
             data: data,
             requireLogin: true,
             stringifyData: false,
@@ -19,7 +17,7 @@ export default class ChangeAvatarForm extends React.Component {
             method: 'PATCH',
         }).then(data => {
             toastr.success('Avatar successfully changed!');
-            this.props.setUserState(data);
+            this.props.onSuccess(data);
         }).catch(() => {
             toastr.error('Unknown error occurred updating avatar.');
         });

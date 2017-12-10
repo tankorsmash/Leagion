@@ -5,8 +5,7 @@ import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
 import PlayerCreateModal from './PlayerCreateModal';
-//import PlayerEditModal from './PlayerEditModal';
-import PlayerRemoveFromSeasonModal from './PlayerRemoveFromSeasonModal';
+import ChangeAvatarModal from './ChangeAvatarModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -66,17 +65,11 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     }},
                     {cell: (item) => {
                         return (
-                            <Dropdown dotdotdot >
-                                {/*
-                                <PlayerEditModal
+                            <Dropdown menuRight dotdotdot >
+                                <ChangeAvatarModal
                                     player={item} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                    Opener={<DropdownItem toggle={false}>{'Change Avatar'}</DropdownItem>}
                                 />
-                                <PlayerDeleteModal
-                                    player={item} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Delete'}</DropdownItem>}
-                                />
-                                */}
                             </Dropdown>
                         );
                     }},

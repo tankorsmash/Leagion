@@ -68,7 +68,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     }},
                     {cell: (item) => {
                         return (
-                            <Dropdown dotdotdot >
+                            <Dropdown menuRight dotdotdot >
                                 <MatchEditModal
                                     season={season} match={item}
                                     onSuccess={() =>{setRefresh(true);}}

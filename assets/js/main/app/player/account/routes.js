@@ -31,7 +31,11 @@ export default class AccountRouter extends React.Component {
                         content: <ProfileForm {...this.props} />
                     }, {
                         label: 'Avatar',
-                        content: <ChangeAvatarForm {...this.props} />
+                        content: <ChangeAvatarForm
+                            url={reverse('api-my-details')}
+                            onSuccess={(data) => {this.props.setUserState(data);}}
+                            {...this.props}
+                        />
                     }, {
                         label: 'Change Password',
                         content: <ChangePasswordForm {...this.props} />
