@@ -16,9 +16,10 @@ User = get_user_model()
 @reverse_js
 class MyCommUserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
+    filter_fields = ('teams__season',)
 
     def get_queryset(self):
-        league_ids = self.user.leagues_commissioned.values_list('id', flat=True)
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
         return User.objects.filter(
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")
@@ -28,9 +29,10 @@ class MyCommUserList(generics.ListCreateAPIView):
 class MyCommUserDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "player_id"
     serializer_class = UserSerializer
+    filter_fields = ('teams__season',)
 
     def get_queryset(self):
-        league_ids = self.user.leagues_commissioned.values_list('id', flat=True)
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
         return User.objects.filter(
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")

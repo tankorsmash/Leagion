@@ -1,5 +1,4 @@
 import {compose, setDisplayName, withState} from 'recompose';
-import FontAwesome from 'react-fontawesome';
 
 import {Titlebar} from 'components/misc';
 import DatasetView from 'components/DatasetView';
@@ -7,6 +6,7 @@ import {Tabs} from 'components/tabs';
 
 import TeamTable from './team/TeamTable';
 import MatchTable from './match/MatchTable';
+import PlayerTable from './player/PlayerTable';
 
 const enhance = compose(
     setDisplayName('SeasonDetail'),
@@ -46,7 +46,11 @@ export default enhance(({season, setSeason, user, match,
                         />,
                     }, {
                         label: 'Players',
-                        content: <h3>player table</h3>
+                        content: <PlayerTable
+                            season={season}
+                            user={user}
+                            setRefresh={setRefresh}
+                        />,
                     }]}
                 />
             </div>

@@ -31,7 +31,7 @@ class UserSerializer(serializers.ModelSerializer):
             'alt_phonenumber', 'teams',
             'captain_of_teams', 'leagues_commissioned',
             'is_commissioner', 'is_staff', 'is_moderator',
-            'avatar', 'avatar_url'
+            'avatar', 'avatar_url', 'status',
         )
         extra_kwargs = {
             'password': {'write_only': True},
