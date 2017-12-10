@@ -2,6 +2,7 @@ from datetime import datetime
 from rest_framework import serializers
 from leagion.models import Match, Team, Location, Roster, Batter
 from leagion.api.serializers.rosters import RosterSerializer
+from leagion.api.validators import no_empty_date, no_empty_time
 
 
 class ShallowTeamSerializer(serializers.ModelSerializer):
@@ -35,8 +36,8 @@ class MatchSerializer(serializers.ModelSerializer):
     away_team = ShallowTeamSerializer(read_only=True)
     away_team_id = serializers.IntegerField(required=True)
 
-    date = serializers.DateField(required=True)
-    time = serializers.TimeField(required=True)
+    date = serializers.DateField(required=True, validators=[no_empty_date])
+    time = serializers.TimeField(required=True, validators=[no_empty_time])
 
     location = ShallowLocationSerializer(read_only=True)
     location_id = serializers.IntegerField(required=False)
@@ -44,11 +45,26 @@ class MatchSerializer(serializers.ModelSerializer):
     postponed_to = serializers.IntegerField(required=False, allow_null=True, default=None)
     postponed_from = serializers.IntegerField(read_only=True)
 
-    def create(self, validated_data, *args, **kwargs):
+    def validate(self, data):
+        if data['home_team_id'] == data['away_team_id']:
+            raise serializers.ValidationError(
+                {'away_team_id': ['A Team cannot play against itself']}
+            )
+
+    def coerce_data_time(self, validated_data):
         data = validated_data.copy()
         data['match_datetime'] = datetime.combine(data['date'], data['time'])
-        created_match = super().create(data, *args, **kwargs)
-        return created_match
+        return data
+
+    def create(self, validated_data, *args, **kwargs):
+        data = self.coerce_data_time(validated_data)
+        return super().create(data, *args, **kwargs)
+
+    def update(self, obj, validated_data, *args, **kwargs):
+        data = self.coerce_data_time(validated_data)
+        del data['date']
+        del data['time']
+        return super().update(obj, data, *args, **kwargs)
 
 
 class SetMatchSerializer(serializers.ModelSerializer):

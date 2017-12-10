@@ -1,36 +1,30 @@
 import {compose, setDisplayName } from 'recompose';
-import FontAwesome from 'react-fontawesome';
 
-import {Button} from 'components/buttons';
 import {FormModal} from 'components/modals';
 import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import ajax from 'common/ajax';
 
 const enhance = compose(
-    setDisplayName('MatchCreateModal'),
+    setDisplayName('MatchEditModal'),
 );
-export default enhance(({season, onSuccess}) => {
+export default enhance(({season, onSuccess, match, Opener}) => {
     const teamOptions = season.teams.map((team) => ({
         value: team.id,
         label: team.name,
     }));
     return (
         <FormModal
-            title="Add a match"
-            Opener={
-                <Button color="primary" size="md" >
-                    <FontAwesome name="plus"/> {' Add Match'}
-                </Button>
-            }
+            title="Edit Match"
+            Opener={Opener}
             body={
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {
                         ajax({
-                            url: reverse('api-my-comm-match-list'),
-                            method: 'POST',
+                            url: reverse('api-my-comm-match-detail', {match_id: match.id}),
+                            method: 'PATCH',
                             data: form,
                         }).then(data => {
-                            toastr.success("Match Added!");
+                            toastr.success("Match Edited!");
                             setSuccess();
                             onSuccess();
                         }).catch(data => {
@@ -38,10 +32,10 @@ export default enhance(({season, onSuccess}) => {
                         });
                     }}
                     form={{
-                        'date': null,
-                        'time': null,
-                        'home_team_id': null,
-                        'away_team_id': null,
+                        'date': match.date,
+                        'time': match.time,
+                        'home_team_id': match.home_team.id,
+                        'away_team_id': match.away_team.id,
                         'season': season.id,
                     }}
                 >

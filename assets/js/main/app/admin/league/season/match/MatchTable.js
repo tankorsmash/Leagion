@@ -5,9 +5,9 @@ import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
 import MatchCreateModal from './MatchCreateModal';
-//import MatchEditModal from './MatchEditModal';
+import MatchEditModal from './MatchEditModal';
 import MatchDeleteManyModal from './MatchDeleteManyModal';
-//import MatchDeleteModal from './MatchDeleteModal';
+import MatchDeleteModal from './MatchDeleteModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -48,7 +48,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any matches in this season yet. Create one to get started!"}</p>
-                        {/*<MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>*/}
+                        <MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                     </NoDataCard>
                 ),
                 columns: [
@@ -65,22 +65,21 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                             return <span>N/A </span>;
                         }
                     }},
-                    {/*
                     {cell: (item) => {
                         return (
                             <Dropdown dotdotdot >
                                 <MatchEditModal
-                                    team={item} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                    season={season} match={item}
+                                    onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Edit'}</DropdownItem>}
                                 />
                                 <MatchDeleteModal
-                                    team={item} onSuccess={() =>{setRefresh(true);}}
+                                    match={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Delete'}</DropdownItem>}
                                 />
                             </Dropdown>
                         );
                     }},
-                        */}
                 ],
             }}
         />

@@ -16,6 +16,7 @@ User = get_user_model()
 
 @reverse_js
 class MyCommMatchList(DeleteManyViewMixin, generics.ListCreateAPIView):
+    filter_fields = ('season',)
     serializer_class = MatchSerializer
 
     def get_queryset(self):
@@ -45,7 +46,8 @@ class MyCommMatchList(DeleteManyViewMixin, generics.ListCreateAPIView):
 
 
 @reverse_js
-class MyCommMatchDetail(generics.RetrieveUpdateAPIView):
+class MyCommMatchDetail(generics.RetrieveUpdateDestroyAPIView):
+    filter_fields = ('season',)
     lookup_url_kwarg = "match_id"
     serializer_class = MatchSerializer
 
