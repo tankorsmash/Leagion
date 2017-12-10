@@ -6,8 +6,7 @@ import {NoDataCard} from 'components/cards';
 
 import PlayerCreateModal from './PlayerCreateModal';
 //import PlayerEditModal from './PlayerEditModal';
-//import PlayerDeleteManyModal from './PlayerDeleteManyModal';
-//import PlayerDeleteModal from './PlayerDeleteModal';
+import PlayerRemoveFromSeasonModal from './PlayerRemoveFromSeasonModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -32,20 +31,6 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
             params={{teams__season: season.id}}
             toolbarLeft={(
                 <div className="d-flex">
-                        {/*
-                    <Dropdown
-                        disabled={!selectedIds.length}
-                        className="mr-1"
-                        color="info"
-                        buttonText="..."
-                    >
-                        <PlayerDeleteManyModal
-                            ids={selectedIds}
-                            Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
-                            onSuccess={() =>{setRefresh(true);}}
-                        />
-                    </Dropdown>
-                        */}
                     <PlayerCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                 </div>
             )}
@@ -55,15 +40,12 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                 </NoDataCard>
             }
             tableProps={{
-                onRowSelect: setSelectedIds,
                 responsive: true,
                 striped: true,
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any players in this season yet. Create one to get started!"}</p>
-                        {/*
                         <PlayerCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
-                        */}
                     </NoDataCard>
                 ),
                 columns: [

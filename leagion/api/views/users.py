@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
-from rest_framework import generics, views as drf_views, filters
+from rest_framework import generics, mixins, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
 from leagion.api.validators import no_empty_team
@@ -30,10 +30,13 @@ class MyCommUserList(generics.ListCreateAPIView):
         team_id = request.data.get('team_id')
         no_empty_team(team_id)
         request.data['set_teams'] = [team_id]
-        request.data['captain_of_teams'] = request.data['set_teams'] if request.data.get('is_captain') else []
+        request.data['set_captain_of_teams'] = request.data['set_teams'] if request.data.get('is_captain') else []
         del request.data['team_id']
         del request.data['is_captain']
         return super().create(request, *args, **kwargs)
+
+    def update_partial(self, queryset, *args, **kwargs):
+        pass
 
 
 @reverse_js

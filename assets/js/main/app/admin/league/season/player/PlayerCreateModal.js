@@ -16,10 +16,10 @@ export default enhance(({season, onSuccess}) => {
     }));
     return (
         <FormModal
-            title="Add a player"
+            title="Invite new player"
             Opener={
                 <Button color="primary" size="md" >
-                    <FontAwesome name="plus"/> {' Add Player'}
+                    <FontAwesome name="plus"/> {' Invite New Player'}
                 </Button>
             }
             body={
@@ -30,7 +30,7 @@ export default enhance(({season, onSuccess}) => {
                             method: 'POST',
                             data: form,
                         }).then(data => {
-                            toastr.success("Player Added!");
+                            toastr.success("Player Invited!");
                             setSuccess();
                             onSuccess();
                         }).catch(data => {
@@ -47,12 +47,14 @@ export default enhance(({season, onSuccess}) => {
                         'season_id': season.id,
                     }}
                 >
-                    <FormGroup label="First Name" type="text" id="first_name" />
-                    <FormGroup label="Last Name" type="text" id="last_name" />
                     <FormGroup label="Email" type="email" id="email" />
-                    <FormGroup label="Mobile number" type="text" id="default_phonenumber" />
+                    <FormGroupWrap row>
+                        <FormGroup className="col-md-6" label="First Name" type="text" id="first_name" />
+                        <FormGroup className="col-md-6" label="Last Name" type="text" id="last_name" />
+                    </FormGroupWrap>
                     <FormGroup label="Team" type="select" id="team_id" options={teamOptions} />
                     <FormGroup label="Is Team Captain" type="checkbox" id="is_captain" />
+                    <FormGroup label="Mobile number (optional)" type="text" id="default_phonenumber" />
                 </Form>
             }
         />
