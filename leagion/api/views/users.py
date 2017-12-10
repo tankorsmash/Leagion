@@ -5,8 +5,9 @@ from rest_framework.response import Response
 from rest_framework import generics, views as drf_views, filters
 
 from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
+from leagion.api.validators import no_empty_team
 
-from leagion.models import Season
+from leagion.models import Season, Team
 
 from leagion.utils import reverse_js
 
@@ -17,12 +18,22 @@ User = get_user_model()
 class MyCommUserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     filter_fields = ('teams__season',)
+    search_fields = ('first_name', 'last_name', 'email', 'teams__name')
 
     def get_queryset(self):
         league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
         return User.objects.filter(
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")
+
+    def create(self, request, *args, **kwargs):
+        team_id = request.data.get('team_id')
+        no_empty_team(team_id)
+        request.data['set_teams'] = [team_id]
+        request.data['captain_of_teams'] = request.data['set_teams'] if request.data.get('is_captain') else []
+        del request.data['team_id']
+        del request.data['is_captain']
+        return super().create(request, *args, **kwargs)
 
 
 @reverse_js

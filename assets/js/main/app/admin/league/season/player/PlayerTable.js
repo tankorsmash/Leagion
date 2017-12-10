@@ -4,7 +4,7 @@ import {Dropdown, DropdownItem} from 'components/dropdowns';
 import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
-//import PlayerCreateModal from './PlayerCreateModal';
+import PlayerCreateModal from './PlayerCreateModal';
 //import PlayerEditModal from './PlayerEditModal';
 //import PlayerDeleteManyModal from './PlayerDeleteManyModal';
 //import PlayerDeleteModal from './PlayerDeleteModal';
@@ -45,8 +45,8 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                             onSuccess={() =>{setRefresh(true);}}
                         />
                     </Dropdown>
-                    <PlayerCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                         */}
+                    <PlayerCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                 </div>
             )}
             emptySearchEl={

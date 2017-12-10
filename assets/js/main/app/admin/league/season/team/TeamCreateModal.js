@@ -34,7 +34,7 @@ export default enhance(({season, onSuccess}) => {
                         });
                     }}
                     form={{
-                        'name': null,
+                        'name': '',
                         'season_id': season.id,
                     }}
                 >

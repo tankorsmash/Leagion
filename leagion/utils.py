@@ -2,6 +2,7 @@ import pytz
 import faker
 import random
 import datetime
+import string
 
 from django.conf import settings
 from django.db.utils import IntegrityError
@@ -220,7 +221,7 @@ def generate_superuser():
         print("See note in settings.py about DEFAULT_ADMIN_DATA if you want to autogenerate a staff/superuser")
 
     except IntegrityError as e:
-        print ("User sharing default superuser email found, skipping")
+        print("User sharing default superuser email found, skipping")
 
 
 def generate_all():
@@ -229,3 +230,7 @@ def generate_all():
     league = generate_league()
     for season in league.seasons.all():
         generate_matches(season)
+
+
+def id_generator(size=6, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for _ in range(size))
