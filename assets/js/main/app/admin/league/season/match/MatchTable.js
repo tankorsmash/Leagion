@@ -8,6 +8,7 @@ import MatchCreateModal from './MatchCreateModal';
 import MatchEditModal from './MatchEditModal';
 import MatchDeleteManyModal from './MatchDeleteManyModal';
 import MatchDeleteModal from './MatchDeleteModal';
+import TeamWithLogo from '../team/TeamWithLogo';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -54,9 +55,9 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                 columns: [
                     {header: 'Date', cell: 'pretty_date'},
                     {header: 'Time', cell: 'pretty_time'},
-                    {header: 'Home Team', cell: (match) => match.home_team.name},
+                    {header: 'Home Team', cell: (match) => (<TeamWithLogo team={match.home_team}/>)},
                     {header: '', cell: () => 'vs.'},
-                    {header: 'Away Team', cell: (match) => match.away_team.name},
+                    {header: 'Away Team', cell: (match) => (<TeamWithLogo team={match.away_team}/>)},
                     {header: 'Location', cell: (match) => match.location ? match.location.name : ''},
                     {header: 'Results', cell: (match) => {
                         if (match.completed) {
