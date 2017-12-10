@@ -20,6 +20,34 @@ const enhance = compose(
 export default enhance(({team, setTeam, user, constants, match}) => {
     const isCaptain = team && team.captains.includes(user.id);
 
+    let tabs = [{
+        label: 'Matches',
+        content: (<MatchTable
+            matches={team.matches}
+            seasonId={team.season.id}
+            leagueId={team.season.league.id}
+        />),
+    }, {
+        label: 'Team Members',
+        content: <PlayerAvatarList players={team.players}/>
+    }];
+
+    if (isCaptain) {
+        tabs.push({
+            label: 'Team Details',
+            content: (
+                <div className="team-details">
+                    <TeamLogoUploader
+                        team={team}
+                        url={reverse("api-my-team-detail", {team_id: team.id})}
+                        onSuccess={(data)=> {setTeam(data);}}
+                    />
+                    <TeamColorUploader team={team} setTeam={setTeam} user={user} constants={constants} />
+                </div>
+            )
+        })
+    }
+
     return (
         <DatasetView
             url={reverse(
@@ -37,25 +65,7 @@ export default enhance(({team, setTeam, user, constants, match}) => {
                     </div>
                     <Tabs
                         className="team-match-table"
-                        tabs={[{
-                            label: 'Matches',
-                            content: (<MatchTable
-                                matches={team.matches}
-                                seasonId={team.season.id}
-                                leagueId={team.season.league.id}
-                            />),
-                        }, {
-                            label: 'Team Members',
-                            content: <PlayerAvatarList players={team.players}/>
-                        }, {
-                            label: 'Team Details',
-                            content: (
-                                <div className="team-details">
-                                    <TeamLogoUploader team={team} setTeam={setTeam} user={user} isCaptain={isCaptain} />
-                                    <TeamColorUploader team={team} setTeam={setTeam} user={user} isCaptain={isCaptain} constants={constants} />
-                                </div>
-                            )
-                        }]}
+                        tabs={tabs}
                     />
                 </div>
             }

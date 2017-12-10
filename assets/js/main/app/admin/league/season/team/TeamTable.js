@@ -8,6 +8,7 @@ import TeamCreateModal from './TeamCreateModal';
 import TeamEditModal from './TeamEditModal';
 import TeamDeleteManyModal from './TeamDeleteManyModal';
 import TeamDeleteModal from './TeamDeleteModal';
+import TeamChangeLogoModal from './TeamChangeLogoModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -68,6 +69,10 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                                 <TeamEditModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                />
+                                <TeamChangeLogoModal
+                                    team={item} onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Change Logo'}</DropdownItem>}
                                 />
                                 <TeamDeleteModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}
