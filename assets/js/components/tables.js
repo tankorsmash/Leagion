@@ -321,7 +321,7 @@ export class DataTable extends React.Component {
     render() {
         const {
             toolbarLeft, toolbarRight, url, tableProps,
-            params, emptySearchEl
+            params, emptySearchEl, noSearch
         } = this.props;
 
         const {data, search, refresh, page, page_size, count} = this.state;
@@ -350,10 +350,12 @@ export class DataTable extends React.Component {
                         left={toolbarLeft}
                         right={(
                             <div className="d-flex flex-row-reverse">
+                                {!noSearch &&
                                 <SearchInput
                                     setSearch={this.setSearch}
                                     search={search}
                                 />
+                                }
                                 {toolbarRight}
                             </div>
                         )}

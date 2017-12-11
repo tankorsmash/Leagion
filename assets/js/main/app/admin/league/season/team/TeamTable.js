@@ -8,6 +8,7 @@ import TeamCreateModal from './TeamCreateModal';
 import TeamEditModal from './TeamEditModal';
 import TeamDeleteManyModal from './TeamDeleteManyModal';
 import TeamDeleteModal from './TeamDeleteModal';
+import TeamPlayerModal from './TeamPlayerModal';
 import TeamChangeLogoModal from './TeamChangeLogoModal';
 import {Avatar} from 'components/media';
 
@@ -69,6 +70,10 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                                 <TeamEditModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                />
+                                <TeamPlayerModal
+                                    team={item} season={season}
+                                    Opener={<DropdownItem toggle={false}>{'Manage Players'}</DropdownItem>}
                                 />
                                 <TeamChangeLogoModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}

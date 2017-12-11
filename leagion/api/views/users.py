@@ -17,7 +17,7 @@ User = get_user_model()
 @reverse_js
 class MyCommUserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
-    filter_fields = ('teams__season',)
+    filter_fields = ('teams__season', 'teams')
     search_fields = ('first_name', 'last_name', 'email', 'teams__name')
 
     def get_queryset(self):
