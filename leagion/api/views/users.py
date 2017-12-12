@@ -3,33 +3,54 @@ from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
 from rest_framework import generics, mixins, views as drf_views, filters
+from rest_framework import status
 
-from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
+from leagion.api.serializers.users import UserSerializer, InviteUserSerializer, PublicUserSerializer
 from leagion.api.validators import no_empty_team
 
 from leagion.models import Season, Team
 
-from leagion.utils import reverse_js
+from leagion.utils import reverse_js, id_generator
 
 User = get_user_model()
 
 
 @reverse_js
-class InviteUserView(drf_views.APIView):
-    serializer_class = UserSerializer
+class InviteUserView(generics.CreateAPIView):
+    """
+    get or create a user and add them to team and send an email with a link
+    """
+
+    serializer_class = InviteUserSerializer
+
+    def perform_create(self, serializer):
+        self.user = serializer.save()
 
     def post(self, request, *args, **kwargs):
-        team_id = request.data.get('team_id')
-        no_empty_team(team_id)
-        request.data['set_teams'] = [team_id]
-        request.data['set_captain_of_teams'] = request.data['set_teams'] if request.data.get('is_captain') else []
-        del request.data['team_id']
-        del request.data['is_captain']
-        return super().create(request, *args, **kwargs)
+        data = request.data
+        response = None
+        self.user = User.objects.filter(email__iexact=data.get('email', ''))
+
+        if not self.user:
+            response = super().create(request, *args, **kwargs)
+        else:
+            no_empty_team(data.get('team_id'))
+
+        # asign data
+        user = self.user
+        team = Team.objects.filter(id=data['team_id']).first()
+        is_captain = data['is_captain']
+
+        # add fields
+        user.teams.add(team)
+        if is_captain:
+            user.captain_of_teams.add(team)
+
+        return response or Response(status=status.HTTP_200_OK)
 
 
 @reverse_js
-class MyCommUserList(generics.ListCreateAPIView):
+class MyCommUserList(generics.ListAPIView):
     serializer_class = UserSerializer
     filter_fields = ('teams__season', 'teams')
     search_fields = ('first_name', 'last_name', 'email', 'teams__name')
@@ -39,18 +60,6 @@ class MyCommUserList(generics.ListCreateAPIView):
         return User.objects.filter(
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")
-
-    def create(self, request, *args, **kwargs):
-        team_id = request.data.get('team_id')
-        no_empty_team(team_id)
-        request.data['set_teams'] = [team_id]
-        request.data['set_captain_of_teams'] = request.data['set_teams'] if request.data.get('is_captain') else []
-        del request.data['team_id']
-        del request.data['is_captain']
-        return super().create(request, *args, **kwargs)
-
-    def update_partial(self, queryset, *args, **kwargs):
-        pass
 
 
 @reverse_js

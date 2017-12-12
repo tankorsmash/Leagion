@@ -20,7 +20,7 @@ export default enhance(({season, onSuccess, className, Opener}) => {
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {
                         ajax({
-                            url: reverse('api-my-comm-player-list'),
+                            url: reverse('api-invite-user'),
                             method: 'POST',
                             data: form,
                         }).then(data => {

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from leagion.models import Team
 
 
 def no_empty_date(date):
@@ -12,7 +13,9 @@ def no_empty_time(time):
 
 
 def no_empty_team(team):
-    if not team:
+    if team and Team.objects.filter(id=team).first():
+        return
+    else:
         raise serializers.ValidationError({
             'team_id': 'Please select a team that the player will be on.'
         })

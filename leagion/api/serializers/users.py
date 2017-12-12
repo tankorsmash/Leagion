@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
 from leagion.models import Team, League
-from leagion.utils import id_generator
+from leagion.api.validators import no_empty_team
 User = get_user_model()
 
 class ShallowTeamSerializer(serializers.ModelSerializer):
@@ -22,6 +22,32 @@ class ShallowLeagueSerializer(serializers.ModelSerializer):
         )
 
 
+class InviteUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'email', 'first_name', 'last_name',
+            'default_phonenumber', 'team_id',
+        )
+    team_id = serializers.IntegerField(required=False, write_only=True)
+
+    def validate(self, data):
+        no_empty_team(data.get('team_id'))
+        return data
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            default_phonenumber=validated_data['default_phonenumber']
+        )
+
+        user.save()
+
+        return user
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -33,9 +59,6 @@ class UserSerializer(serializers.ModelSerializer):
             'captain_of_teams', 'leagues_commissioned',
             'is_commissioner', 'is_staff', 'is_moderator',
             'avatar', 'avatar_url', 'status',
-
-            #write_only
-            'set_teams',
         )
         extra_kwargs = {
             'password': {'write_only': True, 'required': False},
@@ -44,7 +67,6 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     teams = ShallowTeamSerializer(many=True, read_only=True)
-    set_teams = serializers.ListField(required=False, write_only=True)
     leagues_commissioned = ShallowLeagueSerializer(many=True, read_only=True)
     avatar = serializers.ImageField(required=False)
 
@@ -55,14 +77,7 @@ class UserSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
         )
 
-        user.set_password(
-            validated_data.get('password') or id_generator(size=10))
-
-        user.save()
-
-        team_ids = validated_data.get('set_teams', [])
-        user.teams.set(Team.objects.filter(id__in=team_ids))
-        user.captain_of_teams.set(validated_data.get('captain_of_teams', []))
+        user.set_password(validated_data.get('password'))
 
         user.save()
 

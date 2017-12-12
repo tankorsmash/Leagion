@@ -70,6 +70,9 @@ body {
             .Select-placeholder, .Select-value {
                 top: 3px;
             }
+            .Select-placeholder {
+                color: $input-placeholder-color;
+            }
         }
         &.is-open {
             .Select-control {

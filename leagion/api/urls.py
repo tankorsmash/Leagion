@@ -20,6 +20,7 @@ urlpatterns = [
 
     url(r'me/$', users_views.MyUserDetailsView.as_view(), name='api-my-details'),
 
+    url(r'^invite-player/$', users_views.InviteUserView.as_view(), name='api-invite-user'),
     url(r'^me/comm/player/$', users_views.MyCommUserList.as_view(), name='api-my-comm-player-list'),
     url(r'^me/comm/player/(?P<player_id>\d+)/$', users_views.MyCommUserDetail.as_view(), name='api-my-comm-player-detail'),
     url(r'^player/(?P<player_id>\d+)/commissioner-add/$', users_views.AddLeaguesToCommission.as_view(), name='api-player-commissioner-add'),

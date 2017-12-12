@@ -37,7 +37,6 @@ export default enhance(({season, setSeasonRefresh,
     if (selectedTeam) {
         params.teams = selectedTeam;
     }
-    console.log(params);
 
     return (
         <DataTable
@@ -49,7 +48,7 @@ export default enhance(({season, setSeasonRefresh,
                     value={selectedTeam}
                     options={season.teams.map((team) => ({label: team.name, value: team.id}))}
                     onChange={(item)=>{ setSelectedTeam(item.value); }}
-                    placeholder={'filter by team'}
+                    placeholder={'filter by team...'}
                 />,
                 <PlayerInviteModal
                     key={'invite'}
