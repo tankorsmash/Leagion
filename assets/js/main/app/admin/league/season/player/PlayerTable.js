@@ -17,8 +17,8 @@ const enhance = compose(
     withState('selectedTeam', 'setSelectedTeam', null),
     setDisplayName('PlayerTable'),
 );
-export default enhance(({season, setRefresh, selectedIds,
-    setSelectedIds, selectedTeam, setSelectedTeam}) => {
+export default enhance(({season, setSeasonRefresh,
+    selectedTeam, setSelectedTeam}) => {
     const seasonTeamIds = R.map(R.prop('id'), season.teams);
     const teamNameMap = R.reduce(
         (obj, team)=>{
@@ -31,21 +31,29 @@ export default enhance(({season, setRefresh, selectedIds,
         season.teams
     );
 
+    let params = {
+        teams__season: season.id,
+    };
+    if (selectedTeam) {
+        params.teams = selectedTeam;
+    }
+    console.log(params);
+
     return (
         <DataTable
             url={reverse('api-my-comm-player-list')}
-            params={{teams__season: season.id}}
+            params={params}
             toolbar={[
                 <Select
                     key={'select'}
                     value={selectedTeam}
                     options={season.teams.map((team) => ({label: team.name, value: team.id}))}
-                    onChange={(item)=>{setSelectedTeam(item.value);}}
+                    onChange={(item)=>{ setSelectedTeam(item.value); }}
                     placeholder={'filter by team'}
                 />,
                 <PlayerInviteModal
                     key={'invite'}
-                    season={season} onSuccess={() =>{setRefresh(true);}}
+                    season={season} onSuccess={() =>{setSeasonRefresh(true);}}
                     Opener={
                         <Button color="primary" size="md" block >
                             <FontAwesome name="plus"/> {' Invite New Player'}
@@ -64,7 +72,7 @@ export default enhance(({season, setRefresh, selectedIds,
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any players in this season yet. Create one to get started!"}</p>
-                        <PlayerInviteModal season={season} onSuccess={() =>{setRefresh(true);}}/>
+                        <PlayerInviteModal season={season} onSuccess={() =>{setSeasonRefresh(true);}}/>
                     </NoDataCard>
                 ),
                 columns: [
@@ -75,7 +83,6 @@ export default enhance(({season, setRefresh, selectedIds,
                     {header: 'Last Name', cell: 'last_name'},
                     {header: 'Email', cell: 'email'},
                     {header: 'Mobile #', cell: 'default_phonenumber'},
-                    {header: 'Alternate #', cell: 'alt_phonenumber'},
                     {header: 'Status', cell: 'status'},
                     {header: 'Team', cell: (player) => {
                         const playerTeamIds = R.map(R.prop('id'), player.teams);

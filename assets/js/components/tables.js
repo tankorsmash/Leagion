@@ -309,6 +309,12 @@ export class DataTable extends React.Component {
         page_size: 10,
     };
 
+    componentWillUpdate(nextProps) {
+        if(this.props.params !== nextProps.params) {
+            this.setRefresh(true);
+        }
+    }
+
     setRefresh = (refresh) => {this.setState({refresh: refresh});};
     setSearch = (search) => {
         this.setState({
