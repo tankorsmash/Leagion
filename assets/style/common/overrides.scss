@@ -60,8 +60,10 @@ form {
 
 body {
     .Select {
+        min-width: 200px;
+
         .Select-control {
-            height: 42px;
+            height: 100%;
             border-radius: $input-border-radius;
             border-color: $input-border-color;
 
@@ -95,10 +97,23 @@ body {
 
             }
         }
+        .Select-menu-outer {
+            z-index: 100;
+        }
+
+    }
+
+    .form-group {
+        .Select-control {
+            height: 42px;
+        }
     }
 }
 
 .modal-xl {
-    max-width: 100%;
-    margin: 10px;
+    @media (min-width: map-get($grid-breakpoints, sm)) {
+        max-width: 100%;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
 }

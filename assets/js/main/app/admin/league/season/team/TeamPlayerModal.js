@@ -5,6 +5,7 @@ import {Dropdown, DropdownItem} from 'components/dropdowns';
 import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 import {SimpleModal} from 'components/modals';
+import PlayerInviteModal from '../player/PlayerInviteModal';
 
 import {Avatar} from 'components/media';
 
@@ -23,6 +24,11 @@ export default enhance(({season, team, setRefresh, Opener}) => {
                     noSearch
                     url={reverse('api-my-comm-player-list')}
                     params={{teams: [team.id]}}
+                    toolbarLeft={(
+                        <div className="d-flex">
+                            <PlayerInviteModal season={season} onSuccess={() =>{setRefresh(true);}}/>
+                        </div>
+                    )}
                     tableProps={{
                         responsive: true,
                         striped: true,

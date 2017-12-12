@@ -20,23 +20,21 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
         <DataTable
             url={reverse('api-my-comm-match-list')}
             params={{season: season.id}}
-            toolbarLeft={(
-                <div className="d-flex">
-                    <Dropdown
-                        disabled={!selectedIds.length}
-                        className="mr-1"
-                        color="info"
-                        buttonText="..."
-                    >
-                        <MatchDeleteManyModal
-                            ids={selectedIds}
-                            Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
-                            onSuccess={() =>{setRefresh(true);}}
-                        />
-                    </Dropdown>
-                    <MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
-                </div>
-            )}
+            toolbar={[
+                <Dropdown
+                    key="dropdown"
+                    disabled={!selectedIds.length}
+                    color="info"
+                    buttonText="..."
+                >
+                    <MatchDeleteManyModal
+                        ids={selectedIds}
+                        Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
+                        onSuccess={() =>{setRefresh(true);}}
+                    />
+                </Dropdown>,
+                <MatchCreateModal key="match-create" season={season} onSuccess={() =>{setRefresh(true);}}/>
+            ]}
             emptySearchEl={
                 <NoDataCard>
                     <p>{ "No Matches match your search criteria" }</p>

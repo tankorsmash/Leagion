@@ -5,7 +5,6 @@ import update from 'immutability-helper';
 
 import {Input} from 'components/forms';
 import {SearchInput} from 'components/forms';
-import {LeftRight} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 import {Button} from 'components/buttons';
 
@@ -284,7 +283,7 @@ export class DataTable extends React.Component {
     static propTypes = {
         tableProps: PropTypes.object.isRequired,
         url: PropTypes.string.isRequired,
-        toolbar: PropTypes.element,
+        toolbar: PropTypes.array,
         onDrop: function(props, propName, componentName) {
             if (
                 (props['draggable'] == true &&
@@ -320,7 +319,7 @@ export class DataTable extends React.Component {
 
     render() {
         const {
-            toolbarLeft, toolbarRight, url, tableProps,
+            toolbar, url, tableProps,
             params, emptySearchEl, noSearch
         } = this.props;
 
@@ -345,22 +344,15 @@ export class DataTable extends React.Component {
                     });
                 }}
             >
-                {!noData &&
-                    <LeftRight className="mb-3"
-                        left={toolbarLeft}
-                        right={(
-                            <div className="d-flex flex-row-reverse">
-                                {!noSearch &&
-                                <SearchInput
-                                    setSearch={this.setSearch}
-                                    search={search}
-                                />
-                                }
-                                {toolbarRight}
-                            </div>
-                        )}
-                    />
-                }
+                <div className="le-data-table-toolbar row">
+                        {!noData && toolbar}
+                        {!noData && !noSearch &&
+                            <SearchInput
+                                setSearch={this.setSearch}
+                                search={search}
+                            />
+                        }
+                </div>
                 { showTable && !noSearchMatch && (
                     <Table
                         data={data}

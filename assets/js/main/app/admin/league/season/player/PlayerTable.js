@@ -1,18 +1,24 @@
 import {compose, setDisplayName, withState } from 'recompose';
+import Select from 'react-select';
+import FontAwesome from 'react-fontawesome';
 
 import {Dropdown, DropdownItem} from 'components/dropdowns';
 import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
+import {SearchInput} from 'components/forms';
+import {Button} from 'components/buttons';
 
-import PlayerCreateModal from './PlayerCreateModal';
+import PlayerInviteModal from './PlayerInviteModal';
 import ChangeAvatarModal from './ChangeAvatarModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
+    withState('selectedTeam', 'setSelectedTeam', null),
     setDisplayName('PlayerTable'),
 );
-export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
+export default enhance(({season, setRefresh, selectedIds,
+    setSelectedIds, selectedTeam, setSelectedTeam}) => {
     const seasonTeamIds = R.map(R.prop('id'), season.teams);
     const teamNameMap = R.reduce(
         (obj, team)=>{
@@ -24,15 +30,29 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
         {},
         season.teams
     );
+
     return (
         <DataTable
             url={reverse('api-my-comm-player-list')}
             params={{teams__season: season.id}}
-            toolbarLeft={(
-                <div className="d-flex">
-                    <PlayerCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
-                </div>
-            )}
+            toolbar={[
+                <Select
+                    key={'select'}
+                    value={selectedTeam}
+                    options={season.teams.map((team) => ({label: team.name, value: team.id}))}
+                    onChange={(item)=>{setSelectedTeam(item.value);}}
+                    placeholder={'filter by team'}
+                />,
+                <PlayerInviteModal
+                    key={'invite'}
+                    season={season} onSuccess={() =>{setRefresh(true);}}
+                    Opener={
+                        <Button color="primary" size="md" block >
+                            <FontAwesome name="plus"/> {' Invite New Player'}
+                        </Button>
+                    }
+                />
+            ]}
             emptySearchEl={
                 <NoDataCard>
                     <p>{ "No players match your search criteria" }</p>
@@ -44,7 +64,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any players in this season yet. Create one to get started!"}</p>
-                        <PlayerCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
+                        <PlayerInviteModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                     </NoDataCard>
                 ),
                 columns: [

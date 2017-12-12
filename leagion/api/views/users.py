@@ -15,6 +15,20 @@ User = get_user_model()
 
 
 @reverse_js
+class InviteUserView(drf_views.APIView):
+    serializer_class = UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        team_id = request.data.get('team_id')
+        no_empty_team(team_id)
+        request.data['set_teams'] = [team_id]
+        request.data['set_captain_of_teams'] = request.data['set_teams'] if request.data.get('is_captain') else []
+        del request.data['team_id']
+        del request.data['is_captain']
+        return super().create(request, *args, **kwargs)
+
+
+@reverse_js
 class MyCommUserList(generics.ListCreateAPIView):
     serializer_class = UserSerializer
     filter_fields = ('teams__season', 'teams')

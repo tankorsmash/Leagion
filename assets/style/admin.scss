@@ -58,3 +58,24 @@
     }
 
 }
+
+.le-data-table-toolbar {
+    padding: 15px;
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        .le-search-input {
+            margin-left: auto;
+            width: 300px;
+        }
+
+        &> * {
+            margin: 2px;
+        }
+    }
+    @media (max-width: map-get($grid-breakpoints, md)) {
+        &> * {
+            width: 100%;
+            margin: 2px 0;
+        }
+    }
+}

@@ -1,15 +1,13 @@
 import {compose, setDisplayName } from 'recompose';
-import FontAwesome from 'react-fontawesome';
 
-import {Button} from 'components/buttons';
 import {FormModal} from 'components/modals';
 import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import ajax from 'common/ajax';
 
 const enhance = compose(
-    setDisplayName('PlayerCreateModal'),
+    setDisplayName('PlayerInviteModal'),
 );
-export default enhance(({season, onSuccess}) => {
+export default enhance(({season, onSuccess, className, Opener}) => {
     const teamOptions = season.teams.map((team) => ({
         value: team.id,
         label: team.name,
@@ -17,11 +15,7 @@ export default enhance(({season, onSuccess}) => {
     return (
         <FormModal
             title="Invite new player"
-            Opener={
-                <Button color="primary" size="md" >
-                    <FontAwesome name="plus"/> {' Invite New Player'}
-                </Button>
-            }
+            Opener={Opener}
             body={
                 <Form
                     onSubmit={(form, setErrors, setSuccess) => {
