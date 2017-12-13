@@ -69,11 +69,6 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                                     team={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
                                 />
-                                {/*
-                                <TeamPlayerModal
-                                    team={item} season={season}
-                                    Opener={<DropdownItem toggle={false}>{'Manage Players'}</DropdownItem>}
-                                />*/}
                                 <TeamChangeLogoModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Change Logo'}</DropdownItem>}

@@ -2,6 +2,7 @@ import {Table as RTable, Row, Col } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Dragula from 'react-dragula';
 import update from 'immutability-helper';
+import {areEqualShallow} from 'common/functions';
 
 import {Input} from 'components/forms';
 import {SearchInput} from 'components/forms';
@@ -309,8 +310,8 @@ export class DataTable extends React.Component {
         page_size: 10,
     };
 
-    componentWillUpdate(nextProps) {
-        if(this.props.params !== nextProps.params) {
+    componentWillReceiveProps(nextProps) {
+        if (!areEqualShallow(this.props.params, nextProps.params)) {
             this.setRefresh(true);
         }
     }
@@ -335,13 +336,15 @@ export class DataTable extends React.Component {
         const noSearchMatch = data && !data.length && search;
         const showTable = !!data;
 
-        params.page_size = page_size;
-        params.page = page;
+        const dataParams = Object.assign({}, params, {
+            page_size: page_size,
+            page: page,
+        });
 
         return (
             <DatasetView
                 url={url}
-                data={params} search={search}
+                data={dataParams} search={search}
                 refresh={refresh} setRefresh={this.setRefresh}
                 onSuccess={(newData) => {
                     this.setState({
@@ -351,13 +354,13 @@ export class DataTable extends React.Component {
                 }}
             >
                 <div className="le-data-table-toolbar row">
-                        {!noData && toolbar}
-                        {!noData && !noSearch &&
-                            <SearchInput
-                                setSearch={this.setSearch}
-                                search={search}
-                            />
-                        }
+                    {toolbar}
+                    {!noData && !noSearch &&
+                        <SearchInput
+                            setSearch={this.setSearch}
+                            search={search}
+                        />
+                    }
                 </div>
                 { showTable && !noSearchMatch && (
                     <Table
@@ -365,7 +368,7 @@ export class DataTable extends React.Component {
                         {...tableProps}
                     />
                 )}
-                { showTable && !!count &&
+                { showTable && !noSearchMatch && !!count &&
                     <TableControls
                         page={page}
                         pageCount={Math.ceil(count / page_size)}

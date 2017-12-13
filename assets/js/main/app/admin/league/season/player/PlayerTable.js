@@ -51,7 +51,7 @@ export default enhance(({season, setSeasonRefresh,
                     placeholder={'filter by team...'}
                 />,
                 <PlayerInviteModal
-                    key={'invite'}
+                    key={'inviter'}
                     season={season} onSuccess={() =>{setSeasonRefresh(true);}}
                     Opener={
                         <Button color="primary" size="md" block >
@@ -71,7 +71,15 @@ export default enhance(({season, setSeasonRefresh,
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any players in this season yet. Create one to get started!"}</p>
-                        <PlayerInviteModal season={season} onSuccess={() =>{setSeasonRefresh(true);}}/>
+                        <PlayerInviteModal
+                            key={'inviter'}
+                            season={season} onSuccess={() =>{setSeasonRefresh(true);}}
+                            Opener={
+                                <Button color="primary" size="md" block >
+                                    <FontAwesome name="plus"/> {' Invite New Player'}
+                                </Button>
+                            }
+                        />
                     </NoDataCard>
                 ),
                 columns: [

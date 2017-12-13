@@ -42,9 +42,7 @@ class InviteUserSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name'],
             default_phonenumber=validated_data['default_phonenumber']
         )
-
         user.save()
-
         return user
 
 
@@ -76,11 +74,8 @@ class UserSerializer(serializers.ModelSerializer):
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],
         )
-
         user.set_password(validated_data.get('password'))
-
         user.save()
-
         return user
 
 
