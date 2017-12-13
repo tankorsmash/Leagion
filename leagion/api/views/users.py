@@ -74,6 +74,19 @@ class MyCommUserDetail(generics.RetrieveUpdateAPIView):
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")
 
+    def partial_update(self, request, *args, **kwargs):
+        user = User.objects.get(id=kwargs.get('player_id'))
+        team_id = request.data.get('remove_team_id')
+        request.data.pop('remove_team_id', None)
+
+        response = super().partial_update(request, *args, **kwargs)
+
+        if team_id:
+            team = Team.objects.get(id=team_id)
+            user.teams.remove(team)
+
+        return response
+
 
 @reverse_js
 class AddLeaguesToCommission(drf_views.APIView):

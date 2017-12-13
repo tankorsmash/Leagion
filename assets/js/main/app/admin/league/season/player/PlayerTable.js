@@ -10,6 +10,7 @@ import {Button} from 'components/buttons';
 
 import PlayerInviteModal from './PlayerInviteModal';
 import ChangeAvatarModal from './ChangeAvatarModal';
+import PlayerRemoveFromTeamModal from './PlayerRemoveFromTeamModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -17,7 +18,7 @@ const enhance = compose(
     withState('selectedTeam', 'setSelectedTeam', null),
     setDisplayName('PlayerTable'),
 );
-export default enhance(({season, setSeasonRefresh,
+export default enhance(({season, setRefresh,
     selectedTeam, setSelectedTeam}) => {
     const seasonTeamIds = R.map(R.prop('id'), season.teams);
     const teamNameMap = R.reduce(
@@ -30,6 +31,11 @@ export default enhance(({season, setSeasonRefresh,
         {},
         season.teams
     );
+    const getTeamIds = R.compose(R.intersection(seasonTeamIds), R.map(R.prop('id')), R.prop('teams'));
+    const getTeam = R.compose(R.head, R.map((id)=>(teamNameMap[id])), getTeamIds);
+    const playerIsCaptain = player => {
+        return player.captain_of_teams.includes(R.head(getTeamIds(player)));
+    };
 
     let params = {
         teams__season: season.id,
@@ -52,7 +58,7 @@ export default enhance(({season, setSeasonRefresh,
                 />,
                 <PlayerInviteModal
                     key={'inviter'}
-                    season={season} onSuccess={() =>{setSeasonRefresh(true);}}
+                    season={season} onSuccess={() =>{setRefresh(true);}}
                     Opener={
                         <Button color="primary" size="md" block >
                             <FontAwesome name="plus"/> {' Invite New Player'}
@@ -73,7 +79,7 @@ export default enhance(({season, setSeasonRefresh,
                         <p>{"It looks like you don't have any players in this season yet. Create one to get started!"}</p>
                         <PlayerInviteModal
                             key={'inviter'}
-                            season={season} onSuccess={() =>{setSeasonRefresh(true);}}
+                            season={season} onSuccess={() =>{setRefresh(true);}}
                             Opener={
                                 <Button color="primary" size="md" block >
                                     <FontAwesome name="plus"/> {' Invite New Player'}
@@ -92,18 +98,30 @@ export default enhance(({season, setSeasonRefresh,
                     {header: 'Mobile #', cell: 'default_phonenumber'},
                     {header: 'Status', cell: 'status'},
                     {header: 'Team', cell: (player) => {
-                        const playerTeamIds = R.map(R.prop('id'), player.teams);
-                        const teamIds = R.intersection(seasonTeamIds, playerTeamIds);
-                        const teamNames = R.map((id)=>(teamNameMap[id].name), teamIds);
-                        return R.join(', ', teamNames);
+                        return getTeam(player).name;
                     }},
-                    {cell: (item) => {
+                    {header: 'Captain', cell: (player) => {
+                        if (playerIsCaptain(player)) {
+                            return (
+                                <div className="text-center">
+                                    <FontAwesome className="le-captain-star" name="star"/>
+                                </div>
+                            );
+                        }
+                    }},
+                    {cell: (player) => {
                         return (
                             <Dropdown menuRight dotdotdot >
                                 <ChangeAvatarModal
-                                    player={item} onSuccess={() =>{setRefresh(true);}}
+                                    player={player} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Change Avatar'}</DropdownItem>}
                                 />
+                                <PlayerRemoveFromTeamModal
+                                    player={player} team={getTeam(player)} onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Remove from Team'}</DropdownItem>}
+                                />
+
+                                {playerIsCaptain(player) }
                             </Dropdown>
                         );
                     }},
