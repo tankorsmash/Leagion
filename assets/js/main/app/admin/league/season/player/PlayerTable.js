@@ -11,6 +11,7 @@ import {Button} from 'components/buttons';
 import PlayerInviteModal from './PlayerInviteModal';
 import ChangeAvatarModal from './ChangeAvatarModal';
 import PlayerRemoveFromTeamModal from './PlayerRemoveFromTeamModal';
+import PlayerSetTeamCaptain from './PlayerSetTeamCaptain';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -114,14 +115,27 @@ export default enhance(({season, setRefresh,
                             <Dropdown menuRight dotdotdot >
                                 <ChangeAvatarModal
                                     player={player} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Change Avatar'}</DropdownItem>}
+                                    Opener={<DropdownItem toggle={false}>{'Change avatar'}</DropdownItem>}
                                 />
                                 <PlayerRemoveFromTeamModal
                                     player={player} team={getTeam(player)} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Remove from Team'}</DropdownItem>}
+                                    Opener={<DropdownItem toggle={false}>{'Remove from team'}</DropdownItem>}
                                 />
 
-                                {playerIsCaptain(player) }
+                                {!playerIsCaptain(player) &&
+                                    <PlayerSetTeamCaptain
+                                        set={true}
+                                        player={player} team={getTeam(player)} onSuccess={() =>{setRefresh(true);}}
+                                        Opener={<DropdownItem toggle={false}>{'Make team captain'}</DropdownItem>}
+                                    />
+                                }
+                                {playerIsCaptain(player) &&
+                                    <PlayerSetTeamCaptain
+                                        set={false}
+                                        player={player} team={getTeam(player)} onSuccess={() =>{setRefresh(true);}}
+                                        Opener={<DropdownItem toggle={false}>{'Remove from captains'}</DropdownItem>}
+                                    />
+                                }
                             </Dropdown>
                         );
                     }},

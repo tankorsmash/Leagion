@@ -76,14 +76,24 @@ class MyCommUserDetail(generics.RetrieveUpdateAPIView):
 
     def partial_update(self, request, *args, **kwargs):
         user = User.objects.get(id=kwargs.get('player_id'))
-        team_id = request.data.get('remove_team_id')
+        remove_team_id = request.data.get('remove_team_id')
+        remove_captain_team_id = request.data.get('remove_captain_team_id')
+        add_captain_team_id = request.data.get('add_captain_team_id')
         request.data.pop('remove_team_id', None)
+        request.data.pop('remove_captain_team_id', None)
+        request.data.pop('add_captain_team_id', None)
 
         response = super().partial_update(request, *args, **kwargs)
 
-        if team_id:
-            team = Team.objects.get(id=team_id)
+        if remove_team_id:
+            team = Team.objects.get(id=remove_team_id)
             user.teams.remove(team)
+        if remove_captain_team_id:
+            team = Team.objects.get(id=remove_captain_team_id)
+            user.captain_of_teams.remove(team)
+        if add_captain_team_id:
+            team = Team.objects.get(id=add_captain_team_id)
+            user.captain_of_teams.add(team)
 
         return response
 
