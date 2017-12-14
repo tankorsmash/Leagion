@@ -12,9 +12,9 @@ import {
     InputGroup, InputGroupButton,
 } from 'reactstrap';
 
+import {MapWithASearchBox} from 'components/map';
 import {DATE_FORMAT} from 'common/constants';
 import {onKeyPress} from 'common/functions';
-
 import {Button} from 'components/buttons';
 
 const enhance = compose(
@@ -62,7 +62,7 @@ export const Form = enhance(({className, id, children, onFormSubmit, onInputChan
         if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
-                form, errors, setForm,
+                form, errors, setForm
             });
         } else {
             return child;
@@ -135,6 +135,7 @@ export const FormGroup = formGroupEnhance((props) => {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
         tag, children, selectOptions, options, onSelectChange,
+        style, innerRef,
     } = props;
 
     let {name, value} = props;
@@ -163,6 +164,7 @@ export const FormGroup = formGroupEnhance((props) => {
 	const valid = error ? false : undefined;
 
     const isSelect = type === 'select';
+    const isMap = type === 'map';
 
     return (
         <RFormGroup
@@ -172,6 +174,7 @@ export const FormGroup = formGroupEnhance((props) => {
             disabled={disabled}
             tag={tag}
             className={className}
+            style={style}
             color={error ? 'danger' : ''}
         >
             { checkOrRadio && (
@@ -183,10 +186,11 @@ export const FormGroup = formGroupEnhance((props) => {
             { !checkOrRadio &&
                 <Label check={check} for={id}>{label}</Label>
             }
-            { !checkOrRadio && !isDatePicker && !isSelect &&
+            { !checkOrRadio && !isDatePicker && !isSelect && !isMap &&
                 <Input
                     type={type} name={name} id={id} value={value}
                     onChange={onChange} valid={valid} placeholder={placeholder}
+                    ref={innerRef}
                 >
                     {children}
                 </Input>
@@ -203,6 +207,16 @@ export const FormGroup = formGroupEnhance((props) => {
                     options={options} onChange={onSelectChange}
                     placeholder={placeholder} {...selectOptions}
                 />
+            }
+            { isMap &&
+                <MapWithASearchBox onMapChanged={(places)=>{
+                    const place = R.head(places);
+                    if (place) {
+                        props.setForm((f) => {
+                            return update(f, {[props.id]: {$set: place.formatted_address}});
+                        });
+                    }
+                }}/>
             }
             <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
         </RFormGroup>

@@ -4,7 +4,7 @@ import {Dropdown, DropdownItem} from 'components/dropdowns';
 import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
-//import TeamCreateModal from './TeamCreateModal';
+import LocationCreateModal from './LocationCreateModal';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
@@ -14,7 +14,23 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
     return (
         <DataTable
             url={reverse('api-my-comm-location-list')}
-            params={{league: season.league}}
+            params={{league: season.league.id}}
+            toolbar={[
+                /*
+                <Dropdown
+                    key="dropdown"
+                    disabled={!selectedIds.length}
+                    color="info"
+                    buttonText="..."
+                >
+                    <TeamDeleteManyModal
+                        ids={selectedIds}
+                        Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
+                        onSuccess={() =>{setRefresh(true);}}
+                    />
+                </Dropdown>,*/
+                <LocationCreateModal key="create" season={season} onSuccess={() =>{setRefresh(true);}}/>
+            ]}
             emptySearchEl={
                 <NoDataCard>
                     <p>{ "No locations match your search criteria" }</p>
@@ -27,9 +43,7 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any locations in this league yet. Create one to get started!"}</p>
-                        {/*
-                        <TeamCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
-                        */}
+                        <LocationCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                     </NoDataCard>
                 ),
                 columns: [

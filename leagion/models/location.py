@@ -1,6 +1,5 @@
 from django.db import models
 
-from address.models import AddressField
 from .league import League
 
 
@@ -12,7 +11,8 @@ class Location(models.Model):
 
     league = models.ForeignKey(League, related_name='locations')
     name = models.CharField(max_length=255)
-    address = AddressField(blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    geoposition = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return "Location: {name}".format(name=self.name)
