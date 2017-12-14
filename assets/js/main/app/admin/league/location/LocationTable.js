@@ -7,6 +7,7 @@ import {NoDataCard} from 'components/cards';
 import LocationCreateModal from './LocationCreateModal';
 import LocationDeleteModal from './LocationDeleteModal';
 import LocationDeleteManyModal from './LocationDeleteManyModal';
+import LocationEditModal from './LocationEditModal';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
@@ -53,9 +54,13 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {cell: (item) => {
                         return (
                             <Dropdown menuRight dotdotdot >
+                                <LocationEditModal
+                                    location={item} season={season} onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Edit'}</DropdownItem>}
+                                />
                                 <LocationDeleteModal
                                     location={item} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Delete Location'}</DropdownItem>}
+                                    Opener={<DropdownItem toggle={false}>{'Delete'}</DropdownItem>}
                                 />
                             </Dropdown>
                         );

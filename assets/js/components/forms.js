@@ -135,7 +135,7 @@ export const FormGroup = formGroupEnhance((props) => {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
         tag, children, selectOptions, options, onSelectChange,
-        style, innerRef,
+        style, innerRef, lat, lng,
     } = props;
 
     let {name, value} = props;
@@ -146,6 +146,13 @@ export const FormGroup = formGroupEnhance((props) => {
     //explicitly passed in (i.e. for radios)
     if (!value) {
         value = form[name];
+    }
+    let latitude, longitude;
+    if (lat) {
+        latitude = form[lat];
+    }
+    if (lng) {
+        longitude = form[lng];
     }
     const error = errors[name];
     const feedbackClass = error ? 'show-feedback' : '';
@@ -209,14 +216,23 @@ export const FormGroup = formGroupEnhance((props) => {
                 />
             }
             { isMap &&
-                <MapWithASearchBox onMapChanged={(places)=>{
-                    const place = R.head(places);
-                    if (place) {
-                        props.setForm((f) => {
-                            return update(f, {[props.id]: {$set: place.formatted_address}});
-                        });
-                    }
-                }}/>
+                    <MapWithASearchBox
+                        initial={value}
+                        latitude={latitude} longitude={longitude}
+                        onMapChanged={(places)=>{
+                            const place = R.head(places);
+                            if (place) {
+                                props.setForm((f) => {
+                                    return update(f, {
+                                        [props.id]: {$set: place.formatted_address},
+                                        [lat]: {$set: place.geometry.location.lat().toFixed(6)},
+                                        [lng]: {$set: place.geometry.location.lng().toFixed(6)},
+                                    });
+
+                                });
+                            }
+                        }}
+                    />
             }
             <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
         </RFormGroup>
