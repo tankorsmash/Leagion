@@ -1,13 +1,10 @@
 import {compose, setDisplayName, withState} from 'recompose';
-import FontAwesome from 'react-fontawesome';
 
 import {Titlebar} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 import LeagueCard from './LeagueCard';
 import LeagueCreateModal from './LeagueCreateModal';
-import {Button} from 'components/buttons';
 
-//import LeagueCard from 'main/app/admin/league/LeagueCard';
 
 const enhance = compose(
     setDisplayName('LeagueList'),

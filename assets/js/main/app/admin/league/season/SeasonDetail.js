@@ -7,6 +7,7 @@ import {Tabs} from 'components/tabs';
 import TeamTable from './team/TeamTable';
 import MatchTable from './match/MatchTable';
 import PlayerTable from './player/PlayerTable';
+import LocationTable from 'main/app/admin/league/location/LocationTable';
 
 const enhance = compose(
     setDisplayName('SeasonDetail'),
@@ -47,6 +48,13 @@ export default enhance(({season, setSeason, user, match,
                     }, {
                         label: 'Players',
                         content: <PlayerTable
+                            season={season}
+                            user={user}
+                            setRefresh={setRefresh}
+                        />,
+                    }, {
+                        label: 'Locations',
+                        content: <LocationTable
                             season={season}
                             user={user}
                             setRefresh={setRefresh}

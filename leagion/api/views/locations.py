@@ -11,6 +11,8 @@ from leagion.utils import reverse_js
 class MyCommLocationList(generics.ListCreateAPIView):
     queryset = Location.objects.all()
     serializer_class = LocationSerializer
+    filter_fields = ('league',)
+    search_fields = ('name', 'address__raw')
 
 
 @reverse_js

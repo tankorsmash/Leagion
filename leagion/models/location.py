@@ -1,6 +1,8 @@
 from django.db import models
 
 from address.models import AddressField
+from .league import League
+
 
 class Location(models.Model):
     """
@@ -8,7 +10,8 @@ class Location(models.Model):
     There's a ton more functionality to it but that's all we need
     """
 
-    name = models.CharField(max_length=255) #ie Fenway Park
+    league = models.ForeignKey(League, related_name='locations')
+    name = models.CharField(max_length=255)
     address = AddressField(blank=True, null=True)
 
     def __str__(self):
@@ -16,4 +19,3 @@ class Location(models.Model):
 
     def __repr__(self):
         return "<%s>" % str(self).encode("utf-8")
-
