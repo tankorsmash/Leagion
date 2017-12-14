@@ -5,6 +5,8 @@ import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
 import LocationCreateModal from './LocationCreateModal';
+import LocationDeleteModal from './LocationDeleteModal';
+import LocationDeleteManyModal from './LocationDeleteManyModal';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
@@ -16,19 +18,18 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
             url={reverse('api-my-comm-location-list')}
             params={{league: season.league.id}}
             toolbar={[
-                /*
                 <Dropdown
                     key="dropdown"
                     disabled={!selectedIds.length}
                     color="info"
                     buttonText="..."
                 >
-                    <TeamDeleteManyModal
+                    <LocationDeleteManyModal
                         ids={selectedIds}
                         Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
                         onSuccess={() =>{setRefresh(true);}}
                     />
-                </Dropdown>,*/
+                </Dropdown>,
                 <LocationCreateModal key="create" season={season} onSuccess={() =>{setRefresh(true);}}/>
             ]}
             emptySearchEl={
@@ -52,12 +53,10 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {cell: (item) => {
                         return (
                             <Dropdown menuRight dotdotdot >
-                                {/*
-                                <TeamEditModal
-                                    team={item} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                <LocationDeleteModal
+                                    location={item} onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Delete Location'}</DropdownItem>}
                                 />
-                                */}
                             </Dropdown>
                         );
                     }},
