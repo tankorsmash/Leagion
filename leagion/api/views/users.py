@@ -186,12 +186,35 @@ class PublicPlayerView(generics.RetrieveAPIView):
 
 
 @reverse_js
-class UserChangeRole(drf_views.APIView):
+class UserRoleView(drf_views.APIView):
     """
     change the users current role
     """
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        role_key = user_cache_key(user)
+        if not user.is_anonymous():
+            role = request.session.get(role_key)
+            if not role:
+                if user.teams.count():
+                    request.session[role_key] = ROLES['player']
+                elif user.leagues_commissioned.count():
+                    request.session[role_key] = ROLES['commissioner']
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                'role': request.session.get(role_key)
+            }
+        )
+
     def post(self, request, *args, **kwargs):
         role = request.data.get('role')
         if role:
             request.session[user_cache_key(request.user)] = ROLES[role]
-        return super().post(request, *args, **kwargs)
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                'role': role,
+            }
+        )

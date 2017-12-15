@@ -1,6 +1,6 @@
 import {Nav} from 'reactstrap';
 import {Avatar} from 'components/media';
-import {Dropdown, DropdownItem} from 'components/dropdowns';
+import {Dropdown} from 'components/dropdowns';
 
 export class AppProfile extends React.Component {
     constructor(props) {
@@ -19,7 +19,7 @@ export class AppProfile extends React.Component {
     }
 
     render() {
-        const {items} = this.props;
+        const {items, children} = this.props;
 
         return (
             <Nav className="ml-auto" navbar>
@@ -29,9 +29,7 @@ export class AppProfile extends React.Component {
                         <Avatar size="xs" src={this.props.user.avatar_url}/>
                     }
                 >
-                    {items.map((item, i) => {
-                        return (<DropdownItem tag={item} key={i}></DropdownItem>);
-                    })}
+                    {children}
                 </Dropdown>
             </Nav>
         );

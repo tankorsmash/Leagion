@@ -1,5 +1,5 @@
 import appUrls from 'main/app/urls';
-let index = `${appUrls.index}/admin`;
+let index = `${appUrls.index}/`;
 
 module.exports = {
     index: index,

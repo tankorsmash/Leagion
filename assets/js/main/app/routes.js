@@ -1,5 +1,6 @@
 import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
+import update from 'immutability-helper';
 
 import ajax from 'common/ajax';
 
@@ -16,28 +17,23 @@ import SpinLoader from 'components/spinloader';
 class AppRouter extends React.Component {
     state = {
         user: {},
+        role: null,
         userLoaded: false,
         constantsLoaded: false,
+        roleLoaded: false,
     };
 
     componentDidMount() {
-        ajax({
-            url: reverse('api-my-details'),
-        }).then(data => {
-            this.setState({
-                user: data,
-                userLoaded: true,
-            });
+        ajax({url: reverse('api-my-details')}).then(data => {
+            this.setState({user: data, userLoaded: true});
         });
 
-        ajax({
-            url: reverse('api-site-constants'),
-        }).then(data => {
+        ajax({url: reverse('api-site-constants')}).then(data => {
+            this.setState({constants: data, constantsLoaded: true});
+        });
 
-            this.setState({
-                constants: data,
-                constantsLoaded: true,
-            });
+        ajax({url: reverse('api-my-role')}).then(data => {
+            this.setState({role: data.role, roleLoaded: true});
         });
     }
 
@@ -47,13 +43,27 @@ class AppRouter extends React.Component {
         });
     };
 
+    changeRole = role => {
+        this.setState({roleLoaded: false});
+        ajax({url: reverse('api-my-role'), data: {role}}).then(data => {
+            this.setState({role: data.role, roleLoaded: true});
+        });
+    };
+
     render() {
+        const {userLoaded, constantsLoaded, roleLoaded, role} = this.state;
         return (
-            <SpinLoader loaded={this.state.userLoaded && this.state.constantsLoaded}>
+            <SpinLoader loaded={userLoaded && constantsLoaded && roleLoaded}>
                 <Switch>
-                    <Route exact path={appUrls.index} {...this.state} component={PlayerRouter} />
-                    <Route path={adminUrls.index} {...this.state} component={AdminRouter} />
-                    <Route path={playerUrls.index} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />
+                    {role === 'player' &&
+                        <Route exact path={appUrls.index} {...this.state} component={PlayerRouter} />
+                    }
+                    {role === 'player' &&
+                        <Route path={playerUrls.index} changeRole={this.changeRole} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />
+                    }
+                    {role === 'commissioner' &&
+                        <Route path={adminUrls.index} changeRole={this.changeRole} {...this.state} component={AdminRouter} />
+                    }
                     <Route component={FourOhFour} />
                 </Switch>
             </SpinLoader>

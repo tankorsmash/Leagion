@@ -43,10 +43,10 @@ export class LeftRight extends React.Component {
         let {className, left, right} = this.props;
         return (
             <div className={'le-left-right row ' + className}>
-                <div className="col-md-6">
+                <div className="col-md-6 left">
                     {left && left}
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-6 right">
                     {right && right}
                 </div>
             </div>

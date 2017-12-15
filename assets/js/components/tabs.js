@@ -1,4 +1,3 @@
-import {ErrorBoundary} from 'react';
 import PropTypes from 'prop-types';
 
 import {Switch, Link, Redirect, NavLink as RouterNavLink} from 'react-router-dom';

@@ -98,6 +98,12 @@ body {
 .le-left-right {
     display: flex;
     justify-content: space-between;
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        .right {
+            text-align: right;
+        }
+    }
 }
 
 .le-no-data-card {

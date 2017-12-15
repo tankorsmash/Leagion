@@ -76,46 +76,6 @@ export const Form = enhance(({className, id, children, onFormSubmit, onInputChan
     );
 });
 
-export class FormBase extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.updateFormState({
-            [name]: value
-        });
-    }
-
-    // lets us update form data without needing to go through an event, like 'change'
-    updateFormState = (newFormState, onStateUpdated) => {
-        this.setState((prevState, props) => {
-            return {
-                form: {
-                    ...prevState.form,
-                    ...newFormState
-                }
-            };
-        }, onStateUpdated);
-    };
-
-    handleErrors(response) {
-        this.setState({
-            errors: response,
-        });
-    }
-
-    handleSubmit(event) {
-        throw 'you must override handleSubmit method when making a form';
-    }
-}
-
 const formGroupEnhance = compose(
     setDisplayName('FormGroup'),
     withHandlers({

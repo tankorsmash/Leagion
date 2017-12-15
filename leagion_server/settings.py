@@ -67,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'leagion.middleware.role_middleware',
 ]
 
 ROOT_URLCONF = 'leagion_server.urls'
