@@ -59,7 +59,7 @@ const enhance = compose(
 );
 export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors, setForm}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
-        if (child.type && ['FormGroup', 'FormGroupWrap', 'InputGroup'].includes(child.type.name)) {
+        if (child.props && child.props.forminput) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
                 form, errors, setForm
@@ -224,7 +224,7 @@ export class Input extends React.Component {
 export const FormGroupWrap = (props) => {
     const {errors, form, onChange, className, setForm} = props;
     const childrenWithProps = React.Children.map(props.children, (child) => {
-        if (child.type && ['FormGroup', 'FormGroupWrap', 'InputGroup'].includes(child.type.name)) {
+        if (child.props && child.props.forminput) {
             return React.cloneElement(child, { errors, form, onChange, setForm });
         } else {
             return child;
@@ -236,6 +236,7 @@ export const FormGroupWrap = (props) => {
     delete elProps.onChange;
     delete elProps.form;
     delete elProps.errors;
+    delete elProps.forminput;
 
     const classNames = `le-form-group-wrap ${className}`;
 

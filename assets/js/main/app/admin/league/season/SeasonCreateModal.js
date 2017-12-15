@@ -39,9 +39,9 @@ export default enhance(({league, onSuccess}) => {
                         'league_id': league.id,
                     }}
                 >
-                    <FormGroupWrap row>
-                        <FormGroup className="col-md-6" label="Start date" type="date" id="start_date" />
-                        <FormGroup className="col-md-6" label="End date" type="date" id="end_date" />
+                    <FormGroupWrap forminput row>
+                        <FormGroup forminput className="col-md-6" label="Start date" type="date" id="start_date" />
+                        <FormGroup forminput className="col-md-6" label="End date" type="date" id="end_date" />
                     </FormGroupWrap>
                 </Form>
             }

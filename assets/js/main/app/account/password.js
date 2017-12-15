@@ -29,9 +29,9 @@ export default class ChangePasswordForm extends React.Component {
                     'new_password2': '',
                 }}
             >
-                <FormGroup label="Old Password" type="password" id="old_password" />
-                <FormGroup label="New Password" type="password" id="new_password1" />
-                <FormGroup label="Confirm New Password" type="password" id="new_password2" />
+                <FormGroup forminput label="Old Password" type="password" id="old_password" />
+                <FormGroup forminput label="New Password" type="password" id="new_password1" />
+                <FormGroup forminput label="Confirm New Password" type="password" id="new_password2" />
                 <div className="text-center">
                     <Button type='submit' value='Submit'>Change Password</Button>
                 </div>

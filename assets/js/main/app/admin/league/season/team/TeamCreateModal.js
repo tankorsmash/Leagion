@@ -38,7 +38,7 @@ export default enhance(({season, onSuccess}) => {
                         'season_id': season.id,
                     }}
                 >
-                    <FormGroup label="Name" type="text" id="name" />
+                    <FormGroup forminput label="Name" type="text" id="name" />
                 </Form>
             }
         />

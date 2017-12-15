@@ -37,14 +37,14 @@ export default class ProfileForm extends React.Component {
                 }}
                 className=""
             >
-                <FormGroup label="Email" type="email" id="email" />
-                <FormGroupWrap row>
-                    <FormGroup className="col-md-6" label="First Name" type="text" id="first_name" />
-                    <FormGroup className="col-md-6" label="Last Name" type="text" id="last_name" />
+                <FormGroup forminput label="Email" type="email" id="email" />
+                <FormGroupWrap forminput row>
+                    <FormGroup forminput className="col-md-6" label="First Name" type="text" id="first_name" />
+                    <FormGroup forminput className="col-md-6" label="Last Name" type="text" id="last_name" />
                 </FormGroupWrap>
-                <FormGroup label="Phone Number" type="text" id="default_phonenumber" />
-                <FormGroup label="Alternate Phone Number" type="text" id="alt_phonenumber" />
-                <FormGroupWrap className="text-center">
+                <FormGroup forminput label="Phone Number" type="text" id="default_phonenumber" />
+                <FormGroup forminput label="Alternate Phone Number" type="text" id="alt_phonenumber" />
+                <FormGroupWrap forminput className="text-center">
                     <Button type='submit' value='Submit'>Save</Button>
                 </FormGroupWrap>
             </Form>

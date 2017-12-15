@@ -41,8 +41,8 @@ export default enhance(({season, onSuccess}) => {
                         'address_longitude': '',
                     }}
                 >
-                    <FormGroup label="Name" type="text" id="name" />
-                    <FormGroup label="Address" type="map" id="address" lat='address_latitude' lng='address_longitude' />
+                    <FormGroup forminput label="Name" type="text" id="name" />
+                    <FormGroup forminput label="Address" type="map" id="address" lat='address_latitude' lng='address_longitude' />
                 </Form>
             }
         />

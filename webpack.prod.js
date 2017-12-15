@@ -4,7 +4,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const config = require('./webpack.common.js');
 
-config.devtool = 'source-map';
+//config.devtool = 'source-map';
 config.output.filename = "[name]-[hash].js";
 config.output.publicPath = '/static/';
 

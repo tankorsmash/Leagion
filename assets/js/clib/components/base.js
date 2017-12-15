@@ -117,7 +117,7 @@ export class BaseComponent extends React.Component {
                         {Object.keys(this.choiceAttrs).map((attr, i) => {
                             const choices = this.choiceAttrs[attr];
                             return (
-                                <FormGroup row key={i}>
+                                <FormGroup forminput row key={i}>
                                     <Label sm={6}>{attr}</Label>
                                     <Col className="" sm="6">
                                         <Input
@@ -137,7 +137,7 @@ export class BaseComponent extends React.Component {
                         })}
                         {this.stringAttrs.map((attr, i) => {
                             return (
-                                <FormGroup row key={i}>
+                                <FormGroup forminput row key={i}>
                                     <Label sm={6}>{attr}</Label>
                                     <Col className="" sm="6">
                                         <Input
@@ -152,7 +152,7 @@ export class BaseComponent extends React.Component {
                         })}
                         {this.boolAttrs.map((attr, i) => {
                             return (
-                                <FormGroup row key={i}>
+                                <FormGroup forminput row key={i}>
                                     <Label sm={6}>{attr}</Label>
                                     <Col className="" sm="6">
                                         <Input

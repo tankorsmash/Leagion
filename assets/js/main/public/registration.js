@@ -41,18 +41,18 @@ class LoginForm extends React.Component {
                         >
                             <h5 className="text-center">Sign in and get going!</h5>
                             <br />
-                            <FormGroup
+                            <FormGroup forminput
                                 placeholder="john.doe@example.com"
                                 type="email"
                                 label="Email"
                                 id="email"
                             />
-                            <FormGroup
+                            <FormGroup forminput
                                 type="password"
                                 label="Password"
                                 id="password"
                             />
-                            <FormGroupWrap check className="d-flex justify-content-between">
+                            <FormGroupWrap forminput check className="d-flex justify-content-between">
                                 <RLabel check>
                                     <RInput type="checkbox" />
                                     Remember me

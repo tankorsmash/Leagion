@@ -32,27 +32,27 @@ import {Button} from 'reactstrap';
         'grouptext2': '',
     }}
 >
-    <FormGroup label="Email" type="email" id="email" />
-    <FormGroup label="Text" type="text" id="text" />
-    <FormGroup label="Number" type="number" id="number" />
-    <FormGroup
+    <FormGroup forminput label="Email" type="email" id="email" />
+    <FormGroup forminput label="Text" type="text" id="text" />
+    <FormGroup forminput label="Number" type="number" id="number" />
+    <FormGroup forminput
         options={[
             {value: 1, label: 'option 1'},
             {value: 2, label: 'option 2'},
         ]}
         label="Select" type="select" id="select"
     />
-    <FormGroup label="Stacked Checkbox 1" type="checkbox" id="cb1" />
-    <FormGroup label="Stacked Checkbox 2" type="checkbox" id="cb2" />
-    <FormGroup inline label="Inline Radio 1" type="radio" name="rgroup" value="radio1" />
-    <FormGroup inline label="Inline Radio 2" type="radio" name="rgroup" value="radio2" />
-    <FormGroup label="Range" type="range" id="range" />
-    <FormGroup label="Date" type="date" id="date" />
-    <FormGroupWrap row>
-        <FormGroup className="col-md-6" label="Row" type="text" id="grouptext1" />
-        <FormGroup className="col-md-6" label="Row 2" type="text" id="grouptext2" />
+    <FormGroup forminput label="Stacked Checkbox 1" type="checkbox" id="cb1" />
+    <FormGroup forminput label="Stacked Checkbox 2" type="checkbox" id="cb2" />
+    <FormGroup forminput inline label="Inline Radio 1" type="radio" name="rgroup" value="radio1" />
+    <FormGroup forminput inline label="Inline Radio 2" type="radio" name="rgroup" value="radio2" />
+    <FormGroup forminput label="Range" type="range" id="range" />
+    <FormGroup forminput label="Date" type="date" id="date" />
+    <FormGroupWrap forminput row>
+        <FormGroup forminput className="col-md-6" label="Row" type="text" id="grouptext1" />
+        <FormGroup forminput className="col-md-6" label="Row 2" type="text" id="grouptext2" />
     </FormGroupWrap>
-    <FormGroupWrap className="text-center">
+    <FormGroupWrap forminput className="text-center">
         <Button type='submit' value='Submit'>Save</Button>
     </FormGroupWrap>
 </Form>`
@@ -77,27 +77,27 @@ import {Button} from 'reactstrap';
                     'grouptext2': '',
                 }}
             >
-                <FormGroup label="Email" type="email" id="email" />
-                <FormGroup label="Text" type="text" id="text" />
-                <FormGroup label="Number" type="number" id="number" />
-                <FormGroup
+                <FormGroup forminput label="Email" type="email" id="email" />
+                <FormGroup forminput label="Text" type="text" id="text" />
+                <FormGroup forminput label="Number" type="number" id="number" />
+                <FormGroup forminput
                     options={[
                         {value: 1, label: 'option 1'},
                         {value: 2, label: 'option 2'},
                     ]}
                     label="Select" type="select" id="select"
                 />
-                <FormGroup label="Stacked Checkbox 1" type="checkbox" id="cb1" />
-                <FormGroup label="Stacked Checkbox 2" type="checkbox" id="cb2" />
-                <FormGroup inline label="Inline Radio 1" type="radio" name="rgroup" value="radio1" />
-                <FormGroup inline label="Inline Radio 2" type="radio" name="rgroup" value="radio2" />
-                <FormGroup label="Range" type="range" id="range" />
-                <FormGroup label="Date" type="date" id="date" />
-                <FormGroupWrap row>
-                    <FormGroup className="col-md-6" label="Row" type="text" id="grouptext1" />
-                    <FormGroup className="col-md-6" label="Row 2" type="text" id="grouptext2" />
+                <FormGroup forminput label="Stacked Checkbox 1" type="checkbox" id="cb1" />
+                <FormGroup forminput label="Stacked Checkbox 2" type="checkbox" id="cb2" />
+                <FormGroup forminput inline label="Inline Radio 1" type="radio" name="rgroup" value="radio1" />
+                <FormGroup forminput inline label="Inline Radio 2" type="radio" name="rgroup" value="radio2" />
+                <FormGroup forminput label="Range" type="range" id="range" />
+                <FormGroup forminput label="Date" type="date" id="date" />
+                <FormGroupWrap forminput row>
+                    <FormGroup forminput className="col-md-6" label="Row" type="text" id="grouptext1" />
+                    <FormGroup forminput className="col-md-6" label="Row 2" type="text" id="grouptext2" />
                 </FormGroupWrap>
-                <FormGroupWrap className="text-center">
+                <FormGroupWrap forminput className="text-center">
                     <Button type='submit' value='Submit'>Save</Button>
                 </FormGroupWrap>
             </Form>
@@ -125,7 +125,7 @@ import {FormModal} from 'components/modals';
                 'text': '',
             }}
         >
-            <FormGroup label="Text" type="text" id="text" />
+            <FormGroup forminput label="Text" type="text" id="text" />
         </Form>
     }
     onClose={() => {
@@ -147,7 +147,7 @@ import {FormModal} from 'components/modals';
                             'text': '',
                         }}
                     >
-                        <FormGroup label="Text" type="text" id="text" />
+                        <FormGroup forminput label="Text" type="text" id="text" />
                     </Form>
                 }
                 onClose={() => {
