@@ -1,5 +1,5 @@
 #django
-Django==1.9.4
+Django==1.11.8
 django-devserver==0.8.0
 django-extensions==1.6.7
 
@@ -15,7 +15,7 @@ djangorestframework==3.6.2
 django-allauth==0.31.0
 django-rest-auth==0.9.1
 django-rest-knox==3.0.0
-django-filter==1.0.1
+django-filter==1.1.0
 markdown==2.6.8
 
 #webpack
