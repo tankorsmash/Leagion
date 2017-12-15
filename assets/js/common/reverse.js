@@ -4,6 +4,7 @@
 //see leagion reverse_js for what you want
 var viewnames = {
     "api-invite-user": "/api/invite-player/",
+    "api-my-change-role": "/api/me/change-role/",
     "api-my-comm-league-detail": "/api/me/comm/league/<league_id>/",
     "api-my-comm-league-list": "/api/me/comm/league/",
     "api-my-comm-location-detail": "/api/me/comm/location/<location_id>/",

@@ -11,6 +11,8 @@ from leagion.api.validators import no_empty_team
 from leagion.models import Season, Team
 
 from leagion.utils import reverse_js, id_generator
+from leagion.cache import user_cache_key
+from leagion.constants import ROLES
 
 User = get_user_model()
 
@@ -181,3 +183,15 @@ class PublicPlayerView(generics.RetrieveAPIView):
         teams = self.request.user.teams.all()
         seasons = Season.objects.filter(teams__in=teams).distinct()
         return User.objects.filter(teams__season__in=seasons).distinct()
+
+
+@reverse_js
+class UserChangeRole(drf_views.APIView):
+    """
+    change the users current role
+    """
+    def post(self, request, *args, **kwargs):
+        role = request.data.get('role')
+        if role:
+            request.session[user_cache_key(request.user)] = ROLES[role]
+        return super().post(request, *args, **kwargs)

@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^stats/$', stats_views.StatsIndex.as_view(), name='api-stats-index'),
 
     url(r'me/$', users_views.MyUserDetailsView.as_view(), name='api-my-details'),
+    url(r'me/change-role/$', users_views.UserChangeRole.as_view(), name='api-my-change-role'),
 
     url(r'^invite-player/$', users_views.InviteUserView.as_view(), name='api-invite-user'),
     url(r'^me/comm/player/$', users_views.MyCommUserList.as_view(), name='api-my-comm-player-list'),
