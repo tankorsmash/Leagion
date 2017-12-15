@@ -76,126 +76,125 @@ export const Form = enhance(({className, id, children, onFormSubmit, onInputChan
     );
 });
 
-const formGroupEnhance = compose(
-    setDisplayName('FormGroup'),
-    withHandlers({
-        onSelectChange: props => (item) => {
-            let value = '';
-            if (item) {
-                value = item.value;
-            }
-            props.setForm((f) => {
-                return update(f, {[props.id]: {$set: value}});
-            });
-        },
-    }),
-);
-export const FormGroup = formGroupEnhance((props) => {
-    const {
-        id, label, type, onChange, form, errors,
-        className, placeholder, check, row, inline, disabled,
-        tag, selectOptions, options, onSelectChange,
-        style, innerRef, lat, lng, setForm
-    } = props;
+export class FormGroup extends React.Component {
+    onSelectChange = (item) => {
+        let value = '';
+        if (item) {
+            value = item.value;
+        }
+        this.props.setForm((f) => {
+            return update(f, {[this.props.id]: {$set: value}});
+        });
+    };
 
-    let {name, value} = props;
-    if (type !== 'radio') {
-        name = id;
-    }
-    //populate values and errors from form object but not if
-    //explicitly passed in (i.e. for radios)
-    if (!value) {
-        value = form[name];
-    }
-    let latitude, longitude;
-    if (lat) {
-        latitude = form[lat];
-    }
-    if (lng) {
-        longitude = form[lng];
-    }
-    const error = errors[name];
-    const feedbackClass = error ? 'show-feedback' : '';
+    render() {
+        const props = this.props;
+        const {
+            id, label, type, onChange, form, errors,
+            className, placeholder, check, row, inline, disabled,
+            tag, selectOptions, options, onSelectChange,
+            style, innerRef, lat, lng, setForm
+        } = props;
 
-    const checkOrRadio = ['checkbox', 'radio'].includes(type);
-    const isDatePicker = type === 'date';
+        let {name, value} = props;
+        if (type !== 'radio') {
+            name = id;
+        }
+        //populate values and errors from form object but not if
+        //explicitly passed in (i.e. for radios)
+        if (!value) {
+            value = form[name];
+        }
+        let latitude, longitude;
+        if (lat) {
+            latitude = form[lat];
+        }
+        if (lng) {
+            longitude = form[lng];
+        }
+        const error = errors[name];
+        const feedbackClass = error ? 'show-feedback' : '';
 
-    //handle checkbox and radio initial values
-    let checked;
-    if (type === 'radio') {
-        checked = value === form[name];
-    } else if (type === 'checkbox') {
-        checked = value;
-    }
+        const checkOrRadio = ['checkbox', 'radio'].includes(type);
+        const isDatePicker = type === 'date';
 
-	const valid = error ? false : undefined;
+        //handle checkbox and radio initial values
+        let checked;
+        if (type === 'radio') {
+            checked = value === form[name];
+        } else if (type === 'checkbox') {
+            checked = value;
+        }
 
-    const isSelect = type === 'select';
-    const isMap = type === 'map';
+        const valid = error ? false : undefined;
 
-    return (
-        <RFormGroup
-            row={row}
-            check={check}
-            inline={inline}
-            disabled={disabled}
-            tag={tag}
-            className={className}
-            style={style}
-            color={error ? 'danger' : ''}
-        >
-            { checkOrRadio && (
-                <Label check>
-                    <Input checked={checked} type={type} name={name} id={id} value={value} onChange={onChange} valid={!error} placeholder={placeholder} />
-                    {label}
-                </Label>
-            )}
-            { !checkOrRadio &&
-                <Label check={check} for={id}>{label}</Label>
-            }
-            { !checkOrRadio && !isDatePicker && !isSelect && !isMap &&
-                <Input
-                    type={type} name={name} id={id} value={value}
-                    onChange={onChange} valid={valid} placeholder={placeholder}
-                    ref={innerRef}
-                > </Input>
-            }
-            { isDatePicker &&
-                <DatePicker
-                    className={error ? 'is-invalid' : ''} onChange={onChange}
-                    value={value} type={type} name={name} id={id} placeholder={placeholder}
-                />
-            }
-            { isSelect &&
-                <Select
-                    id={id} name={name} value={value}
-                    options={options} onChange={onSelectChange}
-                    placeholder={placeholder} {...selectOptions}
-                />
-            }
-            { isMap &&
-                    <MapWithASearchBox
-                        initial={value}
-                        latitude={latitude} longitude={longitude}
-                        onMapChanged={(places)=>{
-                            const place = R.head(places);
-                            if (place) {
-                                setForm((f) => {
-                                    return update(f, {
-                                        [props.id]: {$set: place.formatted_address},
-                                        [lat]: {$set: place.geometry.location.lat().toFixed(6)},
-                                        [lng]: {$set: place.geometry.location.lng().toFixed(6)},
-                                    });
+        const isSelect = type === 'select';
+        const isMap = type === 'map';
 
-                                });
-                            }
-                        }}
+        return (
+            <RFormGroup
+                row={row}
+                check={check}
+                inline={inline}
+                disabled={disabled}
+                tag={tag}
+                className={className}
+                style={style}
+                color={error ? 'danger' : ''}
+            >
+                { checkOrRadio && (
+                    <Label check>
+                        <Input checked={checked} type={type} name={name} id={id} value={value} onChange={onChange} valid={!error} placeholder={placeholder} />
+                        {label}
+                    </Label>
+                )}
+                { !checkOrRadio &&
+                    <Label check={check} for={id}>{label}</Label>
+                }
+                { !checkOrRadio && !isDatePicker && !isSelect && !isMap &&
+                    <Input
+                        type={type} name={name} id={id} value={value}
+                        onChange={onChange} valid={valid} placeholder={placeholder}
+                        ref={innerRef}
+                    > </Input>
+                }
+                { isDatePicker &&
+                    <DatePicker
+                        className={error ? 'is-invalid' : ''} onChange={onChange}
+                        value={value} type={type} name={name} id={id} placeholder={placeholder}
                     />
-            }
-            <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
-        </RFormGroup>
-    );
-});
+                }
+                { isSelect &&
+                    <Select
+                        id={id} name={name} value={value}
+                        options={options} onChange={onSelectChange}
+                        placeholder={placeholder} {...selectOptions}
+                    />
+                }
+                { isMap &&
+                        <MapWithASearchBox
+                            initial={value}
+                            latitude={latitude} longitude={longitude}
+                            onMapChanged={(places)=>{
+                                const place = R.head(places);
+                                if (place) {
+                                    setForm((f) => {
+                                        return update(f, {
+                                            [props.id]: {$set: place.formatted_address},
+                                            [lat]: {$set: place.geometry.location.lat().toFixed(6)},
+                                            [lng]: {$set: place.geometry.location.lng().toFixed(6)},
+                                        });
+
+                                    });
+                                }
+                            }}
+                        />
+                }
+                <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
+            </RFormGroup>
+        );
+    }
+}
 
 
 export class Input extends React.Component {

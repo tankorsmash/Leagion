@@ -17,6 +17,7 @@ def update(branch=None):
 
 		run('git pull')
 
+		run('rm -rf node_modules')
 		run('npm install')
 		run('npm run build')
 
