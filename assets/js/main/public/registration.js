@@ -1,8 +1,7 @@
 import {Redirect, Link} from 'react-router-dom';
-import {Form, FormGroup} from 'components/forms';
+import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import {
     Button,
-    FormGroup as RFormGroup,
     Label as RLabel,
     Input as RInput,
 } from 'reactstrap';
@@ -53,13 +52,13 @@ class LoginForm extends React.Component {
                                 label="Password"
                                 id="password"
                             />
-                            <RFormGroup check className="d-flex justify-content-between">
+                            <FormGroupWrap check className="d-flex justify-content-between">
                                 <RLabel check>
                                     <RInput type="checkbox" />
                                     Remember me
                                 </RLabel>
                                 <Link to={publicUrls.passwordReset}>Forgot Password?</Link>
-                            </RFormGroup>
+                            </FormGroupWrap>
                             <Button color="primary" block type="submit">Log In</Button>
                         </Form>
                     </div>
