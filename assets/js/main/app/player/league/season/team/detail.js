@@ -20,7 +20,7 @@ const enhance = compose(
 export default enhance(({team, setTeam, user, constants, match}) => {
     const isCaptain = team && team.captains.includes(user.id);
 
-    let tabs = [{
+    let tabs = team ? [{
         label: 'Matches',
         content: (<MatchTable
             matches={team.matches}
@@ -30,7 +30,7 @@ export default enhance(({team, setTeam, user, constants, match}) => {
     }, {
         label: 'Team Members',
         content: <PlayerAvatarList players={team.players}/>
-    }];
+    }] : null;
 
     if (isCaptain) {
         tabs.push({

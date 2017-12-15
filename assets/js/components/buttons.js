@@ -22,21 +22,9 @@ export const LoginButton = ({...rest}) => {
 	);
 };
 
-export const AdminButton = ({...rest}) => {
-	return (
-		<RLink {...rest} to={adminUrls.index}>Manage League</RLink>
-	);
-};
-
 export const AccountSettingsButton = ({...rest}) => {
 	return (
 		<RLink {...rest} to={appUrls.accountIndex}>Profile</RLink>
-	);
-};
-
-export const PlayerAppButton = ({...rest}) => {
-	return (
-		<RLink {...rest} to={playerUrls.index}>Back to my teams</RLink>
 	);
 };
 

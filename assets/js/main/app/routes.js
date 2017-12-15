@@ -1,4 +1,4 @@
-import {Switch} from 'react-router-dom';
+import {Switch, Redirect} from 'react-router-dom';
 import {Route} from 'components/router';
 import update from 'immutability-helper';
 
@@ -21,6 +21,7 @@ class AppRouter extends React.Component {
         userLoaded: false,
         constantsLoaded: false,
         roleLoaded: false,
+        reload: false,
     };
 
     componentDidMount() {
@@ -44,19 +45,27 @@ class AppRouter extends React.Component {
     };
 
     changeRole = role => {
-        this.setState({roleLoaded: false});
-        ajax({url: reverse('api-my-role'), data: {role}}).then(data => {
-            this.setState({role: data.role, roleLoaded: true});
+        ajax({
+            url: reverse('api-my-role'),
+            data: {role: role},
+            method: 'POST',
+        }).then(data => {
+            this.setState({reload: true});
         });
     };
 
     render() {
-        const {userLoaded, constantsLoaded, roleLoaded, role} = this.state;
+        const {userLoaded, constantsLoaded, roleLoaded, role, reload} = this.state;
+
+        if (reload) {
+            return (<Redirect exact to={'/'} /> );
+        }
+
         return (
             <SpinLoader loaded={userLoaded && constantsLoaded && roleLoaded}>
                 <Switch>
                     {role === 'player' &&
-                        <Route exact path={appUrls.index} {...this.state} component={PlayerRouter} />
+                        <Route exact path={appUrls.index}changeRole={this.changeRole} {...this.state} component={PlayerRouter} />
                     }
                     {role === 'player' &&
                         <Route path={playerUrls.index} changeRole={this.changeRole} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />

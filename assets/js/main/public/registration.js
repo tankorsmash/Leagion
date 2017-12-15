@@ -4,7 +4,7 @@ import {
     Button,
     FormGroup as RFormGroup,
     Label as RLabel,
-    Input as RInput
+    Input as RInput,
 } from 'reactstrap';
 import ajax from 'common/ajax';
 import appUrls from 'main/app/urls';
@@ -43,20 +43,16 @@ class LoginForm extends React.Component {
                             <h5 className="text-center">Sign in and get going!</h5>
                             <br />
                             <FormGroup
-                                className="inner-addon left-addon"
                                 placeholder="john.doe@example.com"
                                 type="email"
+                                label="Email"
                                 id="email"
-                            >
-                                <i className="fa fa-user" aria-hidden="true"></i>
-                            </FormGroup>
+                            />
                             <FormGroup
-                                className="inner-addon left-addon"
                                 type="password"
+                                label="Password"
                                 id="password"
-                            >
-                                <i className="fa fa-lock" aria-hidden="true"></i>
-                            </FormGroup>
+                            />
                             <RFormGroup check className="d-flex justify-content-between">
                                 <RLabel check>
                                     <RInput type="checkbox" />

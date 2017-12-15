@@ -1,4 +1,4 @@
-import {Switch, Redirect} from 'react-router-dom';
+import {Switch} from 'react-router-dom';
 import {Route} from 'components/router';
 
 import adminUrls from 'main/app/admin/urls';
@@ -15,10 +15,10 @@ import {FourOhFour} from 'components/error-pages';
 export default class AdminRouter extends React.Component {
     render() {
 
-        const {user, setUserState} = this.props;
+        const {user, setUserState, changeRole} = this.props;
 
         if (!(auth.commissionerOrBetter(user))) {
-            return ( <Redirect exact to={"/"} /> );
+            changeRole('player');
         }
         return (
             <div id="leagion-admin" >

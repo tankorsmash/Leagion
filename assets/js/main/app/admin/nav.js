@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Nav} from 'reactstrap';
 import adminUrls from 'main/app/admin/urls';
-import {LogoutButton, PlayerAppButton, AccountSettingsButton} from 'components/buttons';
+import {LogoutButton, AccountSettingsButton} from 'components/buttons';
 import {DropdownItem} from 'components/dropdowns';
 import {Navbar} from 'components/nav';
 import {AppProfile} from 'main/app/components/nav';
@@ -28,8 +28,8 @@ class AdminNavItems extends React.Component {
 
 const AdminProfile = (props) => (
     <AppProfile {...props} >
-        <DropdownItem tag={PlayerAppButton}></DropdownItem>
-        <DropdownItem onClick={()=>{props.changeRole('player');}} tag={AccountSettingsButton}></DropdownItem>
+        <DropdownItem onClick={()=>{props.changeRole('player');}}>Switch roles</DropdownItem>
+        <DropdownItem tag={AccountSettingsButton}></DropdownItem>
         <DropdownItem tag={LogoutButton}></DropdownItem>
     </AppProfile>
 );

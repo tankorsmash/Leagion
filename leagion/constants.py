@@ -1,4 +1,4 @@
 ROLES = {
     'commissioner': 'commissioner',
-    'player': 'commissioner',
+    'player': 'player',
 }

@@ -59,7 +59,7 @@ const enhance = compose(
 );
 export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors, setForm}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
-        if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
+        if (child.type && ['FormGroup', 'FormGroupWrap', 'InputGroup'].includes(child.type.name)) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
                 form, errors, setForm
@@ -94,8 +94,8 @@ export const FormGroup = formGroupEnhance((props) => {
     const {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
-        tag, children, selectOptions, options, onSelectChange,
-        style, innerRef, lat, lng,
+        tag, selectOptions, options, onSelectChange,
+        style, innerRef, lat, lng, setForm
     } = props;
 
     let {name, value} = props;
@@ -158,9 +158,7 @@ export const FormGroup = formGroupEnhance((props) => {
                     type={type} name={name} id={id} value={value}
                     onChange={onChange} valid={valid} placeholder={placeholder}
                     ref={innerRef}
-                >
-                    {children}
-                </Input>
+                > </Input>
             }
             { isDatePicker &&
                 <DatePicker
@@ -182,7 +180,7 @@ export const FormGroup = formGroupEnhance((props) => {
                         onMapChanged={(places)=>{
                             const place = R.head(places);
                             if (place) {
-                                props.setForm((f) => {
+                                setForm((f) => {
                                     return update(f, {
                                         [props.id]: {$set: place.formatted_address},
                                         [lat]: {$set: place.geometry.location.lat().toFixed(6)},
@@ -213,6 +211,7 @@ export class Input extends React.Component {
     render() {
         let props = Object.assign({}, this.props);
         delete props.indeterminate;
+        delete props.children;
 
         return (
             <RInput
@@ -226,7 +225,7 @@ export class Input extends React.Component {
 export const FormGroupWrap = (props) => {
     const {errors, form, onChange, className, setForm} = props;
     const childrenWithProps = React.Children.map(props.children, (child) => {
-        if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
+        if (child.type && ['FormGroup', 'FormGroupWrap', 'InputGroup'].includes(child.type.name)) {
             return React.cloneElement(child, { errors, form, onChange, setForm });
         } else {
             return child;
