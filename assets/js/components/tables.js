@@ -353,15 +353,15 @@ export class DataTable extends React.Component {
                     });
                 }}
             >
-                <div className="le-data-table-toolbar row">
-                    {toolbar}
-                    {!noData && !noSearch &&
-                        <SearchInput
-                            setSearch={this.setSearch}
-                            search={search}
-                        />
-                    }
-                </div>
+                {!noData && !noSearch &&
+                    <div className="le-data-table-toolbar row">
+                        {toolbar}
+                            <SearchInput
+                                setSearch={this.setSearch}
+                                search={search}
+                            />
+                    </div>
+                }
                 { showTable && !noSearchMatch && (
                     <Table
                         data={data}

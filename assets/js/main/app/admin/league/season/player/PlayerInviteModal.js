@@ -36,7 +36,7 @@ export default enhance(({season, onSuccess, className, Opener}) => {
                         'last_name': '',
                         'email': '',
                         'default_phonenumber': '',
-                        'team_id': null,
+                        'team_id': '',
                         'is_captain': false,
                         'season_id': season.id,
                     }}
