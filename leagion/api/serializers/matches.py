@@ -50,20 +50,20 @@ class MatchSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 {'away_team_id': ['A Team cannot play against itself']}
             )
+        return data
 
-    def coerce_data_time(self, validated_data):
-        data = validated_data.copy()
+    def coerce_date_time(self, data):
         data['match_datetime'] = datetime.combine(data['date'], data['time'])
+        del data['date']
+        del data['time']
         return data
 
     def create(self, validated_data, *args, **kwargs):
-        data = self.coerce_data_time(validated_data)
+        data = self.coerce_date_time(validated_data)
         return super().create(data, *args, **kwargs)
 
     def update(self, obj, validated_data, *args, **kwargs):
-        data = self.coerce_data_time(validated_data)
-        del data['date']
-        del data['time']
+        data = self.coerce_date_time(validated_data)
         return super().update(obj, data, *args, **kwargs)
 
 

@@ -14,6 +14,10 @@ export default enhance(({season, onSuccess}) => {
         value: team.id,
         label: team.name,
     }));
+    const locationOptions = season.league.locations.map((location) => ({
+        value: location.id,
+        label: location.name,
+    }));
     return (
         <FormModal
             title="Add a match"
@@ -38,10 +42,11 @@ export default enhance(({season, onSuccess}) => {
                         });
                     }}
                     form={{
-                        'date': null,
-                        'time': null,
+                        'date': '',
+                        'time': '',
                         'home_team_id': '',
                         'away_team_id': '',
+                        'location_id': '',
                         'season': season.id,
                     }}
                 >
@@ -51,6 +56,7 @@ export default enhance(({season, onSuccess}) => {
                     </FormGroupWrap>
                     <FormGroup label="Home Team" type="select" id="home_team_id" options={teamOptions} />
                     <FormGroup label="Away Team" type="select" id="away_team_id" options={teamOptions} />
+                    <FormGroup label="Location" type="select" id="location_id" options={locationOptions} />
                 </Form>
             }
         />
