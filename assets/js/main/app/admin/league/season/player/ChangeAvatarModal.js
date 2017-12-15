@@ -1,6 +1,6 @@
 import {compose, setDisplayName } from 'recompose';
 import {SimpleModal} from 'components/modals';
-import ChangeAvatarForm from 'main/app/player/account/avatar.js';
+import ChangeAvatarForm from 'main/app/account/avatar.js';
 
 const enhance = compose(
     setDisplayName('TeamEditModal'),

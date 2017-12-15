@@ -4,10 +4,6 @@ let index = appUrls.index
 module.exports = {
 	index: index,
 
-	accountIndex: `${index}/account`,
-	accountProfile: `${index}/account/profile`,
-	accountChangePassword: `${index}/account/change-password`,
-
 	profileIndex: `${index}/profile`,
 	profileDetail: `${index}/profile/:playerId?`,
 

@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import {Titlebar} from 'components/misc';
 import {Tabs} from 'components/tabs';
-import ProfileForm from 'main/app/player/account/profile';
-import ChangeAvatarForm from 'main/app/player/account/avatar';
-import ChangePasswordForm from 'main/app/player/account/password';
+import ProfileForm from 'main/app/account/profile';
+import ChangeAvatarForm from 'main/app/account/avatar';
+import ChangePasswordForm from 'main/app/account/password';
 
 export default class AccountRouter extends React.Component {
 

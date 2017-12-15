@@ -62,7 +62,7 @@ class AppRouter extends React.Component {
                         <Route path={playerUrls.index} changeRole={this.changeRole} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />
                     }
                     {role === 'commissioner' &&
-                        <Route path={adminUrls.index} changeRole={this.changeRole} {...this.state} component={AdminRouter} />
+                        <Route path={adminUrls.index} changeRole={this.changeRole} setUserState={this.setUserState} {...this.state} component={AdminRouter} />
                     }
                     <Route component={FourOhFour} />
                 </Switch>

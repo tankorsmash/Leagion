@@ -3,6 +3,7 @@ import {Link as RLink} from 'react-router-dom';
 import publicUrls from 'main/public/urls';
 import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';
+import appUrls from 'main/app/urls';
 import auth from 'main/auth';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
@@ -29,7 +30,7 @@ export const AdminButton = ({...rest}) => {
 
 export const AccountSettingsButton = ({...rest}) => {
 	return (
-		<RLink {...rest} to={playerUrls.accountIndex}>Profile</RLink>
+		<RLink {...rest} to={appUrls.accountIndex}>Profile</RLink>
 	);
 };
 
