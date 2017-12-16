@@ -46,16 +46,20 @@ class MatchSerializer(serializers.ModelSerializer):
     postponed_from = serializers.IntegerField(read_only=True)
 
     def validate(self, data):
-        if data['home_team_id'] == data['away_team_id']:
+        if (
+            hasattr(data, 'home_team_id') and hasattr(data, 'away_team_id') and
+            data['home_team_id'] == data['away_team_id']
+        ):
             raise serializers.ValidationError(
                 {'away_team_id': ['A Team cannot play against itself']}
             )
         return data
 
     def coerce_date_time(self, data):
-        data['match_datetime'] = datetime.combine(data['date'], data['time'])
-        del data['date']
-        del data['time']
+        if hasattr(data, 'date') and hasattr(data, 'time'):
+            data['match_datetime'] = datetime.combine(data['date'], data['time'])
+            del data['date']
+            del data['time']
         return data
 
     def create(self, validated_data, *args, **kwargs):

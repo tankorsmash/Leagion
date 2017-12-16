@@ -8,8 +8,8 @@ import MatchCreateModal from './MatchCreateModal';
 import MatchEditModal from './MatchEditModal';
 import MatchDeleteManyModal from './MatchDeleteManyModal';
 import MatchDeleteModal from './MatchDeleteModal';
+import MatchSetScoreModal from './MatchSetScoreModal';
 import TeamWithLogo from '../team/TeamWithLogo';
-import {Avatar} from 'components/media';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
@@ -67,6 +67,11 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {cell: (item) => {
                         return (
                             <Dropdown menuRight dotdotdot >
+                                <MatchSetScoreModal
+                                    season={season} match={item}
+                                    onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Set score'}</DropdownItem>}
+                                />
                                 <MatchEditModal
                                     season={season} match={item}
                                     onSuccess={() =>{setRefresh(true);}}
