@@ -7,9 +7,10 @@ import ajax from 'common/ajax';
 import appUrls from 'main/app/urls';
 import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';
-
 import AdminRouter from 'main/app/admin/routes';
 import PlayerRouter from 'main/app/player/routes';
+import auth from 'main/auth';
+
 import {FourOhFour} from 'components/error-pages';
 import SpinLoader from 'components/spinloader';
 
@@ -27,6 +28,9 @@ class AppRouter extends React.Component {
     componentDidMount() {
         ajax({url: reverse('api-my-details')}).then(data => {
             this.setState({user: data, userLoaded: true});
+        }).catch(() => {
+            auth.logout();
+            this.setState({reload: true});
         });
 
         ajax({url: reverse('api-site-constants')}).then(data => {
