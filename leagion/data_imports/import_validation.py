@@ -6,7 +6,21 @@ DATE       | TIME  | HOME | HOME_SCORE | AWAY | AWAY_SCORE | LOCATION
 YYYY/MM/DD | HH:MM | ID   | int        | ID   | int        | ID
 """
 
+import arrow
+
+#NOTE arrow format codes, not the slightly different datetime formats
+DATE_FORMAT = "YYYY/MM/DD"
+TIME_FORMAT = "HH:MM"
+
 def date_validator(column_data):
+    if not isinstance(column_data, str):
+        return False
+
+    try:
+        date_obj = arrow.get(column_data, DATE_FORMAT)
+    except arrow.parser.ParserError:
+        return False
+
     return True
 
 def time_validator(column_data):

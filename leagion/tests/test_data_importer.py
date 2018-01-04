@@ -202,7 +202,18 @@ class DataImportImportValidationTestCase(APITestCase):
     """
 
     def test_date_validator(self):
-        pass
+        self.assertFalse(date_validator(False))
+        self.assertFalse(date_validator(123))
+        self.assertFalse(date_validator(""))
+        self.assertFalse(date_validator("31/2017/12"))
+        self.assertFalse(date_validator("31/11/2017"))
+        self.assertFalse(date_validator("11/31/2017"))
+
+        #random dates
+        self.assertTrue(date_validator("2017/01/01"))
+        self.assertTrue(date_validator("2117/11/11"))
+        self.assertTrue(date_validator("1989/10/10"))
+
 
     def test_time_validator(self):
         pass
