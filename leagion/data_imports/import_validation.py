@@ -2,6 +2,8 @@
 defines the spec for the data format the user will
 be importing into the system
 
+-1 is equivalent to unset scores
+
 DATE       | TIME  | HOME | HOME_SCORE | AWAY | AWAY_SCORE | LOCATION
 YYYY/MM/DD | HH:MM | ID   | int        | ID   | int        | ID
 """
@@ -77,6 +79,19 @@ COLUMN_FORMATTERS = {
 def is_row_well_formatted(row):
     for i, col in enumerate(row):
         if not COLUMN_FORMATTERS[i](col):
-            return False
+            return False, i
 
-    return True
+    return True, None
+
+def validate_rows(rows):
+    """
+    returns a list of (row idx, col idx) pairs that failed validation
+    """
+
+    invalid_row_indices = []
+    for i, row in enumerate(rows):
+        is_valid, col_id = is_row_well_formatted(row)
+        if not is_valid:
+            invalid_row_indices.append((i, col_id))
+
+    return invalid_row_indices

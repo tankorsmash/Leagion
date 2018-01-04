@@ -24,7 +24,7 @@ from leagion.data_imports.template_generation import (
 from leagion.data_imports.import_validation import (
     date_validator, time_validator, whole_number_validator,
 
-    is_row_well_formatted,
+    is_row_well_formatted, validate_rows
 )
 
 from leagion.utils import generate_locations
@@ -239,3 +239,56 @@ class DataImportImportValidationTestCase(APITestCase):
         self.assertTrue(whole_number_validator(0))
         self.assertTrue(whole_number_validator(-1))
         self.assertTrue(whole_number_validator("0"))
+
+    def test_validate_rows(self):
+        VALID_DATE = "2017/01/12"
+        VALID_TIME = "12:22"
+        VALID_NUM = 123
+
+        rows = []
+
+        #sanity
+        row = [
+            VALID_DATE, VALID_TIME, VALID_NUM,
+            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+        ]
+        rows.append(row)
+        is_well_formatted = is_row_well_formatted(row)
+        self.assertTrue(is_well_formatted)
+
+        #invalid date
+        row = [
+            "March 1st", VALID_TIME, VALID_NUM,
+            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+        ]
+        rows.append(row)
+        is_well_formatted = is_row_well_formatted(row)
+        self.assertFalse(is_well_formatted[0])
+        self.assertEqual(is_well_formatted[1], 0)
+
+        #invalid time
+        row = [
+            VALID_DATE, "12h33", VALID_NUM,
+            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+        ]
+        rows.append(row)
+        is_well_formatted = is_row_well_formatted(row)
+        self.assertFalse(is_well_formatted[0])
+        self.assertEqual(is_well_formatted[1], 1)
+
+        #invalid number (all other column types are numbers too, so we dont check)
+        row = [
+            VALID_DATE, VALID_TIME, "home team #3",
+            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+        ]
+        rows.append(row)
+        is_well_formatted = is_row_well_formatted(row)
+        self.assertFalse(is_well_formatted[0])
+        self.assertEqual(is_well_formatted[1], 2)
+
+        #make sure the bad rows are marked
+        invalid_rows = validate_rows(rows)
+        self.assertEquals(
+            invalid_rows,
+            [(1, 0), (2, 1), (3, 2)]
+        )
