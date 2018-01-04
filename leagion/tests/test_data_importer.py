@@ -12,7 +12,7 @@ from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate, APIClient
 from rest_framework.authtoken.models import Token
 
-from leagion.models import League, Season, Team, Location
+from leagion.models import League, Season, Team, Location, Match
 User = get_user_model()
 
 from leagion.tests.test_api import CreatorMixin #TODO move this out of there
@@ -26,10 +26,19 @@ from leagion.data_imports.import_validation import (
 
     is_row_well_formatted, get_invalid_rows
 )
+from leagion.data_imports.match_importer import (
+    build_match_from_row, build_matches_from_rows,
+    import_matches_from_rows,
+)
 
 from leagion.utils import generate_locations
 
 NO_DATA = 0xDEADBEEF
+
+VALID_DATE = "2017/01/12"
+VALID_TIME = "12:22"
+VALID_TEAM_ID = VALID_LOCATION_ID = VALID_NUM = 123
+
 
 def column_order_checker(self):
     """
@@ -191,10 +200,17 @@ class LocationsExporterTestCase(BaseDataExporterTestCase):
 class DataImportImporterTestCase(APITestCase):
     """
     test the importing of prevalidated data for Data Imports
+
     """
 
-    def test_create_match(self):
-        pass
+    def test_create_unsaved_match(self):
+        row = [
+            VALID_DATE, VALID_TIME, VALID_TEAM_ID, VALID_NUM,
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
+        ]
+
+        built_match = build_match_from_row(row)
+        self.assertIsInstance(built_match, Match)
 
 
 class DataImportImportValidationTestCase(APITestCase):
@@ -243,10 +259,6 @@ class DataImportImportValidationTestCase(APITestCase):
         self.assertTrue(whole_number_validator("0"))
 
     def test_get_invalid_rows(self):
-        VALID_DATE = "2017/01/12"
-        VALID_TIME = "12:22"
-        VALID_TEAM_ID = VALID_LOCATION_ID = VALID_NUM = 123
-
         rows = []
 
         #sanity

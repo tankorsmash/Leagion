@@ -12,15 +12,22 @@ from leagion.data_imports.import_validation import (
 def build_match_from_row(row):
     return Match()
 
+def build_matches_from_rows(rows):
+    #list of Match objects to be bulk_created
+    unsaved_matches = []
+    for i, row in rows:
+        unsaved_match = build_match_from_row(row)
+        unsaved_matches.append(unsaved_match)
+
+    return unsaved_matches
+
+
 def import_matches_from_rows(rows):
     #assure no invalid data is used
     if get_invalid_rows(rows):
         return []
 
     #list of Match objects to be bulk_created
-    unsaved_matches = []
-    for i, row in rows:
-        unsaved_match = build_match_from_row(row)
-        unsaved_matches.append(unsaved_match)
+    return build_matches_from_rows(rows)
 
 

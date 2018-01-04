@@ -84,7 +84,7 @@ def is_row_well_formatted(row):
 
     return True, None
 
-def validate_rows(rows):
+def get_invalid_rows(rows):
     """
     returns a list of (row idx, col idx) pairs that failed validation
 
