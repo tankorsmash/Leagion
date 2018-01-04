@@ -24,7 +24,7 @@ from leagion.data_imports.template_generation import (
 from leagion.data_imports.import_validation import (
     date_validator, time_validator, whole_number_validator,
 
-    is_row_well_formatted, validate_rows
+    is_row_well_formatted, get_invalid_rows
 )
 
 from leagion.utils import generate_locations
@@ -192,7 +192,9 @@ class DataImportImporterTestCase(APITestCase):
     """
     test the importing of prevalidated data for Data Imports
     """
-    pass
+
+    def test_create_match(self):
+        pass
 
 
 class DataImportImportValidationTestCase(APITestCase):
@@ -240,7 +242,7 @@ class DataImportImportValidationTestCase(APITestCase):
         self.assertTrue(whole_number_validator(-1))
         self.assertTrue(whole_number_validator("0"))
 
-    def test_validate_rows(self):
+    def test_get_invalid_rows(self):
         VALID_DATE = "2017/01/12"
         VALID_TIME = "12:22"
         VALID_TEAM_ID = VALID_LOCATION_ID = VALID_NUM = 123
@@ -287,7 +289,7 @@ class DataImportImportValidationTestCase(APITestCase):
         self.assertEqual(is_well_formatted[1], 2)
 
         #make sure the bad rows are marked
-        invalid_rows = validate_rows(rows)
+        invalid_rows = get_invalid_rows(rows)
         self.assertEquals(
             invalid_rows,
             [(1, 0), (2, 1), (3, 2)]
