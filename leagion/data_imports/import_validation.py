@@ -14,6 +14,8 @@ import arrow
 DATE_FORMAT = "YYYY/MM/DD"
 TIME_FORMAT = "HH:mm"
 
+NEW_MATCH_ID = -1
+
 def whole_number_validator(column_data):
     try:
         float(column_data)

@@ -28,7 +28,7 @@ from leagion.data_imports.import_validation import (
 )
 from leagion.data_imports.match_importer import (
     build_match_from_row, build_matches_from_rows,
-    import_matches_from_rows,
+    import_matches_from_rows, update_matches_from_pairs,
 )
 
 from leagion.utils import generate_locations
@@ -217,7 +217,6 @@ class DataImportImporterTestCase(TestCase, CreatorMixin):
         update an existing match without making a new one
 
         """
-        #TODO implement this test
 
         #create the first match
         teams = Team.objects.all()
@@ -236,6 +235,21 @@ class DataImportImporterTestCase(TestCase, CreatorMixin):
         saved_match = Match.objects.first()
 
         #add in a second row with a different score to change the existing one
+        new_home_score = 333
+        new_away_score = 111
+        row = [
+            VALID_DATE, VALID_TIME, home_team.id, new_home_score,
+            away_team.id, new_away_score, location.id, season.id, saved_match.id
+        ]
+        import_matches_from_rows([row])
+        updated_match = Match.objects.get(id=saved_match.id)
+
+        #make sure its different
+        self.assertNotEquals(saved_match.home_points, updated_match.home_points)
+        self.assertNotEquals(saved_match.away_points, updated_match.away_points)
+        #make sure its what we wanted
+        self.assertEquals(updated_match.home_points, new_home_score)
+        self.assertEquals(updated_match.away_points, new_away_score)
 
     def test_create_unsaved_match(self):
         """

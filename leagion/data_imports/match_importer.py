@@ -4,16 +4,16 @@ then creates or updates existing rows
 """
 
 import arrow
+from operator import itemgetter
 
 from leagion.models import Match, Team, Location
 
 from leagion.data_imports.import_validation import (
-    get_invalid_rows, DATE_FORMAT, TIME_FORMAT
+    get_invalid_rows, DATE_FORMAT, TIME_FORMAT,
+    NEW_MATCH_ID,
 )
 
-def build_match_from_row(row):
-    match = Match()
-
+def update_match_from_data(match, row):
     #TODO make a named tuple for this or something, using hardcoded indices is
     # awful
 
@@ -44,12 +44,56 @@ def build_match_from_row(row):
 
     return match
 
+
+def build_match_from_row(row):
+    match = Match()
+    return update_match_from_data(match, row)
+
+def update_matches_from_pairs(match_data):
+    """ takes (match_id, data) pairs """
+
+    match_data.sort(key=itemgetter(0))
+
+    match_ids = list(map(lambda p: p[0], match_data))
+
+    matches = Match.objects.filter(id__in=match_ids).order_by("id")
+    #TODO bulk update this so we dont call save so many times
+    for match in matches:
+        for mid, row_data in match_data:
+            if mid == match.id:
+                match = update_match_from_data(match, row_data)
+                match.save()
+
+                #remove so next iteration is faster
+                match_data.remove((mid, row_data))
+
+                break
+
+
+
 def build_matches_from_rows(rows):
     #list of Match objects to be bulk_created
     unsaved_matches = []
+
+    #list of match id to match data pairs
+    matches_to_update = []
+
     for i, row in enumerate(rows):
-        unsaved_match = build_match_from_row(row)
-        unsaved_matches.append(unsaved_match)
+        match_id = row[8]
+
+        #create unsaved Matches
+        if match_id == NEW_MATCH_ID:
+            unsaved_match = build_match_from_row(row)
+            unsaved_matches.append(unsaved_match)
+        #otherwise update later
+        else:
+            matches_to_update.append((
+                match_id, row
+            ))
+
+    #update the matches
+    update_matches_from_pairs(matches_to_update)
+
 
     return unsaved_matches
 
@@ -61,7 +105,6 @@ def import_matches_from_rows(rows):
 
     #list of Match objects to be bulk_created
     unsaved_matches = build_matches_from_rows(rows)
-
     Match.objects.bulk_create(unsaved_matches)
 
 
