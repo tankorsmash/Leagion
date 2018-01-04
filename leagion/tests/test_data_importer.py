@@ -22,8 +22,7 @@ from leagion.data_imports.template_generation import (
     LocationTemplateGenerator,
 )
 from leagion.data_imports.import_validation import (
-    date_validator, time_validator, team_validator,
-    score_validator, location_validator,
+    date_validator, time_validator, whole_number_validator,
 
     is_row_well_formatted,
 )
@@ -230,12 +229,13 @@ class DataImportImportValidationTestCase(APITestCase):
         self.assertTrue(time_validator("21:45"))
         self.assertTrue(time_validator("00:00"))
 
-    def test_team_validator(self):
-        pass
+    def test_whole_number_validator(self):
+        self.assertFalse(whole_number_validator("asd"))
+        self.assertFalse(whole_number_validator("123123asdasd"))
+        self.assertFalse(whole_number_validator("123,23"))
 
-    def test_score_validator(self):
-        pass
-
-    def test_location_validator(self):
-        pass
-
+        self.assertTrue(whole_number_validator("12323"))
+        self.assertTrue(whole_number_validator(12323))
+        self.assertTrue(whole_number_validator(0))
+        self.assertTrue(whole_number_validator(-1))
+        self.assertTrue(whole_number_validator("0"))

@@ -12,6 +12,21 @@ import arrow
 DATE_FORMAT = "YYYY/MM/DD"
 TIME_FORMAT = "HH:mm"
 
+def whole_number_validator(column_data):
+    try:
+        float(column_data)
+        return True
+    except ValueError:
+        pass
+    try:
+        import unicodedata
+        unicodedata.numeric(column_data)
+        return True
+    except (TypeError, ValueError):
+        pass
+
+    return False
+
 def date_validator(column_data):
     if not isinstance(column_data, str):
         return False
@@ -52,11 +67,11 @@ def location_validator(column_data):
 COLUMN_FORMATTERS = {
     0: date_validator,
     1: time_validator,
-    2: team_validator,
-    3: score_validator,
-    4: team_validator,
-    5: score_validator,
-    6: location_validator,
+    2: whole_number_validator,
+    3: whole_number_validator,
+    4: whole_number_validator,
+    5: whole_number_validator,
+    6: whole_number_validator,
 }
 
 def is_row_well_formatted(row):
