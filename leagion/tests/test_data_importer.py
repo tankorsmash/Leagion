@@ -213,10 +213,13 @@ class DataImportImporterTestCase(TestCase, CreatorMixin):
         generate_locations(5)
 
     def test_update_existing_match(self):
-        #TODO
-        pass
+        """
+        update an existing match without making a new one
 
-    def test_create_unsaved_match(self):
+        """
+        #TODO implement this test
+
+        #create the first match
         teams = Team.objects.all()
         home_team = teams[0]
         away_team = teams[1]
@@ -228,25 +231,73 @@ class DataImportImporterTestCase(TestCase, CreatorMixin):
             VALID_DATE, VALID_TIME, home_team.id, 1,
             away_team.id, 2, location.id, season.id, -1
         ]
+        import_matches_from_rows([row])
+
+        saved_match = Match.objects.first()
+
+        #add in a second row with a different score to change the existing one
+
+    def test_create_unsaved_match(self):
+        """
+        create a temporary match and make sure it matches what we send in
+        """
+        teams = Team.objects.all()
+        home_team = teams[0]
+        away_team = teams[1]
+
+        location = Location.objects.first()
+        season = Season.objects.first()
+
+        home_score = 1
+        away_score = 2
+        row = [
+            VALID_DATE, VALID_TIME, home_team.id, home_score,
+            away_team.id, away_score, location.id, season.id, -1
+        ]
 
         built_match = build_match_from_row(row)
         self.assertIsInstance(built_match, Match)
 
         self.assertEqual(built_match.home_team_id, home_team.id)
+        self.assertEqual(built_match.home_points, home_score)
+
         self.assertEqual(built_match.away_team_id, away_team.id)
+        self.assertEqual(built_match.away_points, away_score)
+
         self.assertEqual(built_match.location_id, location.id)
         self.assertEqual(built_match.season_id, season.id)
 
-        #actually create the matches in the db
+    def test_create_saved_match(self):
+        """
+        create and save a match and make sure it matches what we send in
+        """
+
+        teams = Team.objects.all()
+        home_team = teams[0]
+        away_team = teams[1]
+
+        location = Location.objects.first()
+        season = Season.objects.first()
+
+        home_score = 1
+        away_score = 2
+        row = [
+            VALID_DATE, VALID_TIME, home_team.id, home_score,
+            away_team.id, away_score, location.id, season.id, -1
+        ]
         import_matches_from_rows([row])
 
         saved_match = Match.objects.first()
         self.assertIsInstance(saved_match, Match)
 
         self.assertEqual(saved_match.home_team_id, home_team.id)
-        self.assertEqual(saved_match.away_team_id, away_team.id)
-        self.assertEqual(saved_match.location_id, location.id)
+        self.assertEqual(saved_match.home_points, home_score)
 
+        self.assertEqual(saved_match.away_team_id, away_team.id)
+        self.assertEqual(saved_match.away_points, away_score)
+
+        self.assertEqual(saved_match.location_id, location.id)
+        self.assertEqual(saved_match.season_id, season.id)
 
 
 class DataImportImportValidationTestCase(APITestCase):
