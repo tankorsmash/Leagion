@@ -90,7 +90,6 @@ class DataExporterScaffolding(type):
 
 
 # TODO fix subclassing from APITestCase because not all of that is helpful
-
 class BaseDataExporterTestCase(APITestCase, CreatorMixin, metaclass=DataExporterScaffolding):
     """
     test the creation of the CSV template for Data Imports
@@ -197,20 +196,44 @@ class LocationsExporterTestCase(BaseDataExporterTestCase):
             assert_row("location_address","address")
 
 
-class DataImportImporterTestCase(APITestCase):
+class DataImportImporterTestCase(TestCase, CreatorMixin):
     """
     test the importing of prevalidated data for Data Imports
 
     """
+    def setUp(self):
+        super().setUp()
+
+        #generate 5 teams
+        self.league = self.create_league()
+        self.season = self.create_season(self.league)
+        self.teams = []
+        for _ in range(5):
+            self.teams.append(self.create_team(self.season))
+        generate_locations(5)
+
+    def test_update_existing_match(self):
+        #TODO
+        pass
 
     def test_create_unsaved_match(self):
+        teams = Team.objects.all()
+        home_team = teams[0]
+        away_team = teams[1]
+
+        location = Location.objects.first()
+
         row = [
-            VALID_DATE, VALID_TIME, VALID_TEAM_ID, VALID_NUM,
-            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
+            VALID_DATE, VALID_TIME, home_team.id, 1,
+            away_team.id, 2, location.id, -1
         ]
 
         built_match = build_match_from_row(row)
         self.assertIsInstance(built_match, Match)
+
+        self.assertEqual(built_match.home_team_id, home_team.id)
+        self.assertEqual(built_match.away_team_id, away_team.id)
+        self.assertEqual(built_match.location_id, location.id)
 
 
 class DataImportImportValidationTestCase(APITestCase):
