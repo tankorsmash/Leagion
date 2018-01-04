@@ -243,14 +243,14 @@ class DataImportImportValidationTestCase(APITestCase):
     def test_validate_rows(self):
         VALID_DATE = "2017/01/12"
         VALID_TIME = "12:22"
-        VALID_NUM = 123
+        VALID_TEAM_ID = VALID_LOCATION_ID = VALID_NUM = 123
 
         rows = []
 
         #sanity
         row = [
-            VALID_DATE, VALID_TIME, VALID_NUM,
-            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+            VALID_DATE, VALID_TIME, VALID_TEAM_ID, VALID_NUM,
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
@@ -258,8 +258,8 @@ class DataImportImportValidationTestCase(APITestCase):
 
         #invalid date
         row = [
-            "March 1st", VALID_TIME, VALID_NUM,
-            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+            "March 1st", VALID_TIME, VALID_TEAM_ID, VALID_NUM,
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
@@ -268,8 +268,8 @@ class DataImportImportValidationTestCase(APITestCase):
 
         #invalid time
         row = [
-            VALID_DATE, "12h33", VALID_NUM,
-            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+            VALID_DATE, "12h33", VALID_TEAM_ID, VALID_NUM,
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
@@ -278,8 +278,8 @@ class DataImportImportValidationTestCase(APITestCase):
 
         #invalid number (all other column types are numbers too, so we dont check)
         row = [
-            VALID_DATE, VALID_TIME, "home team #3",
-            VALID_NUM, VALID_NUM, VALID_NUM, VALID_NUM
+            VALID_DATE, VALID_TIME, "home team #3", VALID_NUM,
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)

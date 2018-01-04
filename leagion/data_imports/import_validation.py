@@ -2,10 +2,10 @@
 defines the spec for the data format the user will
 be importing into the system
 
--1 is equivalent to unset scores
+-1 is equivalent to unset scores or new matches
 
-DATE       | TIME  | HOME | HOME_SCORE | AWAY | AWAY_SCORE | LOCATION
-YYYY/MM/DD | HH:MM | ID   | int        | ID   | int        | ID
+DATE       | TIME  | HOME | HOME_SCORE | AWAY | AWAY_SCORE | LOCATION | MATCH ID
+YYYY/MM/DD | HH:MM | ID   | int        | ID   | int        | ID       | ID
 """
 
 import arrow
@@ -67,13 +67,14 @@ def location_validator(column_data):
 
 # dict so can easily be reordered
 COLUMN_FORMATTERS = {
-    0: date_validator,
-    1: time_validator,
-    2: whole_number_validator,
-    3: whole_number_validator,
-    4: whole_number_validator,
-    5: whole_number_validator,
-    6: whole_number_validator,
+    0: date_validator, #date
+    1: time_validator, #time
+    2: whole_number_validator, #home id
+    3: whole_number_validator, #home score
+    4: whole_number_validator, #away id
+    5: whole_number_validator, #away score
+    6: whole_number_validator, #location id
+    7: whole_number_validator, #match id
 }
 
 def is_row_well_formatted(row):
@@ -86,6 +87,8 @@ def is_row_well_formatted(row):
 def validate_rows(rows):
     """
     returns a list of (row idx, col idx) pairs that failed validation
+
+    TODO make sure the model ids are valid in some bulk way
     """
 
     invalid_row_indices = []
