@@ -216,7 +216,19 @@ class DataImportImportValidationTestCase(APITestCase):
 
 
     def test_time_validator(self):
-        pass
+        self.assertFalse(time_validator(False))
+        self.assertFalse(time_validator(123))
+        self.assertFalse(time_validator(""))
+        self.assertFalse(time_validator("12:30 AM"))
+        self.assertFalse(time_validator("12h30 PM"))
+        self.assertFalse(time_validator("12h30"))
+        self.assertFalse(time_validator("12:30 am"))
+        self.assertFalse(time_validator("12:30 pm"))
+
+        #random dates
+        self.assertTrue(time_validator("01:30"))
+        self.assertTrue(time_validator("21:45"))
+        self.assertTrue(time_validator("00:00"))
 
     def test_team_validator(self):
         pass

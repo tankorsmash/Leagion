@@ -10,7 +10,7 @@ import arrow
 
 #NOTE arrow format codes, not the slightly different datetime formats
 DATE_FORMAT = "YYYY/MM/DD"
-TIME_FORMAT = "HH:MM"
+TIME_FORMAT = "HH:mm"
 
 def date_validator(column_data):
     if not isinstance(column_data, str):
@@ -24,6 +24,19 @@ def date_validator(column_data):
     return True
 
 def time_validator(column_data):
+    if not isinstance(column_data, str):
+        return False
+
+    #special case because arrow ignores the part that doesn't match the string
+    # ie 2:30 pm is recognized as 2:30
+    if "am" in column_data.lower() or "pm" in column_data.lower():
+        return False
+
+    try:
+        date_obj = arrow.get(column_data, TIME_FORMAT)
+    except arrow.parser.ParserError:
+        return False
+
     return True
 
 def team_validator(column_data):
