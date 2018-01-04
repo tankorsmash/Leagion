@@ -15,12 +15,14 @@ def build_match_from_row(row):
     match = Match()
 
     #TODO make a named tuple for this or something, using hardcoded indices is
-    # awful, then also fix the horrible datetime parsing
+    # awful
+
+    #TODO fix the horrible datetime parsing
     date = row[0]
     time = row[1]
     datetime = arrow.get(date+" "+time, DATE_FORMAT+" "+TIME_FORMAT)
 
-    match.match_datetime = datetime.format("YYYY-MM-DD HH:MM") #simple django-default-like minus timezone and milliseconds
+    match.match_datetime = datetime.format("YYYY-MM-DD HH:MMZ") #simple django-default-like minus milliseconds
 
     #home team and score
     home_id = row[2]
