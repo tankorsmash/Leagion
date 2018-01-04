@@ -4,8 +4,8 @@ be importing into the system
 
 -1 is equivalent to unset scores or new matches
 
-DATE       | TIME  | HOME | HOME_SCORE | AWAY | AWAY_SCORE | LOCATION | MATCH ID
-YYYY/MM/DD | HH:MM | ID   | int        | ID   | int        | ID       | ID
+DATE       | TIME  | HOME | HOME_SCORE | AWAY | AWAY_SCORE | LOCATION | SEASON ID | MATCH ID
+YYYY/MM/DD | HH:MM | ID   | int        | ID   | int        | ID       | ID        | ID
 """
 
 import arrow
@@ -74,7 +74,8 @@ COLUMN_FORMATTERS = {
     4: whole_number_validator, #away id
     5: whole_number_validator, #away score
     6: whole_number_validator, #location id
-    7: whole_number_validator, #match id
+    7: whole_number_validator, #season id
+    8: whole_number_validator, #match id
 }
 
 def is_row_well_formatted(row):

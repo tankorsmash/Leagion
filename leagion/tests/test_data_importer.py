@@ -37,7 +37,7 @@ NO_DATA = 0xDEADBEEF
 
 VALID_DATE = "2017/01/12"
 VALID_TIME = "12:22"
-VALID_TEAM_ID = VALID_LOCATION_ID = VALID_NUM = 123
+VALID_TEAM_ID = VALID_LOCATION_ID = VALID_SEASON_ID = VALID_NUM = 123
 
 
 def column_order_checker(self):
@@ -222,10 +222,11 @@ class DataImportImporterTestCase(TestCase, CreatorMixin):
         away_team = teams[1]
 
         location = Location.objects.first()
+        season = Season.objects.first()
 
         row = [
             VALID_DATE, VALID_TIME, home_team.id, 1,
-            away_team.id, 2, location.id, -1
+            away_team.id, 2, location.id, season.id, -1
         ]
 
         built_match = build_match_from_row(row)
@@ -234,6 +235,18 @@ class DataImportImporterTestCase(TestCase, CreatorMixin):
         self.assertEqual(built_match.home_team_id, home_team.id)
         self.assertEqual(built_match.away_team_id, away_team.id)
         self.assertEqual(built_match.location_id, location.id)
+        self.assertEqual(built_match.season_id, season.id)
+
+        #actually create the matches in the db
+        import_matches_from_rows([row])
+
+        saved_match = Match.objects.first()
+        self.assertIsInstance(saved_match, Match)
+
+        self.assertEqual(saved_match.home_team_id, home_team.id)
+        self.assertEqual(saved_match.away_team_id, away_team.id)
+        self.assertEqual(saved_match.location_id, location.id)
+
 
 
 class DataImportImportValidationTestCase(APITestCase):
@@ -287,7 +300,7 @@ class DataImportImportValidationTestCase(APITestCase):
         #sanity
         row = [
             VALID_DATE, VALID_TIME, VALID_TEAM_ID, VALID_NUM,
-            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_SEASON_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
@@ -296,7 +309,7 @@ class DataImportImportValidationTestCase(APITestCase):
         #invalid date
         row = [
             "March 1st", VALID_TIME, VALID_TEAM_ID, VALID_NUM,
-            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_SEASON_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
@@ -306,7 +319,7 @@ class DataImportImportValidationTestCase(APITestCase):
         #invalid time
         row = [
             VALID_DATE, "12h33", VALID_TEAM_ID, VALID_NUM,
-            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_SEASON_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
@@ -316,7 +329,7 @@ class DataImportImportValidationTestCase(APITestCase):
         #invalid number (all other column types are numbers too, so we dont check)
         row = [
             VALID_DATE, VALID_TIME, "home team #3", VALID_NUM,
-            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_NUM
+            VALID_TEAM_ID, VALID_NUM, VALID_LOCATION_ID, VALID_SEASON_ID, VALID_NUM
         ]
         rows.append(row)
         is_well_formatted = is_row_well_formatted(row)
