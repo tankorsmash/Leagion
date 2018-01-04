@@ -21,6 +21,12 @@ from leagion.data_imports.template_generation import (
     TeamsTemplateGenerator,
     LocationTemplateGenerator,
 )
+from leagion.data_imports.import_validation import (
+    date_validator, time_validator, team_validator,
+    score_validator, location_validator,
+
+    is_row_well_formatted,
+)
 
 from leagion.utils import generate_locations
 
@@ -68,15 +74,16 @@ class DataExporterScaffolding(type):
     subclass (of which there is only two TBF)
     """
     def __new__(cls, name, bases, attrs):
-        #skip BaseDataExporter
-        if name != "BaseDataExporter":
+        #skip BaseDataExporterTestCase
+        if name != "BaseDataExporterTestCase":
             attrs["test_column_order"] = column_order_checker
 
         return super().__new__(cls, name, bases, attrs)
 
 
+# TODO fix subclassing from APITestCase because not all of that is helpful
 
-class BaseDataExporter(APITestCase, CreatorMixin, metaclass=DataExporterScaffolding):
+class BaseDataExporterTestCase(APITestCase, CreatorMixin, metaclass=DataExporterScaffolding):
     """
     test the creation of the CSV template for Data Imports
     """
@@ -133,7 +140,7 @@ class BaseDataExporter(APITestCase, CreatorMixin, metaclass=DataExporterScaffold
         return partial(self.assertRowMatch, row_data, instance)
 
 
-class TeamExporterTestCase(BaseDataExporter):
+class TeamExporterTestCase(BaseDataExporterTestCase):
     GeneratorClass = TeamsTemplateGenerator
     ModelClass = Team
 
@@ -162,7 +169,7 @@ class TeamExporterTestCase(BaseDataExporter):
 
 
 
-class LocationsExporterTestCase(BaseDataExporter):
+class LocationsExporterTestCase(BaseDataExporterTestCase):
     GeneratorClass = LocationTemplateGenerator
     ModelClass = Location
 
@@ -193,4 +200,19 @@ class DataImportImportValidationTestCase(APITestCase):
     """
     test the validation of the CSV to be imported in Data Imports
     """
-    pass
+
+    def test_date_validator(self):
+        pass
+
+    def test_time_validator(self):
+        pass
+
+    def test_team_validator(self):
+        pass
+
+    def test_score_validator(self):
+        pass
+
+    def test_location_validator(self):
+        pass
+
