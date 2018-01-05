@@ -23,3 +23,5 @@ export const keyCodes = {
   up:    38,
   down:  40,
 };
+
+export const mapsUrl = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDqhKuE2JYEPwnLiNBZ-bElFEqeTb_nvdU&v=3.exp&libraries=geometry,drawing,places";

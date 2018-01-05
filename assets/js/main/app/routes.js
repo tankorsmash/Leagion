@@ -1,14 +1,16 @@
-import {Switch} from 'react-router-dom';
+import {Switch, Redirect} from 'react-router-dom';
 import {Route} from 'components/router';
+import update from 'immutability-helper';
 
 import ajax from 'common/ajax';
 
 import appUrls from 'main/app/urls';
 import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';
-
 import AdminRouter from 'main/app/admin/routes';
 import PlayerRouter from 'main/app/player/routes';
+import auth from 'main/auth';
+
 import {FourOhFour} from 'components/error-pages';
 import SpinLoader from 'components/spinloader';
 
@@ -16,28 +18,27 @@ import SpinLoader from 'components/spinloader';
 class AppRouter extends React.Component {
     state = {
         user: {},
+        role: null,
         userLoaded: false,
         constantsLoaded: false,
+        roleLoaded: false,
+        reload: false,
     };
 
     componentDidMount() {
-        ajax({
-            url: reverse('api-my-details'),
-        }).then(data => {
-            this.setState({
-                user: data,
-                userLoaded: true,
-            });
+        ajax({url: reverse('api-my-details')}).then(data => {
+            this.setState({user: data, userLoaded: true});
+        }).catch(() => {
+            auth.logout();
+            this.setState({reload: true});
         });
 
-        ajax({
-            url: reverse('api-site-constants'),
-        }).then(data => {
+        ajax({url: reverse('api-site-constants')}).then(data => {
+            this.setState({constants: data, constantsLoaded: true});
+        });
 
-            this.setState({
-                constants: data,
-                constantsLoaded: true,
-            });
+        ajax({url: reverse('api-my-role')}).then(data => {
+            this.setState({role: data.role, roleLoaded: true});
         });
     }
 
@@ -47,13 +48,35 @@ class AppRouter extends React.Component {
         });
     };
 
+    changeRole = role => {
+        ajax({
+            url: reverse('api-my-role'),
+            data: {role: role},
+            method: 'POST',
+        }).then(data => {
+            this.setState({reload: true});
+        });
+    };
+
     render() {
+        const {userLoaded, constantsLoaded, roleLoaded, role, reload} = this.state;
+
+        if (reload) {
+            return (<Redirect exact to={'/'} /> );
+        }
+
         return (
-            <SpinLoader loaded={this.state.userLoaded && this.state.constantsLoaded}>
+            <SpinLoader loaded={userLoaded && constantsLoaded && roleLoaded}>
                 <Switch>
-                    <Route exact path={appUrls.index} {...this.state} component={PlayerRouter} />
-                    <Route path={adminUrls.index} {...this.state} component={AdminRouter} />
-                    <Route path={playerUrls.index} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />
+                    {role === 'player' &&
+                        <Route exact path={appUrls.index}changeRole={this.changeRole} {...this.state} component={PlayerRouter} />
+                    }
+                    {role === 'player' &&
+                        <Route path={playerUrls.index} changeRole={this.changeRole} setUserState={this.setUserState} {...this.state} component={PlayerRouter} />
+                    }
+                    {role === 'commissioner' &&
+                        <Route path={adminUrls.index} changeRole={this.changeRole} setUserState={this.setUserState} {...this.state} component={AdminRouter} />
+                    }
                     <Route component={FourOhFour} />
                 </Switch>
             </SpinLoader>

@@ -75,7 +75,7 @@ export class SimpleModal extends Modal {
     state = {isOpen: false};
 
     toggle = (e) => {
-        if (e) e.preventDefault();
+        if (e && typeof(e) !== "boolean" ) e.preventDefault();
         if (this.state.isOpen) {
             this.props.onClose();
         }
@@ -89,7 +89,7 @@ export class SimpleModal extends Modal {
 
     render() {
         const {
-            buttonProps, body, title,
+            buttonProps, body, title, onSubmit,
             submitAttrs, cancelAttrs, size, Opener,
         } = this.props;
 
@@ -107,7 +107,9 @@ export class SimpleModal extends Modal {
                         <div>
                             <Button {...cancelAttrs} color="info" onClick={this.toggle}>Cancel</Button>
                             {' '}
-                            <Button {...submitAttrs} color="primary" onClick={this.handleSubmit}>{submitText}</Button>
+                            {onSubmit &&
+                                <Button {...submitAttrs} color="primary" onClick={this.handleSubmit}>{submitText}</Button>
+                            }
                         </div>
                     }
                     body={body}
@@ -136,7 +138,7 @@ export class FormModal extends Modal {
     state = {isOpen: false};
 
     toggle = (e) => {
-        if (e) e.preventDefault();
+        if (e && typeof(e) !== "boolean" ) e.preventDefault();
         if (this.state.isOpen) {
             this.props.onClose();
         }

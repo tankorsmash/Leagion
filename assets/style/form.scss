@@ -1,28 +1,4 @@
 /* enable absolute positioning */
-.inner-addon {
-    position: relative;
-
-    .fa {
-        position: absolute;
-        padding: 10px;
-        pointer-events: none;
-    }
-}
-
-.left-addon .fa  {
-    left:  0px;
-}
-.right-addon .fa {
-    right: 0px;
-}
-
-.left-addon input  {
-    padding-left:  30px;
-}
-.right-addon input {
-    padding-right: 30px;
-}
-
 .le-form-group-wrap {
     margin-bottom: 0;
 }

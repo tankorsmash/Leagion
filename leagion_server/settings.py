@@ -56,14 +56,13 @@ INSTALLED_APPS = [
     'webpack_loader',
 
     'phonenumber_field',
-    'address',
     'django_cleanup',
 ]
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -197,6 +196,7 @@ this is used in generate_all to save on having to recreate a superuser all the t
 from .local import *
 
 if DEBUG:
+    ALLOWED_HOSTS = ['*']
     #disable hardcore password hashing locally, makes generating users real slow
     PASSWORD_HASHERS = (
                 'django.contrib.auth.hashers.MD5PasswordHasher',

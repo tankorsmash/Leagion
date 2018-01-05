@@ -1,5 +1,6 @@
-import {withState, withHandlers, setPropTypes, lifecycle, compose} from 'recompose';
+import {setDisplayName, withState, withHandlers, setPropTypes, lifecycle, compose} from 'recompose';
 import update from 'immutability-helper';
+import Select from 'react-select';
 import PropTypes from 'prop-types';
 import Datetime from 'react-datetime';
 import FontAwesome from 'react-fontawesome';
@@ -11,9 +12,9 @@ import {
     InputGroup, InputGroupButton,
 } from 'reactstrap';
 
+import {MapWithASearchBox} from 'components/map';
 import {DATE_FORMAT} from 'common/constants';
 import {onKeyPress} from 'common/functions';
-
 import {Button} from 'components/buttons';
 
 const enhance = compose(
@@ -56,13 +57,12 @@ const enhance = compose(
         },
     }),
 );
-export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors}) => {
+export const Form = enhance(({className, id, children, onFormSubmit, onInputChange, form, errors, setForm}) => {
     const childrenWithProps = React.Children.map(children, (child) => {
-        if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
+        if (child.props && child.props.forminput) {
             return React.cloneElement(child, {
                 onChange: onInputChange,
-                form,
-                errors,
+                form, errors, setForm
             });
         } else {
             return child;
@@ -76,62 +76,43 @@ export const Form = enhance(({className, id, children, onFormSubmit, onInputChan
     );
 });
 
-export class FormBase extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleInputChange(event) {
-        const target = event.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.updateFormState({
-            [name]: value
-        });
-    }
-
-    // lets us update form data without needing to go through an event, like 'change'
-    updateFormState = (newFormState, onStateUpdated) => {
-        this.setState((prevState, props) => {
-            return {
-                form: {
-                    ...prevState.form,
-                    ...newFormState
-                }
+const formGroupEnhance = compose(
+    setDisplayName('FormGroup'),
+    withHandlers({
+        onSelectChange: props => (item) => {
+            let value = '';
+            if (item) {
+                value = item.value;
             }
-        }, onStateUpdated);
-    }
-
-    handleErrors(response) {
-        this.setState({
-            errors: response,
-        });
-    }
-
-    handleSubmit(event) {
-        throw 'you must override handleSubmit method when making a form';
-    }
-}
-
-export const FormGroup = (props) => {
+            props.setForm((f) => {
+                return update(f, {[props.id]: {$set: value}});
+            });
+        },
+    }),
+);
+export const FormGroup = formGroupEnhance((props) => {
     const {
         id, label, type, onChange, form, errors,
         className, placeholder, check, row, inline, disabled,
-        tag, children
+        tag, selectOptions, options, onSelectChange,
+        style, innerRef, lat, lng, setForm
     } = props;
 
     let {name, value} = props;
     if (type !== 'radio') {
         name = id;
     }
-
     //populate values and errors from form object but not if
     //explicitly passed in (i.e. for radios)
     if (!value) {
         value = form[name];
+    }
+    let latitude, longitude;
+    if (lat) {
+        latitude = form[lat];
+    }
+    if (lng) {
+        longitude = form[lng];
     }
     const error = errors[name];
     const feedbackClass = error ? 'show-feedback' : '';
@@ -145,13 +126,12 @@ export const FormGroup = (props) => {
         checked = value === form[name];
     } else if (type === 'checkbox') {
         checked = value;
-    } else if (type === 'date') {
-
     }
 
 	const valid = error ? false : undefined;
 
-    const select = type === 'select';
+    const isSelect = type === 'select';
+    const isMap = type === 'map';
 
     return (
         <RFormGroup
@@ -161,6 +141,7 @@ export const FormGroup = (props) => {
             disabled={disabled}
             tag={tag}
             className={className}
+            style={style}
             color={error ? 'danger' : ''}
         >
             { checkOrRadio && (
@@ -172,13 +153,12 @@ export const FormGroup = (props) => {
             { !checkOrRadio &&
                 <Label check={check} for={id}>{label}</Label>
             }
-            { !checkOrRadio && !isDatePicker &&
+            { !checkOrRadio && !isDatePicker && !isSelect && !isMap &&
                 <Input
                     type={type} name={name} id={id} value={value}
                     onChange={onChange} valid={valid} placeholder={placeholder}
-                >
-                    {children}
-                </Input>
+                    ref={innerRef}
+                > </Input>
             }
             { isDatePicker &&
                 <DatePicker
@@ -186,10 +166,36 @@ export const FormGroup = (props) => {
                     value={value} type={type} name={name} id={id} placeholder={placeholder}
                 />
             }
+            { isSelect &&
+                <Select
+                    id={id} name={name} value={value}
+                    options={options} onChange={onSelectChange}
+                    placeholder={placeholder} {...selectOptions}
+                />
+            }
+            { isMap &&
+                    <MapWithASearchBox
+                        initial={value}
+                        latitude={latitude} longitude={longitude}
+                        onMapChanged={(places)=>{
+                            const place = R.head(places);
+                            if (place) {
+                                setForm((f) => {
+                                    return update(f, {
+                                        [props.id]: {$set: place.formatted_address},
+                                        [lat]: {$set: place.geometry.location.lat().toFixed(6)},
+                                        [lng]: {$set: place.geometry.location.lng().toFixed(6)},
+                                    });
+
+                                });
+                            }
+                        }}
+                    />
+            }
             <FormFeedback className={feedbackClass}>{error || ''}</FormFeedback>
         </RFormGroup>
     );
-};
+});
 
 
 export class Input extends React.Component {
@@ -205,6 +211,7 @@ export class Input extends React.Component {
     render() {
         let props = Object.assign({}, this.props);
         delete props.indeterminate;
+        delete props.children;
 
         return (
             <RInput
@@ -216,19 +223,26 @@ export class Input extends React.Component {
 }
 
 export const FormGroupWrap = (props) => {
-    const {errors, form, onChange, className} = props;
+    const {errors, form, onChange, className, setForm} = props;
     const childrenWithProps = React.Children.map(props.children, (child) => {
-        if (child.type && ['FormGroup', 'FormGroupWrap'].includes(child.type.name)) {
-            return React.cloneElement(child, { errors, form, onChange });
+        if (child.props && child.props.forminput) {
+            return React.cloneElement(child, { errors, form, onChange, setForm });
         } else {
             return child;
         }
     });
 
+    let elProps = Object.assign({}, props);
+    delete elProps.setForm;
+    delete elProps.onChange;
+    delete elProps.form;
+    delete elProps.errors;
+    delete elProps.forminput;
+
     const classNames = `le-form-group-wrap ${className}`;
 
     return (
-        <RFormGroup className={classNames} {...props} >
+        <RFormGroup className={classNames} {...elProps} >
             {childrenWithProps}
         </RFormGroup>
     );

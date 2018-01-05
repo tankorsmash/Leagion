@@ -3,6 +3,7 @@
 //Do not modify by hand, it will get overwritten
 //see leagion reverse_js for what you want
 var viewnames = {
+    "api-invite-user": "/api/invite-player/",
     "api-my-comm-league-detail": "/api/me/comm/league/<league_id>/",
     "api-my-comm-league-list": "/api/me/comm/league/",
     "api-my-comm-location-detail": "/api/me/comm/location/<location_id>/",
@@ -21,6 +22,7 @@ var viewnames = {
     "api-my-match-detail": "/api/me/match/<match_id>/",
     "api-my-match-list": "/api/me/match/",
     "api-my-public-player-detail": "/api/public-player/<player_id>/",
+    "api-my-role": "/api/me/role/",
     "api-my-season-detail": "/api/me/season/<season_id>/",
     "api-my-season-list": "/api/me/season/",
     "api-my-team-detail": "/api/me/team/<team_id>/",

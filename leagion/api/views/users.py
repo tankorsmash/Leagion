@@ -2,23 +2,63 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework.response import Response
-from rest_framework import generics, views as drf_views, filters
+from rest_framework import generics, mixins, views as drf_views, filters
+from rest_framework import status
 
-from leagion.api.serializers.users import UserSerializer, PublicUserSerializer
+from leagion.api.serializers.users import UserSerializer, InviteUserSerializer, PublicUserSerializer
+from leagion.api.validators import no_empty_team
 
-from leagion.models import Season
+from leagion.models import Season, Team
 
-from leagion.utils import reverse_js
+from leagion.utils import reverse_js, id_generator
+from leagion.cache import user_cache_key
+from leagion.constants import ROLES
 
 User = get_user_model()
 
 
 @reverse_js
-class MyCommUserList(generics.ListCreateAPIView):
+class InviteUserView(generics.CreateAPIView):
+    """
+    get or create a user and add them to team and send an email with a link
+    """
+
+    serializer_class = InviteUserSerializer
+
+    def perform_create(self, serializer):
+        self.user = serializer.save()
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        response = None
+        self.user = User.objects.filter(email__iexact=data.get('email', ''))
+
+        if not self.user:
+            response = super().create(request, *args, **kwargs)
+        else:
+            no_empty_team(data.get('team_id'))
+
+        # asign data
+        user = self.user
+        team = Team.objects.filter(id=data['team_id']).first()
+        is_captain = data['is_captain']
+
+        # add fields
+        user.teams.add(team)
+        if is_captain:
+            user.captain_of_teams.add(team)
+
+        return response or Response(status=status.HTTP_200_OK)
+
+
+@reverse_js
+class MyCommUserList(generics.ListAPIView):
     serializer_class = UserSerializer
+    filter_fields = ('teams__season', 'teams')
+    search_fields = ('first_name', 'last_name', 'email', 'teams__name')
 
     def get_queryset(self):
-        league_ids = self.user.leagues_commissioned.values_list('id', flat=True)
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
         return User.objects.filter(
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")
@@ -28,12 +68,36 @@ class MyCommUserList(generics.ListCreateAPIView):
 class MyCommUserDetail(generics.RetrieveUpdateAPIView):
     lookup_url_kwarg = "player_id"
     serializer_class = UserSerializer
+    filter_fields = ('teams__season',)
 
     def get_queryset(self):
-        league_ids = self.user.leagues_commissioned.values_list('id', flat=True)
+        league_ids = self.request.user.leagues_commissioned.values_list('id', flat=True)
         return User.objects.filter(
             teams__season__league_id__in=league_ids
         ).distinct().prefetch_related("teams")
+
+    def partial_update(self, request, *args, **kwargs):
+        user = User.objects.get(id=kwargs.get('player_id'))
+        remove_team_id = request.data.get('remove_team_id')
+        remove_captain_team_id = request.data.get('remove_captain_team_id')
+        add_captain_team_id = request.data.get('add_captain_team_id')
+        request.data.pop('remove_team_id', None)
+        request.data.pop('remove_captain_team_id', None)
+        request.data.pop('add_captain_team_id', None)
+
+        response = super().partial_update(request, *args, **kwargs)
+
+        if remove_team_id:
+            team = Team.objects.get(id=remove_team_id)
+            user.teams.remove(team)
+        if remove_captain_team_id:
+            team = Team.objects.get(id=remove_captain_team_id)
+            user.captain_of_teams.remove(team)
+        if add_captain_team_id:
+            team = Team.objects.get(id=add_captain_team_id)
+            user.captain_of_teams.add(team)
+
+        return response
 
 
 @reverse_js
@@ -119,3 +183,38 @@ class PublicPlayerView(generics.RetrieveAPIView):
         teams = self.request.user.teams.all()
         seasons = Season.objects.filter(teams__in=teams).distinct()
         return User.objects.filter(teams__season__in=seasons).distinct()
+
+
+@reverse_js
+class UserRoleView(drf_views.APIView):
+    """
+    change the users current role
+    """
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        role_key = user_cache_key(user)
+
+        if not user.is_anonymous():
+            role = request.session.get(role_key)
+            if not user.is_commissioner:
+                request.session[role_key] = ROLES['player']
+            elif not role:
+                request.session[role_key] = ROLES['commissioner']
+
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                'role': request.session.get(role_key)
+            }
+        )
+
+    def post(self, request, *args, **kwargs):
+        role = request.data.get('role')
+        if role:
+            request.session[user_cache_key(request.user)] = ROLES[role]
+        return Response(
+            status=status.HTTP_200_OK,
+            data={
+                'role': role,
+            }
+        )

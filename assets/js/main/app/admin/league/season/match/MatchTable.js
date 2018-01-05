@@ -5,10 +5,11 @@ import {DataTable} from 'components/tables';
 import {NoDataCard} from 'components/cards';
 
 import MatchCreateModal from './MatchCreateModal';
-//import MatchEditModal from './MatchEditModal';
-//import MatchDeleteManyModal from './MatchDeleteManyModal';
-//import MatchDeleteModal from './MatchDeleteModal';
-import {Avatar} from 'components/media';
+import MatchEditModal from './MatchEditModal';
+import MatchDeleteManyModal from './MatchDeleteManyModal';
+import MatchDeleteModal from './MatchDeleteModal';
+import MatchSetScoreModal from './MatchSetScoreModal';
+import TeamWithLogo from '../team/TeamWithLogo';
 
 const enhance = compose(
     withState('selectedIds', 'setSelectedIds', []),
@@ -19,25 +20,21 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
         <DataTable
             url={reverse('api-my-comm-match-list')}
             params={{season: season.id}}
-            toolbarLeft={(
-                <div className="d-flex">
-                        {/*
-                    <Dropdown
-                        disabled={!selectedIds.length}
-                        className="mr-1"
-                        color="info"
-                        buttonText="..."
-                    >
-                        <MatchDeleteManyModal
-                            ids={selectedIds}
-                            Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
-                            onSuccess={() =>{setRefresh(true);}}
-                        />
-                    </Dropdown>
-                            */}
-                    <MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
-                </div>
-            )}
+            toolbar={[
+                <Dropdown
+                    key="dropdown"
+                    disabled={!selectedIds.length}
+                    color="info"
+                    buttonText="..."
+                >
+                    <MatchDeleteManyModal
+                        ids={selectedIds}
+                        Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
+                        onSuccess={() =>{setRefresh(true);}}
+                    />
+                </Dropdown>,
+                <MatchCreateModal key="match-create" season={season} onSuccess={() =>{setRefresh(true);}}/>
+            ]}
             emptySearchEl={
                 <NoDataCard>
                     <p>{ "No Matches match your search criteria" }</p>
@@ -50,16 +47,16 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                 emptyEl: (
                     <NoDataCard>
                         <p>{"It looks like you don't have any matches in this season yet. Create one to get started!"}</p>
-                        {/*<MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>*/}
+                        <MatchCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
                     </NoDataCard>
                 ),
                 columns: [
                     {header: 'Date', cell: 'pretty_date'},
                     {header: 'Time', cell: 'pretty_time'},
-                    {header: 'Home Team', cell: (match) => match.home_team.name},
+                    {header: 'Home Team', cell: (match) => (<TeamWithLogo team={match.home_team}/>)},
                     {header: '', cell: () => 'vs.'},
-                    {header: 'Away Team', cell: (match) => match.away_team.name},
-                    {header: 'Location', cell: (match) => match.location.name},
+                    {header: 'Away Team', cell: (match) => (<TeamWithLogo team={match.away_team}/>)},
+                    {header: 'Location', cell: (match) => match.location ? match.location.name : ''},
                     {header: 'Results', cell: (match) => {
                         if (match.completed) {
                             return <span>{match.home_points} - {match.away_points}</span>;
@@ -67,22 +64,26 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                             return <span>N/A </span>;
                         }
                     }},
-                    {/*
                     {cell: (item) => {
                         return (
-                            <Dropdown dotdotdot >
+                            <Dropdown menuRight dotdotdot >
+                                <MatchSetScoreModal
+                                    season={season} match={item}
+                                    onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Set score'}</DropdownItem>}
+                                />
                                 <MatchEditModal
-                                    team={item} onSuccess={() =>{setRefresh(true);}}
-                                    Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                    season={season} match={item}
+                                    onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Edit'}</DropdownItem>}
                                 />
                                 <MatchDeleteModal
-                                    team={item} onSuccess={() =>{setRefresh(true);}}
+                                    match={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Delete'}</DropdownItem>}
                                 />
                             </Dropdown>
                         );
                     }},
-                        */}
                 ],
             }}
         />

@@ -1,8 +1,9 @@
 import {Link} from 'react-router-dom';
 import {Nav, NavItem} from 'reactstrap';
-import {LogoutButton, AdminButton, AccountSettingsButton} from 'components/buttons';
+import {LogoutButton, AccountSettingsButton} from 'components/buttons';
 import {Navbar} from 'components/nav';
 import {AppProfile} from 'main/app/components/nav';
+import {DropdownItem} from 'components/dropdowns';
 import playerUrls from 'main/app/player/urls';
 
 class PlayerItems extends React.Component {
@@ -17,21 +18,15 @@ class PlayerItems extends React.Component {
     }
 }
 
-class PlayerProfile extends React.Component {
-    getItems = () => {
-        let items = [AccountSettingsButton, LogoutButton];
-
-        if (this.props.user.is_commissioner) {
-            items = [AdminButton].concat(items);
+const PlayerProfile = (props) => (
+    <AppProfile {...props} >
+        {props.user.is_commissioner &&
+            <DropdownItem onClick={()=>{props.changeRole('commissioner');}}>Switch roles</DropdownItem>
         }
-
-        return items;
-    };
-
-    render() {
-        return <AppProfile items={this.getItems()} {...this.props} />;
-    }
-}
+        <DropdownItem tag={AccountSettingsButton}></DropdownItem>
+        <DropdownItem tag={LogoutButton}></DropdownItem>
+    </AppProfile>
+);
 
 export default (props) => {
     return (

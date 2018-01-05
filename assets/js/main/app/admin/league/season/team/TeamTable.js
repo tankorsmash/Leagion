@@ -8,6 +8,8 @@ import TeamCreateModal from './TeamCreateModal';
 import TeamEditModal from './TeamEditModal';
 import TeamDeleteManyModal from './TeamDeleteManyModal';
 import TeamDeleteModal from './TeamDeleteModal';
+//import TeamPlayerModal from './TeamPlayerModal';
+import TeamChangeLogoModal from './TeamChangeLogoModal';
 import {Avatar} from 'components/media';
 
 const enhance = compose(
@@ -19,23 +21,21 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
         <DataTable
             url={reverse('api-my-comm-team-list')}
             params={{season: season.id}}
-            toolbarLeft={(
-                <div className="d-flex">
-                    <Dropdown
-                        disabled={!selectedIds.length}
-                        className="mr-1"
-                        color="info"
-                        buttonText="..."
-                    >
-                        <TeamDeleteManyModal
-                            ids={selectedIds}
-                            Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
-                            onSuccess={() =>{setRefresh(true);}}
-                        />
-                    </Dropdown>
-                    <TeamCreateModal season={season} onSuccess={() =>{setRefresh(true);}}/>
-                </div>
-            )}
+            toolbar={[
+                <Dropdown
+                    key="dropdown"
+                    disabled={!selectedIds.length}
+                    color="info"
+                    buttonText="..."
+                >
+                    <TeamDeleteManyModal
+                        ids={selectedIds}
+                        Opener={<DropdownItem toggle={false}>Delete</DropdownItem>}
+                        onSuccess={() =>{setRefresh(true);}}
+                    />
+                </Dropdown>,
+                <TeamCreateModal key="team-create" season={season} onSuccess={() =>{setRefresh(true);}}/>
+            ]}
             emptySearchEl={
                 <NoDataCard>
                     <p>{ "No teams match your search criteria" }</p>
@@ -63,12 +63,15 @@ export default enhance(({season, setRefresh, selectedIds, setSelectedIds}) => {
                     {header: 'Losses', cell: (team) => team.win_draw_loss_points.losses},
                     {header: 'Points', cell: (team) => team.win_draw_loss_points.points},
                     {cell: (item) => {
-                        console.log(item);
                         return (
-                            <Dropdown dotdotdot >
+                            <Dropdown menuRight dotdotdot >
                                 <TeamEditModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}
                                     Opener={<DropdownItem toggle={false}>{'Rename'}</DropdownItem>}
+                                />
+                                <TeamChangeLogoModal
+                                    team={item} onSuccess={() =>{setRefresh(true);}}
+                                    Opener={<DropdownItem toggle={false}>{'Change Logo'}</DropdownItem>}
                                 />
                                 <TeamDeleteModal
                                     team={item} onSuccess={() =>{setRefresh(true);}}

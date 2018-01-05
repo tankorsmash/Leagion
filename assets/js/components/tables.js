@@ -2,10 +2,10 @@ import {Table as RTable, Row, Col } from 'reactstrap';
 import PropTypes from 'prop-types';
 import Dragula from 'react-dragula';
 import update from 'immutability-helper';
+import {areEqualShallow} from 'common/functions';
 
 import {Input} from 'components/forms';
 import {SearchInput} from 'components/forms';
-import {LeftRight} from 'components/misc';
 import DatasetView from 'components/DatasetView';
 import {Button} from 'components/buttons';
 
@@ -284,7 +284,7 @@ export class DataTable extends React.Component {
     static propTypes = {
         tableProps: PropTypes.object.isRequired,
         url: PropTypes.string.isRequired,
-        toolbar: PropTypes.element,
+        toolbar: PropTypes.array,
         onDrop: function(props, propName, componentName) {
             if (
                 (props['draggable'] == true &&
@@ -310,6 +310,12 @@ export class DataTable extends React.Component {
         page_size: 10,
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (!areEqualShallow(this.props.params, nextProps.params)) {
+            this.setRefresh(true);
+        }
+    }
+
     setRefresh = (refresh) => {this.setState({refresh: refresh});};
     setSearch = (search) => {
         this.setState({
@@ -320,8 +326,8 @@ export class DataTable extends React.Component {
 
     render() {
         const {
-            toolbarLeft, toolbarRight, url, tableProps,
-            params, emptySearchEl
+            toolbar, url, tableProps,
+            params, emptySearchEl, noSearch
         } = this.props;
 
         const {data, search, refresh, page, page_size, count} = this.state;
@@ -330,13 +336,15 @@ export class DataTable extends React.Component {
         const noSearchMatch = data && !data.length && search;
         const showTable = !!data;
 
-        params.page_size = page_size;
-        params.page = page;
+        const dataParams = Object.assign({}, params, {
+            page_size: page_size,
+            page: page,
+        });
 
         return (
             <DatasetView
                 url={url}
-                data={params} search={search}
+                data={dataParams} search={search}
                 refresh={refresh} setRefresh={this.setRefresh}
                 onSuccess={(newData) => {
                     this.setState({
@@ -345,19 +353,14 @@ export class DataTable extends React.Component {
                     });
                 }}
             >
-                {!noData &&
-                    <LeftRight className="mb-3"
-                        left={toolbarLeft}
-                        right={(
-                            <div className="d-flex flex-row-reverse">
-                                <SearchInput
-                                    setSearch={this.setSearch}
-                                    search={search}
-                                />
-                                {toolbarRight}
-                            </div>
-                        )}
-                    />
+                {!noData && !noSearch &&
+                    <div className="le-data-table-toolbar row">
+                        {toolbar}
+                            <SearchInput
+                                setSearch={this.setSearch}
+                                search={search}
+                            />
+                    </div>
                 }
                 { showTable && !noSearchMatch && (
                     <Table
@@ -365,7 +368,7 @@ export class DataTable extends React.Component {
                         {...tableProps}
                     />
                 )}
-                { showTable && !!count &&
+                { showTable && !noSearchMatch && !!count &&
                     <TableControls
                         page={page}
                         pageCount={Math.ceil(count / page_size)}

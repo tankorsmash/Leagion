@@ -35,14 +35,14 @@ export default class MatchScoreSetter extends React.Component {
                             'away_points': '',
                         }}
                     >
-                        <FormGroupWrap row>
-                            <FormGroup
+                        <FormGroupWrap forminput row>
+                            <FormGroup forminput
                                 className="col-md-6"
                                 label={this.props.home_team.name}
                                 type="number"
                                 id="home_points"
                             />
-                            <FormGroup
+                            <FormGroup forminput
                                 className="col-md-6"
                                 label={this.props.away_team.name}
                                 type="number"

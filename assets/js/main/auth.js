@@ -18,6 +18,6 @@ let auth = {
     moderatorOrBetter: function(user) {
         return user.is_moderator || user.is_staff;
     },
-}
+};
 
 module.exports = auth;

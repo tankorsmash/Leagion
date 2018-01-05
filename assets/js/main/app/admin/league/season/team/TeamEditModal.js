@@ -34,7 +34,7 @@ export default enhance(({team, onSuccess, Opener}) => {
                         'name': team.name,
                     }}
                 >
-                    <FormGroup label="Name" type="text" id="name" />
+                    <FormGroup forminput label="Name" type="text" id="name" />
                 </Form>
             }
         />

@@ -107,3 +107,10 @@ class User(AbstractBaseUser, PermissionsMixin, Timestamped):
 
     def __str__(self):
         return self.email
+
+    @property
+    def status(self):
+        if self.is_active:
+            return 'Active'
+        else:
+            return 'Not Active'

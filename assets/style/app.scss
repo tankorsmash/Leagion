@@ -98,6 +98,12 @@ body {
 .le-left-right {
     display: flex;
     justify-content: space-between;
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+        .right {
+            text-align: right;
+        }
+    }
 }
 
 .le-no-data-card {
@@ -114,6 +120,7 @@ body {
     color: $gray-dark;
 }
 
-.le-search-input {
-    width: 300px;
+.le-captain-star {
+    color: $yellow;
+    font-size: 20px;
 }

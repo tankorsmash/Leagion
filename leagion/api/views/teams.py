@@ -59,7 +59,7 @@ class MyCommTeamDetail(generics.RetrieveUpdateDestroyAPIView):
 
             "players"
         ).select_related(
-            "season", "season__league",
+            "season", "season__league"
         )
 
 

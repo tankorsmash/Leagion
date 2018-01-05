@@ -38,7 +38,7 @@ export default enhance(({user, onSuccess}) => {
                         'commissioner': user.id,
                     }}
                 >
-                    <FormGroup label="Name" type="text" id="name" />
+                    <FormGroup forminput label="Name" type="text" id="name" />
                 </Form>
             }
         />

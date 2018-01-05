@@ -8,7 +8,7 @@ export default class TeamLogoUploader extends React.Component {
         let data  = new FormData();
         data.append('logo', file);
 
-        let url = reverse("api-my-team-detail", {team_id: this.props.team.id});
+        let url = this.props.url;
         ajax({
             url:url,
             data:data,
@@ -17,27 +17,25 @@ export default class TeamLogoUploader extends React.Component {
             headers: {},
         }).then(data => {
             toastr.success("Successfully updated team logo!");
-            this.props.setTeam(data);
+            this.props.onSuccess(data);
         }).catch(response => {
             toastr.error("Unknown error occurred updating team logo.");
         });
     };
 
     render() {
-        let {team, isCaptain} = this.props;
+        let {team} = this.props;
         return (
             <div className="team-logo-changer">
                 <h3>Logo</h3>
                 <Avatar className="team-logo" size="md" src={team.logo_url}  />
 
-                {isCaptain &&
-                    <AvatarSelector
-                        dropzoneText="Drag and drop or click to upload file"
-                        title="Change your team's logo"
-                        Opener={<Button>Change Logo</Button>}
-                        onConfirm={this.upload}
-                    />
-                }
+                <AvatarSelector
+                    dropzoneText="Drag and drop or click to upload file"
+                    title="Change your team's logo"
+                    Opener={<Button>Change Logo</Button>}
+                    onConfirm={this.upload}
+                />
             </div>
         );
     }

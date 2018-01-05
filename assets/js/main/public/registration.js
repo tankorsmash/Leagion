@@ -1,10 +1,9 @@
 import {Redirect, Link} from 'react-router-dom';
-import {Form, FormGroup} from 'components/forms';
+import {Form, FormGroup, FormGroupWrap} from 'components/forms';
 import {
     Button,
-    FormGroup as RFormGroup,
     Label as RLabel,
-    Input as RInput
+    Input as RInput,
 } from 'reactstrap';
 import ajax from 'common/ajax';
 import appUrls from 'main/app/urls';
@@ -42,28 +41,24 @@ class LoginForm extends React.Component {
                         >
                             <h5 className="text-center">Sign in and get going!</h5>
                             <br />
-                            <FormGroup
-                                className="inner-addon left-addon"
+                            <FormGroup forminput
                                 placeholder="john.doe@example.com"
                                 type="email"
+                                label="Email"
                                 id="email"
-                            >
-                                <i className="fa fa-user" aria-hidden="true"></i>
-                            </FormGroup>
-                            <FormGroup
-                                className="inner-addon left-addon"
+                            />
+                            <FormGroup forminput
                                 type="password"
+                                label="Password"
                                 id="password"
-                            >
-                                <i className="fa fa-lock" aria-hidden="true"></i>
-                            </FormGroup>
-                            <RFormGroup check className="d-flex justify-content-between">
+                            />
+                            <FormGroupWrap forminput check className="d-flex justify-content-between">
                                 <RLabel check>
                                     <RInput type="checkbox" />
                                     Remember me
                                 </RLabel>
                                 <Link to={publicUrls.passwordReset}>Forgot Password?</Link>
-                            </RFormGroup>
+                            </FormGroupWrap>
                             <Button color="primary" block type="submit">Log In</Button>
                         </Form>
                     </div>

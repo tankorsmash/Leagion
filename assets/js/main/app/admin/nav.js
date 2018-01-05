@@ -1,26 +1,21 @@
 import {Link} from 'react-router-dom';
 import {Nav} from 'reactstrap';
 import adminUrls from 'main/app/admin/urls';
-import {LogoutButton, PlayerAppButton} from 'components/buttons';
+import {LogoutButton, AccountSettingsButton} from 'components/buttons';
+import {DropdownItem} from 'components/dropdowns';
 import {Navbar} from 'components/nav';
 import {AppProfile} from 'main/app/components/nav';
 
 class AdminNavItems extends React.Component {
-    constructor(props) {
-        super(props);
+    state = {
+        createDropdownOpen: false,
+    };
 
-        this.toggleCreateDropdown = this.toggleCreateDropdown.bind(this);
-
-        this.state = {
-            createDropdownOpen: false,
-        };
-    }
-
-    toggleCreateDropdown() {
+    toggleCreateDropdown = () => {
         this.setState({
             createDropdownOpen: !this.state.createDropdownOpen
         });
-    }
+    };
 
     render() {
         return (
@@ -31,15 +26,13 @@ class AdminNavItems extends React.Component {
     }
 }
 
-class AdminProfile extends React.Component {
-    getItems = () => {
-        return [PlayerAppButton, LogoutButton];
-    };
-
-    render() {
-        return <AppProfile items={this.getItems()} {...this.props} />;
-    }
-}
+const AdminProfile = (props) => (
+    <AppProfile {...props} >
+        <DropdownItem onClick={()=>{props.changeRole('player');}}>Switch roles</DropdownItem>
+        <DropdownItem tag={AccountSettingsButton}></DropdownItem>
+        <DropdownItem tag={LogoutButton}></DropdownItem>
+    </AppProfile>
+);
 
 export default (props) => {
     return (

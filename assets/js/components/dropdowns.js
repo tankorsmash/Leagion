@@ -25,7 +25,11 @@ class ExtendedRDropdown extends RDropdown {
             return;
         }
 
-        if (e.target.classList.contains('modal') || e.target.closest('.modal')) {
+        if (
+            e.target.classList.contains('modal') || e.target.closest('.modal') ||
+            e.target.classList.contains('pac-container') || e.target.closest('.pac-container') ||
+            e.target === document.querySelector('body')
+        ) {
             return;
         }
 

@@ -3,6 +3,7 @@ import {Link as RLink} from 'react-router-dom';
 import publicUrls from 'main/public/urls';
 import adminUrls from 'main/app/admin/urls';
 import playerUrls from 'main/app/player/urls';
+import appUrls from 'main/app/urls';
 import auth from 'main/auth';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
@@ -21,21 +22,9 @@ export const LoginButton = ({...rest}) => {
 	);
 };
 
-export const AdminButton = ({...rest}) => {
-	return (
-		<RLink {...rest} to={adminUrls.index}>Manage League</RLink>
-	);
-};
-
 export const AccountSettingsButton = ({...rest}) => {
 	return (
-		<RLink {...rest} to={playerUrls.accountIndex}>Profile</RLink>
-	);
-};
-
-export const PlayerAppButton = ({...rest}) => {
-	return (
-		<RLink {...rest} to={playerUrls.index}>Back to my teams</RLink>
+		<RLink {...rest} to={appUrls.accountIndex}>Profile</RLink>
 	);
 };
 

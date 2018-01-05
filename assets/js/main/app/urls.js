@@ -1,5 +1,9 @@
-import urls from 'common/urls';
+const index = '/app';
 
 module.exports = {
-	index: `/app`,
-}
+	index: index,
+
+	accountIndex: `${index}/account`,
+	accountProfile: `${index}/account/profile`,
+	accountChangePassword: `${index}/account/change-password`,
+};

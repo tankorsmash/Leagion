@@ -57,3 +57,74 @@ form {
 .show-feedback {
     display: block;
 }
+
+body {
+    .Select {
+        min-width: 200px;
+
+        .Select-control {
+            height: 100%;
+            border-radius: $input-border-radius;
+            border-color: $input-border-color;
+
+            .Select-placeholder, .Select-value {
+                top: 3px;
+            }
+            .Select-placeholder {
+                color: $input-placeholder-color;
+            }
+        }
+        &.is-open {
+            .Select-control {
+                border-color: $input-focus-border-color;
+            }
+        }
+        &.is-focused {
+            &:not(.is-open) {
+                .Select-control {
+                    border-color: $input-focus-border-color;
+                }
+            }
+        }
+        .Select-clear-zone {
+            &:hover {
+                color: $red;
+            }
+        }
+        .Select-clear {
+            font-size: 30px;
+        }
+        .Select-option {
+            &.is-focused {
+                background-color: $gray-lighter;
+
+            }
+        }
+        .Select-menu-outer {
+            z-index: 100;
+        }
+
+    }
+
+    .form-group {
+        .Select-control {
+            height: 42px;
+        }
+    }
+}
+
+.modal-xl {
+    @media (min-width: map-get($grid-breakpoints, sm)) {
+        max-width: 100%;
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+}
+
+.pac-container {
+    z-index: 1100;
+}
+
+.dropdown-menu {
+    min-width: 13rem;
+}
