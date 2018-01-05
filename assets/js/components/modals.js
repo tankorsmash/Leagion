@@ -75,7 +75,7 @@ export class SimpleModal extends Modal {
     state = {isOpen: false};
 
     toggle = (e) => {
-        if (e) e.preventDefault();
+        if (e && typeof(e) !== "boolean" ) e.preventDefault();
         if (this.state.isOpen) {
             this.props.onClose();
         }
@@ -138,7 +138,7 @@ export class FormModal extends Modal {
     state = {isOpen: false};
 
     toggle = (e) => {
-        if (e) e.preventDefault();
+        if (e && typeof(e) !== "boolean" ) e.preventDefault();
         if (this.state.isOpen) {
             this.props.onClose();
         }
