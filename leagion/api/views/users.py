@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework.response import Response
 from rest_framework import generics, mixins, views as drf_views, filters
@@ -31,9 +32,9 @@ class InviteUserView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         response = None
-        self.user = User.objects.filter(email__iexact=data.get('email', ''))
-
-        if not self.user:
+        try:
+            self.user = User.objects.get(email__iexact=data.get('email', ''))
+        except ObjectDoesNotExist:
             response = super().create(request, *args, **kwargs)
         else:
             no_empty_team(data.get('team_id'))
