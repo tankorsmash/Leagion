@@ -31,7 +31,7 @@ export class AvatarSelector extends React.Component {
     onConfirm = (toggle) => {
         this.cropper.getCroppedCanvas().toBlob((blob) => {
             if (blob.size < 3000000) {
-                this.setState(uploading:true);
+                this.setState({uploading:true});
                 this.props.onConfirm(blob, toggle);
             } else {
                 toastr.error('Image too big, must be under 3MB');
