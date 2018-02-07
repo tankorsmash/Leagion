@@ -70,12 +70,9 @@ class Team(models.Model):
             if match.completed
         ]
 
-        def is_status(value):
-            return lambda to_test: to_test == value
-
-        wins   = len(list(map(is_status("W"), match_statuses)))
-        draws  = len(list(map(is_status("-"), match_statuses)))
-        losses = len(list(map(is_status("L"), match_statuses)))
+        wins = len([status for status in match_statuses if status == 'W'])
+        draws = len([status for status in match_statuses if status == '-'])
+        losses = len([status for status in match_statuses if status == 'L'])
 
         return {
             'wins': wins,
