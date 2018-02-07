@@ -4,7 +4,7 @@ import {AvatarSelector} from 'components/files';
 import {Button} from 'components/buttons';
 
 export default class TeamLogoUploader extends React.Component {
-    upload = (file) => {
+    upload = (file, onComplete) => {
         let data  = new FormData();
         data.append('logo', file);
 
@@ -18,8 +18,10 @@ export default class TeamLogoUploader extends React.Component {
         }).then(data => {
             toastr.success("Successfully updated team logo!");
             this.props.onSuccess(data);
+            toggle();
         }).catch(response => {
             toastr.error("Unknown error occurred updating team logo.");
+            toggle();
         });
     };
 

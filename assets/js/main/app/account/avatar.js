@@ -4,7 +4,7 @@ import {AvatarSelector} from 'components/files';
 import {Button} from 'components/buttons';
 
 export default class ChangeAvatarForm extends React.Component {
-    upload = (file) => {
+    upload = (file, toggle) => {
         let data  = new FormData();
         data.append('avatar', file);
 
@@ -18,8 +18,10 @@ export default class ChangeAvatarForm extends React.Component {
         }).then(data => {
             toastr.success('Avatar successfully changed!');
             this.props.onSuccess(data);
+            toggle();
         }).catch(() => {
             toastr.error('Unknown error occurred updating avatar.');
+            toggle();
         });
     };
 
