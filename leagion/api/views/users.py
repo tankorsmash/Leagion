@@ -49,7 +49,7 @@ class InviteUserView(generics.CreateAPIView):
         if is_captain:
             user.captain_of_teams.add(team)
 
-        return response or Response(status=status.HTTP_200_OK)
+        return response or Response('success', status=status.HTTP_200_OK)
 
 
 @reverse_js
