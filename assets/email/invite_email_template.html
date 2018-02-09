@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="icon" href="" type="image/x-icon">
+        <meta name="viewport" content="width=device-width">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation-emails/2.2.1/foundation-emails.min.css" rel="stylesheet">
+        <title>Welcome to Leagion</title>
+    </head>
+    <body>
+        <span class="preheader"></span>
+
+        <style type="text/css">
+.header {
+    background: #27AE60;
+}
+.header .columns {
+    padding-bottom: 0;
+}
+.header p {
+    color: #fff;
+    margin-bottom: 0;
+}
+.header .wrapper-inner {
+    padding: 20px; /*controls the height of the header*/
+}
+.header .container {
+    background: #27AE60;
+}
+.wrapper.secondary {
+    background: #f3f3f3;
+}
+        </style>
+        <table align="center" bgcolor="#8A8A8A" class="wrapper header float-center">
+            <tr>
+                <td class="wrapper-inner">
+                    <table align="center" class="container">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table class="row collapse">
+                                        <tbody>
+                                            <tr>
+                                                <th class="small-6 large-6 columns first" valign="middle">
+                                                    <table>
+                                                        <tr>
+                                                            <th><img src="temp_logo.png"></th>
+                                                        </tr>
+                                                    </table>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table align="center" class="container float-center">
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="spacer">
+                            <tbody>
+                                <tr>
+                                    <td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="row">
+                            <tbody>
+                                <tr>
+                                    <th class="small-12 large-12 columns first last">
+                                        <table>
+                                            <tr>
+                                                <th>
+                                                    <h1>Hi, {{ user_full_name }} </h1>
+                                                    <p class="lead">You've been invited to join a team on Leagion!</p>
+                                                    <p>{{ inviter_full_name }} has formally invited you to join their team on the new Leagion scoretracking app. With this, you're able to easily track your scores and view team schedules. It's never been easier. All you need to do is go to {{ leagion_site_url|urlize }} and log in using the temporary credentials below.</p>
+                                                    <table class="callout">
+                                                        <tr>
+                                                            <th class="callout-inner primary">
+                                                                <p> URL: {{ "http://leagion.com/login_url"|urlize }}</p>
+                                                                <p> Email: {{ user_email }}</p>
+                                                                <p> Temporary Password: {{ user_password }}</p>
+                                                            </th>
+                                                            <th class="expander"></th>
+                                                        </tr>
+                                                    </table>
+                                                </th>
+                                                <th class="expander"></th>
+                                            </tr>
+                                        </table>
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table align="center" class="wrapper secondary">
+                            <tr>
+                                <td class="wrapper-inner">
+                                    <table class="spacer">
+                                        <tbody>
+                                            <tr>
+                                                <td height="16px" style="font-size:16px;line-height:16px;">&#xA0;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="row">
+                                        <tbody>
+                                            <tr>
+                                                <th class="small-12 large-6 columns first">
+                                                    <table>
+                                                        <tr>
+                                                            <th>
+                                                                <h5>Connect With Us:</h5>
+                                                                <table class="menu vertical">
+                                                                    <tr>
+                                                                        <td>
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <th class="menu-item float-center" style="text-align: left;">
+                                                                                        <a href="#">Twitter TBA </a>
+                                                                                    </th>
+                                                                                    <th class="menu-item float-center" style="text-align: left;">
+                                                                                        <a href="#">Facebook TBA </a>
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </th>
+                                                        </tr>
+                                                    </table>
+                                                </th>
+                                                <th class="small-12 large-6 columns last">
+                                                    <table>
+                                                        <tr>
+                                                            <th>
+                                                                <h5>Contact Info:</h5>
+                                                                <p>Phone: 123-456-7890</p>
+                                                                <p>Email: <a href="mailto:support@leagion.com">TBA</a></p>
+                                                            </th>
+                                                        </tr>
+                                                    </table>
+                                                </th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div style="display:none; white-space:nowrap; font:15px courier; line-height:0;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+    </body>
+</html>

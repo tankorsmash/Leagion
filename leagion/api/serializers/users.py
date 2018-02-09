@@ -43,6 +43,8 @@ class InviteUserSerializer(serializers.ModelSerializer):
             default_phonenumber=validated_data['default_phonenumber']
         )
         user.save()
+        user.set_password('abc123')
+        user.save()
         return user
 
 

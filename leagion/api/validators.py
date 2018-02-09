@@ -12,8 +12,8 @@ def no_empty_time(time):
         raise serializers.ValidationError('A time is required')
 
 
-def no_empty_team(team):
-    if team and Team.objects.filter(id=team).first():
+def no_empty_team(team_id):
+    if team_id and Team.objects.filter(id=team_id).exists():
         return
     else:
         raise serializers.ValidationError({

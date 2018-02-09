@@ -56,7 +56,7 @@ class MatchSerializer(serializers.ModelSerializer):
         return data
 
     def coerce_date_time(self, data):
-        if hasattr(data, 'date') and hasattr(data, 'time'):
+        if data.get('date') and data.get('time'):
             data['match_datetime'] = datetime.combine(data['date'], data['time'])
             del data['date']
             del data['time']

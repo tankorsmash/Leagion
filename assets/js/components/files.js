@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
+import SpinLoader from 'components/spinloader';
 import {SimpleModal} from 'components/modals';
 import {Button} from 'components/buttons';
 import Cropper from 'react-cropper';
@@ -16,6 +17,7 @@ export class AvatarSelector extends React.Component {
     state = {
         file: null,
         allowSave: false,
+        uploading: false,
     };
 
     onDrop = (file) => {
@@ -28,8 +30,13 @@ export class AvatarSelector extends React.Component {
 
     onConfirm = (toggle) => {
         this.cropper.getCroppedCanvas().toBlob((blob) => {
-            this.props.onConfirm(blob);
-            toggle();
+            if (blob.size < 3000000) {
+                this.setState({uploading:true});
+                this.props.onConfirm(blob, toggle);
+            } else {
+                toastr.error('Image too big, must be under 3MB');
+                toggle();
+            }
         });
 
     };
@@ -43,39 +50,48 @@ export class AvatarSelector extends React.Component {
 
     render() {
         let {dropzoneText, title, Opener} = this.props;
-        let {file, allowSave} = this.state;
+        let {file, allowSave, uploading} = this.state;
 
         return (
             <SimpleModal
                 title={title} submitText="Save"
                 Opener={Opener}
                 body={
-                    !file ? (
-                        <Dropzone
-                            onDrop={this.onDrop}
-                            style={{}}
-                            className="le-avatar-dropzone"
-                        >
-                            <h5>{dropzoneText ?  dropzoneText : ''}</h5>
-                        </Dropzone>
-                    ) : (
-                        <div>
-                            <Cropper
-                                ref={(el) => {this.cropper = el;}}
-                                style={{
-                                    width:'100%',
-                                    height:'400px'
-                                }}
-                                src={file.preview}
-                                aspectRatio={1}
-                                guides={false}
-                                crop={this.crop}
-                            />
-                        </div>
-                    )
+                    <div>
+                        {uploading &&
+                            <div>
+                                <h5>uploading image...</h5>
+                                <SpinLoader loaded={false} />
+                            </div>
+                        }
+                        {!file && !uploading &&
+                            <Dropzone
+                                onDrop={this.onDrop}
+                                style={{}}
+                                className="le-avatar-dropzone"
+                            >
+                                <h5>{dropzoneText ?  dropzoneText : ''}</h5>
+                            </Dropzone>
+                        }
+                        {file && !uploading &&
+                            <div>
+                                <Cropper
+                                    ref={(el) => {this.cropper = el;}}
+                                    style={{
+                                        width:'100%',
+                                        height:'400px'
+                                    }}
+                                    src={file.preview}
+                                    aspectRatio={1}
+                                    guides={false}
+                                    crop={this.crop}
+                                />
+                            </div>
+                        }
+                    </div>
                 }
                 submitAttrs={{
-                    disabled: !allowSave,
+                    disabled: !allowSave || uploading,
                 }}
                 onSubmit={this.onConfirm}
                 onClose={this.reset}

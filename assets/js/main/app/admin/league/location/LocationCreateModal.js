@@ -37,8 +37,8 @@ export default enhance(({season, onSuccess}) => {
                         'name': '',
                         'address': '',
                         'league': season.league.id,
-                        'address_latitude': '',
-                        'address_longitude': '',
+                        'address_latitude': null,
+                        'address_longitude': null,
                     }}
                 >
                     <FormGroup forminput label="Name" type="text" id="name" />
