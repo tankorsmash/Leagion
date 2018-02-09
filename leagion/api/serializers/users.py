@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.conf import settings
 
 from rest_framework import serializers
 
@@ -43,7 +44,8 @@ class InviteUserSerializer(serializers.ModelSerializer):
             default_phonenumber=validated_data['default_phonenumber']
         )
         user.save()
-        user.set_password('abc123')
+        #customized in local.py
+        user.set_password(settings.LEAGION_DEFAULT_PASSWORD)
         user.save()
         return user
 

@@ -166,6 +166,7 @@ MEDIA_URL = '/media/'
 
 #TODO register a domain after we figure out a name
 LEAGION_ROOT_URL = "http://138.197.169.179"
+LEAGION_DEFAULT_PASSWORD = "" #set in local.py
 
 
 STATICFILES_DIRS = (

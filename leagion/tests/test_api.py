@@ -4,12 +4,15 @@ import datetime
 from django.test import TestCase, override_settings
 from django.contrib.auth import get_user_model
 from django.core.urlresolvers import reverse
+from django.core import mail
 
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APITestCase, force_authenticate, APIClient
 from rest_framework.authtoken.models import Token
 
 from leagion.models import League, Season, Team
+from leagion.api.views.users import send_user_email_on_join
+
 User = get_user_model()
 
 from leagion.api import views as api_views
@@ -47,7 +50,8 @@ class CreatorMixin(object):
         return User.objects.create(
             first_name="test",
             last_name="user2",
-            password="abcd1234"
+            password="abcd1234",
+            email="fake@email.com",
         )
 
 
@@ -267,4 +271,13 @@ class ApiTest(BaseAPITestCase):
 
         season = self.create_season(league)
         team = self.create_team(season)
+
+        player = self.create_player()
+
+        send_user_email_on_join(player, team.id, is_captain=False)
+
+        last_sent = mail.outbox[0]
+        import pathlib
+        pathlib.Path("test_email.html").write_text(last_sent.body)
+
 

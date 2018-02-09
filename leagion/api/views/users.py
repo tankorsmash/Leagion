@@ -22,18 +22,14 @@ from leagion.constants import ROLES
 User = get_user_model()
 
 def send_user_email_on_join(user, team_id, is_captain):
+    password_placeholder = settings.LEAGION_DEFAULT_PASSWORD if user.check_password(settings.LEAGION_DEFAULT_PASSWORD) else "previously entered password"
     context = {
-        'user_full_name': '',
-        'leagion_url': '',
-        'user_email': '',
-        'user_password': '',
+        'user_full_name': user.full_name,
+        'leagion_url': settings.LEAGION_ROOT_URL,
+        'user_email': user.email,
+        'user_password': password_placeholder,
     }
     body = render_to_string("email/invite_email_template.html", context=context)
-
-    #TODO remove after testing
-    import pathlib
-    with pathlib.Path("~/email.html").open("w") as f:
-        f.write(body)
 
     send_mail(
         'You have been invited to join a Leagion team',
