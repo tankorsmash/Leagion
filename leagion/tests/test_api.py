@@ -261,3 +261,10 @@ class ApiTest(BaseAPITestCase):
         self.assertEquals(stats['team_count'], 1)
         self.assertEquals(stats['player_count'], 2)
         #TODO rosters
+
+    def test_send_email_on_invite(self):
+        league = self.create_league()
+
+        season = self.create_season(league)
+        team = self.create_team(season)
+

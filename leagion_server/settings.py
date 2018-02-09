@@ -164,6 +164,10 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(ROOT_PATH, 'media/')
 MEDIA_URL = '/media/'
 
+#TODO register a domain after we figure out a name
+LEAGION_ROOT_URL = "http://138.197.169.179"
+
+
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'assets', 'bundles'), # We do this so that django's collectstatic copies or our bundles to the STATIC_ROOT or syncs them to whatever storage we use.
 )

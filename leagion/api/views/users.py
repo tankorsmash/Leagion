@@ -1,6 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+from django.conf import settings
 
 from rest_framework.response import Response
 from rest_framework import generics, mixins, views as drf_views, filters
@@ -17,6 +21,27 @@ from leagion.constants import ROLES
 
 User = get_user_model()
 
+def send_user_email_on_join(user, team_id, is_captain):
+    context = {
+        'user_full_name': '',
+        'leagion_url': '',
+        'user_email': '',
+        'user_password': '',
+    }
+    body = render_to_string("email/invite_email_template.html", context=context)
+
+    #TODO remove after testing
+    import pathlib
+    with pathlib.Path("~/email.html").open("w") as f:
+        f.write(body)
+
+    send_mail(
+        'You have been invited to join a Leagion team',
+        body,
+        'leagionapp@gmail.com',
+        [user.email],
+        fail_silently=False,
+    )
 
 @reverse_js
 class InviteUserView(generics.CreateAPIView):
@@ -52,6 +77,8 @@ class InviteUserView(generics.CreateAPIView):
         user.teams.add(team_id)
         if is_captain:
             user.captain_of_teams.add(team_id)
+
+        send_user_email_on_join(user, team_id, is_captain)
 
         return response or Response('success', status=status.HTTP_200_OK)
 
