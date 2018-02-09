@@ -30,3 +30,6 @@ Pillow==4.3.0
 
 #cleanup old files
 django-cleanup==1.0.1
+
+#emails
+premailer==3.1.1
