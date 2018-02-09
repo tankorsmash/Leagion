@@ -1,3 +1,5 @@
+import premailer
+
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
@@ -21,7 +23,7 @@ from leagion.constants import ROLES
 
 User = get_user_model()
 
-def send_user_email_on_join(user, team_id, is_captain):
+def send_user_email_on_join(user, team_id):
     password_placeholder = settings.LEAGION_DEFAULT_PASSWORD if user.check_password(settings.LEAGION_DEFAULT_PASSWORD) else "previously entered password"
     context = {
         'user_full_name': user.full_name,
@@ -30,6 +32,8 @@ def send_user_email_on_join(user, team_id, is_captain):
         'user_password': password_placeholder,
     }
     body = render_to_string("email/invite_email_template.html", context=context)
+    #inlines styles etc for emails
+    body = premailer.transform(body)
 
     send_mail(
         'You have been invited to join a Leagion team',
@@ -74,7 +78,7 @@ class InviteUserView(generics.CreateAPIView):
         if is_captain:
             user.captain_of_teams.add(team_id)
 
-        send_user_email_on_join(user, team_id, is_captain)
+        send_user_email_on_join(user, team_id)
 
         return response or Response('success', status=status.HTTP_200_OK)
 

@@ -267,6 +267,11 @@ class ApiTest(BaseAPITestCase):
         #TODO rosters
 
     def test_send_email_on_invite(self):
+        """
+        simple test to make sure sending an email works in
+        send_user_email_on_join
+        """
+
         league = self.create_league()
 
         season = self.create_season(league)
@@ -274,10 +279,12 @@ class ApiTest(BaseAPITestCase):
 
         player = self.create_player()
 
-        send_user_email_on_join(player, team.id, is_captain=False)
+        send_user_email_on_join(player, team.id)
 
-        last_sent = mail.outbox[0]
-        import pathlib
-        pathlib.Path("test_email.html").write_text(last_sent.body)
+        self.assertEqual(len(mail.outbox), 1)
+
+        # if testing manually:
+        # import pathlib
+        # pathlib.Path("test_email.html").write_text(last_sent.body)
 
 
