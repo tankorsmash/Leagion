@@ -32,22 +32,26 @@ class InviteUserView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         data = request.data
         response = None
+
+        team_id = data.get('team_id')
+
         try:
             self.user = User.objects.get(email__iexact=data.get('email', ''))
         except ObjectDoesNotExist:
             response = super().create(request, *args, **kwargs)
         else:
-            no_empty_team(data.get('team_id'))
+            #validate that there's a team that exists
+            no_empty_team(team_id)
 
-        # asign data
+        # assign data
         user = self.user
-        team = Team.objects.filter(id=data['team_id']).first()
-        is_captain = data['is_captain']
+
+        is_captain = data.get('is_captain', False)
 
         # add fields
-        user.teams.add(team)
+        user.teams.add(team_id)
         if is_captain:
-            user.captain_of_teams.add(team)
+            user.captain_of_teams.add(team_id)
 
         return response or Response('success', status=status.HTTP_200_OK)
 
