@@ -105,11 +105,11 @@ class ApiTest(BaseAPITestCase):
     def test_league_list(self):
         self.create_league()
 
-        response = self.get_url("api-league-list")
+        response = self.get_url("api-my-league-list")
         self.assertEquals(len(response.json()), 1)
 
         self.create_league()
-        response = self.get_url("api-league-list")
+        response = self.get_url("api-my-league-list")
         self.assertEquals(len(response.json()), 2)
 
     def test_update_team_color(self):
@@ -124,7 +124,7 @@ class ApiTest(BaseAPITestCase):
 
         #get original color for final testing later
         response = self.get_url(
-            "api-team-detail",
+            "api-my-team-detail",
             url_kwargs={"team_id": team.id}
         )
         old_color = response.data['color']
@@ -133,14 +133,14 @@ class ApiTest(BaseAPITestCase):
         #update team color
         data = { 'color': WHITE }
         response = self.patch_url(
-            "api-team-detail",
+            "api-my-team-detail",
             url_kwargs={"team_id": team.id},
             data=data,
         )
 
         #confirm new color
         response = self.get_url(
-            "api-team-detail",
+            "api-my-team-detail",
             url_kwargs={"team_id": team.id}
         )
         new_color = response.data['color']
@@ -168,29 +168,29 @@ class ApiTest(BaseAPITestCase):
         self.setup_client(lc)
 
         #make sure no leagues
-        self.assert_api_list("api-league-list", empty=True)
-        self.assert_api_list("api-team-list", empty=True)
-        response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assert_api_list("api-my-league-list", empty=True)
+        self.assert_api_list("api-my-team-list", empty=True)
+        response = self.get_url("api-my-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 404)
-        response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
+        response = self.get_url("api-my-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 404)
 
         #make sure only the one league after adding
         lc.leagues_commissioned.add(league)
-        self.assert_api_list("api-league-list", empty=False)
-        self.assert_api_list("api-team-list", empty=False)
-        response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assert_api_list("api-my-league-list", empty=False)
+        self.assert_api_list("api-my-team-list", empty=False)
+        response = self.get_url("api-my-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 200)
-        response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
+        response = self.get_url("api-my-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 200)
 
         #make sure no league after removing
         lc.leagues_commissioned.remove(league)
-        self.assert_api_list("api-league-list", empty=True)
-        self.assert_api_list("api-team-list", empty=True)
-        response = self.get_url("api-league-detail", url_kwargs={"league_id": league.id})
+        self.assert_api_list("api-my-league-list", empty=True)
+        self.assert_api_list("api-my-team-list", empty=True)
+        response = self.get_url("api-my-league-detail", url_kwargs={"league_id": league.id})
         self.assertEquals(response.status_code, 404)
-        response = self.get_url("api-team-detail", url_kwargs={"team_id": team.id})
+        response = self.get_url("api-my-team-detail", url_kwargs={"team_id": team.id})
         self.assertEquals(response.status_code, 404)
 
     def test_update_user_commissioner_status(self):
@@ -205,7 +205,7 @@ class ApiTest(BaseAPITestCase):
 
         data = {"is_commissioner": True}
         response = self.patch_url(
-            "api-player-detail",
+            "api-my-public-player-detail",
             url_kwargs={"player_id":lc.id},
             data=data
         )
