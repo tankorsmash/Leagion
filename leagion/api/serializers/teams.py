@@ -1,10 +1,17 @@
 from django.db.models import Q
 
 from rest_framework import serializers
-from leagion.models import Team, Match, League, Season, User
+from leagion.models import Team, Match, League, Season, User, Location
 from leagion.api.serializers.users import UserSerializer
 from leagion.api.serializers.matches import MatchSerializer
 
+
+class ShallowLocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = (
+            'id', 'name'
+        )
 
 class ShallowLeagueSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,6 +42,7 @@ class ShallowTeamSerializer(serializers.ModelSerializer):
 class ShallowMatchSerializer(serializers.ModelSerializer):
     home_team = ShallowTeamSerializer()
     away_team = ShallowTeamSerializer()
+    location = ShallowLocationSerializer(read_only=True)
 
     class Meta:
         model = Match
