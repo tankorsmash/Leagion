@@ -131,4 +131,4 @@ class MyTeamDetail(generics.RetrieveUpdateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Team.objects.filter(season_id__in=user.teams.values_list('id', flat=True))
+        return Team.objects.filter(season_id__in=user.teams.values_list('season_id', flat=True))
