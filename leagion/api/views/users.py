@@ -37,10 +37,11 @@ def send_user_email_on_join(user, team_id):
 
     send_mail(
         'You have been invited to join a Leagion team',
-        body,
+        body, #TODO make this just plain text
         'leagionapp@gmail.com',
         [user.email],
         fail_silently=False,
+        html_message=body,
     )
 
 @reverse_js
