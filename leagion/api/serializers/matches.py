@@ -1,7 +1,7 @@
 from datetime import datetime
 from rest_framework import serializers
-from leagion.models import Match, Team, Location, Roster, Batter
-from leagion.api.serializers.rosters import RosterSerializer
+from leagion.models import Match, Team, Location
+from leagion.models.utils.roster import get_or_create_roster
 from leagion.api.validators import no_empty_date, no_empty_time
 
 
@@ -39,11 +39,22 @@ class MatchSerializer(serializers.ModelSerializer):
     date = serializers.DateField(required=True, validators=[no_empty_date])
     time = serializers.TimeField(required=True, validators=[no_empty_time])
 
+    away_roster = serializers.SerializerMethodField(read_only=True)
+    home_roster = serializers.SerializerMethodField(read_only=True)
+
     location = ShallowLocationSerializer(read_only=True)
     location_id = serializers.IntegerField(required=False)
 
     postponed_to = serializers.IntegerField(required=False, allow_null=True, default=None)
     postponed_from = serializers.IntegerField(read_only=True)
+
+    def get_away_roster(self, obj):
+        roster = get_or_create_roster(obj.away_roster, obj.away_team)
+        return roster.id
+
+    def get_home_roster(self, obj):
+        roster = get_or_create_roster(obj.home_roster, obj.home_team)
+        return roster.id
 
     def validate(self, data):
         if (
